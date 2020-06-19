@@ -1,0 +1,9 @@
+{
+    "mysql":{
+        "connectionLimit" : 50,
+        "host": "localhost",
+        "user": "root",
+        "password": "",
+        "database": "news"
+    }
+}
