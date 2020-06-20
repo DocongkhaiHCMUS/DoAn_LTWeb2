@@ -10,10 +10,8 @@ app.use(express.urlencoded({
 }));
 
 //set static folder public
-app.use('./public', express.static('public'));
+app.use('/public', express.static('public'));
 
-//set views
-app.set("views",__dirname + "/apps/views");
 //config view_engine and libraries helper as hbs-sections
 require('./middlewares/view_engine.mdw')(app);
 
@@ -29,7 +27,9 @@ require('./middlewares/session.mdw')(app);
 
 
 // CODE IN HERE
-
+app.get('/',function(req,res){
+    res.render('home.hbs');
+})
 
 
 
