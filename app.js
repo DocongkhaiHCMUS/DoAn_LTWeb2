@@ -24,6 +24,9 @@ require('./middlewares/locals.mdw')(app);
 //declare session
 require('./middlewares/session.mdw')(app);
 
+//config passport Facebook
+require('./middlewares/passport_FB.mdw')(app);
+
 
 
 // CODE IN HERE
