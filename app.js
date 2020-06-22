@@ -44,7 +44,7 @@ app.use('/admin', require('./routers/admin.route'));
 
 app.use('/editor', require('./routers/editor.route'));
 
-app.use('/login', require('./routers/default.route'));
+app.use('/login', require('./routers/login.route'));
 
 app.use('/register', require('./routers/register.route'));
 
