@@ -3,7 +3,7 @@ const bcrypt = require('bcrypt');
 const router = express.Router();
 
 router.get('/change', async function (req, res) {
-    res.render('viewPassword/change', {
+    res.render('viewPass/change', {
       layout: false
     });
   })
