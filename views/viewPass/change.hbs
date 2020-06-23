@@ -18,19 +18,19 @@
                     <div class="card-body">
                         <h5 class="card-title text-center">Update Password</h5>
 
-                        {{#if error}}
+                        {{#if err}}
                         <div class="alert alert-danger pb-0 text-danger font-weight-bold">
-                            <p>{{error.err}}</p>
+                            <p>{{err}}</p>
                         </div>
                         {{/if}}
-                        <form novalidate class="form-signin" method="POST">
+                        <form action="" class="form-signin" method="POST">
                             <label for="oldPassword">Old password</label>
-                            <div class="form-label-group">                               
+                            <div class="form-label-group">
                                 <input type="text" id="oldPassword" name="old_password" class="form-control"
-                                    placeholder="Old password" autofocus>
+                                    placeholder="Old password" autofocus required>
                             </div>
                             <label for="inputPassword">New Password</label>
-                            <div class="form-label-group">                              
+                            <div class="form-label-group">
                                 <input type="password" id="inputPassword" name="new_password" class="form-control"
                                     placeholder="Password" required>
                             </div>
@@ -39,8 +39,7 @@
                                 <input type="password" id="inputFirmPassword" name="firm_password" class="form-control"
                                     placeholder="Password" required>
                             </div>
-                            <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit"
-                                formaction="/login">
+                            <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit" formaction="/pass/change">
                                 Update
                             </button>
                             <hr class="my-4">
