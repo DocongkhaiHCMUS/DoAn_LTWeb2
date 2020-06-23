@@ -55,7 +55,7 @@ app.use('/category', require('./routers/category.route'));
 app.use('/tag', require('./routers/tag.route'));
 
 app.use('/user', require('./routers/user.route'));
-
+app.use('/pass', require('./routers/password.route'));
 
 
 //error handling
