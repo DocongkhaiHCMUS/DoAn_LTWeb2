@@ -15,9 +15,9 @@
         <div class="row">
             <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
                 <div class="card card-signin my-5">
+                    <h3 class="text-center mt-4">Sign In</h3>
+                    <hr class="mb-4">
                     <div class="card-body">
-                        <h5 class="card-title text-center">Sign In</h5>
-
                         {{#if error}}
                         <div class="alert alert-danger pb-0 text-danger font-weight-bold">
                             <p>{{error.err}}</p>
@@ -47,12 +47,9 @@
                                 Sign in
                             </button>
                             <hr class="my-4">
-                            <button class="btn btn-lg btn-google btn-block text-uppercase" type="submit">
-                                <i class="fa fa-google" aria-hidden="true"></i>
-                                Sign in with Google
-                            </button>
-                            <button class="btn btn-lg btn-facebook btn-block text-uppercase" formaction="/login/auth/facebook" type="submit">
-                                <i class="fa fa-facebook" aria-hidden="true"></i>
+                            <button class="btn btn-lg btn-facebook btn-block text-uppercase"
+                                formaction="/login/auth/facebook" type="submit">
+                                <i class="fa fa-facebook-square" aria-hidden="true"></i>
                                 Sign in with Facebook
                             </button>
                         </form>

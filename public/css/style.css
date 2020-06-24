@@ -31,8 +31,40 @@ Table OF Contents
 /*----------------------------*\
 	typography
 \*----------------------------*/
+
+*{
+	margin: 0;
+}
+
+:root{
+	--header_height : 70px;
+	--header_line_height : 40px;
+}
+
+#top-header ul.nav>li>a {
+    height: var(--header_height) !important;
+    line-height: var(--header_line_height);
+    text-transform: uppercase;
+}
+
+a.navbar-brand {
+    text-transform: uppercase;
+    height: var(--header_height);
+    line-height: var(--header_line_height);
+    margin-left: 34px !important;
+}
+
+#top-header>.navbar {
+    margin-bottom: 0;
+    border-radius: 0px;
+    border-bottom: 0;
+    border-left: 0;
+	border-right: 0;
+	background: #ffffff;
+}
+
 body {
-	font-family: 'Lato', sans-serif;
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 	color:#2C2C2C;
 	font-size:15px;
 	font-weight:300;
@@ -119,8 +151,8 @@ textarea.input {
 /*----------------------------*\
 	Top Header
 \*----------------------------*/
-#header #top-header {
-	border-bottom: 1px solid #DDD;
+#header>#nav-header>#top-header {
+	background: #ffffff !important;
 }
 
 .header-links {
@@ -195,8 +227,10 @@ textarea.input {
 
 .header-logo .logo > img {
 	width: 100%;
-	max-height: 90px;
-	padding: 10px;
+	max-height: var(--header_height);
+	line-height: var(--header_line_height);
+	--padding-top: 5px;
+	text-align: center;
 }
 
 .header-ads {

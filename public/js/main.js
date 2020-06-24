@@ -5,6 +5,7 @@
 		// Fixed Nav
 		var wScroll = $(this).scrollTop();
 		wScroll > $('header').height() ? $('#nav-header').addClass('fixed') : $('#nav-header').removeClass('fixed');
+		wScroll > $('header').height() ? $('#top-header').addClass('fixed') : $('#top-header').removeClass('fixed');
 		
 		// Back to top appear
 		wScroll > 740 ? $('#back-to-top').addClass('active') : $('#back-to-top').removeClass('active')
