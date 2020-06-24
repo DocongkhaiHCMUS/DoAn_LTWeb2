@@ -16,9 +16,9 @@ import xlsxwriter
 
 #WorkBook = xlsxwriter.Workbook('database.xlsx')
 
-class VnExpress(scrapy.Spider):
-    name = 'vnexpress'
-    url = 'https://vnexpress.net/'
+class DanTri(scrapy.Spider):
+    name = 'dantri'
+    url = 'https://dantri.com.vn'
     Sheet =''
     num_row = 1
     topic = ''
@@ -28,14 +28,15 @@ class VnExpress(scrapy.Spider):
         #print('\n\n\n\nRunning........................')
         #print(res)
         url_title = ''
-        titles = res.xpath('//nav[@class="main-nav"]/ul/li')
-        for item in range(4,len(titles)):
-            print(str(item - 3) +' '+ titles.xpath('a/text()')[item].get().strip())
+        #titles = res.xpath('//nav[@class="main-nav"]/ul/li')
+        titles = res.xpath('//div[@class="mgauto wid1004"]/ul/li')
+        for item in range(2, len(titles) - 1):
+            print(str(item - 1) +' '+ titles.xpath('a/span/text()')[item].get().strip())
         
         #print('\n\n\n\n************************END************************')
         #articles = res.xpath('//div[@class="col-left-folder-v2"]//article[@class="item-news item-news-common"]')
-        topic = int(input('Title : ')) + 1
-        self.topic = titles[topic].xpath('a/text()').get().strip().title()
+        topic = int(input('Title : ')) + 2
+        self.topic = titles[topic].xpath('a/span/text()').get().strip().title()
         
         self.Sheet = WorkBook.add_worksheet(self.topic)
         self.Sheet.write("A1", "ID")
@@ -45,8 +46,9 @@ class VnExpress(scrapy.Spider):
         self.Sheet.write("E1", "Name-Img")
         self.Sheet.write("F1", "Publish Date")
         self.Sheet.write("G1", "Link-Img")
+        self.Sheet.write("H1", "Tag")
 
-        url_title = self.url + titles[topic].xpath('a/@href').get().replace('/', '')
+        url_title = self.url + ('/') + titles[topic].xpath('a/@href').get().replace('/', '')
         yield scrapy.Request(url=url_title, callback=self.parse_title)
         
         #print('\n\n\n\n************************END************************')
@@ -58,18 +60,22 @@ class VnExpress(scrapy.Spider):
         
         #print('\n\n\n\nRunning Parse_title........................')
         #print(res)
-        articles = res.xpath('//article[@class="item-news item-news-common" or @class="item-news item-news-common off-thumb" or @data-offset]')
+        articles = res.xpath('//div[@class="mt3 clearfix eplcheck" or @class="mt3 clearfix" or @data-offset]')
         
         url_article = []
+      #   inn = 1
         for item in articles:
-            url = item.xpath('h3/a/@href').get()
+          #  print (self.url)
+            url = self.url + item.xpath('a/@href').get()
             if url is not None:
                 url_article.append(url)
+                # inn = inn + 1
+                # if(inn == 5):
+                #     break
         for url in url_article:
             yield scrapy.Request(url=url, callback=self.parse_article)
                 
-            
-        next_page = self.url + res.xpath('//a[@class="btn-page next-page "]/@href').get().replace('/','')
+        next_page = self.url  + res.xpath('//div[@class="clearfix mt1"]/div/a/@href').get()
         if next_page is not None:
             
             yield scrapy.Request(url=next_page,callback=self.parse_title)
@@ -84,14 +90,21 @@ class VnExpress(scrapy.Spider):
         #print(res)
           
         
-        title = res.xpath('//h1/text()').get()
-        pub_date = res.xpath('//span[@class = "date"]/text()').get()
-        description = res.xpath('//p[@class="description"]/text()').get()
-        img_link = res.xpath('//img[@itemprop="contentUrl"]/@data-src').get() if not None else "no_link"
+        title = res.xpath('//h1[@class="fon31 mgb15"]/text()').get()
+        pub_date = res.xpath('//span[@class = "fr fon7 mr2 tt-capitalize"]/text()').get()
+       # description = res.xpath('//h2/child::text()').get()  #Co the a o sau
+        description = res.xpath('//h2/text()[2]').get() if not None else res.xpath('//h2/child::text()').get()
+        img_link = res.xpath('//img/@data-original').get() if not None else "no_link"
         content = ''
-        content_ = res.xpath('//p[@class = "Normal"]/text()').getall()
+        content_ = res.xpath('//div[@class = "fon34 mt3 mr2 fon43 detail-content"]/p/text()').getall()
+        tag = ''
+        tag_ = res.xpath('//span[@class="news-tags-item"]/a/text()').getall()
+
         for item in content_:
             content = content + item.strip()
+
+        for itemm in tag_ :
+            tag = tag + itemm.strip() + ('; ')
         
         dir_path = "Images/{}".format(self.topic)
         if not os.path.exists(dir_path):
@@ -118,6 +131,7 @@ class VnExpress(scrapy.Spider):
         self.Sheet.write(self.num_row, 4, img_name)
         self.Sheet.write(self.num_row, 5, pub_date)
         self.Sheet.write(self.num_row, 6, img_link)
+        self.Sheet.write(self.num_row, 7, tag)
 
         print("Write Article {} : -> DONE".format(self.num_row),end='\n\n')
         self.num_row += 1
@@ -131,7 +145,7 @@ def sleep(_, duration=5):
 
 
 def crawl(runner):
-    d = runner.crawl(VnExpress)
+    d = runner.crawl(DanTri)
     d.addBoth(sleep)
     d.addBoth(lambda _: crawl(runner))
     return d

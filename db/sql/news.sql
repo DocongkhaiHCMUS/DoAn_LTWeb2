@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th6 19, 2020 lúc 05:26 PM
+-- Thời gian đã tạo: Th6 20, 2020 lúc 06:04 PM
 -- Phiên bản máy phục vụ: 10.4.11-MariaDB
 -- Phiên bản PHP: 7.4.3
 
@@ -40,10 +40,10 @@ CREATE TABLE `assign` (
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `categoriy`
+-- Cấu trúc bảng cho bảng `category`
 --
 
-CREATE TABLE `categoriy` (
+CREATE TABLE `category` (
   `id` int(11) NOT NULL,
   `name` varchar(4255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `create_date` datetime DEFAULT NULL,
@@ -178,6 +178,23 @@ CREATE TABLE `user` (
   `delete` tinyint(4) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+-- --------------------------------------------------------
+
+--
+-- Cấu trúc bảng cho bảng `user_comment`
+--
+
+CREATE TABLE `user_comment` (
+  `id` int(11) NOT NULL,
+  `user` int(11) NOT NULL,
+  `post` int(11) NOT NULL,
+  `comment` mediumtext COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `time_comment` datetime NOT NULL,
+  `create_date` datetime DEFAULT NULL,
+  `modifile_date` datetime DEFAULT NULL,
+  `delete` tinyint(4) DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 --
 -- Chỉ mục cho các bảng đã đổ
 --
@@ -189,9 +206,9 @@ ALTER TABLE `assign`
   ADD PRIMARY KEY (`id`);
 
 --
--- Chỉ mục cho bảng `categoriy`
+-- Chỉ mục cho bảng `category`
 --
-ALTER TABLE `categoriy`
+ALTER TABLE `category`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -237,6 +254,12 @@ ALTER TABLE `user`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Chỉ mục cho bảng `user_comment`
+--
+ALTER TABLE `user_comment`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT cho các bảng đã đổ
 --
 
@@ -247,9 +270,9 @@ ALTER TABLE `assign`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT cho bảng `categoriy`
+-- AUTO_INCREMENT cho bảng `category`
 --
-ALTER TABLE `categoriy`
+ALTER TABLE `category`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
@@ -286,6 +309,12 @@ ALTER TABLE `tag_post`
 -- AUTO_INCREMENT cho bảng `user`
 --
 ALTER TABLE `user`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT cho bảng `user_comment`
+--
+ALTER TABLE `user_comment`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
