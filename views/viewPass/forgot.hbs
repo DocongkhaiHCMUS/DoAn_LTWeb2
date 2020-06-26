@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="/public/css/login.css">
+    <title>Forgot Password</title>
+</head>
+
+<body>
+    {{#if mess}}
+    <div style="padding: 10px; width: 100%; border-radius: 4px; background-color: #98c4ff; color: #006eff">
+        {{mess}}
+    </div>
+    {{/if}}
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+                <div class="card card-signin my-5">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">Forgot Password</h5>
+
+                        {{#if err}}
+                        <div class="alert alert-danger pb-0 text-danger font-weight-bold">
+                            <p>{{err}}</p>
+                        </div>
+                        {{/if}}
+                        <form action="/pass/forgot" class="form-signin" method="POST">
+                            <label for="inputUsername">User name</label>
+                            <div class="form-label-group">
+                                <input type="text" id="inputUsername" name="username" class="form-control"
+                                    placeholder="Password" required>
+                            </div>
+                            <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit"
+                                formaction="/pass/forgot">
+                                Next
+                            </button>
+                            <hr class="my-4">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+    crossorigin="anonymous"></script>
+
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+    integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+    crossorigin="anonymous"></script>
+
+<script src="https://use.fontawesome.com/c4229e64ed.js"></script>
+
+</html>
