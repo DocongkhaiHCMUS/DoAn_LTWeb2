@@ -4,10 +4,11 @@
   }
   
   body {
+    font-family: "Montserrat", sans-serif;
     background: #007bff;
     background: linear-gradient(to right, #0062E6, #33AEFF);
   }
-  
+ 
   .card-signin {
     border: 0;
     border-radius: 1rem;
@@ -31,8 +32,8 @@
   .form-signin .btn {
     font-size: 80%;
     border-radius: 5rem;
-    letter-spacing: .1rem;
-    font-weight: bold;
+    letter-spacing: 0.05rem;
+    font-weight: normal;
     padding: 1rem;
     transition: all 0.2s;
   }
