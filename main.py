@@ -42,11 +42,12 @@ class DanTri(scrapy.Spider):
         self.Sheet.write("A1", "ID")
         self.Sheet.write("B1", "Title")
         self.Sheet.write("C1", "Description")
-        self.Sheet.write("D1", "Content")
+        self.Sheet.write("D1", "Content")       
         self.Sheet.write("E1", "Name-Img")
         self.Sheet.write("F1", "Publish Date")
-        self.Sheet.write("G1", "Link-Img")
+        self.Sheet.write("G1", "Images-Link")
         self.Sheet.write("H1", "Tag")
+        self.Sheet.write("I1", "Content-Img")
 
         url_title = self.url + ('/') + titles[topic].xpath('a/@href').get().replace('/', '')
         yield scrapy.Request(url=url_title, callback=self.parse_title)
@@ -92,37 +93,111 @@ class DanTri(scrapy.Spider):
         
         title = res.xpath('//h1[@class="fon31 mgb15"]/text()').get()
         pub_date = res.xpath('//span[@class = "fr fon7 mr2 tt-capitalize"]/text()').get()
-       # description = res.xpath('//h2/child::text()').get()  #Co the a o sau
-        description = res.xpath('//h2/text()[2]').get() if not None else res.xpath('//h2/child::text()').get()
-        img_link = res.xpath('//img/@data-original').get() if not None else "no_link"
+       
+       #Get values in index = 2. Not get row 1
+        description = res.xpath('//h2[@class="fon33 mt1 sapo"]/text()[2]').get() 
+        if len(description) < 35:
+            description = res.xpath('//h2[@class="fon33 mt1 sapo"]//text()[1]').get()
+
+        img_link = res.xpath('//img/@data-original').getall() 
+
+        content_img_ = res.xpath('//figcaption//text()').getall()
+        content_img = ''
         content = ''
-        content_ = res.xpath('//div[@class = "fon34 mt3 mr2 fon43 detail-content"]/p/text()').getall()
+
+        content_ = res.xpath('//div[@class="fon34 mt3 mr2 fon43 detail-content"]//text()').getall()
+        #text = content_[1]
+        count = 0
+        # for item in range(1000):
+        #     if len(content_[item]) < 35:
+        #         count = count + 1
+        #     else:
+        #         count = 0
+        #     if(count >= 3):
+        #         if(content_[item] < 35):
+        #             count = count + 1
+        #         else:
+        #             content_[item] = "+++"
+        #             count = 0
+        #     if item == len(content_):
+        #         break
+            
+        # content_ = ''
+        # count_content = 1
+        # for item in range(100):
+        #     #Create Loop, if img is ++, else Content
+        #     content_[item] = res.xpath('//div[@class="fon34 mt3 mr2 fon43 detail-content"]["{count_content}"]//text()').get()
+        #     #content_ = content_xyz[len(content_xyz) - 1]
+        #     if len(content_) < 35:
+        #         content_[item] = '+++'
+        #     elif item == len(content_xyz):
+        #         break
+        #     count_content = count_content + 1
+
+        #Edit link tags
         tag = ''
         tag_ = res.xpath('//span[@class="news-tags-item"]/a/text()').getall()
 
-        for item in content_:
-            content = content + item.strip()
-
-        for itemm in tag_ :
-            tag = tag + itemm.strip() + ('; ')
+        img = ''
         
-        dir_path = "Images/{}".format(self.topic)
+
+
+#ghep mang content thanh mot dong
+        count_temp = 0
+        #var_before = ''
+        for item1 in range(len(content_)):
+            
+            #content = content + item1.strip() + ('\n')
+            if len(content_[item1]) < 35:
+                count_temp = count_temp + 1
+                if (count_temp == 3):
+                    content = content + ('\n+++\n')
+                    var_before = "flag"
+                    
+                #content = content + item1.strip() + ('\n')          
+            else:
+                if (var_before == "flag"  and len(content_[item1 + 1]) < 35  and len(content_[item1 + 2]) < 35):
+                    content = content + ('\n+++\n') 
+                    var_before = ''
+                else:
+                    content = content + content_[item1].strip() + ('\n')
+                    #var_after = content_[item1]
+                   
+                if content_[item1].strip() == 'Tag :':
+                    break
+                count_temp = 0 
+            
+        for item2 in tag_:
+            tag = tag + item2.strip() + ('; ')
+        
+        for item3 in content_img_:
+            #Write to file excel new
+            if len(item3) < 35:
+                continue
+            else:
+                content_img = content_img + item3.strip() + ('\n')
+
+        for item4 in img_link:
+            img = img + item4.strip() + ('\n')
+
+           # temp = temp + 1
+            #break    
+        
+        dir_path = "Images/{}/{}".format(self.topic, self.num_row)
         if not os.path.exists(dir_path):
             os.makedirs(dir_path)
         
-       
-        img_name = '{}_img_{}'.format(self.topic.replace(' ','').lower(),self.num_row) if img_link is not None  else "no_image"
-        if img_link is not None:
-            img_data = requests.get(img_link).content
-            with open('Images/{}/{}.jpg'.format(self.topic,img_name), 'wb') as handler:
-                handler.write(img_data)
-
-        # print(title ,end='\n\n')
-        # print(pub_date, end='\n\n')
-        # print(description, end='\n\n')
-        # print(img_link, end='\n\n')
-        # print(content, end='\n\n')
-
+        img_name = ''
+        numberI = 1
+        if img is not None:
+            for i in img_link:
+                img_data = requests.get(i).content
+                img_name = '{}_img_{}'.format(self.topic.replace(' ','').lower(), numberI) if img is not None  else "no_image"
+                with open('Images/{}/{}/{}.jpg'.format(self.topic, self.num_row , img_name), 'wb') as handler:
+                    handler.write(img_data)   
+                numberI = numberI + 1
+        #return        
+        
        
         self.Sheet.write(self.num_row, 0, self.num_row)
         self.Sheet.write(self.num_row, 1, title)
@@ -130,9 +205,9 @@ class DanTri(scrapy.Spider):
         self.Sheet.write(self.num_row, 3, content)
         self.Sheet.write(self.num_row, 4, img_name)
         self.Sheet.write(self.num_row, 5, pub_date)
-        self.Sheet.write(self.num_row, 6, img_link)
+        self.Sheet.write(self.num_row, 6, img)
         self.Sheet.write(self.num_row, 7, tag)
-
+        self.Sheet.write(self.num_row, 8, content_img)
         print("Write Article {} : -> DONE".format(self.num_row),end='\n\n')
         self.num_row += 1
         
