@@ -1,12 +1,17 @@
 {
-    "mysql":{
-        "connectionLimit" : 50,
+    "mysql": {
+        "connectionLimit": 50,
         "host": "localhost",
         "user": "root",
         "password": "",
         "database": "news"
     },
-    "server":{
-        "PORT" : 3000
+    "server": {
+        "PORT": 3000
+    },
+    "passport_FB": {
+        "FACEBOOK_CLIENT_ID": "976169742817726",
+        "FACEBOOK_CLIENT_SECRET": "8ab1df63d0819efc9293ee2f02c968a0",
+        "callback_url": "http://localhost:3000/login/auth/facebook/callback"
     }
 }

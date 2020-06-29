@@ -1,6 +1,6 @@
 const fs = require('fs');
 
-const path = './data/db.json';
+const path = './db/db.json';
 
 module.exports = {
     getData: () => {
