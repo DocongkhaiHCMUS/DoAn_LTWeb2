@@ -36,6 +36,10 @@ app.get('/', function (req, res) {
     res.render('home.hbs');
 })
 
+app.get('/post', function (req, res) {
+    res.render('post.hbs');
+})
+
 //require all router
 app.use('/guest', require('./routers/default.route'));
 

@@ -1,6 +1,4 @@
 /*
-Template Name:  News & Magazine Template
-Author: yaminncco
 
 Colors:
 	Body 		: #2C2C2C
@@ -53,6 +51,14 @@ body {
   color: #2c2c2c;
   font-size: 15px;
   font-weight: 300;
+}
+
+.top-body{
+  padding-top: 170.4px !important;
+}
+
+.text-uppercase{
+  text-transform: uppercase !important;
 }
 
 h1,
@@ -151,20 +157,18 @@ textarea.input {
   text-transform: uppercase;
   font-weight: 500;
   color: #636161;
-  transition: 0.2s all;
+  transition: 0.3s all;
 }
 
 #top-header a {
   font-size: 15px !important;
-  transition: 0.2s all;
+  transition: 0.3s all;
 }
 
 .navbar-brand {
   padding: 0px 45px;
   text-transform: uppercase;
-  height: var(--header_height);
-  line-height: var(--header_line_height);
-  transition: 0.2s all;
+  transition: 0.3s all;
 }
 
 #top-header.shrink ul.nav > li > a {
@@ -915,6 +919,21 @@ textarea.input {
   display: inline-block;
 }
 
+.widget-des {
+  font-size: 14px;
+  color: #DDD;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+
+.about-des{
+  font-size: 15px;
+  color: #ffffff;
+  font-weight: 600;
+  display: block !important;
+  text-align: justify;
+}
+
 .social-widget ul li a {
   display: block;
   padding: 6px 15px;
@@ -1246,7 +1265,7 @@ textarea.input {
 }
 
 .article-reply-form form input.input + input.input {
-  margin-left: 12px;
+  margin-left: 10px;
 }
 
 .article-reply-form form textarea.input {
@@ -1340,10 +1359,6 @@ textarea.input {
 /*------------------------------------*\
 	Owl Custom nav
 \*------------------------------------*/
-
-#owl-carousel-1 {
-  padding-top: 146.4px;
-}
 
 .custom-owl-nav > div {
   position: relative;

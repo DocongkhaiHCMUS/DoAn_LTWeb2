@@ -4,7 +4,7 @@
 	$(window).on('scroll', function () {
 		// Fixed Nav
 		var wScroll = $(this).scrollTop();
-		var h = $('header').height() + 550;
+		var h = $('header').height();
 		wScroll > h ? $('#top-header').removeClass('shrink') : $('#top-header').addClass('shrink');
 
 		// Back to top appear
