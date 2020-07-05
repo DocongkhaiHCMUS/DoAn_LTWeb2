@@ -1,0 +1,9 @@
+const session = require('express-session');
+
+module.exports = function (app) {
+    app.use(session({
+        secret: 'keyboard cat',
+        resave: false,
+        saveUninitialized: true
+    }))
+};
