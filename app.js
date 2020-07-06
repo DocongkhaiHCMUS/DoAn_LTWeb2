@@ -24,6 +24,9 @@ require('./middlewares/locals.mdw')(app);
 //declare session
 require('./middlewares/session.mdw')(app);
 
+//config passport Facebook
+require('./middlewares/passport_FB.mdw')(app);
+
 
 
 // CODE IN HERE
@@ -31,6 +34,10 @@ require('./middlewares/session.mdw')(app);
 //set link home
 app.get('/', function (req, res) {
     res.render('home.hbs');
+})
+
+app.get('/post', function (req, res) {
+    res.render('post.hbs');
 })
 
 //require all router
@@ -44,7 +51,7 @@ app.use('/admin', require('./routers/admin.route'));
 
 app.use('/editor', require('./routers/editor.route'));
 
-app.use('/login', require('./routers/default.route'));
+app.use('/login', require('./routers/login.route'));
 
 app.use('/register', require('./routers/register.route'));
 
