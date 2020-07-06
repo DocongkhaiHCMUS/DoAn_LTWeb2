@@ -35,6 +35,9 @@ router.get('/forgot', function (req, res) {
         layout: false
     });
 });
+function DestroyOTP(otp){
+ otp = 0;
+}
 router.post('/forgot', function (req, res) {
     var transporter = nodemailer.createTransport({ // config mail server
         host: 'smtp.gmail.com',
@@ -90,6 +93,7 @@ router.post('/forgot', function (req, res) {
      res.render('viewPass/newpass', {
          layout: false,data
      });
+     setTimeout(DestroyOTP(OTP),86400000);
 })
 router.get('/new', function (req, res) {
     res.render('viewPass/newpass', {
