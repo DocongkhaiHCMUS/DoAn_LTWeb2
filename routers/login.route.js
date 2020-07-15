@@ -1,7 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const db = require('../db/util/db.json');
-const passport = require('passport')
+const passport = require('passport');
+const userModel = require('../models/user.model');
+const bcrypt = require('bcrypt');
 
 app = express();
 
@@ -16,32 +17,95 @@ router.get('/', function (req, res) {
     });
 });
 
+// Handling logout
 router.post('/logout', function (req, res) {
     req.session.isAuthenticated = false;
     req.session.authUser = null;
     res.redirect('/');
 })
 
+// Handling when receive POST request
 router.post('/', async function (req, res) {
 
-    var users = db.getData().users;
+    let user = await userModel.singleByUserName(req.body.user_name);
+    let us = user[0];
 
-    var flag = false;
-    var us = null;
-    for (var item of users) {
-        if (req.body.user_name == item.user_name && req.body.password == item.password) {
-            flag = true;
-            us = item;
-            break;
-        }
+    let flag = false;
+
+    if (bcrypt.compare(`${req.body.id}`, us.password) && us.isPassport == '0') {
+        flag = true;
+        req.session.isAuthenticated = true;
+        delete us.password;
+        req.session.authUser = us;
     }
 
-    // if (bcrypt.compare(req.body.Password.toString(), user.password)) {
-    //     flag = true;
-    // }
+    if (flag == true) {
+        // if (user.permission == false || user.permission == 0) {
+        //     if (user.attend == true || user.attend == 1) {
+        //         res.render('viewLogin/loginSuccess.hbs', {
+        //             title: config[0].res_agree,
+        //             is_user: true
+        //         });
+        //     }
+        //     else {
+        //         res.render('viewLogin/loginSuccess.hbs', {
+        //             title: config[0].res_disagree,
+        //             is_user: true
+        //         });
+        //     }
+        // }
+        // else {
+        //     res.redirect('/admin/admin.html');
+        // }
 
-    req.session.isAuthenticated = true;
-    req.session.authUser = us;
+
+        res.redirect('/');
+    }
+    else {
+        res.render('viewLogin/login.hbs', {
+            layout: false,
+            error: { err: 'Username or password is incorrect !' }
+        });
+    }
+});
+
+function xoa_dau(str) {
+    str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a");
+    str = str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, "e");
+    str = str.replace(/ì|í|ị|ỉ|ĩ/g, "i");
+    str = str.replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g, "o");
+    str = str.replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, "u");
+    str = str.replace(/ỳ|ý|ỵ|ỷ|ỹ/g, "y");
+    str = str.replace(/đ/g, "d");
+    str = str.replace(/À|Á|Ạ|Ả|Ã|Â|Ầ|Ấ|Ậ|Ẩ|Ẫ|Ă|Ằ|Ắ|Ặ|Ẳ|Ẵ/g, "A");
+    str = str.replace(/È|É|Ẹ|Ẻ|Ẽ|Ê|Ề|Ế|Ệ|Ể|Ễ/g, "E");
+    str = str.replace(/Ì|Í|Ị|Ỉ|Ĩ/g, "I");
+    str = str.replace(/Ò|Ó|Ọ|Ỏ|Õ|Ô|Ồ|Ố|Ộ|Ổ|Ỗ|Ơ|Ờ|Ớ|Ợ|Ở|Ỡ/g, "O");
+    str = str.replace(/Ù|Ú|Ụ|Ủ|Ũ|Ư|Ừ|Ứ|Ự|Ử|Ữ/g, "U");
+    str = str.replace(/Ỳ|Ý|Ỵ|Ỷ|Ỹ/g, "Y");
+    str = str.replace(/Đ/g, "D");
+    return str;
+}
+
+// handling when success
+router.get('/account', ensureAuthenticated, async function (req, res) {
+    console.log(req.user);
+    let str = req.user.displayName;
+    str = xoa_dau(str);
+    let matches = str.match(/\b(\w)/g);
+    let user_name = matches.join('');
+
+    let user = await userModel.singleByUserName(user_name);
+    let us = user[0];
+
+    let flag = false;
+
+    if (bcrypt.compare(`${req.body.password}`, us.password) && us.isPassport == '1') {
+        flag = true;
+        req.session.isAuthenticated = true;
+        delete us.password;
+        req.session.authUser = us;
+    }
 
     if (flag == true) {
 
@@ -67,25 +131,20 @@ router.post('/', async function (req, res) {
         // else {
         //     res.redirect('/admin/admin.html');
         // }
-
-
-        res.send("Login success !");
+        res.redirect('/');
     }
     else {
         res.render('viewLogin/login.hbs', {
             layout: false,
-            error: { err: 'Username or password is incorrect !' }
+            error: { err: 'User not found !' }
         });
     }
 });
 
-router.get('/account',ensureAuthenticated, function (req, res) {
-    console.log(req.user);
-    res.send(`Xin chào : ${req.user.displayName} ; id : ${req.user.id}`);
-});
+// send request to facebook API
+router.post('/auth/facebook', passport.authenticate('facebook', { authType: 'rerequest', scope: 'email' }));
 
-router.post('/auth/facebook', passport.authenticate('facebook', { scope: 'email' }));
-
+// receive call back from facebook API
 router.get('/auth/facebook/callback',
     passport.authenticate('facebook', { successRedirect: '/login/account', failureRedirect: '/login' }),
     function (req, res) {
