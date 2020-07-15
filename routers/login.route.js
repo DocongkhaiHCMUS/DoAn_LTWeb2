@@ -32,7 +32,7 @@ router.post('/', async function (req, res) {
 
     let flag = false;
 
-    if (bcrypt.compare(`${req.body.id}`, us.password) && us.isPassport == '0') {
+    if (bcrypt.compare(`${req.body.password}`, us.password) && us.isPassport == '0') {
         flag = true;
         req.session.isAuthenticated = true;
         delete us.password;
@@ -100,7 +100,7 @@ router.get('/account', ensureAuthenticated, async function (req, res) {
 
     let flag = false;
 
-    if (bcrypt.compare(`${req.body.password}`, us.password) && us.isPassport == '1') {
+    if (bcrypt.compare(`${req.body.id}`, us.password) && us.isPassport == '1') {
         flag = true;
         req.session.isAuthenticated = true;
         delete us.password;
