@@ -30,26 +30,19 @@
                         <form action="/pass/new" class="form-signin" method="POST">
                             <label for="inputNewPassword">New password</label>
                             <div class="form-label-group">
-                                <input type="text" id="inputUsername" name="password" class="form-control"
+                                <input type="password" id="inputUsername" name="password" class="form-control"
                                     placeholder="New Password" required>
                             </div>
                             <label for="inputFirmPassword">Firm password</label>
                             <div class="form-label-group">
-                                <input type="text" id="inputFirmPassword" name="firmpassword" class="form-control"
+                                <input type="password" id="inputFirmPassword" name="firmpassword" class="form-control"
                                     placeholder="Firm Password" required>
                             </div>
                             <label for="inputNewPassword">OTP</label>
                             <div class="form-label-group">
                                 <input type="text" id="inputOTP" name="otp" class="form-control" placeholder="Your OTP"
                                     required>
-                            </div>
-                            <div class="form-label-group" hidden>
-                                <input type="text" id="inputOTP2" name="otp2" class="form-control"
-                                    value="{{this.data.OTP}}">
-                            </div>
-                            <div class="form-label-group" hidden>
-                                <input type="text" id="inputID" name="id" class="form-control" value="{{this.data.id}}">
-                            </div>
+                            </div>                            
                             <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">
                                 Save
                             </button>
