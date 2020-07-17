@@ -1,0 +1,227 @@
+* {
+  padding: 0;
+  margin: 0;
+}
+
+.d-none {
+  display: none !important;
+}
+
+.d-block {
+  display: block !important;
+}
+
+.bsz-border {
+  box-sizing: border-box;
+}
+
+.shrink img.avatar {
+  border-radius: 100%;
+  width: 60px;
+  padding: 0px;
+  margin-right: 10px;
+}
+
+img.avatar {
+  border-radius: 100%;
+  width: 50px;
+  margin-right: 5px;
+  transition: all 0.3s;
+}
+
+.main-nav li a:hover {
+  background-color: #ef233c !important;
+
+}
+
+#second-header .dropdown-menu {
+  padding: 0px;
+  border-left: 1px solid #ef233c !important;
+  border-right: 1px solid #ef233c !important;
+  border-top: 3px solid #ef233c;
+  border-bottom: 1px solid #ef233c;
+  box-shadow: 0 10px 14px rgba(0, 0, 0, 0.5);
+  margin: 0px;
+  border-radius: 0px !important;
+}
+
+.nav .open > a,
+.nav .open > a:focus,
+.nav .open > a:hover {
+  background: #ef233c;
+}
+
+#second-header .dropdown-menu > li > a {
+  color: #ffffff;
+  background: #07090c;
+  min-width: 100%;
+}
+
+#top-header .dropdown ul.dropdown-menu a {
+  font-weight: 500;
+}
+
+.main-nav .dropdown-menu li {
+  border-left: none;
+}
+
+.main-nav .dropdown-menu li:last-child {
+  border-right: none;
+}
+
+.main-nav .dropdown-menu li:first-child {
+  border-left: none;
+}
+.navbar-default .navbar-nav > .open > a:focus {
+  background: transparent;
+}
+.navbar-default .navbar-nav > .open > a,
+.navbar-default .navbar-nav > .open > a:hover {
+  color: #ef233c !important;
+  background: transparent;
+}
+
+#top-header.shrink ul.nav > li > a:hover {
+  color: #ef233c;
+}
+
+#top-header ul.nav > li > a:hover {
+  color: #ef233c;
+}
+
+#top-header ul.nav > li.account > a {
+  padding: 10px 12px 10px 12px;
+}
+
+/* #top-header.shrink ul.nav > li.account > a{
+    padding: 0px;
+    padding-top: 10px;
+} */
+
+.m-head-right {
+  margin-right: 20px !important;
+}
+
+.m-head-left {
+  margin-left: 20px !important;
+}
+
+.main1-nav {
+  position: relative;
+}
+
+.shrink div.main1-nav::before {
+  content: "";
+  position: absolute;
+  top: 5%;
+  height: 90%;
+  border-left: 2px solid #c0bcbce7;
+}
+
+div.main1-nav::before {
+  content: "";
+  position: absolute;
+  top: 5%;
+  height: 90%;
+  border-right: 1px solid #c0bcbce7;
+  transition: all 0.3s;
+}
+
+#second-header::after {
+  content: "";
+  transform: translateX(-20%);
+  width: 150%;
+  border-bottom: 2px solid #e7e7e7e7;
+}
+
+#top-header.shrink ul.dropdown-menu {
+  transform: translateY(-4px);
+  border-radius: 7px !important;
+  min-width: 100%;
+}
+
+#top-header ul.dropdown-menu {
+  transform: translateY(-7px);
+  border-radius: 7px !important;
+  min-width: 100%;
+}
+
+#top-header.shrink ul.dropdown-menu::before {
+  content: "";
+  position: absolute;
+  border: 10px solid;
+  border-color: transparent transparent rgb(241, 73, 73) transparent;
+  transform: translateY(-122%) translateX(550%);
+}
+
+#top-header ul.dropdown-menu::before {
+  content: "";
+  position: absolute;
+  border: 8px solid;
+  border-color: transparent transparent rgb(241, 73, 73) transparent;
+  transform: translateY(-131%) translateX(500%);
+}
+
+.shrink .icon-head {
+  display: block;
+  text-align: center;
+}
+
+.icon-head {
+  display: inline-block;
+  text-align: center;
+}
+
+@media only screen and (max-width: 767px) and (min-width: 300px) {
+  ul.dropdown-menu {
+    transform: translateY(0px);
+    border-radius: 7px !important;
+    min-width: 100%;
+  }
+  .shrink div.main1-nav::before {
+    content: "";
+    border: 0px;
+  }
+
+  div.main1-nav::before {
+    content: "" !important;
+    border: 0px;
+  }
+  .shrink ul.dropdown-menu::before {
+    content: "";
+    border: 0px;
+  }
+
+  ul.dropdown-menu::before {
+    content: "";
+    border: 0px;
+  }
+  .shrink ul.dropdown-menu {
+    transform: translateY(0);
+  }
+
+  ul.dropdown-menu {
+    transform: translateY(0);
+  }
+
+  .shrink .account ul.dropdown-menu {
+    transform: translateY(25px);
+  }
+
+  .account ul.dropdown-menu {
+    transform: translateY(5px);
+  }
+
+  .shrink img.avatar {
+    border-radius: 100%;
+    width: 40px;
+    margin-right: 10px;
+  }
+
+  img.avatar {
+    border-radius: 100%;
+    width: 30px;
+    margin-right: 5px;
+    transition: all 0.3s;
+  }
+}

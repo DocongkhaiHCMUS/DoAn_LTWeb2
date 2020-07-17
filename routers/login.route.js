@@ -39,7 +39,15 @@ router.post('/', async function (req, res) {
         req.session.authUser = us;
     }
 
+    console.log(req.session);
+
     if (flag == true) {
+
+        if(req.body.remmember_pass)
+        {
+            
+        }
+
         // if (user.permission == false || user.permission == 0) {
         //     if (user.attend == true || user.attend == 1) {
         //         res.render('viewLogin/loginSuccess.hbs', {

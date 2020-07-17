@@ -1,7 +1,7 @@
 const db = require('../db/util/db');
 const moment = require('moment');
 
-const TBL_User = 'user'
+const TBL_User = 'user';
 
 module.exports = {
     load: () => db.load(`select * from ${TBL_User}`),
