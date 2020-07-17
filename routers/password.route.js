@@ -29,12 +29,6 @@ router.post('/change', async function (req, res) {
             layout: false
         })
     }
-    if (newpass != firmpass) {
-        return res.render('viewPass/change', {
-            err: 'Re-password incorrect.',
-            layout: false
-        })
-    }
     us.password = bcrypt.hashSync(firmpass, 10);
     userModel.patch(us);
     res.redirect('/');

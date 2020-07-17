@@ -23,7 +23,7 @@
                             <p>{{err}}</p>
                         </div>
                         {{/if}}
-                        <form action="" class="form-signin" method="POST">
+                        <form action="" class="form-signin" method="POST" onsubmit="return kiemTra();">
                             <label for="oldPassword">Old password</label>
                             <div class="form-label-group">
                                 <input type="password" id="oldPassword" name="old_password" class="form-control"
@@ -33,13 +33,16 @@
                             <div class="form-label-group">
                                 <input type="password" id="inputPassword" name="new_password" class="form-control"
                                     placeholder="Password" required>
+                                <i id="errPass"></i>
                             </div>
                             <label for="inputFirmPassword">Confirm Password</label>
                             <div class="form-label-group">
                                 <input type="password" id="inputFirmPassword" name="firm_password" class="form-control"
                                     placeholder="Password" required>
+                                <i id="errRePass"></i>
                             </div>
-                            <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit" formaction="/pass/change">
+                            <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit"
+                                formaction="/pass/change">
                                 Update
                             </button>
                             <hr class="my-4">
@@ -61,5 +64,28 @@
     crossorigin="anonymous"></script>
 
 <script src="https://use.fontawesome.com/c4229e64ed.js"></script>
+<script type="text/javascript">
+    function kiemTra() {
+        var pass = document.getElementById("inputPassword");
+        var err = document.getElementById("errPass");
+        var len = pass.value;
+        if (len.length < 6) {
+            err.innerHTML = "Mật khẩu tối  thiểu phải có 6 kí tự";
+            pass.focus();
+            return false;
+        } else
+            err.innerHTML = "";
+        var repass = document.getElementById("inputFirmPassword");
+        var err = document.getElementById("errRePass");
+        if (len != repass.value) {
+            err.innerHTML = "Mật khẩu không khớp";
+            repass.focus();
+            return false;
+        }
+        else
+            err.innerHTML = "";
+        return true;
+    }
+</script>
 
 </html>
