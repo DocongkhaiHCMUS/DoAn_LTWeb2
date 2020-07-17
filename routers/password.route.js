@@ -90,8 +90,8 @@ router.post('/forgot', async function (req, res) {
             port: 465,
             secure: true,
             auth: {
-                user: process.env.MAILER_EMAIL_ID, //Tài khoản gmail server
-                pass: process.env.MAILER_PASSWORD //Mật khẩu tài khoản gmail server
+                user: process.env.MAILER_EMAIL_ID || "lnhiep120699@gmail.com", //Tài khoản gmail server
+                pass: process.env.MAILER_PASSWORD || "hiepktvn99" //Mật khẩu tài khoản gmail server
             },
             tls: {
                 // do not fail on invalid certs
