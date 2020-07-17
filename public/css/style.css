@@ -39,10 +39,17 @@ div#second-header.container {
 }
 
 :root {
-  --top-header_padding-y: 25px;
-  --top-header_padding-x: 10px;
-  --top-header_padding-y_shrink: 43px;
-  --top-header_padding-x_shrink: 15px;
+  --top-header_padding-y: 10px;
+  --top-header_padding-x: 12px;
+  --top-header_padding-y_shrink: 12px 12px;
+  --top-header_padding-x_shrink: 0px 12px;
+  --top-header_line-height: 52px;
+  --top-header_line-height_shrink: 52px;
+
+  --top-header-brand_line-height: 50px;
+  --top-header-brand_padding: 6px 20px;
+  --top-header-brand_padding-shrink: 6px 25px;
+
   --header_li_margin: 3px;
 }
 
@@ -53,11 +60,11 @@ body {
   font-weight: 300;
 }
 
-.top-body{
+.top-body {
   padding-top: 170.4px !important;
 }
 
-.text-uppercase{
+.text-uppercase {
   text-transform: uppercase !important;
 }
 
@@ -154,34 +161,39 @@ textarea.input {
 
 #top-header ul.nav > li > a {
   padding: var(--top-header_padding-y) var(--top-header_padding-x);
+  line-height: var(--top-header_line-height);
   text-transform: uppercase;
-  font-weight: 500;
+  font-weight: 600;
   color: #636161;
   transition: 0.3s all;
 }
 
 #top-header a {
-  font-size: 15px !important;
+  font-size: 14px !important;
   transition: 0.3s all;
 }
 
 .navbar-brand {
-  padding: 0px 45px;
+  padding: var(--top-header-brand_padding);
   text-transform: uppercase;
   transition: 0.3s all;
 }
 
 #top-header.shrink ul.nav > li > a {
-  padding: var(--top-header_padding-y_shrink) var(--top-header_padding-x);
+  padding: var(--top-header_padding-y_shrink) var(--top-header_padding-x_shrink);
+  line-height: var(--top-header_line-height_shrink);
   font-weight: 600;
+  transition: 0.3s all;
 }
 
 #top-header.shrink a {
-  font-size: 18px !important;
+  font-size: 17px !important;
+  transition: 0.3s all;
 }
 
 #top-header.shrink .navbar-brand {
-  padding: 18px 45px;
+  padding: var(--top-header-brand_padding-shrink);
+  transition: 0.3s all;
 }
 
 #top-header > .navbar {
@@ -260,20 +272,25 @@ textarea.input {
   display: inline-block;
 }
 
-/* .header-logo {
-	float:left;
-} */
+.shrink h1.logo {
+  font-size: 31.104px !important;
+  transition: 0.3s all;
+}
 
-/* .header-logo .logo {
-	display:inline-block;
-} */
+h1.logo {
+  font-size: 25px;
+  transition: 0.3s all;
+}
 
-.header-logo .logo > img {
-  width: 100%;
-  max-height: var(--header_height);
-  line-height: var(--header_line_height);
-  /* --padding-top: 5px; */
+.logo img {
+  transition: all 0.3s;
+  width: 162px;
+}
+
+.shrink .logo img {
   text-align: center;
+  width: 182px !important;
+  transition: all 0.3s;
 }
 
 .header-ads {
@@ -308,28 +325,39 @@ textarea.input {
   right: 0;
   z-index: 99;
 }
-
+.main-nav {
+  padding-left: 5px;
+}
 .main-nav li {
-  border-left: 1px solid #222;
+  border-left: 1px solid #b3b3b3e7;
 }
 
 .main-nav li:last-child {
-  border-right: 1px solid #222;
+  border-right: 1px solid #b3b3b3e7;
+}
+
+.main-nav li:first-child {
+  border-left: 1px solid #b3b3b3e7;
 }
 
 .main-nav li a {
-  padding: 10px 15px;
+  padding: 10px 8px;
   color: #fff;
   text-transform: uppercase;
+  font-size: 14px;
+  font-weight: 400;
 }
 
 .main-nav li.active a {
   background-color: #ef233c !important;
 }
 
-.main-nav li a:hover,
-.main-nav li a:focus {
-  background-color: rgb(105, 104, 104);
+.main-nav li a:focus,.main1-nav li a:focus {
+  background-color: transparent;
+}
+
+.main-nav li a:hover {
+  background-color: rgb(239, 35, 60);
 }
 
 .button-nav {
@@ -351,7 +379,7 @@ textarea.input {
 
 .search-form {
   position: absolute;
-  width: 1140px;
+  width: 2260%;
   background: #07090c;
   padding: 10px;
   right: 0;
@@ -398,29 +426,38 @@ textarea.input {
 }
 
 @media only screen and (max-width: 767px) and (min-width: 300px) {
-  #header #top-header {
-    text-align: center;
+  #top-header.shrink button.navbar-toggle.collapsed.logo {
+    margin: 25px 10px !important;
+  }
+
+  button.navbar-toggle.collapsed.logo {
+    margin: 15px 10px;
+    transition: all 0.3s;
   }
 
   #top-header.shrink ul.nav > li > a {
-	padding: var(--top-header_padding-y) var(--top-header_padding-x);
-	text-transform: uppercase;
-	font-weight: 500;
-	color: #636161;
-	transition: 0.3s all;
+    padding: var(--top-header_padding-y) var(--top-header_padding-x);
+    line-height: var(--top-header_line-height_shrink);
+    text-transform: uppercase;
+    font-weight: 500;
+    color: #636161;
+    transition: 0.3s all;
   }
-  
+
   #top-header.shrink a {
-	font-size: 15px !important;
-	transition: 0.3s all;
+    font-size: 15px !important;
+    transition: 0.3s all;
   }
-  
+
   #top-header.shrink .navbar-brand {
-	padding: 0px 45px;
-	text-transform: uppercase;
-	height: var(--header_height);
-	line-height: var(--header_line_height);
-	transition: 0.3s all;
+    padding: 0px 15px;
+    margin: 20px 0px;
+    text-transform: uppercase;
+    transition: 0.3s all;
+  }
+
+  #top-header .navbar-brand {
+    padding: 0px 15px;
   }
 
   #top-header a {
@@ -428,7 +465,7 @@ textarea.input {
   }
 
   #top-header.shrink a {
-	font-size: 15px !important;
+    font-size: 15px !important;
   }
 
   #top-header ul.nav > li > a {
@@ -445,22 +482,22 @@ textarea.input {
   }
 
   .search-form {
-	position: absolute;
-	width: 450px;
-	background: #07090c;
-	padding: 10px;
-	right: 0;
-	border-top: 2px solid #ef233c;
-	-webkit-box-shadow: 0px 5px 6px -5px rgba(0, 0, 0, 0.4);
-	box-shadow: 0px 5px 6px -5px rgba(0, 0, 0, 0.4);
-	z-index: 22;
-	-webkit-transform: translateY(15px);
-	-ms-transform: translateY(15px);
-	transform: translateY(15px);
-	opacity: 0;
-	visibility: hidden;
-	-webkit-transition: 0.3s all;
-	transition: 0.3s all;
+    position: absolute;
+    width: 450px;
+    background: #07090c;
+    padding: 10px;
+    right: 0;
+    border-top: 2px solid #ef233c;
+    -webkit-box-shadow: 0px 5px 6px -5px rgba(0, 0, 0, 0.4);
+    box-shadow: 0px 5px 6px -5px rgba(0, 0, 0, 0.4);
+    z-index: 22;
+    -webkit-transform: translateY(15px);
+    -ms-transform: translateY(15px);
+    transform: translateY(15px);
+    opacity: 0;
+    visibility: hidden;
+    -webkit-transition: 0.3s all;
+    transition: 0.3s all;
   }
 
   .header-links,
@@ -497,7 +534,6 @@ textarea.input {
   #nav-header .nav-logo {
     display: block;
     float: none;
-    text-align: center;
     margin-bottom: 30px;
   }
 
@@ -921,12 +957,12 @@ textarea.input {
 
 .widget-des {
   font-size: 14px;
-  color: #DDD;
+  color: #ddd;
   font-weight: 600;
   margin-bottom: 5px;
 }
 
-.about-des{
+.about-des {
   font-size: 15px;
   color: #ffffff;
   font-weight: 600;
