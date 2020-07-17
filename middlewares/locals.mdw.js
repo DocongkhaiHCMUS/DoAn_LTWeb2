@@ -49,9 +49,9 @@ module.exports = function (app) {
         app.locals.listCat = convertToCatFull(listCategory, listCat1);
 
         //local Authentication
-        if (req.session.isAuthenticated === true) {
-            app.locals.isAuthenticated = req.session.isAuthenticated;
-            app.locals.user = req.session.athUser;
+        if (req.session.isAuthenticated && req.session.authUser) {
+            res.locals.isAuthenticated = req.session.isAuthenticated;
+            res.locals.user = req.session.authUser;
         }
 
         next();
