@@ -238,7 +238,7 @@ textarea.input {
   color: #ef233c;
 }
 
-.header-social {
+/* .header-social {
   float: right;
 }
 
@@ -262,7 +262,7 @@ textarea.input {
 
 .header-social ul li a:hover {
   color: #ef233c;
-}
+} */
 
 /*----------------------------*\
 	Center Header
@@ -500,24 +500,25 @@ h1.logo {
     transition: 0.3s all;
   }
 
-  .header-links,
-  .header-social {
+  .header-links {
     float: none;
   }
-
+  /* .header-social {
+    float: none;
+  } */
   .header-links ul li {
     margin-right: -4px;
     border-bottom: 1px solid #ddd;
   }
 
-  .header-social {
+  /* .header-social {
     margin-top: -1px;
   }
 
   .header-social ul li {
     margin-right: -4px;
     border-top: 1px solid #ddd;
-  }
+  } */
 
   #header #center-header {
     padding: 0px;

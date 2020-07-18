@@ -10,18 +10,18 @@ router.get('/', function (req, res) {
     req.session.isAuthenticated = false;
     req.session.authUser = null;
 
-    res.render('viewLogin/login.hbs', {
-        layout: false,
+    res.render('viewLogin/_login.hbs', {
         user_name: app.locals.user_name,
         password: app.locals.password
     });
 });
 
 // Handling logout
-router.post('/logout', function (req, res) {
-    req.session.isAuthenticated = false;
-    req.session.authUser = null;
-    res.redirect('/');
+router.get('/logout', function (req, res) {
+    req.logOut();
+    req.session.destroy(function (err) {
+        res.redirect('/');
+    });
 })
 
 // Handling when receive POST request
@@ -32,7 +32,7 @@ router.post('/', async function (req, res) {
 
     let flag = false;
 
-    if (bcrypt.compareSync(req.body.password.toString(), us.password) == true && us.isPassport == '0') {
+    if (bcrypt.compareSync(req.body.password.toString(), us.password) == true && us.isPassport == 0) {
         flag = true;
         req.session.isAuthenticated = true;
         delete us.password;
@@ -43,9 +43,8 @@ router.post('/', async function (req, res) {
 
     if (flag == true) {
 
-        if(req.body.remmember_pass)
-        {
-            
+        if (req.body.remmember_pass) {
+
         }
 
         // if (user.permission == false || user.permission == 0) {
@@ -72,7 +71,7 @@ router.post('/', async function (req, res) {
     else {
         res.render('viewLogin/login.hbs', {
             layout: false,
-            error: { err: 'Username or password is incorrect !' }
+            error: { err: 'Tên đăng nhập hoặc mật khẩu không đúng !' }
         });
     }
 });
@@ -108,7 +107,7 @@ router.get('/account', ensureAuthenticated, async function (req, res) {
 
     let flag = false;
 
-    if (bcrypt.compareSync(req.body.id.toString(), us.password) && us.isPassport == '1') {
+    if (bcrypt.compareSync(`${req.user.id}`, us.password) && us.isPassport == 1) {
         flag = true;
         req.session.isAuthenticated = true;
         delete us.password;
@@ -144,13 +143,13 @@ router.get('/account', ensureAuthenticated, async function (req, res) {
     else {
         res.render('viewLogin/login.hbs', {
             layout: false,
-            error: { err: 'User not found !' }
+            error: { err: 'Tài khoản không tồn tại !' }
         });
     }
 });
 
 // send request to facebook API
-router.post('/auth/facebook', passport.authenticate('facebook', { authType: 'rerequest', scope: 'email' }));
+router.get('/auth/facebook', passport.authenticate('facebook', { authType: 'rerequest', scope: 'email' }));
 
 // receive call back from facebook API
 router.get('/auth/facebook/callback',
