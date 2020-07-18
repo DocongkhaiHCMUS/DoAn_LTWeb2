@@ -50,10 +50,9 @@ module.exports = function (app) {
 
         //local Authentication
         if (req.session.isAuthenticated && req.session.authUser) {
-            res.locals.isAuthenticated = req.session.isAuthenticated;
-            res.locals.user = req.session.authUser;
+            res.locals.lcIsAuthenticated = req.session.isAuthenticated;
+            res.locals.lcUser = req.session.authUser;
         }
-
         next();
     });
 };
