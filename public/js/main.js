@@ -48,23 +48,29 @@
 	});
 
 	$('#owl-carousel-2').owlCarousel({
-		loop: false,
+		loop: true,
 		margin: 15,
 		dots: false,
 		nav: true,
 		navContainer: '#nav-carousel-2',
 		navText: ['<i class="fa fa-angle-left"></i>', '<i class="fa fa-angle-right"></i>'],
-		autoplay: false,
+		autoplay: true,
 		responsive: {
 			0: {
 				items: 1
 			},
+			// 375: {
+			// 	items: 2
+			// },
+			// 600: {
+			// 	items: 2
+			// },
 			768: {
-				items: 2
-			},
-			992: {
 				items: 3
 			},
+			992: {
+				items: 4
+			}
 		}
 	});
 
