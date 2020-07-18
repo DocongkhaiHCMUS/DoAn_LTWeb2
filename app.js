@@ -17,14 +17,14 @@ app.use('/public', express.static('public'));
 //config view_engine and libraries helper as hbs-sections
 require('./middlewares/view_engine.mdw')(app);
 
+//declare session
+require('./middlewares/session.mdw')(app);
+
 //require function check is login
 const restrict = require('./middlewares/authenticated.mdw');
 
 //require local variables
 require('./middlewares/locals.mdw')(app);
-
-//declare session
-require('./middlewares/session.mdw')(app);
 
 //config passport Facebook
 require('./middlewares/passport_FB.mdw')(app);
