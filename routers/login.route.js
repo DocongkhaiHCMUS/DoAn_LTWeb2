@@ -31,12 +31,13 @@ router.post('/', async function (req, res) {
     let us = user[0];
 
     let flag = false;
-
-    if (bcrypt.compareSync(req.body.password.toString(), us.password) == true && us.isPassport == 0) {
-        flag = true;
-        req.session.isAuthenticated = true;
-        delete us.password;
-        req.session.authUser = us;
+    if (us) {
+        if (bcrypt.compareSync(req.body.password.toString(), us.password) == true && us.isPassport == 0) {
+            flag = true;
+            req.session.isAuthenticated = true;
+            delete us.password;
+            req.session.authUser = us;
+        }
     }
 
     console.log(req.session);
@@ -69,8 +70,7 @@ router.post('/', async function (req, res) {
         res.redirect('/');
     }
     else {
-        res.render('viewLogin/login.hbs', {
-            layout: false,
+        res.render('viewLogin/_login.hbs', {
             error: { err: 'Tên đăng nhập hoặc mật khẩu không đúng !' }
         });
     }
@@ -141,8 +141,7 @@ router.get('/account', ensureAuthenticated, async function (req, res) {
         res.redirect('/');
     }
     else {
-        res.render('viewLogin/login.hbs', {
-            layout: false,
+        res.render('viewLogin/_login.hbs', {
             error: { err: 'Tài khoản không tồn tại !' }
         });
     }
