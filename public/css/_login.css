@@ -132,6 +132,8 @@ body {
 }
 
 .alert{
+	text-align: center;
+	font-size: 15px;
 	font-weight:500;
 	background: #fff;
 	border: 2px solid red;
