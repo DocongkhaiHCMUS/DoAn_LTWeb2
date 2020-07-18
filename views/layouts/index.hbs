@@ -26,7 +26,7 @@
 	<link type="text/css" rel="stylesheet" href="/public/css/style.css" />
 	<link type="text/css" rel="stylesheet" href="/public/css/style_of_mine.css">
 
-	 {{{_sections.css}}}
+	{{{_sections.css}}}
 
 </head>
 
@@ -166,7 +166,7 @@
 									<li class="dropdown account">
 										<a href="#" class="dropdown-toggle account" data-toggle="dropdown" role="button"
 											aria-haspopup="true" aria-expanded="false">
-											<img class="avatar"  {{#if lcUser.avartar}}
+											<img class="avatar" {{#if lcUser.avartar}}
 												src="/public/img/img_avatar/{{lcUser.avartar}}" {{else}}
 												src="/public/img/img_avatar/default_user.png"
 												style="border: 1px solid black;" {{/if}} alt="avatar">
@@ -491,6 +491,33 @@
 	<script src="/public/js/owl.carousel.min.js"></script>
 	<script src="/public/js/main.js"></script>
 	<script src="/public/js/boostrap-hover-dropdown.js"></script>
+
+	<script>
+		$(window).resize(function () {
+			var width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
+			$('.search-form').css('width', width - 20);
+
+			if (width < 1351) {
+				$('.main-nav li a').css('font-size', '12px');
+			}
+			else if (width < 1391) {
+				$('.main-nav li a').css('font-size', '12.5px');
+			}
+			else if (width < 1431) {
+				$('.main-nav li a').css('font-size', '13px');
+			}
+			else if (width < 1471) {
+				$('.main-nav li a').css('font-size', '13.5px');
+			}
+			else if (width < 1509) {
+				$('.main-nav li a').css('font-size', '14px');
+			}
+			else if (width > 1509) {
+				$('.main-nav li a').css('font-size', '14.5px');
+			}
+		});
+
+	</script>
 
 	{{{_sections.js}}}
 
