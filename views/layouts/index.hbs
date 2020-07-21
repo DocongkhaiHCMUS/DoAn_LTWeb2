@@ -13,7 +13,7 @@
 
 	<!-- Bootstrap -->
 	<link type="text/css" rel="stylesheet" href="/public/css/bootstrap.min.css" />
-	
+
 
 	<!-- Owl Carousel -->
 	<link type="text/css" rel="stylesheet" href="/public/css/owl.carousel.css" />
@@ -25,6 +25,8 @@
 	<!-- Custom stlylesheet -->
 	<link type="text/css" rel="stylesheet" href="/public/css/style.css" />
 	<link type="text/css" rel="stylesheet" href="/public/css/style_of_mine.css">
+
+	{{{_sections.css}}}
 
 </head>
 
@@ -96,11 +98,14 @@
 							<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 								<ul class="nav navbar-nav">
 									<li class="icon-head m-head-left active">
-										<a href="#">
+										<a href="./">
 											<i class="fa fa-home icon-head" aria-hidden="true">&nbsp;</i>
 											Trang Chủ
 										</a>
 									</li>
+
+									{{#if lcIsAuthenticated}}
+									{{else}}
 									<li class="icon-head ">
 										<a href="#">
 											<i class="fa fa-user-plus icon-head" aria-hidden="true">&nbsp;</i>
@@ -108,11 +113,15 @@
 										</a>
 									</li>
 									<li>
-										<a href="#">
+										<a href="/login">
 											<i class="fa fa-sign-in icon-head" aria-hidden="true">&nbsp;</i>
 											Đăng Nhập
 										</a>
 									</li>
+									{{/if}}
+
+									{{#if isWriter}}
+
 									<li class="dropdown">
 										<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
 											aria-haspopup="true" aria-expanded="false">
@@ -132,6 +141,9 @@
 										</ul>
 
 									</li>
+									{{/if}}
+
+									{{#if isEditor}}
 									<li class="dropdown">
 										<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
 											aria-haspopup="true" aria-expanded="false">
@@ -147,14 +159,21 @@
 										</ul>
 
 									</li>
+									{{/if}}
 								</ul>
+
 								<ul class="nav navbar-nav navbar-right">
 									<li class="dropdown account">
 										<a href="#" class="dropdown-toggle account" data-toggle="dropdown" role="button"
 											aria-haspopup="true" aria-expanded="false">
-											<img class="avatar" src="/public/img/av-1.jpg" alt="avatar">
-											Đỗ Công Khải
+											<img class="avatar" {{#if lcUser.avartar}}
+												src="/public/img/img_avatar/{{lcUser.avartar}}" {{else}}
+												src="/public/img/img_avatar/default_user.png"
+												style="border: 1px solid black;" {{/if}} alt="avatar">
+											{{#if lcUser}}
+											{{lcUser.display_name}}
 											<i class="fa fa-angle-double-down" aria-hidden="true"></i>
+
 										</a>
 										<ul class="dropdown-menu">
 											<li>
@@ -170,12 +189,16 @@
 												</a>
 											</li>
 											<li>
-												<a href="#">
+												<a href="./login/logout">
 													<i class="fa fa-sign-out" aria-hidden="true">&nbsp;</i>
 													Đăng Xuất
 												</a>
 											</li>
 										</ul>
+										{{else}}
+										khách ghé thăm
+										</a>
+										{{/if}}
 									</li>
 								</ul>
 							</div><!-- /.navbar-collapse -->
@@ -228,9 +251,7 @@
 	<!-- /Header -->
 
 	{{{body}}}
-	{{!-- <div style="min-height: 2000px;">
 
-	</div> --}}
 
 	<!-- FOOTER -->
 	<footer id="footer">
@@ -468,6 +489,35 @@
 	<script src="/public/js/owl.carousel.min.js"></script>
 	<script src="/public/js/main.js"></script>
 	<script src="/public/js/boostrap-hover-dropdown.js"></script>
+
+	<script>
+		$(window).resize(function () {
+			var width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
+			$('.search-form').css('width', width - 20);
+
+			if (width < 1351) {
+				$('.main-nav li a').css('font-size', '12px');
+			}
+			else if (width < 1391) {
+				$('.main-nav li a').css('font-size', '12.5px');
+			}
+			else if (width < 1431) {
+				$('.main-nav li a').css('font-size', '13px');
+			}
+			else if (width < 1471) {
+				$('.main-nav li a').css('font-size', '13.5px');
+			}
+			else if (width < 1509) {
+				$('.main-nav li a').css('font-size', '14px');
+			}
+			else if (width > 1509) {
+				$('.main-nav li a').css('font-size', '14.5px');
+			}
+		});
+
+	</script>
+
+	{{{_sections.js}}}
 
 </body>
 

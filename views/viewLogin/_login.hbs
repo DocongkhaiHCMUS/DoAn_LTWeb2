@@ -1,0 +1,103 @@
+{{#section 'css'}}
+<link rel="stylesheet" href="/public//css/_login.css">
+{{/section}}
+
+{{#section 'js'}}
+<script>
+    //handling when btnSignIn submit
+    $('#frmLogin').submit(function (e) {
+        e.preventDefault();
+
+        if (validate() == 1) {
+
+            // remove all error before 
+            $('#txtValidate').empty();
+            // add error text
+            let error = $("<p></p>").append("<i class='fa fa-exclamation-triangle' aria-hidden='true'>&nbsp;</i>Vui lòng nhập thông tin !");
+            $('#txtValidate').append(error);
+            if ($('#txtValidate').hasClass('d-none'))
+                $('#txtValidate').removeClass('d-none')
+        }
+        else {
+            if ($('#txtValidate').hasClass('d-none') == false)
+                $('#txtValidate').addClass('d-none')
+            $('#frmLogin').off('submit').submit();
+        }
+    });
+
+    function validate() {
+        let name = $('#inputName').val();
+        let pass = $('#inputPassword').val();
+        if (!name || !pass)
+            return 1;
+    }
+</script>
+{{/section}}
+
+<div class="demo-1">
+    <div class="main-agileits">
+        <!--form-stars-here-->
+        <div class="form-w3-agile">
+            <h2>Đăng Nhập</h2>
+            <form id="frmLogin" action="./login" method="post" novalidate>
+                {{#if error}}
+                <h3 class="alert">
+                    <p>
+                        <i class='fa fa-exclamation-triangle' aria-hidden='true'>&nbsp;</i>
+                        {{error.err}}
+                    <p>
+                </h3>
+                {{/if}}
+
+                <h4 id="txtValidate" class="alert d-none">
+                    
+                </h4>
+
+                <div class="form-sub-w3">
+                    <input id="inputName" type="text" name="user_name" placeholder="Username " {{#if user_name}}
+                        value="{{user_name}}" {{/if}} required="" autofocus />
+                    <div class="icon-w3">
+                        <i class="fa fa-user" aria-hidden="true"></i>
+                    </div>
+                </div>
+                <div class="form-sub-w3">
+                    <input id="inputPassword" type="password" name="password" {{#if user_name}} value="{{password}}"
+                        {{/if}} placeholder="Password" required="" />
+                    <div class="icon-w3">
+                        <i class="fa fa-unlock-alt" aria-hidden="true"></i>
+                    </div>
+                </div>
+                <div class="form-sub-w3">
+                    <input name="remmember_pass" type="checkbox" class="checked" checked>
+                    <label class="p-bottom-w3ls">Nhớ mật khẩu<label>
+                </div>
+                <hr class="mt1">
+                <p class="p-bottom-w3ls">Quên mật khẩu?<a href="javascript:;">&nbsp;Bấm vào đây</a></p>
+                <div class="clear"></div>
+                <div class="submit-w3l">
+                    <input id="btnSignIn" type="submit" value="Xác nhận">
+                </div>
+            </form>
+            <div class="social w3layouts">
+                <div class="header-social wthree">
+                    <div class="line-mid">
+                        <h4>hoặc</h4>
+                    </div>
+                    <ul>
+                        <li>
+                            <a class="f" href="/login/auth/facebook">
+                                <span class="fa fa-facebook" aria-hidden="true"></span>
+                                Đăng nhập với Facebook
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="clear"></div>
+            </div>
+            <hr>
+            <p class="p-bottom-w3ls1">Bạn chưa có tài khoản?<a class href="#">&nbsp;Đăng ký</a></p>
+        </div>
+
+        <!--//form-ends-here-->
+    </div>
+</div>
