@@ -10,9 +10,7 @@ router.get('/change', async function (req, res) {
         res.redirect('/');
     }
     else {
-        res.render('viewPass/change', {
-            layout: false
-        });
+        res.render('viewPass/change');
     }
 })
 router.post('/change', async function (req, res) {
@@ -25,8 +23,7 @@ router.post('/change', async function (req, res) {
     var rs = bcrypt.compareSync(oldpass, us.password);
     if (rs === false) {
         return res.render('viewPass/change', {
-            err: 'Old password Invalid.',
-            layout: false
+            err: 'Old password Invalid.'
         })
     }
     us.password = bcrypt.hashSync(firmpass, 10);
@@ -34,9 +31,7 @@ router.post('/change', async function (req, res) {
     res.redirect('/');
 })
 router.get('/forgot', function (req, res) {
-    res.render('viewPass/forgot', {
-        layout: false
-    });
+    res.render('viewPass/forgot');
 });
 var generateToken = (user, secretSignature, tokenLife) => {
     return new Promise((resolve, reject) => {
@@ -79,9 +74,8 @@ router.post('/forgot', async function (req, res) {
     const user = await userModel.singleByUserName(req.body.username);
     const us = user[0];
     if (!us) {
-        res.render('viewPass/forgot.hbs', {
-            layout: false,
-            err: 'Username is not valid.'
+        res.render('viewPass/forgot.hbs', {      
+            err: 'Username does not exist.'
         });
     }
     else {
@@ -125,17 +119,14 @@ router.post('/forgot', async function (req, res) {
         }
         transporter.sendMail(mainOptions, function (err, info) {
             if (err) {
-                res.render('viewPass/forgot.hbs', {
-                    layout: false,
+                res.render('viewPass/forgot.hbs', {                
                     err
                 });
             } else {
                 us.accessToken = accessToken;
                 userModel.patch(us);
                 console.log('Message sent: ' + info.response);
-                res.render('viewPass/newpass', {
-                    layout: false
-                });
+                res.render('viewPass/newpass');
             }
         });
     }
@@ -146,13 +137,6 @@ router.post('/new', async function (req, res) {
     const newPass = req.body.password;
     const rePass = req.body.firmpassword;
     const token = req.body.otp;
-    if (newPass != rePass) {
-        res.render('viewPass/newpass.hbs', {
-            layout: false,
-            err: 'Password does not match.'
-        });
-    }
-    else {
         try {
             const decoded = await verifyToken(token, accessTokenSecret);
             const user = await userModel.singleByID(decoded.data.id);
@@ -164,16 +148,13 @@ router.post('/new', async function (req, res) {
             }
             else{
                 res.render('viewPass/newpass.hbs', {
-                    layout: false,
                     err: 'OTP invalid'
                 });
             }
         } catch (error) {
-            res.render('viewPass/newpass.hbs', {
-                layout: false,
+            res.render('viewPass/newpass.hbs', {          
                 err: 'OTP invalid or expired.'
             });
         }
-    }
 });
 module.exports = router;
