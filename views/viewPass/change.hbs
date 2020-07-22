@@ -1,91 +1,95 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
-        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-    <link rel="stylesheet" href="/public/css/login.css">
-    <title>Change Password</title>
-</head>
-
-<body>
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
-                <div class="card card-signin my-5">
-                    <div class="card-body">
-                        <h5 class="card-title text-center">Update Password</h5>
-
-                        {{#if err}}
-                        <div class="alert alert-danger pb-0 text-danger font-weight-bold">
-                            <p>{{err}}</p>
-                        </div>
-                        {{/if}}
-                        <form action="" class="form-signin" method="POST" onsubmit="return kiemTra();">
-                            <label for="oldPassword">Old password</label>
-                            <div class="form-label-group">
-                                <input type="password" id="oldPassword" name="old_password" class="form-control"
-                                    placeholder="Old password" autofocus required>
-                            </div>
-                            <label for="inputPassword">New Password</label>
-                            <div class="form-label-group">
-                                <input type="password" id="inputPassword" name="new_password" class="form-control"
-                                    placeholder="Password" required>
-                                <i id="errPass"></i>
-                            </div>
-                            <label for="inputFirmPassword">Confirm Password</label>
-                            <div class="form-label-group">
-                                <input type="password" id="inputFirmPassword" name="firm_password" class="form-control"
-                                    placeholder="Password" required>
-                                <i id="errRePass"></i>
-                            </div>
-                            <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit"
-                                formaction="/pass/change">
-                                Update
-                            </button>
-                            <hr class="my-4">
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</body>
-
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
-    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-    crossorigin="anonymous"></script>
-
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
-    integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
-    crossorigin="anonymous"></script>
-
-<script src="https://use.fontawesome.com/c4229e64ed.js"></script>
+{{#section 'css'}}
+<link rel="stylesheet" href="/public//css//_login.css">
+{{/section}}
+{{#section 'js'}}
 <script type="text/javascript">
-    function kiemTra() {
-        var pass = document.getElementById("inputPassword");
-        var err = document.getElementById("errPass");
-        var len = pass.value;
-        if (len.length < 6) {
-            err.innerHTML = "Mật khẩu tối  thiểu phải có 6 kí tự";
-            pass.focus();
-            return false;
-        } else
-            err.innerHTML = "";
-        var repass = document.getElementById("inputFirmPassword");
-        var err = document.getElementById("errRePass");
-        if (len != repass.value) {
-            err.innerHTML = "Mật khẩu không khớp";
-            repass.focus();
-            return false;
+    $('#frmChangePass').submit(function (e) {
+        e.preventDefault();
+        if (validate() == 1) {
+
+            // remove all error before 
+            $('#txtValidate').empty();
+            // add error text
+            let error = $("<p></p>").append("<i class='fa fa-exclamation-triangle' aria-hidden='true'>&nbsp;</i>Mật khẩu mới không khớp !");
+            $('#txtValidate').append(error);
+            if ($('#txtValidate').hasClass('d-none'))
+                $('#txtValidate').removeClass('d-none')
         }
-        else
-            err.innerHTML = "";
-        return true;
+        else if (validate() == 2) {
+            // remove all error before 
+            $('#txtValidate').empty();
+            // add error text
+            let error = $("<p></p>").append("<i class='fa fa-exclamation-triangle' aria-hidden='true'>&nbsp;</i>Mật khẩu phải có ít nhất 6 kí tự !");
+            $('#txtValidate').append(error);
+            if ($('#txtValidate').hasClass('d-none'))
+                $('#txtValidate').removeClass('d-none')
+        }
+        else {
+            if ($('#txtValidate').hasClass('d-none') == false)
+                $('#txtValidate').addClass('d-none')
+            $('#frmChangePass').off('submit').submit();
+        }
+    });
+    function validate() {
+        let newpass = $('#inputPassword').val();
+        let repass = $('#inputFirmPassword').val();
+        if (newpass != repass)
+            return 1;
+        if (newpass.length < 6) {
+            return 2;
+        }
     }
 </script>
+{{/section}}
 
-</html>
+<div class="demo-1">
+    <div class="main-agileits">
+        <!--form-stars-here-->
+        <div class="form-w3-agile">
+            <h2>Cập nhật mật khẩu</h2>
+
+            {{#if err}}
+            <h3 class="alert">
+                <p>
+                    <i class='fa fa-exclamation-triangle' aria-hidden='true'>&nbsp;</i>
+                    {{err}}
+                <p>
+            </h3>
+            {{/if}}
+            <h4 id="txtValidate" class="alert d-none">
+
+            </h4>
+            <form id="frmChangePass" action="" method="POST" novalidate>
+                <label for="oldPassword" style="color: white;">Mật khẩu cũ</label>
+                <div class="form-sub-w3">
+                    <input type="password" id="oldPassword" name="old_password"
+                        placeholder="Old password" autofocus required="">
+                    <div class="icon-w3">
+                        <i class="fa fa-unlock-alt" aria-hidden="true"></i>
+                    </div>
+                </div>
+                <label for="inputPassword" style="color: white;">Mật khẩu mới</label>
+                <div class="form-sub-w3">
+                    <input type="password" id="inputPassword" name="new_password"
+                        placeholder="Password" required="">
+                    <div class="icon-w3">
+                        <i class="fa fa-unlock-alt" aria-hidden="true"></i>
+                    </div>
+                </div>
+                <label for="inputFirmPassword" style="color: white;">Xác nhận mật khẩu</label>
+                <div class="form-sub-w3">
+                    <input type="password" id="inputFirmPassword" name="firm_password"
+                        placeholder="Password" require="">
+                    <div class="icon-w3">
+                        <i class="fa fa-unlock-alt" aria-hidden="true"></i>
+                    </div>
+                </div>
+                <hr class="my-4">
+                <div class="submit-w3l">
+                    <input id="btnChangePass" type="submit" value="Xác nhận" formaction="/pass/change">
+                </div>             
+            </form>
+        </div>
+        <!--//form-ends-here-->
+    </div>
+</div>
