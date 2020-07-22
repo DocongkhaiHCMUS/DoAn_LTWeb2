@@ -35,8 +35,10 @@ require('./middlewares/passport_FB.mdw')(app);
 
 //set link home
 app.get('/', function (req, res) {
+    
     if (!req.session.athUser)
-        res.render('home.hbs');
+        res.render('home.hbs'); 
+
     else if (req.session.athUser.permission == 2)
     {
         res.render('home.hbs', {
