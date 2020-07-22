@@ -1,0 +1,100 @@
+{{#section 'css'}}
+<link rel="stylesheet" href="/public//css//_login.css">
+{{/section}}
+{{#section 'js'}}
+<script type="text/javascript">
+    $('#frmNewPass').submit(function (e) {
+        e.preventDefault();
+        if (validate() == 1) {
+
+            // remove all error before 
+            $('#txtValidate').empty();
+            // add error text
+            let error = $("<p></p>").append("<i class='fa fa-exclamation-triangle' aria-hidden='true'>&nbsp;</i>Mật khẩu mới không khớp !");
+            $('#txtValidate').append(error);
+            if ($('#txtValidate').hasClass('d-none'))
+                $('#txtValidate').removeClass('d-none')
+        }
+        else if (validate() == 2) {
+            // remove all error before 
+            $('#txtValidate').empty();
+            // add error text
+            let error = $("<p></p>").append("<i class='fa fa-exclamation-triangle' aria-hidden='true'>&nbsp;</i>Mật khẩu phải có ít nhất 6 kí tự !");
+            $('#txtValidate').append(error);
+            if ($('#txtValidate').hasClass('d-none'))
+                $('#txtValidate').removeClass('d-none')
+        }
+        else if (validate() == 3) {
+            // remove all error before 
+            $('#txtValidate').empty();
+            // add error text
+            let error = $("<p></p>").append("<i class='fa fa-exclamation-triangle' aria-hidden='true'>&nbsp;</i>Vui lòng nhập đầy đủ các trường !");
+            $('#txtValidate').append(error);
+            if ($('#txtValidate').hasClass('d-none'))
+                $('#txtValidate').removeClass('d-none')
+        }
+        else {
+            if ($('#txtValidate').hasClass('d-none') == false)
+                $('#txtValidate').addClass('d-none')
+            $('#frmNewPass').off('submit').submit();
+        }
+    });
+    function validate() {
+        let newpass = $('#inputPass').val();
+        let repass = $('#inputFirmPass').val();
+        let otp = $('#inputOTP').val();
+        if (newpass != repass)
+            return 1;
+        if (newpass.length < 6) {
+            return 2;
+        }
+        if (!newpass || !repass || !otp) {
+            return 3;
+        }
+    }
+</script>
+{{/section}}
+<div class="demo-1">
+    <div class="main-agileits">
+        <!--form-stars-here-->
+        <div class="form-w3-agile">
+            <h2>Reset Password</h2>
+            {{#if err}}
+            <h3 class="alert">
+                <p>
+                    <i class='fa fa-exclamation-triangle' aria-hidden='true'>&nbsp;</i>
+                    {{err}}
+                <p>
+            </h3>
+            {{/if}}
+            <h4 id="txtValidate" class="alert d-none"></h4>
+            <form id="frmNewPass" action="/pass/new" method="POST" novalidate>
+                <div class="form-sub-w3">
+                    <input type="password" id="inputPass" name="password" placeholder="Mật khẩu mới" autofocus
+                        required="">
+                    <div class="icon-w3">
+                        <i class="fa fa-unlock-alt" aria-hidden="true"></i>
+                    </div>
+                </div>
+                <div class="form-sub-w3">
+                    <input type="password" id="inputFirmPass" name="firmpassword" placeholder="Nhập lại mật khẩu"
+                        required="">
+                    <div class="icon-w3">
+                        <i class="fa fa-unlock-alt" aria-hidden="true"></i>
+                    </div>
+                </div>
+                <div class="form-sub-w3">
+                    <input type="text" id="inputOTP" name="otp" placeholder="OTP" required="">
+                    <div class="icon-w3">
+                        <i class="fa fa-key" aria-hidden="true"></i>
+                    </div>
+                </div>
+                <hr class="my-4">
+                <div class="submit-w3l">
+                    <input id="btnSave" type="submit" value="Xác nhận" formaction="/pass/new">
+                </div>
+            </form>
+        </div>
+        <!--//form-ends-here-->
+    </div>
+</div>

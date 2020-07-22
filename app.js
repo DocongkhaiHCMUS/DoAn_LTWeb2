@@ -9,6 +9,8 @@ app.use(express.urlencoded({
     extended: true
 }));
 
+//read file .env
+require('dotenv').config();
 //set static folder public
 app.use('/public', express.static('public'));
 
@@ -75,7 +77,7 @@ app.use('/category', require('./routers/category.route'));
 app.use('/tag', require('./routers/tag.route'));
 
 app.use('/user', require('./routers/user.route'));
-
+app.use('/pass', require('./routers/password.route'));
 
 
 //error handling
