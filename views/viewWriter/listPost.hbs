@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    
+    <title>List Post</title>
+</head>
+<body>
+    {{#section 'css'}}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.9/css/fileinput.min.css">
+{{/section}}
+
+  {{#if this.empty}}
+    <h1>Không có dữ liệu.</h1>
+  </div>
+  {{else}}
+  {{#each this.post}}
+      <div class="card" style="width: 18rem;">
+  <img src="..." class="card-img-top" alt="...">
+  <div class="card-body">
+    <h5 class="card-title">{{title}}</h5>
+    <p class="card-text">{{tiny_des}}</p>
+    <a href="#" class="btn btn-primary">Xem bài viết</a>
+    <a href="writer/modifiedpost/{{id}}" class="btn btn-secondary">Chỉnh sửa</a>
+  </div>
+</div>
+  {{/each}}
+  {{/if}}
+
+</body>

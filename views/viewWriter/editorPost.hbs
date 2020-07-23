@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.9/css/fileinput.min.css">
+    <script src="https://cdn.tiny.cloud/1/zbfdt7ar01pn6lmkt1zlp38650brpnde0vbcnfdd78p3xk2x/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.9/js/fileinput.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.9/themes/fa/theme.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.9/js/locales/vi.min.js"></script>
+    <script>
+      $('#upload').fileinput({
+        theme: 'fa',
+        showCaption: true,
+        dropZoneEnabled: true,
+        allowedFileExtensions: ['png', 'jpg', 'gif'],
+        language: 'vi'
+      });
+    </script>
+    <script>
+      tinymce.init({
+        selector: '#txtFullDes',
+        height: 390,
+        plugins: 'paste image link autolink lists table media',
+        menubar: false,
+        toolbar: [
+          'undo redo | bold italic underline strikethrough | numlist bullist | alignleft aligncenter alignright | forecolor backcolor | table link image media',
+        ],
+      });
+    </script>
+
+
+    <!--XU LY REGEX-->
+    <script>
+    let frm = document.getElementById('frmEditor')
+    frm.addEventListener('submit', (e)=>{
+        e.preventDefault();
+        if (validate() == 1)
+            $('#txtValidate').text("Xin nhập tiêu đề bài viết !");
+        else if (validate() == 2)
+            $('#txtValidate').text("Xin nhập mô tả bài viết !");
+        else (validate() == 3)
+            $('#txtValidate').text("Xin nhập nội dung bài viết !");
+    });
+
+    function validate() {
+        let Title = document.getElementById('txtTitle')
+        let Tiny_des = document.getElementById('txtTiny_des')
+        let Full_des = document.getElementById('txtFull_des')
+        
+        if (Title.value == null||Title.value ==="")
+            return 1;
+        if (Tiny_des.value==null || Tiny_des.value==="")
+            return 2;
+        if (Full_des==null || Full_des.value==="")
+            return 3;
+        return 0;
+    }
+</script>
+    <title>Editor</title>
+</head>
+
+
+<body>
+<h4 id="txtValidate"></h4>
+<form method="post" id="frmEditor" action="/writer/editor">
+  <div class="card">
+    <div class="card-header">
+       Editor
+    </div>
+    <div class="card-body">
+      <div class="form-group">
+        <label>Tiêu đề bài viết</label>
+        <input type="text" class="form-control" id="txtTitle" name="title" placeholder="Tiêu đề bài viết">
+      </div>
+      <div class="form-group">
+        <label>Mô tả bài viết</label>
+        <input type="text" class="form-control" id="txtTiny_des" name="tiny_des" placeholder="Mô tả bài viết">
+      </div>
+      <div class="form-group">
+        <label>Nội dung bài viết</label>
+        <textarea name="full_des" id="txtFullDes" class="form-control" cols="30" rows="10"></textarea>
+      </div>
+      
+    </div>
+    <div class="card-footer">
+      <button type="submit" class="btn btn-lg btn-success btn-block" >
+        <i class="fa fa-check" aria-hidden="true"></i>
+        Submit
+      </button>
+    </div>
+  </div>
+</form>
+</body>
+
+</html>
