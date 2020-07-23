@@ -10,7 +10,7 @@ app.use(express.urlencoded({
 }));
 
 //read file .env
-require('dotenv').config();
+// require('dotenv').config();
 //set static folder public
 app.use('/public', express.static('public'));
 
