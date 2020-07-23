@@ -126,8 +126,16 @@ module.exports = function (app) {
         let latestPost10 = [];
         let mostViewedPost = [];
         for (var item of list1) {
+
             let listPostTemp = listPost.filter(function (item1) {
-                return listIDCat1[item.id - 1].list.includes(item1.category);
+                let rs;
+                if (item.id < 8)
+                    rs = listIDCat1[item.id - 1].list.includes(item1.category);
+                else if (item.id == 8)
+                    rs = listIDCat1[14].list.includes(item1.category);
+                else if (item.id > 8)
+                    rs = listIDCat1[item.id - 2].list.includes(item1.category);
+                return rs;
             })
                 .sort(function (a, b) {
                     moment.locale('vi');
@@ -151,7 +159,14 @@ module.exports = function (app) {
                 });
 
             let listPostTemp1 = listPost.filter(function (item1) {
-                return listIDCat1[item.id - 1].list.includes(item1.category);
+                let rs;
+                if (item.id < 8)
+                    rs = listIDCat1[item.id - 1].list.includes(item1.category);
+                else if (item.id == 8)
+                    rs = listIDCat1[14].list.includes(item1.category);
+                else if (item.id > 8)
+                    rs = listIDCat1[item.id - 2].list.includes(item1.category);
+                return rs;
             })
                 .sort(function (a, b) {
                     return b.views - a.views;
@@ -167,7 +182,13 @@ module.exports = function (app) {
         // app.locals.latestPost = latestPost;
 
         mostViewedPost.map(function (item) {
-            item['listCat2'] = app.locals.listCat[item.id - 1].list;
+
+            if (item.id < 8)
+                item['listCat2'] = app.locals.listCat[item.id - 1].list;
+            else if (item.id == 8)
+                item['listCat2'] = app.locals.listCat[14].list;
+            else if (item.id > 8)
+                item['listCat2'] = app.locals.listCat[item.id - 2].list;
             item['listLatestPost'] = latestPost[item.id - 1].listPost;
             return item;
         });

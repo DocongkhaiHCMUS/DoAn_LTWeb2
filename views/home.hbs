@@ -20,13 +20,13 @@
 				</h3>
 				<ul class="article-meta">
 					<li>
-						<i class="fa fa-clock-o"></i>
+						<i class="fa fa-clock-o">&nbsp;</i>
 						{{publish_date}}
 					</li>
-					{{!-- <li>
-					<i class="fa fa-comments"></i>
-					33
-				</li> --}}
+					<li>
+						<i class="fa fa-eye">&nbsp;</i>
+						{{views}}
+					</li>
 				</ul>
 			</div>
 		</article>
@@ -79,7 +79,8 @@
 								<!-- ARTICLE -->
 								<article class="article">
 									<div class="article-img">
-										<img src="/public/img/img_post/{{folder_img}}/{{avatar}}.jpg" alt="">
+										<img class="img-responsive"
+											src="/public/img/img_post/{{folder_img}}/{{avatar}}.jpg" alt="">
 									</div>
 									<div class="article-body">
 										<ul class="article-info">
@@ -94,11 +95,11 @@
 										</h5>
 										<ul class="article-meta">
 											<li>
-												<i class="fa fa-clock-o"></i>
+												<i class="fa fa-clock-o">&nbsp;</i>
 												{{publish_date}}
 											</li>
 											<li>
-												<i class="fa fa-eye"></i>
+												<i class="fa fa-eye">&nbsp;</i>
 												{{views}}
 											</li>
 											{{!-- <li>
@@ -921,6 +922,107 @@
 					<!-- /section title -->
 
 					<div class="row">
+
+						<!-- Main Column -->
+						<div class="col-md-12 mostView">
+							<!-- section title -->
+							<div class="section-title">
+								{{!-- <h2 class="title">Xem Nhiều Nhất</h2> --}}
+								{{!-- <div id="" class="custom-owl-nav pull-right nav-carousel-2"></div> --}}
+							</div>
+							<!-- /section title -->
+
+							<!-- owl carousel 2 -->
+							<div id="" class="owl-carousel owl-theme owl-carousel-2">
+								{{#each listMostViewedPost}}
+								<!-- ARTICLE -->
+								<article class="article thumb-article">
+									<div class="article-img">
+										<img src="/public/img/img_post/{{folder_img}}/{{avatar}}.jpg" alt="">
+									</div>
+									<div class="article-body">
+										<ul class="article-info">
+											<li class="article-category"><a href="#">Đọc Nhiều</a></li>
+											<li class="article-type"><i class="fa fa-file-text"></i></li>
+										</ul>
+										<h3 class="article-title"><a href="#">{{title}}</a></h3>
+										<ul class="article-meta">
+											<li><i class="fa fa-clock-o">&nbsp;</i>{{publish_date}}</li>
+											<li><i class="fa fa-eye">&nbsp;</i>{{views}}</li>
+										</ul>
+										<p>
+											{{tiny_des}}
+										</p>
+									</div>
+								</article>
+								<!-- /ARTICLE -->
+
+								{{!-- <!-- ARTICLE -->
+								<article class="article thumb-article">
+									<div class="article-img">
+										<img src="/public/img/img-thumb-2.jpg" alt="">
+									</div>
+									<div class="article-body">
+										<ul class="article-info">
+											<li class="article-category"><a href="#">News</a></li>
+											<li class="article-type"><i class="fa fa-video-camera"></i></li>
+										</ul>
+										<h3 class="article-title"><a href="#">Duis urbanitas eam in, tempor
+												consequat.</a></h3>
+										<ul class="article-meta">
+											<li><i class="fa fa-clock-o"></i> January 31, 2017</li>
+											<li><i class="fa fa-comments"></i> 33</li>
+										</ul>
+									</div>
+								</article>
+								<!-- /ARTICLE -->
+
+								<!-- ARTICLE -->
+								<article class="article thumb-article">
+									<div class="article-img">
+										<img src="/public/img/img-thumb-3.jpg" alt="">
+									</div>
+									<div class="article-body">
+										<ul class="article-info">
+											<li class="article-category"><a href="#">News</a></li>
+											<li class="article-type"><i class="fa fa-video-camera"></i></li>
+										</ul>
+										<h3 class="article-title"><a href="#">Duis urbanitas eam in, tempor
+												consequat.</a></h3>
+										<ul class="article-meta">
+											<li><i class="fa fa-clock-o"></i> January 31, 2017</li>
+											<li><i class="fa fa-comments"></i> 33</li>
+										</ul>
+									</div>
+								</article>
+								<!-- /ARTICLE -->
+
+								<!-- ARTICLE -->
+								<article class="article thumb-article">
+									<div class="article-img">
+										<img src="/public/img/img-thumb-4.jpg" alt="">
+									</div>
+									<div class="article-body">
+										<ul class="article-info">
+											<li class="article-category"><a href="#">News</a></li>
+											<li class="article-type"><i class="fa fa-video-camera"></i></li>
+										</ul>
+										<h3 class="article-title"><a href="#">Duis urbanitas eam in, tempor
+												consequat.</a></h3>
+										<ul class="article-meta">
+											<li><i class="fa fa-clock-o"></i> January 31, 2017</li>
+											<li><i class="fa fa-comments"></i> 33</li>
+										</ul>
+									</div>
+								</article>
+								<!-- /ARTICLE --> --}}
+
+								{{/each}}
+							</div>
+							<!-- /owl carousel 2 -->
+						</div>
+						<!-- /Main Column -->
+
 						<div class="col-md-11">
 							<!-- ARTICLE -->
 							{{#each listLatestPost}}
@@ -938,8 +1040,8 @@
 									<h3 class="article-title"><a href="#">{{title}}</a>
 									</h3>
 									<ul class="article-meta">
-										<li><i class="fa fa-clock-o"></i>{{publish_date}}</li>
-										<li><i class="fa fa-eye"></i>{{views}}</li>
+										<li><i class="fa fa-clock-o">&nbsp;</i>{{publish_date}}</li>
+										<li><i class="fa fa-eye">&nbsp;</i>{{views}}</li>
 									</ul>
 									<p>
 										{{tiny_des}}
@@ -947,6 +1049,7 @@
 								</div>
 							</article>
 							{{/each}}
+							<a href="">Xem thêm &nbsp;<i class="fa fa-angle-double-right" aria-hidden="true"></i></a>
 							<!-- /ARTICLE -->
 
 							{{!-- <!-- ARTICLE -->
