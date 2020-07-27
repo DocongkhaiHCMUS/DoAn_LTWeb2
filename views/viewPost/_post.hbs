@@ -1,0 +1,519 @@
+<!-- SECTION -->
+<div class="section">
+    <!-- CONTAINER -->
+    <div class="container">
+        <!-- ROW -->
+        <div class="row">
+            <!-- Main Column -->
+            <div class="col-md-8 top-body">
+
+                <!-- breadcrumb -->
+                <ul class="article-breadcrumb">
+                    <li><a href="/">Trang Chủ</a></li>
+                    <li><a href="/category/cat1/{{post.category.id_cat1}}">{{post.category.name_cat1}}</a></li>
+                    <li><a href="/category/cat2/{{post.category.id_cat2}}">{{post.category.name_cat2}}</a></li>
+                    <li>{{post.title}}</li>
+                </ul>
+                <!-- /breadcrumb -->
+
+                <!-- ARTICLE POST -->
+                <article class="article article-post">
+                    {{!-- <div class="article-share">
+						<a href="#" class="facebook"><i class="fa fa-facebook"></i></a>
+						<a href="#" class="twitter"><i class="fa fa-twitter"></i></a>
+						<a href="#" class="google"><i class="fa fa-google-plus"></i></a>
+					</div> --}}
+                    <div class="article-main-img">
+                        <img src="/public/img/img_post/{{post.folder_img}}/{{post.avatar}}.jpg" alt="">
+                    </div>
+                    <div class="article-body">
+                        <ul class="article-info">
+                            <li class="article-category"><a
+                                    href="/category/cat1/{{post.category.id_cat1}}">{{post.category.name_cat1}}</a></li>
+                            <li class="article-category"><a
+                                    href="/category/cat2/{{post.category.id_cat2}}">{{post.category.name_cat2}}</a></li>
+                            <li class="article-type"><i class="fa fa-file-text"></i></li>
+                        </ul>
+                        <h1 class="article-title">{{post.title}}</h1>
+                        <ul class="article-meta">
+                            <li><i class="fa fa-clock-o">&nbsp;</i>{{parseTime post.publish_date}}</li>
+                            <li><i class="fa fa-eye">&nbsp;</i>{{post.views}}</li>
+                        </ul>
+                        <p class="post_tiny_des">
+                            "&nbsp;{{post.tiny_des}}&nbsp;"
+                        </p>
+                        {{#each post.full_des}}
+                        {{{text}}}
+                        {{/each}}
+                    </div>
+                </article>
+                <!-- /ARTICLE POST -->
+
+                <!-- widget tags -->
+                <div class="widget-tags">
+                    <h4>Từ khóa : </h4>
+                    <ul>
+                        {{#each post.listTag}}
+                        <li><a href="/tag/{{tag.id}}">{{tag.name}}</a></li>
+                        {{/each}}
+                    </ul>
+                </div>
+                <!-- /widget tags -->
+
+                <!-- article comments -->
+                <div class="article-comments">
+                    <div class="section-title">
+                        <h2 class="title">Bình Luận</h2>
+                    </div>
+
+
+                    {{#if post.listComment}}
+                    {{#each post.listComment}}
+                    <!-- comment -->
+                    <div class="media">
+                        <div class="media-left">
+                            {{#if avatar}}
+                            <img src="/public/img/img_avatar/{{avatar}}" alt="">
+                            {{else}}
+                            <img src="/public/img/img_avatar/default_user.png" alt="">
+                            {{/if}}
+                        </div>
+                        <div class="media-body">
+                            <div class="media-heading">
+                                <h5>{{display_name}}
+                                    <span class="reply-time">
+                                        <i class="fa fa-clock-o">&nbsp;</i>{{parseTime time_comment}}
+                                    </span>
+                                </h5>
+                            </div>
+                            <p>
+                                {{comment}}
+                            </p>
+                            {{!-- <a href="#" class="reply-btn">Reply</a> --}}
+                        </div>
+                    </div>
+                    <!-- /comment -->
+                    {{/each}}
+                    {{else}}
+                    <h3>Chưa có bình luận ! Mời độc giả bình luận cho bài viết.</h3>
+                    {{/if}}
+
+                    <!-- comment -->
+                    {{!-- <div class="media">
+                        <div class="media-left">
+                            <img src="/public/img/av-1.jpg" alt="">
+                        </div>
+                        <div class="media-body">
+                            <div class="media-heading">
+                                <h5>John Doe <span class="reply-time">April 04, 2017 At 9:30 AM</span></h5>
+                            </div>
+                            <p>Eu usu aliquip vivendo. Impedit suscipit invidunt te vel, sale periculis id mea. Ne nec
+                                atqui paulo,</p>
+                            <a href="#" class="reply-btn">Reply</a>
+                        </div>
+
+                        <!-- comment -->
+                        <div class="media">
+                            <div class="media-left">
+                                <img src="/public/img/av-2.jpg" alt="">
+                            </div>
+                            <div class="media-body">
+                                <div class="media-heading">
+                                    <h5>John Doe <span class="reply-time">April 04, 2017 At 9:30 AM</span></h5>
+                                </div>
+                                <p>Eu usu aliquip vivendo. Impedit suscipit invidunt te vel, sale periculis id mea. Ne
+                                    nec atqui paulo,</p>
+                                <a href="#" class="reply-btn">Reply</a>
+                            </div>
+
+                            <!-- comment -->
+                            <div class="media">
+                                <div class="media-left">
+                                    <img src="/public/img/av-1.jpg" alt="">
+                                </div>
+                                <div class="media-body">
+                                    <div class="media-heading">
+                                        <h5>John Doe <span class="reply-time">April 04, 2017 At 9:30 AM</span></h5>
+                                    </div>
+                                    <p>Eu usu aliquip vivendo. Impedit suscipit invidunt te vel, sale periculis id mea.
+                                        Ne nec atqui paulo,</p>
+                                    <a href="#" class="reply-btn">Reply</a>
+                                </div>
+                            </div>
+                            <!-- /comment -->
+                        </div>
+                        <!-- /comment -->
+                    </div> --}}
+                    <!-- /comment -->
+
+                    <!-- comment -->
+                    {{!-- <div class="media">
+                        <div class="media-left">
+                            <img src="/public/img/av-2.jpg" alt="">
+                        </div>
+                        <div class="media-body">
+                            <div class="media-heading">
+                                <h5>John Doe <span class="reply-time">April 04, 2017 At 9:30 AM</span></h5>
+                            </div>
+                            <p>Eu usu aliquip vivendo. Impedit suscipit invidunt te vel, sale periculis id mea. Ne nec
+                                atqui paulo,</p>
+                            <a href="#" class="reply-btn">Reply</a>
+                        </div>
+                    </div> --}}
+                    <!-- /comment -->
+                </div>
+                <!-- /article comments -->
+
+                <!-- reply form -->
+                <div class="article-reply-form">
+                    <div class="section-title">
+                        <h2 class="title">Đăng bình luận</h2>
+                    </div>
+
+                    <form action="/comment" method="POST">
+                        {{#if lcIsAuthenticated}}
+                        <textarea class="input" name="txtComment" placeholder="Bình Luận"></textarea>
+                        <input type="hidden" name="txtUser" value="{{lcUser.id}}">
+                        <input type="hidden" name="txtPost" value="{{post.id}}">
+                        <button type="submit" class="input-btn">Gửi Bình luận</button>
+                        {{else}}
+                        <textarea class="input" placeholder="Bạn chưa đăng nhập ! Hãy đăng nhập để bình luận"
+                            readonly></textarea>
+                        <div><a class="input-btn" href="/login">Đăng nhập</a> </div>
+                        {{/if}}
+                    </form>
+                </div>
+                <!-- /reply form -->
+            </div>
+            <!-- /Main Column -->
+
+            <!-- Aside Column -->
+            <div class="col-md-4">
+                <div class="scroll">
+                    <div class="side-bar">
+                        <!-- article widget -->
+                        <div class="widget">
+                            <div class="widget-title">
+                                <h2 class="title">Tin Nổi Bật</h2>
+                            </div>
+
+                            <!-- owl carousel 3 -->
+                            <div id="owl-carousel-3" class="owl-carousel owl-theme center-owl-nav">
+
+                                {{#each highlightPost}}
+                                <article class="article">
+                                    <div class="article-img">
+                                        <a href="/post/{{id}}">
+                                            <img src="/public/img/img_post/{{folder_img}}/{{avatar}}.jpg" alt="">
+                                        </a>
+                                    </div>
+                                    <div class="article-body">
+                                        <h4 class="article-title"><a href="/post/{{id}}">{{title}}</a></h4>
+                                        <ul class="article-meta">
+                                            <li><i class="fa fa-clock-o">&nbsp;</i>{{parseTime publish_date}}
+                                            </li>
+                                            <li><i class="fa fa-eye">&nbsp;</i>{{views}}</li>
+                                        </ul>
+                                        <p>
+                                            {{!-- {{tiny_des}} --}}
+                                        </p>
+                                    </div>
+                                </article>
+                                {{/each}}
+                                <!-- ARTICLE -->
+                                {{!-- <article class="article">
+                                    <div class="article-img">
+                                        <a href="#">
+                                            <img src="/public/img/img-md-3.jpg" alt="">
+                                        </a>
+                                        <ul class="article-info">
+                                            <li class="article-type"><i class="fa fa-file-text"></i></li>
+                                        </ul>
+                                    </div>
+                                    <div class="article-body">
+                                        <h4 class="article-title"><a href="#">Duis urbanitas eam in, tempor
+                                                consequat.</a>
+                                        </h4>
+                                        <ul class="article-meta">
+                                            <li><i class="fa fa-clock-o"></i> January 31, 2017</li>
+                                            <li><i class="fa fa-comments"></i> 33</li>
+                                        </ul>
+                                    </div>
+                                </article>
+                                <!-- /ARTICLE -->
+
+                                <!-- ARTICLE -->
+                                <article class="article">
+                                    <div class="article-img">
+                                        <a href="#">
+                                            <img src="/public/img/img-md-4.jpg" alt="">
+                                        </a>
+                                        <ul class="article-info">
+                                            <li class="article-type"><i class="fa fa-file-text"></i></li>
+                                        </ul>
+                                    </div>
+                                    <div class="article-body">
+                                        <h4 class="article-title"><a href="#">Duis urbanitas eam in, tempor
+                                                consequat.</a>
+                                        </h4>
+                                        <ul class="article-meta">
+                                            <li><i class="fa fa-clock-o"></i> January 31, 2017</li>
+                                            <li><i class="fa fa-comments"></i> 33</li>
+                                        </ul>
+                                    </div>
+                                </article> --}}
+                                <!-- /ARTICLE -->
+                            </div>
+                            <!-- /owl carousel 3 -->
+                            <div class="widget-title">
+                                <h2 class="title">Tin Mới Nhất</h2>
+                            </div>
+                            {{#each latestPost10}}
+                            {{#each listPost}}
+                            <article class="article widget-article">
+                                <div class="article-img">
+                                    <a href="/post/{{id}}">
+                                        <img src="/public/img/img_post/{{folder_img}}/{{avatar}}.jpg" alt="">
+                                    </a>
+                                </div>
+                                <div class="article-body">
+                                    <h4 class="article-title"><a href="/post/{{id}}">{{title}}</a></h4>
+                                    <ul class="article-meta">
+                                        <li><i class="fa fa-clock-o">&nbsp;</i>{{parseTime publish_date}}
+                                        </li>
+                                        <li><i class="fa fa-eye">&nbsp;</i>{{views}}</li>
+                                    </ul>
+                                </div>
+                            </article>
+                            {{/each}}
+                            {{/each}}
+                            <!-- ARTICLE -->
+                            {{!-- <article class="article widget-article">
+                                <div class="article-img">
+                                    <a href="#">
+                                        <img src="/public/img/img-widget-1.jpg" alt="">
+                                    </a>
+                                </div>
+                                <div class="article-body">
+                                    <h4 class="article-title"><a href="#">Duis urbanitas eam in, tempor consequat.</a>
+                                    </h4>
+                                    <ul class="article-meta">
+                                        <li><i class="fa fa-clock-o"></i> January 31, 2017</li>
+                                        <li><i class="fa fa-comments"></i> 33</li>
+                                    </ul>
+                                </div>
+                            </article>
+                            <!-- /ARTICLE -->
+
+                            <!-- ARTICLE -->
+                            <article class="article widget-article">
+                                <div class="article-img">
+                                    <a href="#">
+                                        <img src="/public/img/img-widget-2.jpg" alt="">
+                                    </a>
+                                </div>
+                                <div class="article-body">
+                                    <h4 class="article-title"><a href="#">Duis urbanitas eam in, tempor consequat.</a>
+                                    </h4>
+                                    <ul class="article-meta">
+                                        <li><i class="fa fa-clock-o"></i> January 31, 2017</li>
+                                        <li><i class="fa fa-comments"></i> 33</li>
+                                    </ul>
+                                </div>
+                            </article>
+                            <!-- /ARTICLE -->
+
+                            <!-- ARTICLE -->
+                            <article class="article widget-article">
+                                <div class="article-img">
+                                    <a href="#">
+                                        <img src="/public/img/img-widget-3.jpg" alt="">
+                                    </a>
+                                </div>
+                                <div class="article-body">
+                                    <h4 class="article-title"><a href="#">Duis urbanitas eam in, tempor consequat.</a>
+                                    </h4>
+                                    <ul class="article-meta">
+                                        <li><i class="fa fa-clock-o"></i> January 31, 2017</li>
+                                        <li><i class="fa fa-comments"></i> 33</li>
+                                    </ul>
+                                </div>
+                            </article> --}}
+                            <!-- /ARTICLE -->
+                        </div>
+                        <!-- /article widget -->
+
+                        <!-- article widget -->
+                        {{!-- <div class="widget">
+                        <div class="widget-title">
+                            <h2 class="title">Featured Posts</h2>
+                        </div>
+
+                        <!-- owl carousel 4 -->
+                        <div id="owl-carousel-4" class="owl-carousel owl-theme">
+                            <!-- ARTICLE -->
+                            <article class="article thumb-article">
+                                <div class="article-img">
+                                    <img src="/public/img/img-thumb-1.jpg" alt="">
+                                </div>
+                                <div class="article-body">
+                                    <ul class="article-info">
+                                        <li class="article-category"><a href="#">News</a></li>
+                                        <li class="article-type"><i class="fa fa-video-camera"></i></li>
+                                    </ul>
+                                    <h3 class="article-title"><a href="#">Duis urbanitas eam in, tempor consequat.</a>
+                                    </h3>
+                                    <ul class="article-meta">
+                                        <li><i class="fa fa-clock-o"></i> January 31, 2017</li>
+                                        <li><i class="fa fa-comments"></i> 33</li>
+                                    </ul>
+                                </div>
+                            </article>
+                            <!-- /ARTICLE -->
+
+                            <!-- ARTICLE -->
+                            <article class="article thumb-article">
+                                <div class="article-img">
+                                    <img src="/public/img/img-thumb-2.jpg" alt="">
+                                </div>
+                                <div class="article-body">
+                                    <ul class="article-info">
+                                        <li class="article-category"><a href="#">News</a></li>
+                                        <li class="article-type"><i class="fa fa-video-camera"></i></li>
+                                    </ul>
+                                    <h3 class="article-title"><a href="#">Duis urbanitas eam in, tempor consequat.</a>
+                                    </h3>
+                                    <ul class="article-meta">
+                                        <li><i class="fa fa-clock-o"></i> January 31, 2017</li>
+                                        <li><i class="fa fa-comments"></i> 33</li>
+                                    </ul>
+                                </div>
+                            </article>
+                            <!-- /ARTICLE -->
+                        </div>
+                        <!-- /owl carousel 4 -->
+                    </div> --}}
+                        <!-- /article widget -->
+                    </div>
+                </div>
+            </div>
+            <!-- /Aside Column -->
+        </div>
+        <!-- /ROW -->
+    </div>
+    <!-- /CONTAINER -->
+</div>
+<!-- /SECTION -->
+
+<!-- AD SECTION -->
+{{!-- <div class="visible-lg visible-md">
+    <img class="center-block" src="/public/img/ad-3.jpg" alt="">
+</div> --}}
+<!-- /AD SECTION -->
+
+<!-- SECTION -->
+<div class="section">
+    <!-- CONTAINER -->
+    <div class="container">
+        <!-- ROW -->
+        <div class="row">
+            <!-- Main Column -->
+            <div class="col-md-12">
+                <!-- section title -->
+                <div class="section-title">
+                    <h2 class="title">Tin Liên Quan</h2>
+                    <div id="nav-carousel-2" class="custom-owl-nav pull-right"></div>
+                </div>
+                <!-- /section title -->
+
+                <!-- ARTICLE -->
+                <div id="owl-carousel-5" class="owl-carousel owl-theme">
+
+                    <!-- ARTICLE -->
+                    {{#each relPost}}
+                    <article class="article">
+                        <div class="article-img">
+                            <a href="/post/{{relPost.id}}">
+                                <img src="/public/img/img_post/{{relPost.folder_img}}/{{relPost.avatar}}.jpg" alt="">
+                            </a>
+                        </div>
+                        <div class="article-body">
+                            <h4 class="article-title"><a href="/post/{{relPost.id}}">{{relPost.title}}</a></h4>
+                            <ul class="article-meta">
+                                <li><i class="fa fa-clock-o">&nbsp;</i>{{parseTime relPost.publish_date}}</li>
+                                <li><i class="fa fa-eye">&nbsp;</i>{{relPost.views}}</li>
+                            </ul>
+                            <p>
+                                {{relPost.tiny_des}}
+                            </p>
+                        </div>
+                    </article>
+                    {{/each}}
+                    <!-- /ARTICLE -->
+
+                    <!-- ARTICLE -->
+                    {{!-- <article class="article">
+                        <div class="article-img">
+                            <a href="#">
+                                <img src="/public/img/img-md-2.jpg" alt="">
+                            </a>
+                        </div>
+                        <div class="article-body">
+                            <h4 class="article-title"><a href="#"></a></h4>
+                            <ul class="article-meta">
+                                <li><i class="fa fa-clock-o">&nbsp;</i></li>
+                                <li><i class="fa fa-eye">&nbsp;</i></li>
+                            </ul>
+                        </div>
+                    </article> --}}
+                    <!-- /ARTICLE -->
+
+                    <!-- ARTICLE -->
+                    {{!-- <article class="article">
+                        <div class="article-img">
+                            <a href="#">
+                                <img src="/public/img/img-md-3.jpg" alt="">
+                            </a>
+                            <ul class="article-info">
+                                <li class="article-type"><i class="fa fa-file-text"></i></li>
+                            </ul>
+                        </div>
+                        <div class="article-body">
+                            <h4 class="article-title"><a href="#">Duis urbanitas eam in, tempor consequat.</a></h4>
+                            <ul class="article-meta">
+                                <li><i class="fa fa-clock-o"></i> January 31, 2017</li>
+                                <li><i class="fa fa-comments"></i> 33</li>
+                            </ul>
+                        </div>
+                    </article> --}}
+                    <!-- /ARTICLE -->
+
+                    <!-- ARTICLE -->
+                    {{!-- <article class="article">
+                        <div class="article-img">
+                            <a href="#">
+                                <img src="/public/img/img-md-4.jpg" alt="">
+                            </a>
+                            <ul class="article-info">
+                                <li class="article-type"><i class="fa fa-file-text"></i></li>
+                            </ul>
+                        </div>
+                        <div class="article-body">
+                            <h4 class="article-title"><a href="#">Duis urbanitas eam in, tempor consequat.</a></h4>
+                            <ul class="article-meta">
+                                <li><i class="fa fa-clock-o"></i> January 31, 2017</li>
+                                <li><i class="fa fa-comments"></i> 33</li>
+                            </ul>
+                        </div>
+                    </article> --}}
+                    <!-- /ARTICLE -->
+                </div>
+                <!-- /row -->
+            </div>
+            <!-- /Main Column -->
+        </div>
+        <!-- /ROW -->
+    </div>
+    <!-- /CONTAINER -->
+</div>
+<!-- /SECTION -->

@@ -9,11 +9,15 @@
 			</div>
 			<div class="article-body">
 				<ul class="article-info">
-					<li class="article-category"><a href="#">Nổi bật</a></li>
+					<li class="article-category"><a href="/category/cat1/{{category.id_cat1}}">{{category.nameCat1}}</a>
+					</li>
+					<li class="article-category"><a href="/category/cat2/{{category.id_cat2}}">{{category.nameCat2}}</a>
+					</li>
+					<li class="article-category"><a href="javascript:;">Nổi bật</a></li>
 					<li class="article-type"><i class="fa fa-file-text"></i></li>
 				</ul>
 				<h2 class="article-title">
-					<a href="#">{{title}}</a>
+					<a href="/post/{{id}}">{{title}}</a>
 				</h2>
 				<h3 class="article-description">
 					{{tiny_des}}
@@ -21,7 +25,7 @@
 				<ul class="article-meta">
 					<li>
 						<i class="fa fa-clock-o">&nbsp;</i>
-						{{publish_date}}
+						{{parseTime publish_date}}
 					</li>
 					<li>
 						<i class="fa fa-eye">&nbsp;</i>
@@ -84,11 +88,16 @@
 									</div>
 									<div class="article-body">
 										<ul class="article-info">
-											<li class="article-category"><a href="#">Mới Nhất</a></li>
+											<li class="article-category"><a
+													href="/category/cat1/{{category.id_cat1}}">{{category.nameCat1}}</a>
+											</li>
+											<li class="article-category"><a
+													href="/category/cat2/{{category.id_cat2}}">{{category.nameCat2}}</a>
+											</li>
 											<li class="article-type"><i class="fa fa-file-text"></i></li>
 										</ul>
 										<h4 class="article-title">
-											<a href="#">{{title}}</a>
+											<a href="/post/{{id}}">{{title}}</a>
 										</h4>
 										<h5 class="article-description">
 											{{tiny_des}}
@@ -96,7 +105,7 @@
 										<ul class="article-meta">
 											<li>
 												<i class="fa fa-clock-o">&nbsp;</i>
-												{{publish_date}}
+												{{parseTime publish_date}}
 											</li>
 											<li>
 												<i class="fa fa-eye">&nbsp;</i>
@@ -911,7 +920,7 @@
 						<ul class="tab-nav pull-right">
 							{{#each listCat2}}
 							<li>
-								<a href="#">
+								<a href="/category/cat2/{{id_cat2}}">
 									{{nameCat2}}
 								</a>
 							</li>
@@ -942,12 +951,17 @@
 									</div>
 									<div class="article-body">
 										<ul class="article-info">
-											<li class="article-category"><a href="#">Đọc Nhiều</a></li>
+											<li class="article-category"><a
+													href="/category/cat1/{{category.id_cat1}}">{{category.nameCat1}}</a>
+											</li>
+											<li class="article-category"><a
+													href="/category/cat2/{{category.id_cat2}}">{{category.nameCat2}}</a>
+											</li>
 											<li class="article-type"><i class="fa fa-file-text"></i></li>
 										</ul>
-										<h3 class="article-title"><a href="#">{{title}}</a></h3>
+										<h3 class="article-title"><a href="/post/{{id}}">{{title}}</a></h3>
 										<ul class="article-meta">
-											<li><i class="fa fa-clock-o">&nbsp;</i>{{publish_date}}</li>
+											<li><i class="fa fa-clock-o">&nbsp;</i>{{parseTime publish_date}}</li>
 											<li><i class="fa fa-eye">&nbsp;</i>{{views}}</li>
 										</ul>
 										<p>
@@ -1028,19 +1042,24 @@
 							{{#each listLatestPost}}
 							<article class="article row-article">
 								<div class="article-img">
-									<a href="#">
+									<a href="/post/{{id}}">
 										<img src="/public/img/img_post/{{folder_img}}/{{avatar}}.jpg" alt="">
 									</a>
 								</div>
 								<div class="article-body">
 									<ul class="article-info">
-										<li class="article-category"><a href="#">Mới</a></li>
+										<li class="article-category"><a
+												href="/category/cat1/{{category.id_cat1}}">{{category.nameCat1}}</a>
+										</li>
+										<li class="article-category"><a
+												href="/category/cat2/{{category.id_cat2}}">{{category.nameCat2}}</a>
+										</li>
 										<li class="article-type"><i class="fa fa-file-text"></i></li>
 									</ul>
-									<h3 class="article-title"><a href="#">{{title}}</a>
+									<h3 class="article-title"><a href="/post/{{id}}">{{title}}</a>
 									</h3>
 									<ul class="article-meta">
-										<li><i class="fa fa-clock-o">&nbsp;</i>{{publish_date}}</li>
+										<li><i class="fa fa-clock-o">&nbsp;</i>{{parseTime publish_date}}</li>
 										<li><i class="fa fa-eye">&nbsp;</i>{{views}}</li>
 									</ul>
 									<p>
@@ -1049,7 +1068,7 @@
 								</div>
 							</article>
 							{{/each}}
-							<a href="">Xem thêm &nbsp;<i class="fa fa-angle-double-right" aria-hidden="true"></i></a>
+							<a href="/category/cat1/{{id}}">Xem thêm &nbsp;<i class="fa fa-angle-double-right" aria-hidden="true"></i></a>
 							<!-- /ARTICLE -->
 
 							{{!-- <!-- ARTICLE -->

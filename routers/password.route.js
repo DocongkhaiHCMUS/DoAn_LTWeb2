@@ -1,10 +1,10 @@
 const express = require('express');
 const bcrypt = require('bcrypt');
-const db = require('../db/util/db.json');
 const router = express.Router();
 const nodemailer = require('nodemailer');
 const userModel = require('../models/user.model');
 const jwt = require('jsonwebtoken');
+
 router.get('/change', async function (req, res) {
     if (!req.session.isAuthenticated) {
         res.redirect('/');

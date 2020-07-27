@@ -47,31 +47,32 @@
 		}
 	});
 
-	// $('#owl-carousel-5').owlCarousel({
-	// 	loop: true,
-	// 	margin: 5,
-	// 	dots: false,
-	// 	nav: true,
-	// 	navText: ['<i class="fa fa-angle-left"></i>', '<i class="fa fa-angle-right"></i>'],
-	// 	autoplay: true,
-	// 	responsive: {
-	// 		0: {
-	// 			items: 1
-	// 		},
-	// 		// 375: {
-	// 		// 	items: 2
-	// 		// },
-	// 		// 600: {
-	// 		// 	items: 2
-	// 		// },
-	// 		768: {
-	// 			items: 1
-	// 		},
-	// 		992: {
-	// 			items: 2
-	// 		}
-	// 	}
-	// });
+	$('#owl-carousel-5').owlCarousel({
+		loop: true,
+		margin: 10,
+		dots: false,
+		nav: true,
+		navContainer: '#nav-carousel-2',
+		navText: ['<i class="fa fa-angle-left"></i>', '<i class="fa fa-angle-right"></i>'],
+		autoplay: true,
+		responsive: {
+			0: {
+				items: 1
+			},
+			// 375: {
+			// 	items: 2
+			// },
+			// 600: {
+			// 	items: 2
+			// },
+			768: {
+				items: 2
+			},
+			992: {
+				items: 3
+			}
+		}
+	});
 
 	$('.owl-carousel-2').owlCarousel({
 		loop: true,
