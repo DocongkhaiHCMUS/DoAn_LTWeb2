@@ -91,6 +91,7 @@ function convertToCatFull(list, cat1, getID = false) {
     return cat1;
 }
 
+// add category level1 and level2 into post
 function convertCat(item, list2, list1) {
     let cat1, cat2;
     try {
@@ -156,7 +157,9 @@ module.exports = function (app) {
             let list2 = Cache.get('list2');
             let listCategory = Cache.get('listCategory');
 
-            //local 4 highlights post
+            //local 4 highlights posts
+            // highlights posts are the posts are most viewed the current way the number of days specified
+            // in there number of days are 40 days
             let highlightPost = listPost.filter(function (item) {
                 return moment().diff(moment(item.time), 'days') <= 40;
             })

@@ -8,7 +8,7 @@ limit = config.pagination.limit;
 //filter list tag for post
 function addTag(item, listTag) {
     let list = listTag.filter(function (item1) {
-        return item1.post == item.id;
+        return item1.post === item.id;
     })
     item['listTag'] = list;
     return item;
@@ -82,12 +82,12 @@ router.get('/cat1/:id', async function (req, res) {
         });
     }
 
-    if (nPages == page)
+    if (nPages == page && nPages != 1)
         pageItems.push({
             'value': nPages,
             'active': true
         });
-    else
+    else if (nPages != 1)
         pageItems.push({
             'value': nPages
         });
@@ -110,6 +110,7 @@ router.get('/cat1/:id', async function (req, res) {
 })
 
 router.get('/cat2/:id', async function (req, res) {
+
     // get id cat1 and page number
     //compute offset data row of page number
     let id = +req.params.id || -1;
@@ -189,12 +190,12 @@ router.get('/cat2/:id', async function (req, res) {
         });
     }
 
-    if (nPages == page)
+    if (nPages == page && nPages != 1)
         pageItems.push({
             'value': nPages,
             'active': true
         });
-    else
+    else if (nPages != 1)
         pageItems.push({
             'value': nPages
         });

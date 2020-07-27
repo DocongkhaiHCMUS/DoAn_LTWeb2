@@ -3,6 +3,8 @@ const moment = require('moment');
 
 const TBL_Post = 'post';
 const TBL_Cat2 = 'category_level2';
+const TBL_Tag = 'tag';
+const TBL_TagPost = 'tag_post';
 
 module.exports = {
     load: () => db.load(`select * from ${TBL_Post} p where p.delete = 0`),
@@ -35,6 +37,15 @@ module.exports = {
 
     singleByIDCat2: (idCat2) => {
         return db.load(`select p.*,cat2.name nameCat2 from ${TBL_Post} p join ${TBL_Cat2} cat2 on p.category = cat2.id where p.category = ${idCat2} and p.delete =0`)
+    },
+
+    singleByIDTag_page: (idTag, limit, offset) => {
+        return db.load(`select p.*,tag.name as tag_name from ${TBL_Post} p join ${TBL_TagPost} tp on p.id = tp.post join 
+                        ${TBL_Tag} tag on tp.tag = tag.id and tag.id = ${idTag} where p.delete = 0 limit ${limit} offset ${offset}`);
+    },
+    countByIDTag: (idTag) => {
+        return db.load(`select count(*) as total from ${TBL_Post} p join ${TBL_TagPost} tp on p.id = tp.post join 
+                            ${TBL_Tag} tag on tp.tag = tag.id and tag.id = ${idTag} where p.delete = 0`);
     },
 
     add: (entity) => {

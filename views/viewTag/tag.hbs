@@ -15,18 +15,9 @@
             <div class="col-md-12 top-body">
                 <!-- section title -->
                 <div class="section-title">
-                    <h2 class="title"><a href="/category/cat1/{{cat1.id}}">{{cat1.name}}</a></h2>
-                    <!-- tab nav -->
-                    <ul class="nav-cat2">
-                        {{#each cat2}}
-                        <li>
-                            <a {{#if active}} class="cat2-active" {{/if}} href="/category/cat2/{{id}}">
-                                {{name}}
-                            </a>
-                        </li>
-                        {{/each}}
-                    </ul>
-                    <!-- /tab nav -->
+                    <h2 class="title">
+                      Tin tức về Từ khóa : " {{curTag}} "
+                    </h2>
                 </div>
                 <!-- /section title -->
                 <!-- Main Column -->
@@ -41,7 +32,7 @@
                         </div>
                         <div class="article-body">
                             <ul class="article-info">
-                                <li class="article-category"><a href="/category/cat2/{{category}}">{{nameCat2}}</a>
+                                <li class="article-category"><a href="/category/cat2/{{category.id_cat2}}">{{category.nameCat2}}</a>
                                 </li>
                                 <li class="article-type"><i class="fa fa-file-text"></i></li>
                             </ul>
