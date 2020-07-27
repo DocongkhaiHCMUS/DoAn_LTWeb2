@@ -22,11 +22,9 @@
     "moment": "^2.27.0",
     "multer": "^1.4.2",
     "mysql": "^2.18.1",
+    "node-cache": "^5.1.2",
     "nodemailer": "^6.4.10",
     "passport": "^0.4.1",
     "passport-facebook": "^3.0.0"
-  },
-  "devDependencies": {
-    "nodemon": "^2.0.4"
   }
 }

@@ -1246,7 +1246,7 @@ h1.logo {
   position: relative;
 }
 
-.article-comments .media:after {
+/* .article-comments .media:after {
   content: "";
   position: absolute;
   left: 22.5px;
@@ -1254,7 +1254,7 @@ h1.logo {
   bottom: 15px;
   width: 1px;
   background-color: #ddd;
-}
+} */
 
 .article-comments > .media {
   margin-top: 30px;

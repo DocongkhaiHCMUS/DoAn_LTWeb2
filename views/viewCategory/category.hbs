@@ -1,0 +1,155 @@
+{{#section 'js'}}
+<script>
+    $('.article-pagination .disable').on('click', function (e) {
+        e.preventDefault();
+    })
+</script>
+{{/section}}
+
+<!-- SECTION -->
+<div id="category-detail" class="section">
+    <!-- CONTAINER -->
+    <div class="container">
+        <!-- ROW -->
+        <div class="row">
+            <div class="col-md-12 top-body">
+                <!-- section title -->
+                <div class="section-title">
+                    <h2 class="title"><a href="/category/cat1/{{cat1.id}}">{{cat1.name}}</a></h2>
+                    <!-- tab nav -->
+                    <ul class="nav-cat2">
+                        {{#each cat2}}
+                        <li>
+                            <a {{#if active}} class="cat2-active" {{/if}} href="/category/cat2/{{id}}">
+                                {{name}}
+                            </a>
+                        </li>
+                        {{/each}}
+                    </ul>
+                    <!-- /tab nav -->
+                </div>
+                <!-- /section title -->
+                <!-- Main Column -->
+                <div class="col-md-8">
+                    <!-- ARTICLE -->
+                    {{#each listPost}}
+                    <article class="article row-article">
+                        <div class="article-img">
+                            <a href="/post/{{id}}">
+                                <img src="/public/img/img_post/{{folder_img}}/{{avatar}}.jpg" alt="">
+                            </a>
+                        </div>
+                        <div class="article-body">
+                            <ul class="article-info">
+                                <li class="article-category"><a href="/category/cat2/{{category}}">{{nameCat2}}</a>
+                                </li>
+                                <li class="article-type"><i class="fa fa-file-text"></i></li>
+                            </ul>
+                            <h3 class="article-title"><a href="/post/{{id}}">{{title}}</a>
+                            </h3>
+                            <ul class="article-meta">
+                                <li><i class="fa fa-clock-o">&nbsp;</i>{{parseTime publish_date}}</li>
+                                <li><i class="fa fa-eye">&nbsp;</i>{{views}}</li>
+                            </ul>
+                            <p>
+                                {{tiny_des}}
+                            </p>
+                        </div>
+                        <!-- widget tags -->
+                        <div class="widget-tags">
+                            <h4>Từ khóa : </h4>
+                            <ul>
+                                {{#each listTag}}
+                                <li><a href="/tag/{{id}}">{{name}}</a></li>
+                                {{/each}}
+                            </ul>
+                        </div>
+                        <!-- /widget tags -->
+                    </article>
+                    {{/each}}
+                    <!-- /ARTICLE -->
+                    <!-- pagination -->
+                    <div class="article-pagination">
+                        <ul>
+                            <li><a {{#unless can_go_prev}} class="disable" {{/unless}} href="?page={{prev_value}}"><i
+                                        class="fa fa-angle-double-left"></i></a></li>
+                            {{#each pageItems}}
+                            <li {{#if active}} class="active" {{/if}}>
+                                <a {{#if disable}} class="disable" {{/if}} {{#if active}} class="active" {{/if}}
+                                    href="?page={{value}}">{{value}}</a></li>
+                            {{/each}}
+                            <li><a {{#unless can_go_next}} class="disable" {{/unless}} href="?page={{next_value}}"><i
+                                        class="fa fa-angle-double-right"></i></a></li>
+                        </ul>
+                    </div>
+                    <!-- /pagination -->
+                </div>
+                <!-- /Main Column -->
+
+                <!-- Aside Column -->
+                <div class="col-md-4">
+                    <div class="scroll">
+                        <div class="side-bar">
+                            <!-- article widget -->
+                            <div class="widget">
+                                <div class="widget-title">
+                                    <h2 class="title">Tin Nổi Bật</h2>
+                                </div>
+
+                                <!-- owl carousel 3 -->
+                                <div id="owl-carousel-3" class="owl-carousel owl-theme center-owl-nav">
+
+                                    {{#each highlightPost}}
+                                    <article class="article">
+                                        <div class="article-img">
+                                            <a href="/post/{{id}}">
+                                                <img src="/public/img/img_post/{{folder_img}}/{{avatar}}.jpg" alt="">
+                                            </a>
+                                        </div>
+                                        <div class="article-body">
+                                            <h4 class="article-title"><a href="/post/{{id}}">{{title}}</a></h4>
+                                            <ul class="article-meta">
+                                                <li><i class="fa fa-clock-o">&nbsp;</i>{{parseTime publish_date}}
+                                                </li>
+                                                <li><i class="fa fa-eye">&nbsp;</i>{{views}}</li>
+                                            </ul>
+                                        </div>
+                                    </article>
+                                    {{/each}}
+                                </div>
+                                <!-- /owl carousel 3 -->
+                                <div class="widget-title">
+                                    <h2 class="title">Tin Mới Nhất</h2>
+                                </div>
+                                {{#each latestPost10}}
+                                {{#each listPost}}
+                                <article class="article widget-article">
+                                    <div class="article-img">
+                                        <a href="/post/{{id}}">
+                                            <img src="/public/img/img_post/{{folder_img}}/{{avatar}}.jpg" alt="">
+                                        </a>
+                                    </div>
+                                    <div class="article-body">
+                                        <h4 class="article-title"><a href="/post/{{id}}">{{title}}</a></h4>
+                                        <ul class="article-meta">
+                                            <li><i class="fa fa-clock-o">&nbsp;</i>{{parseTime publish_date}}
+                                            </li>
+                                            <li><i class="fa fa-eye">&nbsp;</i>{{views}}</li>
+                                        </ul>
+                                    </div>
+                                </article>
+                                {{/each}}
+                                {{/each}}
+                            </div>
+                            <!-- /article widget -->
+                        </div>
+                    </div>
+                </div>
+                <!-- /Aside Column -->
+            </div>
+        </div>
+        <!-- /ROW -->
+    </div>
+    <!-- /CONTAINER -->
+</div>
+<!-- /SECTION -->

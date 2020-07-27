@@ -98,7 +98,7 @@
 							<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 								<ul class="nav navbar-nav">
 									<li class="icon-head m-head-left active">
-										<a href="./">
+										<a href="/">
 											<i class="fa fa-home icon-head" aria-hidden="true">&nbsp;</i>
 											Trang Chủ
 										</a>
@@ -183,13 +183,13 @@
 												</a>
 											</li>
 											<li>
-												<a href="#">
+												<a href="/pass/change">
 													<i class="fa fa-key" aria-hidden="true">&nbsp;</i>
 													Đổi mật khẩu
 												</a>
 											</li>
 											<li>
-												<a href="./login/logout">
+												<a href="/login/logout">
 													<i class="fa fa-sign-out" aria-hidden="true">&nbsp;</i>
 													Đăng Xuất
 												</a>
@@ -216,14 +216,15 @@
 					<ul class="main-nav nav navbar-nav">
 						{{#each listCat}}
 						<li class="dropdown">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown"
-								role="button" aria-haspopup="true" aria-expanded="false">
+							<a href="javascript:;" data-toggle="dropdown" data-hover="dropdown" role="button"
+								onclick="redirectFunction('/category/cat1/{{id_cat1}}')" aria-haspopup="true"
+								aria-expanded="false">
 								{{nameCat1}}
 							</a>
 							<ul class="dropdown-menu dropdownhover-bottom">
 								{{#each list}}
 								<li>
-									<a href="#">
+									<a href="/category/cat2/{{id_cat2}}">
 										{{nameCat2}}
 									</a>
 								</li>
@@ -250,7 +251,9 @@
 	</header>
 	<!-- /Header -->
 
-	{{{body}}}
+	<div id="main-content">
+		{{{body}}}
+	</div>
 
 
 	<!-- FOOTER -->
@@ -262,7 +265,7 @@
 				<!-- ROW -->
 				<div class="row">
 					<!-- Column 1 -->
-					<div class="col-md-4">
+					<div class="col-md-5">
 						<!-- footer about -->
 						<div class="footer-widget about-widget">
 							<div class="footer-logo">
@@ -307,11 +310,11 @@
 					<!-- /Column 1 -->
 
 					<!-- Column 2 -->
-					<div class="col-md-5">
+					{{!-- <div class="col-md-5">
 						<!-- footer article -->
 						<div class="footer-widget">
 							<div class="widget-title">
-								<h2 class="title">Featured Posts</h2>
+								<h2 class="title">Tin Mới Nhất</h2>
 							</div>
 
 							<!-- ARTICLE -->
@@ -369,30 +372,72 @@
 							<!-- /ARTICLE -->
 						</div>
 						<!-- /footer article -->
-					</div>
+					</div> --}}
 					<!-- /Column 2 -->
+
+					<!-- Column 2 -->
+					<div class="col-md-4">
+						<div class="footer-widget social-widget">
+							<div class="widget-title">
+								<h3 class="title">Thông tin đồ án</h3>
+							</div>
+							<ul>
+								<li class="about-des">
+									<p>
+										<span>
+											Mô hình
+										</span>
+										: MVC
+									</p>
+								</li>
+								<li class="about-des">
+									<p>
+										<span>
+											Cơ chế render
+										</span>
+										: Server-side render
+									</p>
+								</li>
+								<li class="about-des">
+									<p>
+										<span>Nền tảng</span>
+										: NodeJs
+									</p>
+								</li>
+								<li class="about-des">
+									<p>
+										<span>Framework</span> : Express-js
+									</p>
+									<p>
+										<span>View-engine</span> : Express-handlebars
+									</p>
+								</li>
+								<li class="about-des">
+									<p> <span>Database</span> : MySQL</p>
+								</li>
+							</ul>
+						</div>
+					</div>
+					<!-- Column 2 -->
 
 					<!-- Column 3 -->
 					<div class="col-md-3">
 						<div class="footer-widget social-widget">
 							<div class="widget-title">
-								<h3 class="title">About Us</h3>
-							</div>
-							<div class="widget-des">
-								This website made by :
+								<h3 class="title">Thành viên nhóm</h3>
 							</div>
 							<ul>
 								<li class="about-des">
-									<p>Đỗ Công Khải - 1760330</p>
+									<p><span>Đỗ Công Khải</span> : 1760330</p>
 								</li>
 								<li class="about-des">
-									<p> Lê Ngọc Hiệp - 1760310</p>
+									<p> <span>Lê Ngọc Hiệp</span> : 1760310</p>
 								</li>
 								<li class="about-des">
-									<p> Trần Minh Khôi - 1760341</p>
+									<p> <span>Trần Minh Khôi</span> : 1760341</p>
 								</li>
 								<li class="about-des">
-									<p> Nguyễn Thành Trí</p>
+									<p><span>Nguyễn Thành Trí</span> : 1760123</p>
 								</li>
 							</ul>
 						</div>
@@ -514,6 +559,10 @@
 				$('.main-nav li a').css('font-size', '14.5px');
 			}
 		});
+
+		function redirectFunction(url) {
+			location.assign(url);
+		}
 
 	</script>
 

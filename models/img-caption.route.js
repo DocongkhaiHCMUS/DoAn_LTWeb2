@@ -1,15 +1,14 @@
 const db = require('../db/util/db');
 const moment = require('moment');
 
-const TBL_TP = 'tag_post';
-const TBL_Tag = 'tag';
+const TBL_IC = 'image_caption';
 
 module.exports = {
-    load: () => db.load(`select tp.id, tp.tag, tag.name, tp.post from ${TBL_TP} tp join ${TBL_Tag} tag on tp.tag = tag.id and tp.delete = 0`),
+    load: () => db.load(`select * from ${TBL_IC}`),
 
-    singleByPost: (postID) => {
-        return db.load(`select tp.id, tp.tag, tag.name from ${TBL_TP} tp join ${TBL_Tag} tag on tp.tag = tag.id and tp.post = '${postID}' 
-                        and tp.delete = 0`)
+    singleByFolder: (folderName) => {
+        return db.load(`select ic.id, ic.name_img, ic.caption,ic.folder from ${TBL_IC} ic where ic.folder = '${folderName}' 
+                        and ic.delete = 0`)
     },
 
     add: (entity) => {
@@ -17,7 +16,7 @@ module.exports = {
         entity['create_date'] = moment().format('YYYY/MM/DD HH:mm:ss');
         entity['modifile_date'] = moment().format('YYYY/MM/DD HH:mm:ss');
 
-        return db.add(TBL_User, entity)
+        return db.add(TBL_IC, entity)
     },
 
     delete: (ID) => {
@@ -32,7 +31,7 @@ module.exports = {
         entity['modifile_date'] = moment().format('YYYY/MM/DD HH:mm:ss');
 
 
-        return db.patch(TBL_User, entity, condition)
+        return db.patch(TBL_IC, entity, condition)
     },
 
     patch: (entity) => {
@@ -44,6 +43,6 @@ module.exports = {
 
         entity['modifile_date'] = moment().format('YYYY/MM/DD HH:mm:ss');
 
-        return db.patch(TBL_User, entity, condition)
+        return db.patch(TBL_IC, entity, condition)
     }
 };
