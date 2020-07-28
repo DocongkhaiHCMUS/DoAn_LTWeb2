@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const config = require('../db/config/config.json');
 const modelPost = require('../models/post.model');
+const config = require('../db/config/config.json');
 
 //filter list tag for post
 function addTag(item, listTag) {
@@ -32,20 +32,22 @@ function convertCat(item, list2, list1) {
     }
 }
 
-router.get('/:id', async function (req, res) {
+router.get('/', async function (req, res) {
+
     // get id cat1 and page number
     //compute offset data row of page number
-    let id = +req.params.id || -1;
+    let text = req.query.txtSearch || "";
     let page = +req.query.page || 1;
-    if (page < 0 || !page)
+    if (page <= 0 || !page)
         page = 1;
-    let offset = (page - 1) * limit;
 
     limit = config.pagination.limit;
+    let offset = (page - 1) * limit;
+
     //get data in db
     let [listPost, total_post] = await Promise.all([
-        modelPost.singleByIDTag_page(id, limit, offset),
-        modelPost.countByIDTag(id)
+        modelPost.searchText(text, limit, offset),
+        modelPost.countSearchText(text)
     ]);
 
     let total = total_post[0].total;
@@ -63,12 +65,14 @@ router.get('/:id', async function (req, res) {
 
     if (1 == page)
         pageItems.push({
+            'text': text,
             'value': 1,
             'active': true
         });
     else
         pageItems.push({
-            'value': 1,
+            'text': text,
+            'value': 1
         });
 
     if (page - 3 > 2) {
@@ -78,16 +82,19 @@ router.get('/:id', async function (req, res) {
         });
     }
 
-    let top = (page + 3 < nPages - 1 ? page + 3 : nPages - 1);
-    let bot = (page - 3 > 1 ? page - 3 : 2);
-    for (let i = bot; i <= top; i++) {
-        if (i == page)
-            pageItems.push({
-                'value': i,
-                'active': true
-            });
-        else
-            pageItems.push({ 'value': i });
+    if (nPages > 1) {
+        let top = (page + 3 < nPages - 1 ? page + 3 : nPages - 1);
+        let bot = (page - 3 > 1 ? page - 3 : 2);
+        for (let i = bot; i <= top; i++) {
+            if (i == page)
+                pageItems.push({
+                    'text': text,
+                    'value': i,
+                    'active': true
+                });
+            else
+                pageItems.push({ 'text': text, 'value': i });
+        }
     }
 
     if (page + 3 < nPages - 1) {
@@ -99,11 +106,13 @@ router.get('/:id', async function (req, res) {
 
     if (nPages == page && nPages != 1)
         pageItems.push({
+            'text': text,
             'value': nPages,
             'active': true
         });
     else if (nPages > 1)
         pageItems.push({
+            'text': text,
             'value': nPages
         });
 
@@ -117,12 +126,9 @@ router.get('/:id', async function (req, res) {
         return convertCat(item1, list2, list1);
     })
 
-    //get tag name
-    let curTag = listPost[0].tag_name;
-
-    res.render('viewTag/tag.hbs', {
+    res.render('viewSearch/search.hbs', {
         listPost,
-        curTag,
+        text,
         pageItems,
         prev_value: page - 1,
         next_value: page + 1,

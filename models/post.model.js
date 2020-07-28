@@ -1,5 +1,6 @@
 const db = require('../db/util/db');
 const moment = require('moment');
+const { text } = require('express');
 
 const TBL_Post = 'post';
 const TBL_Cat2 = 'category_level2';
@@ -46,6 +47,21 @@ module.exports = {
     countByIDTag: (idTag) => {
         return db.load(`select count(*) as total from ${TBL_Post} p join ${TBL_TagPost} tp on p.id = tp.post join 
                             ${TBL_Tag} tag on tp.tag = tag.id and tag.id = ${idTag} where p.delete = 0`);
+    },
+
+    searchText: (text,limit,offset) =>{
+        return db.load(`SELECT p.* FROM ${TBL_Post} p
+        WHERE MATCH (title,tiny_des,full_des) 
+        AGAINST ('${text}' IN NATURAL LANGUAGE MODE)
+        limit ${limit} offset ${offset}
+        `)
+    },
+
+    countSearchText: (text)=>{
+        return db.load(`SELECT count(*) as total FROM ${TBL_Post}
+        WHERE MATCH (title,tiny_des,full_des) 
+        AGAINST ('${text}' IN NATURAL LANGUAGE MODE)
+        `)
     },
 
     add: (entity) => {

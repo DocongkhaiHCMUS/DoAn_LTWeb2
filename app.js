@@ -65,6 +65,8 @@ app.use('/pass', require('./routers/password.route'));
 
 app.use('/comment', require('./routers/comment.route'));
 
+app.use('/search', require('./routers/search.route'));
+
 
 //error handling
 app.get('/err', function (req, res) {
