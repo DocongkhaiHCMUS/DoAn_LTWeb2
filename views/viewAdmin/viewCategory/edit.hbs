@@ -158,6 +158,11 @@
             <a class="btn btn-success" href="/admin/category" role="button" title="Back to List">
                 <i class="fa fa-backward" aria-hidden="true"></i>
             </a>
+            {{#if this.category.delete}}
+                <button type="submit" class="btn btn-submit" title="Khôi phục" formaction="/admin/category/restore">
+                <i class="fa fa-undo" aria-hidden="true"></i>
+            </button>
+            {{/if}}
             <button type="submit" class="btn btn-danger" title="Xóa thể loại" formaction="/admin/category/del">
                 <i class="fa fa-trash" aria-hidden="true"></i>
             </button>
