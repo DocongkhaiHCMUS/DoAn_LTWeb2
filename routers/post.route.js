@@ -114,27 +114,30 @@ router.get('/:id', async function (req, res) {
         relPost[i] = { 'relPost': relPost_raw[temp] };
     }
 
+    //get data from database
+    let [category, tag, img_cap, listComment] = await Promise.all([
+        modelCategory.singleCatByIDCat2(post.category),
+        modelTagPost.singleByPost(id),
+        modelImageCaption.singleByFolder(post.folder_img),
+        modelComment.loadByPost(post.id)
+    ]);
+
     //category
-    let category = await modelCategory.singleCatByIDCat2(post.category);
     post.category = category[0];
 
     // tag
-    let tag = await modelTagPost.singleByPost(id);
     for (let i = 0; i < tag.length; i++) {
         tag[i] = { 'tag': tag[i] };
     }
 
     // image_caption
-    let img_cap = await modelImageCaption.singleByFolder(post.folder_img);
     post = convertContent(post, img_cap);
 
     // comment
-    let listComment = await modelComment.loadByPost(post.id);
     listComment.sort(function (a, b) {
         moment.locale('vi');
         return moment(b.publish_date).diff(moment(a.publish_date), 'days');
     })
-
     post['listComment'] = listComment;
 
     // add list tag into post

@@ -116,17 +116,23 @@ module.exports = function (app) {
 
         //check if list Category, list Tag, list Post exists in cache
         // if not exixts then get data from database and push to cahe
-        if (!Cache.has('listCat') || !Cache.has('list1') || !Cache.has('list2')|| 
-        !Cache.has('listTag')|| !Cache.has('listPost')) {
+        if (!Cache.has('listCat') || !Cache.has('list1') || !Cache.has('list2') ||
+            !Cache.has('listTag') || !Cache.has('listPost')) {
 
             //local categories
-            let [listCategory, list1, list2,listTag,listPost] = await Promise.all([
+            let [listCategory, list1, list2, listTag, listPost] = await Promise.all([
                 modelCategory.load(),
                 modelCategory.load_cat1(),
                 modelCategory.load_cat2(),
                 modelTagPost.load(),
                 modelPost.load()
             ]);
+
+            //filter all post has publish date before current time
+            listPost = listPost.filter(function (item) {
+                moment.locale('vi');
+                return moment(item.publish_date).diff(moment(), 'seconds') <= 0;
+            })
 
             Cache.set('listCategory', listCategory);
             Cache.set('list1', list1);
@@ -171,6 +177,7 @@ module.exports = function (app) {
             highlightPost.map(function (item) {
                 return convertCat(item, list2, list1);
             })
+
             Cache.set('highlightPost', highlightPost);
 
             //local 10 latest post and most viewed post each category
@@ -184,13 +191,19 @@ module.exports = function (app) {
 
                 let listPostTemp = listPost.filter(function (item1) {
                     let rs;
-                    if (item.id < 8)
-                        rs = listIDCat1[item.id - 1].list.includes(item1.category);
-                    else if (item.id == 8)
-                        rs = listIDCat1[14].list.includes(item1.category);
-                    else if (item.id > 8)
-                        rs = listIDCat1[item.id - 2].list.includes(item1.category);
-                    return rs;
+                    try {
+                        if (item.id < 8)
+                            rs = listIDCat1[item.id - 1].list.includes(item1.category);
+                        else if (item.id == 8)
+                            rs = listIDCat1[14].list.includes(item1.category);
+                        else if (item.id > 8)
+                            rs = listIDCat1[item.id - 2].list.includes(item1.category);
+                    } catch (error) {
+                        console.log(errer);
+                    }
+                    finally {
+                        return rs;
+                    }
                 })
                     .sort(function (a, b) {
                         moment.locale('vi');
@@ -236,14 +249,21 @@ module.exports = function (app) {
             }
 
             mostViewedPost.map(function (item) {
-                if (item.id < 8)
-                    item['listCat2'] = app.locals.listCat[item.id - 1].list;
-                else if (item.id == 8)
-                    item['listCat2'] = app.locals.listCat[14].list;
-                else if (item.id > 8)
-                    item['listCat2'] = app.locals.listCat[item.id - 2].list;
-                item['listLatestPost'] = latestPost[item.id - 1].listPost;
-                return item;
+                try {
+                    if (item.id < 8)
+                        item['listCat2'] = app.locals.listCat[item.id - 1].list;
+                    else if (item.id == 8)
+                        item['listCat2'] = app.locals.listCat[14].list;
+                    else if (item.id > 8)
+                        item['listCat2'] = app.locals.listCat[item.id - 2].list;
+                    item['listLatestPost'] = latestPost[item.id - 1].listPost;
+                }
+                catch (err) {
+                    console.log(err);
+                }
+                finally {
+                    return item;
+                }
             });
 
             for (let i = 0; i < mostViewedPost.length; i++) {
