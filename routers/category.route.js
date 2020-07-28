@@ -87,7 +87,7 @@ router.get('/cat1/:id', async function (req, res) {
             'value': nPages,
             'active': true
         });
-    else if (nPages != 1)
+    else if (nPages > 1)
         pageItems.push({
             'value': nPages
         });
@@ -195,7 +195,7 @@ router.get('/cat2/:id', async function (req, res) {
             'value': nPages,
             'active': true
         });
-    else if (nPages != 1)
+    else if (nPages > 1)
         pageItems.push({
             'value': nPages
         });
