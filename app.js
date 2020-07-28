@@ -10,7 +10,7 @@ app.use(express.urlencoded({
 }));
 
 //read file .env
-require('dotenv').config();
+// require('dotenv').config();
 //set static folder public
 app.use('/public', express.static('public'));
 
@@ -29,31 +29,14 @@ require('./middlewares/locals.mdw')(app);
 //config passport Facebook
 require('./middlewares/passport_FB.mdw')(app);
 
-
-
 // CODE IN HERE
 
 //set link home
-app.get('/', function (req, res) {
-    if (!req.session.athUser)
-        res.render('home.hbs');
-    else if (req.session.athUser.permission == 2)
-    {
-        res.render('home.hbs', {
-            isWriter: true
-        });
-    }
-    else if (req.session.athUser.permission == 33)
-    {
-        res.render('home.hbs', {
-            isEditor: true
-        });
-    }
-})
+app.get('/', require('./routers/home.route'))
 
-app.get('/post', function (req, res) {
-    res.render('post.hbs');
-})
+// app.get('/post', function (req, res) {
+//     res.render('post.hbs');
+// })
 
 //require all router
 app.use('/guest', require('./routers/default.route'));
@@ -77,7 +60,12 @@ app.use('/category', require('./routers/category.route'));
 app.use('/tag', require('./routers/tag.route'));
 
 app.use('/user', require('./routers/user.route'));
+
 app.use('/pass', require('./routers/password.route'));
+
+app.use('/comment', require('./routers/comment.route'));
+
+app.use('/search', require('./routers/search.route'));
 
 
 //error handling

@@ -32,8 +32,8 @@
 	// Owl Carousel
 	$('#owl-carousel-1').owlCarousel({
 		loop: true,
-		margin: 0,
-		dots: false,
+		margin: 1,
+		dots: true,
 		nav: true,
 		navText: ['<i class="fa fa-angle-left"></i>', '<i class="fa fa-angle-right"></i>'],
 		autoplay: true,
@@ -47,9 +47,9 @@
 		}
 	});
 
-	$('#owl-carousel-2').owlCarousel({
+	$('#owl-carousel-5').owlCarousel({
 		loop: true,
-		margin: 15,
+		margin: 10,
 		dots: false,
 		nav: true,
 		navContainer: '#nav-carousel-2',
@@ -66,10 +66,36 @@
 			// 	items: 2
 			// },
 			768: {
-				items: 3
+				items: 2
 			},
 			992: {
-				items: 4
+				items: 3
+			}
+		}
+	});
+
+	$('.owl-carousel-2').owlCarousel({
+		loop: true,
+		margin: 5,
+		dots: false,
+		nav: true,
+		navText: ['<i class="fa fa-angle-left"></i>', '<i class="fa fa-angle-right"></i>'],
+		autoplay: true,
+		responsive: {
+			0: {
+				items: 1
+			},
+			// 375: {
+			// 	items: 2
+			// },
+			// 600: {
+			// 	items: 2
+			// },
+			768: {
+				items: 2
+			},
+			992: {
+				items: 3
 			}
 		}
 	});
