@@ -57,6 +57,7 @@ router.post('/category/del', async function (req, res) {
         delete: 1
     }
     await cateModel.patch1(entity);
+    await cateModel.deteleAllbyCatLv2(req.body.id);
     res.redirect('/admin/category');
 });
 
@@ -65,15 +66,16 @@ router.post('/category/update', async function (req, res) {
     res.redirect('/admin/category');
 });
 router.post('/category/restore', async function (req, res) {
-    var entity = {
-        id: req.body.id,
-        name: req.body.name,
-        delete: 0
-    }
-    await cateModel.patch1(entity);
+        var entity = {
+            id: req.body.id,
+            name: req.body.name,
+            delete: 0
+        }
+        await cateModel.patch1(entity);
     res.redirect('/admin/category');
 });
 router.get('/category/detail/:catID', async function (req, res) {
+    const id = +req.params.catID || -1;
     const categoryLv2 = await cateModel.single2(req.params.catID);
     let i = 0;
     while (i < categoryLv2.length) {
@@ -85,17 +87,66 @@ router.get('/category/detail/:catID', async function (req, res) {
     res.render('viewAdmin/viewCategory/detail.hbs', {
         layout: false,
         category: categoryLv2,
+        cat1ID: id,
         empty: categoryLv2.length === 0
     });
 });
-router.get('/categorylv2/edit/:id',async function (req, res) {
-    const id = +req.params.catID || -1;
-    const rows = await cateModel.single1(id);
+router.get('/categorylv2/add/:id', async function (req, res) {
+    const id = +req.params.id || -1;
+    const cat1 = await cateModel.single1(id);
+    res.render('viewAdmin/viewCategory/addLv2.hbs', { layout: false, catLv1: cat1[0] });
+});
+router.post('/categorylv2/add', async function (req, res) {
+    await cateModel.add2(req.body);
+    res.redirect('/admin/category');
+});
+router.get('/categorylv2/edit/:id', async function (req, res) {
+    const id = +req.params.id || -1;
+    const rows = await cateModel.singleCat2ByID(id);
     if (rows.length === 0)
         return res.send('Invalid parameter.');
 
     const category = rows[0];
-    res.render('viewAdmin/viewCategory/edit.hbs', { layout: false, category });
+    const cat1 = await cateModel.loadCat1();
+    let i = 0;
+    while (i < cat1.length) {
+        if (category.category_level1 === cat1[i].id) {
+            cat1[i].isActive = true;
+        }
+        i++;
+    }
+    res.render('viewAdmin/viewCategory/editLv2.hbs', { layout: false, category, catLv1: cat1 });
+});
+router.post('/categorylv2/update', async function (req, res) {
+    await cateModel.patch2(req.body);
+    //   const url = req.query.retUrl || '/';
+    //  res.redirect(url);
+    res.redirect('/admin/category');
+});
+router.post('/categorylv2/restore', async function (req, res) {
+    cat1 = await cateModel.singleCat1ByCat2ID(req.body.id);
+    if (cat1 === null) {
+       return  res.send("Category lv1 is locked");
+    }
+    else {
+        var entity = {
+            id: req.body.id,
+            name: req.body.name,
+            delete: 0
+        }
+        await cateModel.patch2(entity);
+    }
+    res.redirect('/admin/category');
+});
+router.post('/categorylv2/del', async function (req, res) {
+    var entity = {
+        id: req.body.id,
+        name: req.body.name,
+        delete: 1
+    }
+    await cateModel.patch2(entity);
+    res.redirect('/admin/category');
 });
 //Xu li POST
+
 module.exports = router;
