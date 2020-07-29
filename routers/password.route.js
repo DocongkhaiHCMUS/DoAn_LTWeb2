@@ -13,6 +13,7 @@ router.get('/change', async function (req, res) {
         res.render('viewPass/change');
     }
 })
+
 router.post('/change', async function (req, res) {
     let user = await userModel.singleByID(req.session.authUser.id);
     var us = user[0];
@@ -33,6 +34,7 @@ router.post('/change', async function (req, res) {
 router.get('/forgot', function (req, res) {
     res.render('viewPass/forgot');
 });
+
 var generateToken = (user, secretSignature, tokenLife) => {
     return new Promise((resolve, reject) => {
         // Định nghĩa những thông tin của user muốn lưu vào token ở đây
@@ -57,6 +59,7 @@ var generateToken = (user, secretSignature, tokenLife) => {
             });
     });
 }
+
 var verifyToken = (token, secretKey) => {
     return new Promise((resolve, reject) => {
         jwt.verify(token, secretKey, (error, decoded) => {
@@ -68,6 +71,7 @@ var verifyToken = (token, secretKey) => {
     });
 }
 //60000 = 60s
+
 const accessTokenSecret = "access-token-secret-@hiep";
 const accessTokenLife = process.env.ACCESS_TOKEN_LIFE || "1h";
 router.post('/forgot', async function (req, res) {
@@ -131,7 +135,8 @@ router.post('/forgot', async function (req, res) {
         });
     }
 
-})
+});
+
 router.post('/new', async function (req, res) {
     // xử lí update password
     const newPass = req.body.password;
@@ -157,4 +162,5 @@ router.post('/new', async function (req, res) {
             });
         }
 });
+
 module.exports = router;
