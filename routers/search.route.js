@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const modelPost = require('../models/post.model');
 const config = require('../db/config/config.json');
+const moment = require('moment');
 
 //filter list tag for post
 function addTag(item, listTag) {
@@ -124,6 +125,12 @@ router.get('/', async function (req, res) {
     // add category to post
     listPost.map(function (item1) {
         return convertCat(item1, list2, list1);
+    })
+
+    //filter all post has publish date before current time
+    listPost = listPost.filter(function (item) {
+        moment.locale('vi');
+        return moment(item.publish_date).diff(moment(), 'seconds') <= 0;
     })
 
     res.render('viewSearch/search.hbs', {
