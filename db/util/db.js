@@ -52,5 +52,17 @@ module.exports = {
                 resolve(results);
             })
         })
-    }
+    },
+    deleteAllCat2: function(ID){
+        return new Promise(function(resolve,reject){
+            const sql =`update category_level2 cat2 set cat2.delete = 1 where cat2.category_level1 = ${ID}`;
+            pool.query(sql,ID, function (error, results) {
+                if (error) {
+                    return reject(error);
+                }
+
+                resolve(results);
+            });
+        })
+    },
 };
