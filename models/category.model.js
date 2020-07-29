@@ -23,11 +23,26 @@ module.exports = {
         entity['modifile_date'] = moment().format('YYYY/MM/DD HH:mm:ss');
         return db.add(TBL_Cat1, entity);
     },
+    add2: function (entity) {
+        entity['create_date'] = moment().format('YYYY/MM/DD HH:mm:ss');
+        entity['modifile_date'] = moment().format('YYYY/MM/DD HH:mm:ss');
+        return db.add(TBL_Cat2, entity);
+    },
     single1: function (id) {
         return db.load(`select * from ${TBL_Cat1} where id = ${id}`);
     },
     single2: function (id) {
         return db.load(`select * from ${TBL_Cat2} where category_level1 = ${id}`);
+    },
+    singleCat2ByID: function (id) {
+        return db.load(`select * from ${TBL_Cat2} where id = ${id}`);
+    },
+    singleCat1ByCat2ID: async function (id) {
+        const rows = await db.load(`select cat1.* from ${TBL_Cat2} cat2 join ${TBL_Cat1} cat1 on cat2.category_level1 = cat1.id where cat2.id = ${id} and cat1.delete = 0`);
+        if(rows.length === 0){
+            return null;
+        }
+        return rows[0];
     },
     patch1: function (entity) {
         const condition = {
@@ -37,11 +52,22 @@ module.exports = {
         delete entity.id;
         return db.patch(TBL_Cat1, entity, condition);
     },
+    patch2: function (entity) {
+        const condition = {
+            id: entity.id
+        }
+        entity['modifile_date'] = moment().format('YYYY/MM/DD HH:mm:ss');
+        delete entity.id;
+        return db.patch(TBL_Cat2, entity, condition);
+    },
     delele1: function (ID) {
         const condition = {
             id: ID
         }
         return db.delele(TBL_Cat1, condition);
+    },
+    deteleAllbyCatLv2 :function(id){
+        return db.deleteAllCat2(id);
     }
 };
 
