@@ -1,6 +1,11 @@
 const express = require('express');
 const router = express.Router();
 
+router.use(function (req, res, next) {
+    req.app.set('view options', { layout: 'other' });
+    next();
+})
+
 router.get('/', function (req, res) {
 
     if (!req.session.authUser)
@@ -18,8 +23,7 @@ router.get('/', function (req, res) {
         });
     }
 
-    else if (req.session.authUser.permission == 4)
-    {
+    else if (req.session.authUser.permission == 4) {
         res.redirect('/admin');
     }
 })
