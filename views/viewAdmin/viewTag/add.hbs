@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Thêm thể loại báo cấp 2</title>
+    <title>Thêm thể loại báo cấp 1</title>
 
     <meta name="viewport"
         content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
@@ -16,7 +16,6 @@
     <!-- End import lib -->
 
     <link rel="stylesheet" type="text/css" href="/public/css/admin.css">
-
 
     <style>
         input[type=text] {
@@ -43,6 +42,18 @@
             border: none;
             border-radius: 4px;
             cursor: pointer;
+        }
+
+        textarea {
+            width: 100%;
+            height: 150px;
+            padding: 12px 20px;
+            box-sizing: border-box;
+            border: 2px solid #ccc;
+            border-radius: 4px;
+            background-color: #f8f8f8;
+            font-size: 16px;
+            resize: none;
         }
     </style>
 </head>
@@ -150,11 +161,11 @@
     <!-- end sidebar -->
     <!-- main content -->
     <div class="wrapper">
-        <form action="/admin/categorylv2/add" method="POST">
-            <label for="name">Tên thể loại cấp 2</label>
+        <form action="" method="POST">
+            <label for="name">Tên nhãn</label>
             <input type="text" id="name" name="name" autofocus required>
-            <label for="category_level1">Thể loại cấp 1 : {{this.catLv1.name}}</label>
-            <input type="text" id="catID1" name="category_level1" value="{{this.catLv1.id}}" readonly>
+            <label for="name">Mô tả</label>
+            <textarea placeholder="Viết gì đó..." name="des"></textarea>
             <a class="btn btn-success" href="/admin/category" role="button" title="Back to List">
                 <i class="fa fa-backward" aria-hidden="true"></i>
             </a>
