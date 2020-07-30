@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
 
-router.use(function (req, res, next) {
-    req.app.set('view options', { layout: 'other' });
-    next();
-})
+// router.use(function (req, res, next) {
+//     req.app.set('view options', { layout: 'other' });
+//     next();
+// })
 
 router.get('/', function (req, res) {
 
