@@ -1,0 +1,37 @@
+<div class="card" style="margin-top:150px; margin-left:50px; margin-right:50px;">
+    <div class="card-header">
+        <h4>Trả bài về</h4>
+    </div>
+
+    <div class="card-body">
+        <form method="POST">
+            <div class="form-group">
+                <label for="txtID">id</label>
+                <input type="text" class="form-control" id="txtID" name="id"
+                   readonly value="{{this.editor.id}}">
+                <label for="txtStatus">Status</label>
+                <input type="text" class="form-control" id="txtStatus" name="status"
+                   readonly value=0>   
+            </div>
+            
+            <div class="form-group">
+                <label for="txtReason">Lý do trả về </label>
+                <input type="text" class="form-control" id="txtReason" name="reason" autofocus
+                    value="{{this.editor.reason}}">
+            </div>
+
+            <a class="btn btn-success" href="/editor" title="Back to list" role="button">
+                <i class="fa fa-backward" aria-hidden="true"></i>
+            </a>
+
+            <button formaction="/editor/update" type="submit" class="btn btn-primary">
+                <i class="fa fa-check" aria-hidden="true"></i>
+                Từ chối
+            </button>
+        </form>
+    </div>
+
+    <div class="card-footer text-muted">
+        Footer
+    </div>
+</div>

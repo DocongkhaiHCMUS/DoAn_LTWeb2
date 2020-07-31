@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const modelPost = require('../models/post.model');
 const config = require('../db/config/config.json');
+const moment = require('moment');
 
 limit = config.pagination.limit;
 
@@ -95,6 +96,12 @@ router.get('/cat1/:id', async function (req, res) {
     //add listTag for each post in list post
     listPost.map(function (item) {
         return addTag(item, listTag);
+    })
+
+    //filter all post has publish date before current time
+    listPost.filter(function (item) {
+        moment.locale('vi');
+        return moment(item.publish_date).diff(moment(), 'seconds') >= 0;
     })
 
     res.render('viewCategory/category.hbs', {
@@ -204,6 +211,12 @@ router.get('/cat2/:id', async function (req, res) {
     //add listTag for each post in list post
     listPost.map(function (item) {
         return addTag(item, listTag);
+    })
+
+    //filter all post has publish date before current time
+    listPost = listPost.filter(function (item) {
+        moment.locale('vi');
+        return moment(item.publish_date).diff(moment(), 'seconds') <= 0;
     })
 
     res.render('viewCategory/category.hbs', {

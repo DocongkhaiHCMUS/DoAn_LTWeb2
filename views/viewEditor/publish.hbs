@@ -1,0 +1,44 @@
+<div class="card" style="margin-top:150px; margin-left:50px; margin-right:50px;">
+    <div class="card-header">
+        <h4>Duyệt bài</h4>
+    </div>
+
+    <div class="card-body">
+        <form method="POST">
+            <div class="form-group">
+                <label for="txtID">id</label>
+                <input type="text" class="form-control" id="txtID" name="id" readonly value="{{this.editor.id}}">
+            </div>
+
+            <div class="form-group">
+                <label for="txtCategory">Danh mục </label>
+                <input type="text" class="form-control" id="txtCategory" name="category" autofocus
+                    value="{{this.editor.category}}">
+            </div>
+
+            <div class="form-group">
+                <label for="txtTag">Nhãn </label>
+                <input type="text" class="form-control" id="txtTag" name="tag" value="{{this.editor.source}}">
+            </div>
+
+            <div class="form-group">
+                <label for="txtPublish_date">Thời gian đăng bài </label>
+                <input type="datetime" class="form-control" id="txtPublish_date" name="publish_date"
+                    value="{{this.editor.publish_date}}">
+            </div>
+
+            <a class="btn btn-success" href="/editor" title="Back to list" role="button">
+                <i class="fa fa-backward" aria-hidden="true"></i>
+            </a>
+
+            <button formaction="/editor/update" type="submit" class="btn btn-primary">
+                <i class="fa fa-check" aria-hidden="true"></i>
+                Duyệt
+            </button>
+        </form>
+    </div>
+
+    <div class="card-footer text-muted">
+        Footer
+    </div>
+</div>
