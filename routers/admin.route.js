@@ -5,14 +5,17 @@ const { options } = require('./home.route');
 const tagModel = require('../models/tag.model');
 const config = require('../db/config/config.json');
 const tagPostModel = require('../models/tag-post.model');
+const postModel = require('../models/post.model');
+const userModel = require('../models/user.model');
 // router.use(function (req, res, next) {
 //     req.app.set('view options', { layout: 'admin.hbs' });
 //     next();
 // })
+//                  DEFAULT VIEW ADMIN
 router.get('/', function (req, res) {
     res.render('layouts/admin.hbs', { layout: false });
 });
-//Xu li Category
+//                                          ADMIN CATEGORY 
 router.get('/category', async function (req, res) {
     const categoryLv1 = await cateModel.loadCat1();
     res.render('viewAdmin/viewCategory/listCategory.hbs',
@@ -70,7 +73,8 @@ router.post('/category/restore', async function (req, res) {
     }
     await cateModel.patch1(entity);
     res.redirect('/admin/category');
-});
+}); 
+//                                  CATEGORY LEVEL2
 router.get('/category/detail/:catID', async function (req, res) {
     const id = +req.params.catID || -1;
     const categoryLv2 = await cateModel.single2(req.params.catID);
@@ -137,7 +141,10 @@ router.post('/categorylv2/del', async function (req, res) {
     await cateModel.patch2(entity);
     res.redirect(req.headers.referer);
 });
-//                                                XU LI TAG
+//                              END ADMIN CATEGORY
+
+
+//                                                ADMIN TAG
 router.get('/tag', async function (req, res) {
     const page = +req.query.page || 1;
     if (page < 0 || !page) {
@@ -266,14 +273,18 @@ router.post('/tag/restore', async function (req, res) {
 });
 router.get('/tag/detail/:id', async function (req, res) {
     const id = +req.params.id || -1;
+    const _tag = await tagModel.singleTagById(id);
     const tag_post = await tagPostModel.singleByTag(id);
     res.render('viewAdmin/viewTag/detail.hbs', {
         layout: false,
         tag_post,
+        tag: _tag[0],
         empty: tag_post.length === 0
     });
 });
-///                           DELETE , RESTORE TAG_POST
+
+
+///                           DELETE , RESTORE, ADD TAG_POST WITH TAG
 router.post('/tag_post/restore', async function (req, res) {
     var entity = {
         id: req.body.id,
@@ -287,4 +298,130 @@ router.post('/tag_post/del', async function (req, res) {
     const url = req.query.retUrl || '/';
     res.redirect(req.headers.referer);
 });
+router.get('/tag_post/add/:id', async function (req, res) {
+    
+    const id = +req.params.id || -1;
+    const _tag  = await tagModel.singleTagById(id);
+    const posts = await postModel.loadSortByTitle();
+    req.session.prevURL = req.headers.referer
+    res.render('viewAdmin/viewTag/addTagPost.hbs', { layout: false, tag:_tag[0],posts });
+});
+router.post('/tag_post/add', async function (req, res) {
+    await tagPostModel.add(req.body);
+    res.redirect(req.session.prevURL);
+});
+/// END OF ADMIN TAG / TAG_POST
+
+//                                      ADMIN POST
+
+router.get('/post', async function (req, res) {
+    const page = +req.query.page || 1;
+    if (page < 0 || !page) {
+        page = 1;
+    }
+    const offset = (page - 1) * config.pagination.limit;
+
+    const [list, total] = await Promise.all([
+        //config.pagination.limit
+        postModel.pageByPost(config.pagination.limit, offset),
+       postModel.countByPost()
+    ]);
+    const nPages = Math.ceil(total / config.pagination.limit);
+    const pageItems = [];
+
+    if (1 == page)
+        pageItems.push({
+            'value': 1,
+            'active': true
+        });
+    else
+        pageItems.push({
+            'value': 1,
+        });
+
+    if (page - 3 > 2) {
+        pageItems.push({
+            'value': '...',
+            'disable': true
+        });
+    }
+
+    let top = (page + 3 < nPages - 1 ? page + 3 : nPages - 1);
+    let bot = (page - 3 > 1 ? page - 3 : 2);
+    for (let i = bot; i <= top; i++) {
+        if (i == page)
+            pageItems.push({
+                'value': i,
+                'active': true
+            });
+        else
+            pageItems.push({ 'value': i });
+    }
+
+    if (page + 3 < nPages - 1) {
+        pageItems.push({
+            'value': '...',
+            'disable': true
+        });
+    }
+
+    if (nPages == page && nPages != 1)
+        pageItems.push({
+            'value': nPages,
+            'active': true
+        });
+    else if (nPages > 1)
+        pageItems.push({
+            'value': nPages
+        });
+
+    res.render('viewAdmin/viewPost/list.hbs',
+        {
+            layout: false,
+            posts: list,
+            empty: list.length === 0,
+            pageItems,
+            prev_value: page - 1,
+            next_value: page + 1,
+            can_go_prev: page > 1,
+            can_go_next: page < nPages
+        });
+});
+router.get('/post/detail/:id', async function (req, res) {
+    const id = +req.params.id || -1;
+    const _post = await postModel.singleByID2(id);
+    const listUser = await userModel.load();
+    let i = 0;
+    while (i < listUser.length) {
+        if (listUser[i].id === _post[0].author) {
+           listUser[i].isAuthor = true;
+           break;
+        }
+        i++;
+    }
+    res.render('viewAdmin/viewPost/detail.hbs', {
+        layout: false,
+        post: _post[0],
+        users:listUser,
+        empty: _post.length === 0
+    });
+});
+router.post('/post/update',async function (req, res) {
+    await postModel.patch(req.body);
+   res.redirect(req.headers.referer);
+});
+/*router.get('/post/add', function (req, res) {
+    res.render('viewAdmin/viewPost/add.hbs', {
+        layout: false
+    });
+});
+
+router.post('/post/add', async function (req, res) {
+    console.log(req.body);
+    await tagModel.add(req.body);
+    res.render('viewAdmin/viewPost/add.hbs', {
+        layout: false
+    });
+}); */
+
 module.exports = router;
