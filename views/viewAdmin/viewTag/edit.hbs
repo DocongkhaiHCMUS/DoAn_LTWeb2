@@ -128,18 +128,18 @@
             <input type="text" id="name" name="name" value="{{this.tag.name}}" autofocus required>
             <textarea name="des">{{this.tag.des}}</textarea>
             <hr>
-            <a class="btn btn-success" href="/admin/category" role="button" title="Back to List">
+            <a  href="/admin/category" role="button" title="Back to List">
                 <i class="fa fa-backward" aria-hidden="true"></i>
             </a>
             {{#if this.tag.delete}}
-            <button type="submit" class="btn btn-submit" title="Khôi phục" formaction="/admin/tag/restore">
+            <button type="submit" title="Khôi phục" formaction="/admin/tag/restore">
                 <i class="fa fa-undo" aria-hidden="true"></i>
             </button>
             {{/if}}
-            <button type="submit" class="btn btn-danger" title="Xóa thể loại" formaction="/admin/tag/del">
+            <button type="submit"  title="Xóa thể loại" formaction="/admin/tag/del">
                 <i class="fa fa-trash" aria-hidden="true"></i>
             </button>
-            <button type="submit" class="btn btn-primary" formaction="/admin/tag/update">
+            <button type="submit"  formaction="/admin/tag/update">
                 <i class="fa fa-check" aria-hidden="true"></i>
                 Lưu
             </button>
