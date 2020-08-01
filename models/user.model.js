@@ -4,14 +4,14 @@ const moment = require('moment');
 const TBL_User = 'user';
 
 module.exports = {
-    load: () => db.load(`select * from ${TBL_User}`),
+    load: () => db.load(`select us.* from ${TBL_User} us where us.delete =0 `),
 
     singleByUserName: (userName) => {
-        return db.load(`select * from ${TBL_User} where user_name = '${userName}'`)
+        return db.load(`select us.* from ${TBL_User} us where us.user_name = '${userName}' and us.delete =0 `)
     },
 
     singleByID: (ID) => {
-        return db.load(`select * from ${TBL_User} where id = ${ID}`)
+        return db.load(`select us.* from ${TBL_User} where us.id = ${ID} and us.delete =0`)
     },
 
     add: (entity) => {

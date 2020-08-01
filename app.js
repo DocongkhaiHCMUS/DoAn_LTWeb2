@@ -1,10 +1,8 @@
 const express = require('express');
 
-//decalre library to control throw async error
 require('express-async-errors');
 
 const app = express();
-
 app.use(express.urlencoded({
     extended: true
 }));
@@ -26,8 +24,8 @@ const restrict = require('./middlewares/authenticated.mdw');
 //require local variables
 require('./middlewares/locals.mdw')(app);
 
-//config passport Facebook
-require('./middlewares/passport_FB.mdw')(app);
+// //config passport Facebook
+// require('./middlewares/passport_FB.mdw')(app);
 
 // CODE IN HERE
 
@@ -86,5 +84,5 @@ app.use(function (req, res) {
 
 const PORT = 3000;
 app.listen(PORT, () => {
-    console.log(`App is running at http://localhost:${PORT} :))) !`);
+    console.log(`App is running at http://localhost:3000 :))) !`);
 })
