@@ -16,33 +16,6 @@
     <!-- End import lib -->
 
     <link rel="stylesheet" type="text/css" href="/public/css/admin.css">
-    <style>
-        input[type=text] {
-            width: 100%;
-            padding: 12px 20px;
-            margin: 8px 0;
-            box-sizing: border-box;
-            border: 3px solid #e9d8f4;
-            -webkit-transition: 0.5s;
-            transition: 0.5s;
-            outline: none;
-        }
-
-        input[type=text]:focus {
-            border: 3px solid #58257b;
-        }
-
-        input[type=submit] {
-            width: 100%;
-            background-color: #58257b;
-            color: white;
-            padding: 14px 20px;
-            margin: 8px 0;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-    </style>
 </head>
 
 <body class="overlay-scrollbar">
@@ -92,7 +65,7 @@
                             </a>
                         </li>
                         <li class="dropdown-menu-item">
-                            <a href="#" class="dropdown-menu-link">
+                            <a href="/login/logout" class="dropdown-menu-link">
                                 <div>
                                     <i class="fa fa-sign-out" aria-hidden="true"></i>
                                 </div>
@@ -162,18 +135,18 @@
                 {{/each}}
             </select>
             <hr>
-            <a class="btn btn-success" href="/admin/category" role="button" title="Back to List">
+            <a  href="/admin/category" role="button" title="Back to List">
                 <i class="fa fa-backward" aria-hidden="true"></i>
             </a>
             {{#if this.category.delete}}
-            <button type="submit" class="btn btn-submit" title="Khôi phục" formaction="/admin/categorylv2/restore">
+            <button type="submit"  title="Khôi phục" formaction="/admin/categorylv2/restore">
                 <i class="fa fa-undo" aria-hidden="true"></i>
             </button>
             {{/if}}
-            <button type="submit" class="btn btn-danger" title="Xóa thể loại" formaction="/admin/categorylv2/del">
+            <button type="submit"  title="Xóa thể loại" formaction="/admin/categorylv2/del">
                 <i class="fa fa-trash" aria-hidden="true"></i>
             </button>
-            <button type="submit" class="btn btn-primary" formaction="/admin/categorylv2/update">
+            <button type="submit"  formaction="/admin/categorylv2/update">
                 <i class="fa fa-check" aria-hidden="true"></i>
                 Lưu
             </button>

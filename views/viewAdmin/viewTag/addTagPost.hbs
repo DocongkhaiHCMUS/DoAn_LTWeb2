@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Chinh sửa nhãn </title>
+    <title>Thêm nhãn vào bài viết </title>
 
     <meta name="viewport"
         content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
@@ -16,33 +16,6 @@
     <!-- End import lib -->
 
     <link rel="stylesheet" type="text/css" href="/public/css/admin.css">
-    <style>
-        input[type=text] {
-            width: 100%;
-            padding: 12px 20px;
-            margin: 8px 0;
-            box-sizing: border-box;
-            border: 3px solid #e9d8f4;
-            -webkit-transition: 0.5s;
-            transition: 0.5s;
-            outline: none;
-        }
-
-        input[type=text]:focus {
-            border: 3px solid #58257b;
-        }
-
-        input[type=submit] {
-            width: 100%;
-            background-color: #58257b;
-            color: white;
-            padding: 14px 20px;
-            margin: 8px 0;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-    </style>
 </head>
 
 <body class="overlay-scrollbar">
@@ -92,7 +65,7 @@
                             </a>
                         </li>
                         <li class="dropdown-menu-item">
-                            <a href="#" class="dropdown-menu-link">
+                            <a href="/login/logout" class="dropdown-menu-link">
                                 <div>
                                     <i class="fa fa-sign-out" aria-hidden="true"></i>
                                 </div>
@@ -155,14 +128,14 @@
             <label for="txtHoidap">Chọn bài viết</label>
             <select name="post">
                 {{#each this.posts }}
-                <option value="{{id}}">{{title}}</option>
+                <option value="{{id}}">ID:{{id}}  , {{title}}</option>
                 {{/each}}
             </select>
             <hr>
-            <a class="btn btn-success" href="/admin/category" role="button" title="Back to List">
+            <a  href="/admin/category" role="button" title="Back to List">
                 <i class="fa fa-backward" aria-hidden="true"></i>
             </a>
-            <button type="submit" class="btn btn-primary" formaction="/admin/tag_post/add">
+            <button type="submit" formaction="/admin/tag_post/add">
                 <i class="fa fa-check" aria-hidden="true"></i>
                 Gắn nhãn
             </button>

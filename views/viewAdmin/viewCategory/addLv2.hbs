@@ -17,34 +17,6 @@
 
     <link rel="stylesheet" type="text/css" href="/public/css/admin.css">
 
-
-    <style>
-        input[type=text] {
-            width: 100%;
-            padding: 12px 20px;
-            margin: 8px 0;
-            box-sizing: border-box;
-            border: 3px solid #e9d8f4;
-            -webkit-transition: 0.5s;
-            transition: 0.5s;
-            outline: none;
-        }
-
-        input[type=text]:focus {
-            border: 3px solid #58257b;
-        }
-
-        input[type=submit] {
-            width: 100%;
-            background-color: #58257b;
-            color: white;
-            padding: 14px 20px;
-            margin: 8px 0;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-    </style>
 </head>
 
 <body class="overlay-scrollbar">
@@ -94,7 +66,7 @@
                             </a>
                         </li>
                         <li class="dropdown-menu-item">
-                            <a href="#" class="dropdown-menu-link">
+                            <a href="/login/logout" class="dropdown-menu-link">
                                 <div>
                                     <i class="fa fa-sign-out" aria-hidden="true"></i>
                                 </div>
@@ -155,7 +127,7 @@
             <input type="text" id="name" name="name" autofocus required>
             <label for="category_level1">Thể loại cấp 1 : {{this.catLv1.name}}</label>
             <input type="text" id="catID1" name="category_level1" value="{{this.catLv1.id}}" readonly>
-            <a class="btn btn-success" href="/admin/category" role="button" title="Back to List">
+            <a href="/admin/category" role="button" title="Back to List">
                 <i class="fa fa-backward" aria-hidden="true"></i>
             </a>
             <input type="submit" value="Thêm">
