@@ -289,10 +289,10 @@
         </div>
         {{else}}
         <div class="table-title">
-            <h3>Danh sách bài viết có chứa nhãn</h3>
+            <h3>Danh sách bài viết có chứa nhãn <b style="color: green;">{{this.tag.name}}</b></h3>
         </div>
         <div class="table-title">
-            <a class="white-purple" href="/admin/tag_post/add/{{tagid}}" role="button" title="Thêm thể loại cấp 2">
+            <a class="white-purple" href="/admin/tag_post/add/{{this.tag.id}}" role="button" title="Thêm thể loại cấp 2">
                 <i class="fa fa-plus" aria-hidden="true"></i>
                 Gắn nhãn vào bài viết
             </a>
