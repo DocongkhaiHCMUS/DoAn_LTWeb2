@@ -12,7 +12,7 @@ module.exports = {
                         and tp.delete = 0`)
     },
     singleByTag: (tagID) => {
-        return db.load(`select tag.id as tagid,p.id as postid ,p.title,tp.delete,tp.id as tpid from ${TBL_TP} tp join ${TBL_Tag} tag on tp.tag = tag.id join ${TBL_Post} p on p.id = tp.post where tag.id = '${tagID}'`)
+        return db.load(`select tag.id as tagid,tag.des as tagdes,p.id as postid ,p.title,tp.delete,tp.id as tpid from ${TBL_TP} tp join ${TBL_Tag} tag on tp.tag = tag.id join ${TBL_Post} p on p.id = tp.post where tag.id = '${tagID}'`)
     },
     add: (entity) => {
 
