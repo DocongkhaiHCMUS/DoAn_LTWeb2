@@ -95,7 +95,7 @@ function xoa_dau(str) {
 }
 
 // handling when success
-router.get('/account', ensureAuthenticated, async function (req, res) {
+router.get('/account', async function (req, res) {
     console.log(req.user);
     let str = req.user.displayName;
     str = xoa_dau(str);
@@ -107,11 +107,13 @@ router.get('/account', ensureAuthenticated, async function (req, res) {
 
     let flag = false;
 
-    if (bcrypt.compareSync(`${req.user.id}`, us.password) && us.isPassport == 1) {
-        flag = true;
-        req.session.isAuthenticated = true;
-        delete us.password;
-        req.session.authUser = us;
+    if (us) {
+        if (bcrypt.compareSync(`${req.user.id}`, us.password) && us.isPassport == 1) {
+            flag = true;
+            req.session.isAuthenticated = true;
+            delete us.password;
+            req.session.authUser = us;
+        }
     }
 
     if (flag == true) {
@@ -121,23 +123,6 @@ router.get('/account', ensureAuthenticated, async function (req, res) {
             app.locals.password = req.body.password;
         }
 
-        // if (user.permission == false || user.permission == 0) {
-        //     if (user.attend == true || user.attend == 1) {
-        //         res.render('viewLogin/loginSuccess.hbs', {
-        //             title: config[0].res_agree,
-        //             is_user: true
-        //         });
-        //     }
-        //     else {
-        //         res.render('viewLogin/loginSuccess.hbs', {
-        //             title: config[0].res_disagree,
-        //             is_user: true
-        //         });
-        //     }
-        // }
-        // else {
-        //     res.redirect('/admin/admin.html');
-        // }
         res.redirect('/');
     }
     else {
@@ -157,10 +142,5 @@ router.get('/auth/facebook/callback',
         res.redirect('/login');
     }
 );
-
-function ensureAuthenticated(req, res, next) {
-    if (req.isAuthenticated()) { return next(); }
-    res.redirect('/login')
-}
 
 module.exports = router;

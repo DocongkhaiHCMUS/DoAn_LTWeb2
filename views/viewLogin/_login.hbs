@@ -50,12 +50,13 @@
                 {{/if}}
 
                 <h4 id="txtValidate" class="alert d-none">
-                    
+
                 </h4>
 
                 <div class="form-sub-w3">
                     <input id="inputName" type="text" name="user_name" placeholder="Username " {{#if user_name}}
                         value="{{user_name}}" {{/if}} required="" autofocus />
+                    <label>UserName</label>
                     <div class="icon-w3">
                         <i class="fa fa-user" aria-hidden="true"></i>
                     </div>
@@ -63,13 +64,14 @@
                 <div class="form-sub-w3">
                     <input id="inputPassword" type="password" name="password" {{#if user_name}} value="{{password}}"
                         {{/if}} placeholder="Password" required="" />
+                    <label>Password</label>
                     <div class="icon-w3">
                         <i class="fa fa-unlock-alt" aria-hidden="true"></i>
                     </div>
                 </div>
                 <div class="form-sub-w3">
                     <input name="remmember_pass" type="checkbox" class="checked" checked>
-                    <label class="p-bottom-w3ls">Nhớ mật khẩu<label>
+                    <label class="p-bottom-w3ls clear">Nhớ mật khẩu<label>
                 </div>
                 <hr class="mt1">
                 <p class="p-bottom-w3ls">Quên mật khẩu?<a href="/pass/forgot">&nbsp;Bấm vào đây</a></p>
@@ -86,7 +88,7 @@
                     <ul>
                         <li>
                             <a class="f" href="/login/auth/facebook">
-                                <span class="fa fa-facebook" aria-hidden="true"></span>tu
+                                <span class="fa fa-facebook" aria-hidden="true"></span>
                                 Đăng nhập với Facebook
                             </a>
                         </li>
@@ -95,7 +97,7 @@
                 <div class="clear"></div>
             </div>
             <hr>
-            <p class="p-bottom-w3ls1">Bạn chưa có tài khoản?<a class href="javascript:;">&nbsp;Đăng ký</a></p>
+            <p class="p-bottom-w3ls1">Bạn chưa có tài khoản?<a class href="/register">&nbsp;Đăng ký</a></p>
         </div>
 
         <!--//form-ends-here-->

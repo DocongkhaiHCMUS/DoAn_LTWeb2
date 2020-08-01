@@ -2,9 +2,17 @@ const modelCategory = require('../models/category.model');
 const modelPost = require('../models/post.model');
 const modelTagPost = require('../models/tag-post.model');
 const moment = require('moment');
-const nodeCache = require('node-cache');
+const LRU = require("lru-cache");
 
-const Cache = new nodeCache();
+
+const options = { max: 500
+    , length: function (n, key) { return n * 2 + key.length }
+    , dispose: function (key, n) { n.close() }
+    , maxAge: 1000 * 60 * 60 * 24 }
+
+ const Cache = new LRU(options)
+
+// const Cache = new nodeCache();
 
 // let see name of function :)
 function removeDuplicate(arr) {
@@ -30,21 +38,6 @@ function convertToCat1(list, getID = false) {
                 'nameCat1': item.cat1
             }
         });
-
-        // for (let item of list) {
-
-        //     // if cat1 doesn't contains item then push item
-        //     if (cat1_temp.includes(item['cat1']) == false) {
-        //         cat1_temp.push(item['cat1']);
-        //         cat1_tempID.push(item['id_cat1']);
-        //     }
-        // }
-        // for (let i = 0; i < cat1_temp.length; i++) {
-        //     cat1.push({
-        //         'id_cat1': cat1_tempID[i],
-        //         'nameCat1': cat1_temp[i]
-        //     });
-        // }
     }
     else {
 
@@ -54,16 +47,6 @@ function convertToCat1(list, getID = false) {
                 'id_cat1': item.id_cat1
             }
         });
-
-        // for (let item of list) {
-
-        //     // if cat1 doesn't contains item then push item
-        //     if (cat1_temp.includes(item['id_cat1']) == false)
-        //         cat1_temp.push(item['id_cat1']);
-        // }
-        // for (let item of cat1_temp) {
-        //     cat1.push({ 'id_cat1': item });
-        // }
     }
 
     //filter duplicate
@@ -74,9 +57,7 @@ function convertToCat1(list, getID = false) {
 
 //split all category level 2 follow each category level 1 and push into list object 
 function convertToCatFull(list, cat1, getID = false) {
-    // let temp = [];
-    // let old_cat1;
-    // let i = 0;
+
     if (getID == false) {
 
         //filter list Cat2 and push it into each object cat1
@@ -95,28 +76,6 @@ function convertToCatFull(list, cat1, getID = false) {
             cat1[i]['list'] = listCat2;
 
         }
-
-        // for (let item of list) {
-        //     // if end of category level 1 , push list category level 2 into object category level 1 and start next
-        //     if (old_cat1 != item['cat1'] && temp.length != 0) {
-        //         cat1[i]['list'] = temp;
-        //         old_cat1 = item['cat1'];
-        //         i++;
-        //         temp = [];
-        //         temp.push({
-        //             'id_cat2': item['id_cat2'],
-        //             "nameCat2": item['cat2']
-        //         });
-        //     }
-        //     else {
-        //         temp.push({
-        //             'id_cat2': item['id_cat2'],
-        //             "nameCat2": item['cat2']
-        //         });
-        //         old_cat1 = item['cat1'];
-        //     }
-        // }
-        // cat1[i]['list'] = temp;
     }
     else {
 
@@ -131,25 +90,8 @@ function convertToCatFull(list, cat1, getID = false) {
             });
 
             cat1[i]['list'] = listIDCat2;
-
         }
 
-        // for (let item of list) {
-
-        //     // if end of category level 1 , push list category level 2 into object category level 1 and start next
-        //     if (old_cat1 != item['id_cat1'] && temp.length != 0) {
-        //         cat1[i]['list'] = temp;
-        //         old_cat1 = item['id_cat1'];
-        //         i++;
-        //         temp = [];
-        //         temp.push(item['id_cat2']);
-        //     }
-        //     else {
-        //         temp.push(item['id_cat2']);
-        //         old_cat1 = item['id_cat1'];
-        //     }
-        // }
-        // cat1[i]['list'] = temp;
     }
     return cat1;
 }
