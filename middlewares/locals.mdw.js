@@ -6,87 +6,150 @@ const nodeCache = require('node-cache');
 
 const Cache = new nodeCache();
 
+// let see name of function :)
+function removeDuplicate(arr) {
+    var hashTable = {};
+    return arr.filter(function (el) {
+        var key = JSON.stringify(el);
+        var match = Boolean(hashTable[key]);
+        return (match ? false : hashTable[key] = true);
+    });
+}
+
 // split all category level 1 push into a list
 function convertToCat1(list, getID = false) {
-    let cat1_temp = [];
-    let cat1_tempID = [];
+    // let cat1_temp = [];
+    // let cat1_tempID = [];
     let cat1 = [];
     if (getID == false) {
-        for (let item of list) {
 
-            // if cat1 doesn't contains item then push item
-            if (cat1_temp.includes(item['cat1']) == false) {
-                cat1_temp.push(item['cat1']);
-                cat1_tempID.push(item['id_cat1']);
+        //filter cat1 and push it into new object
+        cat1 = list.map(function (item) {
+            return item = {
+                'id_cat1': item.id_cat1,
+                'nameCat1': item.cat1
             }
-        }
-        for (let i = 0; i < cat1_temp.length; i++) {
-            cat1.push({
-                'id_cat1': cat1_tempID[i],
-                'nameCat1': cat1_temp[i]
-            });
-        }
+        });
+
+        // for (let item of list) {
+
+        //     // if cat1 doesn't contains item then push item
+        //     if (cat1_temp.includes(item['cat1']) == false) {
+        //         cat1_temp.push(item['cat1']);
+        //         cat1_tempID.push(item['id_cat1']);
+        //     }
+        // }
+        // for (let i = 0; i < cat1_temp.length; i++) {
+        //     cat1.push({
+        //         'id_cat1': cat1_tempID[i],
+        //         'nameCat1': cat1_temp[i]
+        //     });
+        // }
     }
     else {
-        for (let item of list) {
 
-            // if cat1 doesn't contains item then push item
-            if (cat1_temp.includes(item['id_cat1']) == false)
-                cat1_temp.push(item['id_cat1']);
-        }
-        for (let item of cat1_temp) {
-            cat1.push({ 'id_Cat1': item });
-        }
+        //filter id_cat1 and push it into new object
+        cat1 = list.map(function (item) {
+            return item = {
+                'id_cat1': item.id_cat1
+            }
+        });
+
+        // for (let item of list) {
+
+        //     // if cat1 doesn't contains item then push item
+        //     if (cat1_temp.includes(item['id_cat1']) == false)
+        //         cat1_temp.push(item['id_cat1']);
+        // }
+        // for (let item of cat1_temp) {
+        //     cat1.push({ 'id_cat1': item });
+        // }
     }
+
+    //filter duplicate
+    cat1 = removeDuplicate(cat1);
+
     return cat1;
 }
 
 //split all category level 2 follow each category level 1 and push into list object 
 function convertToCatFull(list, cat1, getID = false) {
-    let temp = [];
-    let old_cat1;
-    let i = 0;
+    // let temp = [];
+    // let old_cat1;
+    // let i = 0;
     if (getID == false) {
-        for (let item of list) {
 
-            // if end of category level 1 , push list category level 2 into object category level 1 and start next
-            if (old_cat1 != item['cat1'] && temp.length != 0) {
-                cat1[i]['list'] = temp;
-                old_cat1 = item['cat1'];
-                i++;
-                temp = [];
-                temp.push({
-                    'id_cat2': item['id_cat2'],
-                    "nameCat2": item['cat2']
-                });
-            }
-            else {
-                temp.push({
-                    'id_cat2': item['id_cat2'],
-                    "nameCat2": item['cat2']
-                });
-                old_cat1 = item['cat1'];
-            }
+        //filter list Cat2 and push it into each object cat1
+        for (let i = 0; i < cat1.length; i++) {
+            let listCat2 = list.filter(function (item) {
+                return item.id_cat1 == cat1[i].id_cat1;
+            })
+
+            listCat2 = listCat2.map(function (item) {
+                return item = {
+                    'id_cat2': item.id_cat2,
+                    'nameCat2': item.cat2
+                }
+            })
+
+            cat1[i]['list'] = listCat2;
+
         }
-        cat1[i]['list'] = temp;
+
+        // for (let item of list) {
+        //     // if end of category level 1 , push list category level 2 into object category level 1 and start next
+        //     if (old_cat1 != item['cat1'] && temp.length != 0) {
+        //         cat1[i]['list'] = temp;
+        //         old_cat1 = item['cat1'];
+        //         i++;
+        //         temp = [];
+        //         temp.push({
+        //             'id_cat2': item['id_cat2'],
+        //             "nameCat2": item['cat2']
+        //         });
+        //     }
+        //     else {
+        //         temp.push({
+        //             'id_cat2': item['id_cat2'],
+        //             "nameCat2": item['cat2']
+        //         });
+        //         old_cat1 = item['cat1'];
+        //     }
+        // }
+        // cat1[i]['list'] = temp;
     }
     else {
-        for (let item of list) {
 
-            // if end of category level 1 , push list category level 2 into object category level 1 and start next
-            if (old_cat1 != item['id_cat1'] && temp.length != 0) {
-                cat1[i]['list'] = temp;
-                old_cat1 = item['id_cat1'];
-                i++;
-                temp = [];
-                temp.push(item['id_cat2']);
-            }
-            else {
-                temp.push(item['id_cat2']);
-                old_cat1 = item['id_cat1'];
-            }
+        //filter list id_Cat2 and push it into each object cat1
+        for (let i = 0; i < cat1.length; i++) {
+            let listCat2 = list.filter(function (item) {
+                return item.id_cat1 == cat1[i].id_cat1;
+            })
+
+            let listIDCat2 = listCat2.map(item => {
+                return item.id_cat2;
+            });
+
+            cat1[i]['list'] = listIDCat2;
+
         }
-        cat1[i]['list'] = temp;
+
+        // for (let item of list) {
+
+        //     // if end of category level 1 , push list category level 2 into object category level 1 and start next
+        //     if (old_cat1 != item['id_cat1'] && temp.length != 0) {
+        //         cat1[i]['list'] = temp;
+        //         old_cat1 = item['id_cat1'];
+        //         i++;
+        //         temp = [];
+        //         temp.push(item['id_cat2']);
+        //     }
+        //     else {
+        //         temp.push(item['id_cat2']);
+        //         old_cat1 = item['id_cat1'];
+        //     }
+        // }
+        // cat1[i]['list'] = temp;
     }
     return cat1;
 }
