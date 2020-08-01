@@ -408,7 +408,28 @@ router.get('/post/detail/:id', async function (req, res) {
 });
 router.post('/post/update',async function (req, res) {
     await postModel.patch(req.body);
+    if(parseInt(req.body.delete, 10) === 1){
+       await postModel.deteleAllTagPostByPost(req.body.id);
+    }
    res.redirect(req.headers.referer);
+});
+router.get('/post/tag_post/:id', async function (req, res) {  
+    const id = +req.params.id || -1;
+    const tag_post = await tagPostModel.postInTagPost(id);
+    const _post = await postModel.singlePostById(id);
+    res.render('viewAdmin/viewPost/tagToPost.hbs', { 
+        layout: false,
+        empty: tag_post.length === 0,
+        tag_posts: tag_post,
+        post: _post[0] });
+});
+router.get('/post_tag/add/:id', async function (req, res) {
+    
+    const id = +req.params.id || -1;
+    const _post  = await postModel.singlePostById(id);
+    const tags = await tagModel.All();
+    req.session.prevURL = req.headers.referer;
+    res.render('viewAdmin/viewPost/addTagPost.hbs', { layout: false, post:_post[0],tags });
 });
 /*router.get('/post/add', function (req, res) {
     res.render('viewAdmin/viewPost/add.hbs', {
