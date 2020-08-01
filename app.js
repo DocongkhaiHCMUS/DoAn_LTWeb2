@@ -24,8 +24,8 @@ const restrict = require('./middlewares/authenticated.mdw');
 //require local variables
 require('./middlewares/locals.mdw')(app);
 
-//config passport Facebook
-require('./middlewares/passport_FB.mdw')(app);
+// //config passport Facebook
+// require('./middlewares/passport_FB.mdw')(app);
 
 // CODE IN HERE
 

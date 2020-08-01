@@ -3,16 +3,48 @@ const router = express.Router();
 const passport = require('passport');
 const userModel = require('../models/user.model');
 const bcrypt = require('bcrypt');
+const config = require('../db/config/config.json');
+const FacebookStrategy = require('passport-facebook').Strategy;
 
-app = express();
+//Passport FB setup
+router.use(function (req, res, next) {
+    // Passport session setup. 
+    passport.serializeUser(function (user, done) {
+        done(null, user);
+    });
+
+    passport.deserializeUser(function (obj, done) {
+        done(null, obj);
+    });
+
+    // Use FacebookStrategy with Passport.
+    passport.use(new FacebookStrategy({
+        clientID: config.passport_FB.FACEBOOK_CLIENT_ID,
+        clientSecret: config.passport_FB.FACEBOOK_CLIENT_SECRET,
+        callbackURL: config.passport_FB.callback_url_login,
+        profileFields: ['id', 'displayName', 'email']
+    },
+        function (accessToken, refreshToken, profile, done) {
+            process.nextTick(function () {
+                //console.log(accessToken, refreshToken, profile, done);
+                return done(null, profile);
+            });
+        }
+    ));
+    next();
+})
+router.use(passport.initialize());
+router.use(passport.session());
+
+
 
 router.get('/', function (req, res) {
     req.session.isAuthenticated = false;
     req.session.authUser = null;
 
     res.render('viewLogin/_login.hbs', {
-        user_name: app.locals.user_name,
-        password: app.locals.password
+        user_name: req.app.locals.user_name,
+        password: req.app.locals.password
     });
 });
 
@@ -35,6 +67,12 @@ router.post('/', async function (req, res) {
         if (bcrypt.compareSync(req.body.password.toString(), us.password) == true && us.isPassport == 0) {
             flag = true;
             req.session.isAuthenticated = true;
+
+            if (req.body.remmember_pass) {
+                req.app.locals.user_name = req.body.user_name;
+                req.app.locals.password = req.body.password.toString
+            }
+
             delete us.password;
             req.session.authUser = us;
         }
@@ -43,30 +81,6 @@ router.post('/', async function (req, res) {
     console.log(req.session);
 
     if (flag == true) {
-
-        if (req.body.remmember_pass) {
-
-        }
-
-        // if (user.permission == false || user.permission == 0) {
-        //     if (user.attend == true || user.attend == 1) {
-        //         res.render('viewLogin/loginSuccess.hbs', {
-        //             title: config[0].res_agree,
-        //             is_user: true
-        //         });
-        //     }
-        //     else {
-        //         res.render('viewLogin/loginSuccess.hbs', {
-        //             title: config[0].res_disagree,
-        //             is_user: true
-        //         });
-        //     }
-        // }
-        // else {
-        //     res.redirect('/admin/admin.html');
-        // }
-
-
         res.redirect('/');
     }
     else {
@@ -117,12 +131,6 @@ router.get('/account', async function (req, res) {
     }
 
     if (flag == true) {
-
-        if (req.body.remmember_pass) {
-            app.locals.user_name = req.body.user_name;
-            app.locals.password = req.body.password;
-        }
-
         res.redirect('/');
     }
     else {
