@@ -9,19 +9,10 @@
     <link rel="icon" type="image/png" href="/public/img/logo-2.png" />
 
     <!-- Import lib -->
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.css">
     <link rel="stylesheet" type="text/css" href="/public/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/public/css/font-awesome.min.css">
-    <link type="text/css" rel="stylesheet" href="/public/css/bootstrap.min.css" />
 
-
-    <!-- Owl Carousel -->
-    <link type="text/css" rel="stylesheet" href="/public/css/owl.carousel.css" />
-    <link type="text/css" rel="stylesheet" href="/public/css/owl.theme.default.css" />
-
-    <!-- Font Awesome Icon -->
-    <link rel="stylesheet" href="/public/css/font-awesome.min.css">
 
     <!-- Custom stlylesheet -->
     <link type="text/css" rel="stylesheet" href="/public/css/style.css" />
@@ -297,11 +288,7 @@
     <!-- end sidebar -->
     <!-- main content -->
     <div class="wrapper">
-        {{#if this.empty}}
-        <div class="table-title">
-            <h3>Không có nhãn nào.</h3>
-        </div>
-        {{else}}
+         
         <div class="table-title">
             <h3>Danh sách nhãn</h3>
         </div>
@@ -363,7 +350,6 @@
                             class="fa fa-angle-double-right"></i></a></li>
             </ul>
         </div>
-        {{/if}}
     </div>
     <!-- end main content -->
     <!-- import script -->
@@ -374,41 +360,8 @@
         })
     </script>
     <script src="/public/js/jquery.min.js"></script>
-	<script src="/public/js/bootstrap.min.js"></script>
-	<script src="/public/js/owl.carousel.min.js"></script>
 	<script src="/public/js/main.js"></script>
-	<script src="/public/js/boostrap-hover-dropdown.js"></script>
 
-	<script>
-		$(window).resize(function () {
-			var width = (window.innerWidth > 0) ? window.innerWidth : screen.width;
-			$('.search-form').css('width', width - 20);
-
-			if (width < 1351) {
-				$('.main-nav li a').css('font-size', '12px');
-			}
-			else if (width < 1391) {
-				$('.main-nav li a').css('font-size', '12.5px');
-			}
-			else if (width < 1431) {
-				$('.main-nav li a').css('font-size', '13px');
-			}
-			else if (width < 1471) {
-				$('.main-nav li a').css('font-size', '13.5px');
-			}
-			else if (width < 1509) {
-				$('.main-nav li a').css('font-size', '14px');
-			}
-			else if (width > 1509) {
-				$('.main-nav li a').css('font-size', '14.5px');
-			}
-		});
-
-		function redirectFunction(url) {
-			location.assign(url);
-		}
-
-	</script>
     <!-- end import script -->
 </body>
 
