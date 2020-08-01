@@ -179,21 +179,21 @@ span.fa {
 	border: 2px solid #8BC34A;
 }
 
-.form-sub-w3 input[type="text"]:hover,
-.form-sub-w3 input[type="password"]:hover{
+.form-sub-w3 input[type="text"]:hover, .form-sub-w3 input[type="password"]:hover,.form-sub-w3 input[type="text"]:focus, .form-sub-w3 input[type="password"]:focus{
     background-color: #fff !important;
 	font-weight: 550;
     color: #407204 !important;
 }
 
-input:hover~.icon-w3 i
+input:hover~.icon-w3 i,
+input:focus~.icon-w3 i
 {
 	color:#8BC34A ;
 }
 
 input:hover::-webkit-input-placeholder{
 	font-weight: 500;
-color:#407204 ;
+	color:#407204 ;
 }
 
 input::-webkit-input-placeholder {
@@ -267,8 +267,9 @@ h1 {
 .icon-w3 {
     display: inline-block;
     position: absolute;
+    transform: translateY(-4px);
     right: 12px;
-	color: #fff;
+    color: #fff;
     bottom: 26px;
 }
 form {
@@ -277,13 +278,13 @@ form {
 }
 .form-sub-w3{
 	position:relative;
-    margin-bottom: 20px;
+	margin-bottom: 30px;
 }
 .form-sub-w3 input[type="text"],input[type="password"] {
     outline: none;
     font-size: 15px;
     color: #ffffff;
-    padding: 15px 30px 15px 10px;
+    padding: 20px 30px 20px 10px;
     letter-spacing: 2px;
     width: 100%;
     border: none;
