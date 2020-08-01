@@ -9,12 +9,15 @@ const TBL_TagPost = 'tag_post';
 
 module.exports = {
     load: () => db.load(`select * from ${TBL_Post} p where p.delete = 0`),
-
+    loadSortByTitle: () => db.load(`select * from ${TBL_Post} p where p.delete = 0 order by title`),
     // load_home:() => db.load(`select p.id,p.title,p.avatar,p.folder_img, p.tiny_des, p.views.p.categories,
     //                         p.publish_date from ${TBL_Post}`),
 
     singleByID: (ID) => {
         return db.load(`select * from ${TBL_Post} p where p.id = ${ID} and p.delete = 0`)
+    },
+    singleByID2: (ID) => {
+        return db.load(`select p.*,u.id as id_user from ${TBL_Post} p left join user u on p.author = u.id where p.id = ${ID} `)
     },
 
     singleByIDCat1_page: (idCat1, limit, offset) => {
@@ -96,5 +99,12 @@ module.exports = {
         entity['modifile_date'] = moment().format('YYYY/MM/DD HH:mm:ss');
 
         return db.patch(TBL_Post, entity, condition)
-    }
+    },
+    pageByPost: function (limit, offset) {
+        return db.load(`select * from ${TBL_Post} order by title limit ${limit} offset ${offset} `);
+      },
+      countByPost: async function () {
+        const rows = await db.load(`select count(*) as total from ${TBL_Post}`);
+        return rows[0].total;
+      },
 };
