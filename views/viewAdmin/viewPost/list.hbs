@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Danh sách bài viết</title>
+
+    <meta name="viewport"
+        content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+    <link rel="icon" type="image/png" href="/public/img/logo-2.png" />
+
+    <!-- Import lib -->
+    <link rel="stylesheet" type="text/css" href="/public/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/public/css/font-awesome.min.css">
+
+    <!-- Custom stlylesheet -->
+    <link type="text/css" rel="stylesheet" href="/public/css/style.css" />
+    <link type="text/css" rel="stylesheet" href="/public/css/style_of_mine.css">
+    <link rel="stylesheet" type="text/css" href="/public/css/admin.css">
+    <!-- End import lib -->
+
+
+
+    <style>
+        @import url(https://fonts.googleapis.com/css?family=Roboto:400,500,700,300,100);
+
+        .wrapper {
+            background-color: #3e94ec;
+            font-family: "Roboto", helvetica, arial, sans-serif;
+            font-size: 16px;
+            font-weight: 400;
+            text-rendering: optimizeLegibility;
+        }
+
+        div.table-title {
+            display: block;
+            margin: auto;
+            max-width: 600px;
+            padding: 5px;
+            width: 100%;
+        }
+
+        .table-title h3 {
+            color: #fafafa;
+            font-size: 30px;
+            font-weight: 400;
+            font-style: normal;
+            font-family: "Roboto", helvetica, arial, sans-serif;
+            text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.1);
+            text-transform: uppercase;
+        }
+
+
+        /*** Table Styles **/
+
+        .table-fill {
+            background: white;
+            border-radius: 3px;
+            border-collapse: collapse;
+            height: 320px;
+            margin: auto;
+            max-width: 990px;
+            padding: 5px;
+            width: 100%;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+            animation: float 5s infinite;
+        }
+
+        th {
+            color: #D5DDE5;
+            ;
+            background: #1b1e24;
+            border-bottom: 4px solid #9ea7af;
+            border-right: 1px solid #343a45;
+            font-size: 23px;
+            font-weight: 100;
+            padding: 24px;
+            text-align: left;
+            text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+            vertical-align: middle;
+        }
+
+        th:first-child {
+            border-top-left-radius: 3px;
+        }
+
+        th:last-child {
+            border-top-right-radius: 3px;
+            border-right: none;
+        }
+
+        tr {
+            border-top: 1px solid #C1C3D1;
+            border-bottom-: 1px solid #C1C3D1;
+            color: #666B85;
+            font-size: 16px;
+            font-weight: normal;
+            text-shadow: 0 1px 1px rgba(256, 256, 256, 0.1);
+        }
+
+        tr:hover td {
+            background: #4E5066;
+            color: #FFFFFF;
+            border-top: 1px solid #22262e;
+        }
+
+        tr:first-child {
+            border-top: none;
+        }
+
+        tr:last-child {
+            border-bottom: none;
+        }
+
+        tr:nth-child(odd) td {
+            background: #EBEBEB;
+        }
+
+        tr:nth-child(odd):hover td {
+            background: #4E5066;
+        }
+
+        tr:last-child td:first-child {
+            border-bottom-left-radius: 3px;
+        }
+
+        tr:last-child td:last-child {
+            border-bottom-right-radius: 3px;
+        }
+
+        td {
+            background: #FFFFFF;
+            padding: 20px;
+            text-align: left;
+            vertical-align: middle;
+            font-weight: 300;
+            font-size: 18px;
+            text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.1);
+            border-right: 1px solid #C1C3D1;
+        }
+
+        td:last-child {
+            border-right: 0px;
+        }
+
+        th.text-left {
+            text-align: left;
+        }
+
+        th.text-center {
+            text-align: center;
+        }
+
+        th.text-right {
+            text-align: right;
+        }
+
+        td.text-left {
+            text-align: left;
+        }
+
+        td.text-center {
+            text-align: center;
+        }
+
+        td.text-right {
+            text-align: right;
+        }
+
+        a {
+            cursor: pointer;
+            text-decoration: none;
+
+            &.white-purple {
+                font-weight: 700;
+                color: #664e96;
+                border-color: white;
+                background: white;
+            }
+        }
+
+        .card {
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+            transition: 0.3s;
+            width: 40%;
+        }
+
+        .card:hover {
+            box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+        }
+
+        .container {
+            padding: 2px 16px;
+        }
+    </style>
+</head>
+
+<body class="overlay-scrollbar">
+
+    <!-- navbar -->
+    <div class="navbar">
+        <!-- nav left -->
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link">
+                    <i class="fa fa-bars" aria-hidden="true" onclick="collapseSidebar()"></i>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="/admin">
+                    <img src="/public/img/logo.png" alt="News24H logo" class="logo">
+                </a>
+            </li>
+        </ul>
+        <!-- end nav left -->
+        <!-- form -->
+        <form class="navbar-search">
+            <input type="text" name="Search" class="navbar-search-input" placeholder="What you looking for...">
+            <i class="fa fa-search" aria-hidden="true"></i>
+        </form>
+        <!-- end form -->
+        <!-- nav right -->
+        <ul class="navbar-nav nav-right">
+            <li class="nav-item dropdown">
+            </li>
+            <li class="nav-item">
+                <div class="avt dropdown">
+                    <img src="/public/img/img_avatar/default_user.png" alt="User image" class="dropdown-toggle"
+                        data-toggle="user-menu">
+                    <ul id="user-menu" class="dropdown-menu">
+                        <li class="dropdown-menu-item">
+                            <a class="dropdown-menu-link">
+                                <div>
+                                    <i class="fa fa-user-circle-o" aria-hidden="true"></i>
+                                </div>
+                                <span>Profile</span>
+                            </a>
+                        </li>
+                        <li class="dropdown-menu-item">
+                            <a href="#" class="dropdown-menu-link">
+                                <div>
+                                    <i class="fa fa-cog" aria-hidden="true"></i>
+                                </div>
+                                <span>Settings</span>
+                            </a>
+                        </li>
+                        <li class="dropdown-menu-item">
+                            <a href="#" class="dropdown-menu-link">
+                                <div>
+                                    <i class="fa fa-sign-out" aria-hidden="true"></i>
+                                </div>
+                                <span>Logout</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+        </ul>
+        <!-- end nav right -->
+    </div>
+    <!-- end navbar -->
+    <!-- sidebar -->
+    <div class="sidebar">
+        <ul class="sidebar-nav">
+            <li class="sidebar-nav-item">
+                <a href="/admin/category" class="sidebar-nav-link">
+                    <div>
+                        <i class="fa fa-list" aria-hidden="true"></i>
+                    </div>
+                    <span>
+                        Category
+                    </span>
+                </a>
+            </li>
+            <li class="sidebar-nav-item">
+                <a href="/admin/tag" class="sidebar-nav-link">
+                    <div>
+                        <i class="fa fa-tags" aria-hidden="true"></i>
+                    </div>
+                    <span>Tags</span>
+                </a>
+            </li>
+            <li class="sidebar-nav-item">
+                <a href="/admin/post" class="sidebar-nav-link">
+                    <div>
+                        <i class="fa fa-book" aria-hidden="true"></i>
+                    </div>
+                    <span>Posts</span>
+                </a>
+            </li>
+            <li class="sidebar-nav-item">
+                <a href="/admin/user" class="sidebar-nav-link">
+                    <div>
+                        <i class="fa fa-users" aria-hidden="true"></i>
+                    </div>
+                    <span>Users</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <!-- end sidebar -->
+    <!-- main content -->
+    <div class="wrapper">
+        {{#if this.empty}}
+        <div class="table-title">
+            <h3>Không có bài viết nào.</h3>
+        </div>
+        {{else}}
+        <div class="table-title">
+            <h3>Danh sách bài viết</h3>
+        </div>
+        <h4>
+            <a style="color:white;" href="/admin/post/add" role="button" title="Thêm bài viết">
+                <i class="fa fa-plus" aria-hidden="true"></i>
+                Tạo bài viết
+            </a>
+        </h4>
+        <table class="table-fill">
+            <thead>
+                <tr>
+                    <th class="text-left">Tên bài viết</th>
+                    <th class="text-left">Ngày tạo</th>
+                    <th class="text-left">Avartar</th>
+                    <th class="text-left=">Mô tả</th>
+                    <th class="text-left">&nbsp;</th>
+                </tr>
+            </thead>
+            <tbody class="table-hover">
+                {{#each this.posts}}
+                <tr>
+                    <td class="text-left">{{title}}</td>
+                    <td class="text-left" id="txtDateCreate">{{parseTime create_date}}</td>
+                    <td class="text-left">
+                        <img src="/public/img/img_post/{{folder_img}}/{{avatar}}.jpg" alt="" width="100" height="100">
+                    </td>
+                    <td class="text-left">{{tiny_des}}</td>
+                
+                    <td class="text-right">
+                        <a class="" href="/admin/post/edit/{{id}}" title="Nhãn gắn bài viết">
+                             <i class="fa fa-tags" aria-hidden="true"></i>
+                        </a>
+                        &nbsp;&nbsp;&nbsp;
+                        <a class="" href="/admin/post/detail/{{id}}" title="Chi tiết / chỉnh sửa">
+                            <i class="fa fa-pencil" aria-hidden="true"></i>
+                        </a>
+                    </td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+        <div class="article-pagination">
+            <ul>
+                <li><a {{#unless can_go_prev}} class="disable" {{/unless}} href="?page={{prev_value}}"><i
+                            class="fa fa-angle-double-left"></i></a></li>
+                {{#each pageItems}}
+                <li {{#if active}} class="active" {{/if}}>
+                    <a {{#if disable}} class="disable" {{/if}} {{#if active}} class="active" {{/if}}
+                        href="?page={{value}}">{{value}}</a></li>
+                {{/each}}
+                <li><a {{#unless can_go_next}} class="disable" {{/unless}} href="?page={{next_value}}"><i
+                            class="fa fa-angle-double-right"></i></a></li>
+            </ul>
+        </div>
+        {{/if}}
+    </div>
+    <!-- end main content -->
+    <!-- import script -->
+    <script src="/public/js/admin.js"></script>
+    <script>
+        $('.article-pagination .disable').on('click', function (e) {
+            e.preventDefault();
+        })
+    </script>
+    <script src="/public/js/jquery.min.js"></script>
+    <script src="/public/js/main.js"></script>
+    <script src="/public/js/bootstrap.min.js"></script>
+    <!-- end import script -->
+</body>
+
+</html>
