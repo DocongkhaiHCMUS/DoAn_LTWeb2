@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Danh sách thể loại cấp 2 báo</title>
+    <title>Danh sách nhãn trong bài viết</title>
 
     <meta name="viewport"
         content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
@@ -20,20 +20,14 @@
         @import url(https://fonts.googleapis.com/css?family=Roboto:400,500,700,300,100);
 
         .wrapper {
-            background: #808080;
-            /* fallback for old browsers */
-            background: -webkit-linear-gradient(to right, #3fada8, #808080);
-            /* Chrome 10-25, Safari 5.1-6 */
-            background: linear-gradient(to right, #3fada8, #808080);
-            /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-
-
+            background-color: #3e94ec;
             font-family: "Roboto", helvetica, arial, sans-serif;
             font-size: 16px;
             font-weight: 400;
             text-rendering: optimizeLegibility;
         }
     </style>
+    {{{_sections.css}}}
 </head>
 
 <body class="overlay-scrollbar">
@@ -144,47 +138,54 @@
     <div class="wrapper">
         {{#if this.empty}}
         <div class="table-title">
-            <h3>Không có thể loại cấp 2.</h3>
+            <h3>Bài viết này không có nhãn nào.</h3>
         </div>
         {{else}}
         <div class="table-title">
-            <h3>Danh sách thể loại cấp 2</h3>
+            <h3>Danh sách nhãn gắn trong bài viết <b style="color: green;"></b></h3>
         </div>
-        <a class="btn btn success" href="/admin/categorylv2/add/{{cat1ID}}" role="button" title="Thêm thể loại cấp 2">
-            <i class="fa fa-plus" aria-hidden="true"></i>
-            Thêm thể loại loại cấp 2
-        </a>
+        <br><br>
+        <div>
+            <a class="btn success" href="/admin/post_tag/add/{{this.post.id}}" role="button">
+                <i class="fa fa-plus" aria-hidden="true"></i>
+                Gắn thêm nhãn vào bài viết
+            </a>
+        </div>
         <br><br>
         <table class="table-fill">
             <thead>
                 <tr>
-                    <th class="text-left">Tên thể loại</th>
-                    <th class="text-left">Ngày tạo</th>
-                    <th class="text-left">Chỉnh sửa lần cuối</th>
+                    <th class="text-left">Tên nhãn</th>
                     <th class="text-left=">Tình trạng</th>
                     <th class="text-left">&nbsp;</th>
                 </tr>
             </thead>
             <tbody class="table-hover">
-                {{#each this.category}}
+                {{#each this.tag_posts}}
                 <tr>
-                    <td class="text-left">{{name}}</td>
-                    <td class="text-left" id="txtDateCreate">{{parseTime create_date}}</td>
-                    <td class="text-left">{{parseTime modifile_date}}</td>
-                    {{#if delete}}
-                    <td class="text-center">
-                        <i class="fa fa-lock" aria-hidden="true"></i>
-                    </td>
-                    {{else}}
-                    <td class="text-center">
-                        <i class="fa fa-unlock" aria-hidden="true"></i>
-                    </td>
-                    {{/if}}
-                    <td class="text-right">
-                        <a class="" href="/admin/categorylv2/edit/{{id}}" title="Chỉnh sửa">
-                            <i class="fa fa-pencil" aria-hidden="true"></i>
-                        </a>
-                    </td>
+                    <td class="text-left">{{tagname}}</td>
+                    <form method="POST">
+                        <input hidden name="id" value="{{id}}">
+                        {{#if delete}}
+                        <td class="text-center">
+                            <i class="fa fa-lock" aria-hidden="true"></i>
+                        </td>
+                        <td class="text-right">
+                            <button type="submit" title="Mở khóa nhãn này" formaction="/admin/tag_post/restore">
+                                <i class="fa fa-refresh" aria-hidden="true"></i>
+                            </button>
+                        </td>
+                        {{else}}
+                        <td class="text-center">
+                            <i class="fa fa-unlock" aria-hidden="true"></i>
+                        </td>
+                        <td class="text-right">
+                            <button type="submit" title="Khóa nhãn này" formaction="/admin/tag_post/del">
+                                <i class="fa fa-recycle" aria-hidden="true"></i>
+                            </button>
+                        </td>
+                        {{/if}}
+                    </form>
                 </tr>
                 {{/each}}
             </tbody>
