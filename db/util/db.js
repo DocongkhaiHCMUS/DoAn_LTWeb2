@@ -77,4 +77,16 @@ module.exports = {
             });
         })
     },
+    deleteAllTagPostByPost: function(ID){
+        return new Promise(function(resolve,reject){
+            const sql =`update tag_post tp set tp.delete = 1 where tp.post = ${ID}`;
+            pool.query(sql,ID, function (error, results) {
+                if (error) {
+                    return reject(error);
+                }
+
+                resolve(results);
+            });
+        })
+    },
 };
