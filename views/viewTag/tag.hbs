@@ -1,5 +1,8 @@
 {{#section 'js'}}
 <script>
+    $('#lock-premium>a').on('click', function (e) {
+        e.preventDefault();
+    })
     $('.article-pagination .disable').on('click', function (e) {
         e.preventDefault();
     })
@@ -16,13 +19,16 @@
                 <!-- section title -->
                 <div class="section-title">
                     <h2 class="title">
-                      Tin tức về Từ khóa : " {{curTag}} "
+                        Tin tức về Từ khóa : " {{curTag}} "
                     </h2>
                 </div>
                 <!-- /section title -->
                 <!-- Main Column -->
                 <div class="col-md-8">
                     <!-- ARTICLE -->
+
+                    {{#if lcSubcriber}}
+
                     {{#each listPost}}
                     <article class="article row-article">
                         <div class="article-img">
@@ -32,11 +38,19 @@
                         </div>
                         <div class="article-body">
                             <ul class="article-info">
-                                <li class="article-category"><a href="/category/cat2/{{category.id_cat2}}">{{category.nameCat2}}</a>
+                                <li class="article-category"><a
+                                        href="/category/cat2/{{category.id_cat1}}">{{category.nameCat1}}</a>
                                 </li>
+                                <li class="article-category"><a
+                                        href="/category/cat2/{{category.id_cat2}}">{{category.nameCat2}}</a>
+                                </li>
+                                {{#if premium}}
+                                <li class="premium">Premium</li>
+                                {{/if}}
                                 <li class="article-type"><i class="fa fa-file-text"></i></li>
                             </ul>
-                            <h3 class="article-title"><a href="/post/{{id}}">{{title}}</a>
+                            <h3 class="article-title">
+                                <a href="/post/{{id}}">{{title}}</a>
                             </h3>
                             <ul class="article-meta">
                                 <li><i class="fa fa-clock-o">&nbsp;</i>{{parseTime publish_date}}</li>
@@ -58,6 +72,55 @@
                         <!-- /widget tags -->
                     </article>
                     {{/each}}
+
+                    {{else}}
+
+                    {{#each listPost}}
+                    <article class="article row-article">
+                        <div {{#if premium}} id="lock-premium" {{/if}} class="article-img">
+                            <a href="/post/{{id}}">
+                                <img src="/public/img/img_post/{{folder_img}}/{{avatar}}.jpg" alt="">
+                            </a>
+                        </div>
+                        <div class="article-body">
+                            <ul class="article-info">
+                                <li class="article-category"><a
+                                        href="/category/cat2/{{category.id_cat1}}">{{category.nameCat1}}</a>
+                                </li>
+                                <li class="article-category"><a
+                                        href="/category/cat2/{{category.id_cat2}}">{{category.nameCat2}}</a>
+                                </li>
+                                {{#if premium}}
+                                <li class="premium">Premium</li>
+                                {{/if}}
+                                <li class="article-type"><i class="fa fa-file-text"></i></li>
+                            </ul>
+                            <h3 {{#if premium}}id="lock-premium" {{/if}} class="article-title">
+                                <a href="/post/{{id}}">{{title}}</a>
+                            </h3>
+                            <ul class="article-meta">
+                                <li><i class="fa fa-clock-o">&nbsp;</i>{{parseTime publish_date}}</li>
+                                <li><i class="fa fa-eye">&nbsp;</i>{{views}}</li>
+                            </ul>
+                            <p>
+                                {{tiny_des}}
+                            </p>
+                        </div>
+                        <!-- widget tags -->
+                        <div class="widget-tags">
+                            <h4>Từ khóa : </h4>
+                            <ul>
+                                {{#each listTag}}
+                                <li><a href="/tag/{{tag}}">{{name}}</a></li>
+                                {{/each}}
+                            </ul>
+                        </div>
+                        <!-- /widget tags -->
+                    </article>
+                    {{/each}}
+
+                    {{/if}}
+
                     <!-- /ARTICLE -->
                     <!-- pagination -->
                     <div class="article-pagination">
@@ -90,6 +153,8 @@
                                 <!-- owl carousel 3 -->
                                 <div id="owl-carousel-3" class="owl-carousel owl-theme center-owl-nav">
 
+                                    {{#if lcSubcriber}}
+
                                     {{#each highlightPost}}
                                     <article class="article">
                                         <div class="article-img">
@@ -98,7 +163,9 @@
                                             </a>
                                         </div>
                                         <div class="article-body">
-                                            <h4 class="article-title"><a href="/post/{{id}}">{{title}}</a></h4>
+                                            <h4 class="article-title">
+                                                <a href="/post/{{id}}">{{title}}</a>
+                                            </h4>
                                             <ul class="article-meta">
                                                 <li><i class="fa fa-clock-o">&nbsp;</i>{{parseTime publish_date}}
                                                 </li>
@@ -107,11 +174,37 @@
                                         </div>
                                     </article>
                                     {{/each}}
+
+                                    {{else}}
+
+                                    {{#each highlightPost}}
+                                    <article class="article">
+                                        <div {{#if premium}} id="lock-premium" {{/if}} class="article-img">
+                                            <a href="/post/{{id}}">
+                                                <img src="/public/img/img_post/{{folder_img}}/{{avatar}}.jpg" alt="">
+                                            </a>
+                                        </div>
+                                        <div class="article-body">
+                                            <h4 {{#if premium}} id="lock-premium" {{/if}} class="article-title">
+                                                <a href="/post/{{id}}">{{title}}</a>
+                                            </h4>
+                                            <ul class="article-meta">
+                                                <li><i class="fa fa-clock-o">&nbsp;</i>{{parseTime publish_date}}
+                                                </li>
+                                                <li><i class="fa fa-eye">&nbsp;</i>{{views}}</li>
+                                            </ul>
+                                        </div>
+                                    </article>
+                                    {{/each}}
+
+                                    {{/if}}
                                 </div>
                                 <!-- /owl carousel 3 -->
                                 <div class="widget-title">
                                     <h2 class="title">Tin Mới Nhất</h2>
                                 </div>
+                                {{#if lcSubcriber}}
+
                                 {{#each latestPost10}}
                                 {{#each listPost}}
                                 <article class="article widget-article">
@@ -121,7 +214,9 @@
                                         </a>
                                     </div>
                                     <div class="article-body">
-                                        <h4 class="article-title"><a href="/post/{{id}}">{{title}}</a></h4>
+                                        <h4 class="article-title">
+                                            <a href="/post/{{id}}">{{title}}</a>
+                                        </h4>
                                         <ul class="article-meta">
                                             <li><i class="fa fa-clock-o">&nbsp;</i>{{parseTime publish_date}}
                                             </li>
@@ -131,6 +226,32 @@
                                 </article>
                                 {{/each}}
                                 {{/each}}
+
+                                {{else}}
+
+                                {{#each latestPost10}}
+                                {{#each listPost}}
+                                <article class="article widget-article">
+                                    <div {{#if premium}} id="lock-premium" {{/if}} class="article-img">
+                                        <a href="/post/{{id}}">
+                                            <img src="/public/img/img_post/{{folder_img}}/{{avatar}}.jpg" alt="">
+                                        </a>
+                                    </div>
+                                    <div class="article-body">
+                                        <h4 {{#if premium}} id="lock-premium" {{/if}} class="article-title">
+                                            <a href="/post/{{id}}">{{title}}</a>
+                                        </h4>
+                                        <ul class="article-meta">
+                                            <li><i class="fa fa-clock-o">&nbsp;</i>{{parseTime publish_date}}
+                                            </li>
+                                            <li><i class="fa fa-eye">&nbsp;</i>{{views}}</li>
+                                        </ul>
+                                    </div>
+                                </article>
+                                {{/each}}
+                                {{/each}}
+
+                                {{/if}}
                             </div>
                             <!-- /article widget -->
                         </div>

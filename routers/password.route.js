@@ -20,16 +20,16 @@ router.post('/change', async function (req, res) {
     console.log(us);
     var oldpass = req.body.old_password;
     var newpass = req.body.new_password;
-    var firmpass = req.body.firm_password;
-    var rs = bcrypt.compareSync(oldpass, us.password);
+    // var firmpass = req.body.firm_password;
+    var rs = bcrypt.compareSync(oldpass.toString(), us.password);
     if (rs === false) {
         return res.render('viewPass/change', {
             err: 'Old password Invalid.'
         })
     }
-    us.password = bcrypt.hashSync(firmpass, 10);
+    us.password = bcrypt.hashSync(newpass, 10);
     userModel.patch(us);
-    res.redirect('/');
+    res.redirect(`${req.headers.referer}`);
 })
 router.get('/forgot', function (req, res) {
     res.render('viewPass/forgot');

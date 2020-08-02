@@ -2,6 +2,17 @@
   padding: 0;
   margin: 0;
 }
+
+.premium {
+    padding: 0px 15px;
+    color: #fff !important;
+    font-size: 12.5px;
+    text-transform: uppercase;
+    font-weight: 600;
+    height: 30px;
+    line-height: 30px;
+    background: #fdbe00;
+}
 input:focus::-webkit-input-placeholder {
   color: transparent;
 }

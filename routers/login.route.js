@@ -43,8 +43,8 @@ router.get('/', function (req, res) {
     req.session.authUser = null;
 
     res.render('viewLogin/_login.hbs', {
-        user_name: req.app.locals.user_name,
-        password: req.app.locals.password
+        user_name: (req.app.locals.user_name ? req.app.locals.user_name : null),
+        password: (req.app.locals.password ? req.app.locals.password : null)
     });
 });
 
@@ -52,8 +52,15 @@ router.get('/', function (req, res) {
 router.get('/logout', function (req, res) {
     req.logOut();
     req.session.destroy(function (err) {
-        res.redirect('/');
+        console.log(err);
+        // res.redirect('/');
     });
+
+    req.app.locals.lcUser = null;
+    req.app.locals.lcIsAuthenticated = false;
+    req.app.locals.lcSubcriber = false;
+
+    res.redirect('/');
 })
 
 // Handling when receive POST request
@@ -70,7 +77,7 @@ router.post('/', async function (req, res) {
 
             if (req.body.remmember_pass) {
                 req.app.locals.user_name = req.body.user_name;
-                req.app.locals.password = req.body.password.toString
+                req.app.locals.password = req.body.password
             }
 
             delete us.password;
