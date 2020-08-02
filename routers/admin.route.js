@@ -458,10 +458,19 @@ router.get('/post/detail/:id', async function (req, res) {
         const id = +req.params.id || -1;
         const _post = await postModel.singleByID2(id);
         const listUser = await userModel.load();
+        const categoryLv2 = await cateModel.load_cat2();
         let i = 0;
         while (i < listUser.length) {
             if (listUser[i].id === _post[0].author) {
                 listUser[i].isAuthor = true;
+                i = 0;
+                break;
+            }
+            i++;
+        }
+        while(i< categoryLv2.length){
+            if(categoryLv2[i].id === _post[0].category){
+                categoryLv2[i].isCat2 = true;
                 break;
             }
             i++;
@@ -470,15 +479,16 @@ router.get('/post/detail/:id', async function (req, res) {
             layout: false,
             post: _post[0],
             users: listUser,
+            cats2: categoryLv2,
             empty: _post.length === 0
         });
     }
 });
 router.post('/post/update', async function (req, res) {
     await postModel.patch(req.body);
-    if (parseInt(req.body.delete, 10) === 1) {
-        await postModel.deteleAllTagPostByPost(req.body.id);
-    }
+    // if (parseInt(req.body.delete, 10) === 1) {
+    //     await postModel.deleteAllTagPostByPost(req.body.id);
+    // }
     res.redirect(req.headers.referer);
 });
 router.get('/post/tag_post/:id', async function (req, res) {
@@ -546,7 +556,7 @@ router.get('/user/add', function (req, res) {
         res.redirect('/');
     }
     else {
-        res.render('viewAdmin/viewCategory/add.hbs', {
+        res.render('viewAdmin/viewUser/add.hbs', {
             layout: false
         });
     }
