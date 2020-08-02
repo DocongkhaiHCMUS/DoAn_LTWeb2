@@ -9,7 +9,6 @@
     <link rel="icon" type="image/png" href="/public/img/logo-2.png" />
 
     <!-- Import lib -->
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.css">
     <link rel="stylesheet" type="text/css" href="/public/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/public/css/font-awesome.min.css">
@@ -193,6 +192,13 @@
                 <option value="0" selected>không khóa &#xf118;</option>
                 {{/if}}
             </select>
+            <label for="category">Thể loại</label>
+           <select name="category">
+                {{#each this.cats2}}
+                <option value="{{id}}" {{#if isCat2}} selected {{/if}}>{{name}}</option>
+                {{/each}}
+            </select>
+            <p>Lượt xem: {{this.post.views}}</p>
             <hr>
             <a  href="/admin/post" role="button" title="Back to List">
                 <i class="fa fa-backward" aria-hidden="true"></i>
