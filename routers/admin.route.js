@@ -13,23 +13,37 @@ const userModel = require('../models/user.model');
 // })
 //                  DEFAULT VIEW ADMIN
 router.get('/', function (req, res) {
-    res.render('layouts/admin.hbs', { layout: false });
+    if (!req.session.isAuthenticated || parseInt(req.session.authUser.permission, 10) != 4) {
+        res.redirect('/');
+    }
+    else {
+        res.render('layouts/admin.hbs', { layout: false });
+    }
 });
 //                                          ADMIN CATEGORY 
 router.get('/category', async function (req, res) {
-    const categoryLv1 = await cateModel.loadCat1();
-    res.render('viewAdmin/viewCategory/listCategory.hbs',
-        {
-            layout: false,
-            categories1: categoryLv1,
-            empty: categoryLv1.length === 0
-        });
+    if (!req.session.isAuthenticated || parseInt(req.session.authUser.permission, 10) != 4) {
+        res.redirect('/');
+    }
+    else {
+        const categoryLv1 = await cateModel.loadCat1();
+        res.render('viewAdmin/viewCategory/listCategory.hbs',
+            {
+                layout: false,
+                categories1: categoryLv1,
+                empty: categoryLv1.length === 0
+            });
+    }
 });
 
 router.get('/category/add', function (req, res) {
-    res.render('viewAdmin/viewCategory/add.hbs', {
-        layout: false
-    });
+    if (!req.session.isAuthenticated || parseInt(req.session.authUser.permission, 10) != 4) {
+        res.redirect('/');
+    } else {
+        res.render('viewAdmin/viewCategory/add.hbs', {
+            layout: false
+        });
+    }
 });
 
 router.post('/category/add', async function (req, res) {
@@ -41,13 +55,18 @@ router.post('/category/add', async function (req, res) {
 
 router.get('/category/edit/:catID', async function (req, res) {
     // const id = +req.query.id || -1;
-    const id = +req.params.catID || -1;
-    const rows = await cateModel.single1(id);
-    if (rows.length === 0)
-        return res.send('Invalid parameter.');
+    if (!req.session.isAuthenticated || parseInt(req.session.authUser.permission, 10) != 4) {
+        res.redirect('/');
+    }
+    else {
+        const id = +req.params.catID || -1;
+        const rows = await cateModel.single1(id);
+        if (rows.length === 0)
+            return res.send('Invalid parameter.');
 
-    const category = rows[0];
-    res.render('viewAdmin/viewCategory/edit.hbs', { layout: false, category });
+        const category = rows[0];
+        res.render('viewAdmin/viewCategory/edit.hbs', { layout: false, category });
+    }
 });
 
 router.post('/category/del', async function (req, res) {
@@ -73,43 +92,58 @@ router.post('/category/restore', async function (req, res) {
     }
     await cateModel.patch1(entity);
     res.redirect('/admin/category');
-}); 
+});
 //                                  CATEGORY LEVEL2
 router.get('/category/detail/:catID', async function (req, res) {
-    const id = +req.params.catID || -1;
-    const categoryLv2 = await cateModel.single2(req.params.catID);
-    res.render('viewAdmin/viewCategory/detail.hbs', {
-        layout: false,
-        category: categoryLv2,
-        cat1ID: id,
-        empty: categoryLv2.length === 0
-    });
+    if (!req.session.isAuthenticated || parseInt(req.session.authUser.permission, 10) != 4) {
+        res.redirect('/');
+    }
+    else {
+        const id = +req.params.catID || -1;
+        const categoryLv2 = await cateModel.single2(req.params.catID);
+        res.render('viewAdmin/viewCategory/detail.hbs', {
+            layout: false,
+            category: categoryLv2,
+            cat1ID: id,
+            empty: categoryLv2.length === 0
+        });
+    }
 });
 router.get('/categorylv2/add/:id', async function (req, res) {
-    const id = +req.params.id || -1;
-    const cat1 = await cateModel.single1(id);
-    res.render('viewAdmin/viewCategory/addLv2.hbs', { layout: false, catLv1: cat1[0] });
+    if (!req.session.isAuthenticated || parseInt(req.session.authUser.permission, 10) != 4) {
+        res.redirect('/');
+    }
+    else {
+        const id = +req.params.id || -1;
+        const cat1 = await cateModel.single1(id);
+        res.render('viewAdmin/viewCategory/addLv2.hbs', { layout: false, catLv1: cat1[0] });
+    }
 });
 router.post('/categorylv2/add', async function (req, res) {
     await cateModel.add2(req.body);
     res.redirect(req.headers.referer);
 });
 router.get('/categorylv2/edit/:id', async function (req, res) {
-    const id = +req.params.id || -1;
-    const rows = await cateModel.singleCat2ByID(id);
-    if (rows.length === 0)
-        return res.send('Invalid parameter.');
-
-    const category = rows[0];
-    const cat1 = await cateModel.loadCat1();
-    let i = 0;
-    while (i < cat1.length) {
-        if (category.category_level1 === cat1[i].id) {
-            cat1[i].isActive = true;
-        }
-        i++;
+    if (!req.session.isAuthenticated || parseInt(req.session.authUser.permission, 10) != 4) {
+        res.redirect('/');
     }
-    res.render('viewAdmin/viewCategory/editLv2.hbs', { layout: false, category, catLv1: cat1 });
+    else {
+        const id = +req.params.id || -1;
+        const rows = await cateModel.singleCat2ByID(id);
+        if (rows.length === 0)
+            return res.send('Invalid parameter.');
+
+        const category = rows[0];
+        const cat1 = await cateModel.loadCat1();
+        let i = 0;
+        while (i < cat1.length) {
+            if (category.category_level1 === cat1[i].id) {
+                cat1[i].isActive = true;
+            }
+            i++;
+        }
+        res.render('viewAdmin/viewCategory/editLv2.hbs', { layout: false, category, catLv1: cat1 });
+    }
 });
 router.post('/categorylv2/update', async function (req, res) {
     await cateModel.patch2(req.body);
@@ -146,84 +180,94 @@ router.post('/categorylv2/del', async function (req, res) {
 
 //                                                ADMIN TAG
 router.get('/tag', async function (req, res) {
-    const page = +req.query.page || 1;
-    if (page < 0 || !page) {
-        page = 1;
+    if (!req.session.isAuthenticated || parseInt(req.session.authUser.permission, 10) != 4) {
+        res.redirect('/');
     }
-    const offset = (page - 1) * config.pagination.limit;
+    else {
+        const page = +req.query.page || 1;
+        if (page < 0 || !page) {
+            page = 1;
+        }
+        const offset = (page - 1) * config.pagination.limit;
 
-    const [list, total] = await Promise.all([
-        //config.pagination.limit
-        tagModel.pageByTag(config.pagination.limit, offset),
-        tagModel.countByTag()
-    ]);
+        const [list, total] = await Promise.all([
+            //config.pagination.limit
+            tagModel.pageByTag(config.pagination.limit, offset),
+            tagModel.countByTag()
+        ]);
 
-    // const total = await productModel.countByCat(req.params.catId);
-    const nPages = Math.ceil(total / config.pagination.limit);
-    const pageItems = [];
+        // const total = await productModel.countByCat(req.params.catId);
+        const nPages = Math.ceil(total / config.pagination.limit);
+        const pageItems = [];
 
-    if (1 == page)
-        pageItems.push({
-            'value': 1,
-            'active': true
-        });
-    else
-        pageItems.push({
-            'value': 1,
-        });
-
-    if (page - 3 > 2) {
-        pageItems.push({
-            'value': '...',
-            'disable': true
-        });
-    }
-
-    let top = (page + 3 < nPages - 1 ? page + 3 : nPages - 1);
-    let bot = (page - 3 > 1 ? page - 3 : 2);
-    for (let i = bot; i <= top; i++) {
-        if (i == page)
+        if (1 == page)
             pageItems.push({
-                'value': i,
+                'value': 1,
                 'active': true
             });
         else
-            pageItems.push({ 'value': i });
+            pageItems.push({
+                'value': 1,
+            });
+
+        if (page - 3 > 2) {
+            pageItems.push({
+                'value': '...',
+                'disable': true
+            });
+        }
+
+        let top = (page + 3 < nPages - 1 ? page + 3 : nPages - 1);
+        let bot = (page - 3 > 1 ? page - 3 : 2);
+        for (let i = bot; i <= top; i++) {
+            if (i == page)
+                pageItems.push({
+                    'value': i,
+                    'active': true
+                });
+            else
+                pageItems.push({ 'value': i });
+        }
+
+        if (page + 3 < nPages - 1) {
+            pageItems.push({
+                'value': '...',
+                'disable': true
+            });
+        }
+
+        if (nPages == page && nPages != 1)
+            pageItems.push({
+                'value': nPages,
+                'active': true
+            });
+        else if (nPages > 1)
+            pageItems.push({
+                'value': nPages
+            });
+
+        res.render('viewAdmin/viewTag/list.hbs',
+            {
+                layout: false,
+                tags: list,
+                empty: list.length === 0,
+                pageItems,
+                prev_value: page - 1,
+                next_value: page + 1,
+                can_go_prev: page > 1,
+                can_go_next: page < nPages
+            });
     }
-
-    if (page + 3 < nPages - 1) {
-        pageItems.push({
-            'value': '...',
-            'disable': true
-        });
-    }
-
-    if (nPages == page && nPages != 1)
-        pageItems.push({
-            'value': nPages,
-            'active': true
-        });
-    else if (nPages > 1)
-        pageItems.push({
-            'value': nPages
-        });
-
-    res.render('viewAdmin/viewTag/list.hbs',
-        {
-            layout: false,
-            tags: list,
-            empty: list.length === 0,
-            pageItems,
-            prev_value: page - 1,
-            next_value: page + 1,
-            can_go_prev: page > 1,
-            can_go_next: page < nPages
-        });
 });
 router.get('/tag/add', function (req, res) {
-    res.render('viewAdmin/viewTag/add.hbs', {
-        layout: false
-    });
+    if (!req.session.isAuthenticated || parseInt(req.session.authUser.permission, 10) != 4) {
+        res.redirect('/');
+    }
+    else {
+        res.render('viewAdmin/viewTag/add.hbs', {
+            layout: false
+        });
+    }
 });
 
 router.post('/tag/add', async function (req, res) {
@@ -236,13 +280,18 @@ router.post('/tag/add', async function (req, res) {
 
 router.get('/tag/edit/:id', async function (req, res) {
     // const id = +req.query.id || -1;
-    const id = +req.params.id || -1;
-    const rows = await tagModel.singleTagById(id);
-    if (rows.length === 0)
-        return res.send('Invalid parameter.');
+    if (!req.session.isAuthenticated || parseInt(req.session.authUser.permission, 10) != 4) {
+        res.redirect('/');
+    }
+    else {
+        const id = +req.params.id || -1;
+        const rows = await tagModel.singleTagById(id);
+        if (rows.length === 0)
+            return res.send('Invalid parameter.');
 
-    const tag = rows[0];
-    res.render('viewAdmin/viewTag/edit.hbs', { layout: false, tag });
+        const tag = rows[0];
+        res.render('viewAdmin/viewTag/edit.hbs', { layout: false, tag });
+    }
 });
 
 router.post('/tag/del', async function (req, res) {
@@ -272,15 +321,20 @@ router.post('/tag/restore', async function (req, res) {
     res.redirect('/admin/tag');
 });
 router.get('/tag/detail/:id', async function (req, res) {
-    const id = +req.params.id || -1;
-    const _tag = await tagModel.singleTagById(id);
-    const tag_post = await tagPostModel.singleByTag(id);
-    res.render('viewAdmin/viewTag/detail.hbs', {
-        layout: false,
-        tag_post,
-        tag: _tag[0],
-        empty: tag_post.length === 0
-    });
+    if (!req.session.isAuthenticated || parseInt(req.session.authUser.permission, 10) != 4) {
+        res.redirect('/');
+    }
+    else {
+        const id = +req.params.id || -1;
+        const _tag = await tagModel.singleTagById(id);
+        const tag_post = await tagPostModel.singleByTag(id);
+        res.render('viewAdmin/viewTag/detail.hbs', {
+            layout: false,
+            tag_post,
+            tag: _tag[0],
+            empty: tag_post.length === 0
+        });
+    }
 });
 
 
@@ -299,12 +353,16 @@ router.post('/tag_post/del', async function (req, res) {
     res.redirect(req.headers.referer);
 });
 router.get('/tag_post/add/:id', async function (req, res) {
-    
-    const id = +req.params.id || -1;
-    const _tag  = await tagModel.singleTagById(id);
-    const posts = await postModel.loadSortByTitle();
-    req.session.prevURL = req.headers.referer
-    res.render('viewAdmin/viewTag/addTagPost.hbs', { layout: false, tag:_tag[0],posts });
+    if (!req.session.isAuthenticated || parseInt(req.session.authUser.permission, 10) != 4) {
+        res.redirect('/');
+    }
+    else {
+        const id = +req.params.id || -1;
+        const _tag = await tagModel.singleTagById(id);
+        const posts = await postModel.loadSortByTitle();
+        req.session.prevURL = req.headers.referer
+        res.render('viewAdmin/viewTag/addTagPost.hbs', { layout: false, tag: _tag[0], posts });
+    }
 });
 router.post('/tag_post/add', async function (req, res) {
     await tagPostModel.add(req.body);
@@ -315,121 +373,141 @@ router.post('/tag_post/add', async function (req, res) {
 //                                      ADMIN POST
 
 router.get('/post', async function (req, res) {
-    const page = +req.query.page || 1;
-    if (page < 0 || !page) {
-        page = 1;
+    if (!req.session.isAuthenticated || parseInt(req.session.authUser.permission, 10) != 4) {
+        res.redirect('/');
     }
-    const offset = (page - 1) * config.pagination.limit;
+    else {
+        const page = +req.query.page || 1;
+        if (page < 0 || !page) {
+            page = 1;
+        }
+        const offset = (page - 1) * config.pagination.limit;
 
-    const [list, total] = await Promise.all([
-        //config.pagination.limit
-        postModel.pageByPost(config.pagination.limit, offset),
-       postModel.countByPost()
-    ]);
-    const nPages = Math.ceil(total / config.pagination.limit);
-    const pageItems = [];
+        const [list, total] = await Promise.all([
+            //config.pagination.limit
+            postModel.pageByPost(config.pagination.limit, offset),
+            postModel.countByPost()
+        ]);
+        const nPages = Math.ceil(total / config.pagination.limit);
+        const pageItems = [];
 
-    if (1 == page)
-        pageItems.push({
-            'value': 1,
-            'active': true
-        });
-    else
-        pageItems.push({
-            'value': 1,
-        });
-
-    if (page - 3 > 2) {
-        pageItems.push({
-            'value': '...',
-            'disable': true
-        });
-    }
-
-    let top = (page + 3 < nPages - 1 ? page + 3 : nPages - 1);
-    let bot = (page - 3 > 1 ? page - 3 : 2);
-    for (let i = bot; i <= top; i++) {
-        if (i == page)
+        if (1 == page)
             pageItems.push({
-                'value': i,
+                'value': 1,
                 'active': true
             });
         else
-            pageItems.push({ 'value': i });
+            pageItems.push({
+                'value': 1,
+            });
+
+        if (page - 3 > 2) {
+            pageItems.push({
+                'value': '...',
+                'disable': true
+            });
+        }
+
+        let top = (page + 3 < nPages - 1 ? page + 3 : nPages - 1);
+        let bot = (page - 3 > 1 ? page - 3 : 2);
+        for (let i = bot; i <= top; i++) {
+            if (i == page)
+                pageItems.push({
+                    'value': i,
+                    'active': true
+                });
+            else
+                pageItems.push({ 'value': i });
+        }
+
+        if (page + 3 < nPages - 1) {
+            pageItems.push({
+                'value': '...',
+                'disable': true
+            });
+        }
+
+        if (nPages == page && nPages != 1)
+            pageItems.push({
+                'value': nPages,
+                'active': true
+            });
+        else if (nPages > 1)
+            pageItems.push({
+                'value': nPages
+            });
+
+        res.render('viewAdmin/viewPost/list.hbs',
+            {
+                layout: false,
+                posts: list,
+                empty: list.length === 0,
+                pageItems,
+                prev_value: page - 1,
+                next_value: page + 1,
+                can_go_prev: page > 1,
+                can_go_next: page < nPages
+            });
     }
-
-    if (page + 3 < nPages - 1) {
-        pageItems.push({
-            'value': '...',
-            'disable': true
-        });
-    }
-
-    if (nPages == page && nPages != 1)
-        pageItems.push({
-            'value': nPages,
-            'active': true
-        });
-    else if (nPages > 1)
-        pageItems.push({
-            'value': nPages
-        });
-
-    res.render('viewAdmin/viewPost/list.hbs',
-        {
-            layout: false,
-            posts: list,
-            empty: list.length === 0,
-            pageItems,
-            prev_value: page - 1,
-            next_value: page + 1,
-            can_go_prev: page > 1,
-            can_go_next: page < nPages
-        });
 });
 router.get('/post/detail/:id', async function (req, res) {
-    const id = +req.params.id || -1;
-    const _post = await postModel.singleByID2(id);
-    const listUser = await userModel.load();
-    let i = 0;
-    while (i < listUser.length) {
-        if (listUser[i].id === _post[0].author) {
-           listUser[i].isAuthor = true;
-           break;
+    if (!req.session.isAuthenticated || parseInt(req.session.authUser.permission, 10) != 4) {
+        res.redirect('/');
+    }
+    else {
+        const id = +req.params.id || -1;
+        const _post = await postModel.singleByID2(id);
+        const listUser = await userModel.load();
+        let i = 0;
+        while (i < listUser.length) {
+            if (listUser[i].id === _post[0].author) {
+                listUser[i].isAuthor = true;
+                break;
+            }
+            i++;
         }
-        i++;
+        res.render('viewAdmin/viewPost/detail.hbs', {
+            layout: false,
+            post: _post[0],
+            users: listUser,
+            empty: _post.length === 0
+        });
     }
-    res.render('viewAdmin/viewPost/detail.hbs', {
-        layout: false,
-        post: _post[0],
-        users:listUser,
-        empty: _post.length === 0
-    });
 });
-router.post('/post/update',async function (req, res) {
+router.post('/post/update', async function (req, res) {
     await postModel.patch(req.body);
-    if(parseInt(req.body.delete, 10) === 1){
-       await postModel.deteleAllTagPostByPost(req.body.id);
+    if (parseInt(req.body.delete, 10) === 1) {
+        await postModel.deteleAllTagPostByPost(req.body.id);
     }
-   res.redirect(req.headers.referer);
+    res.redirect(req.headers.referer);
 });
-router.get('/post/tag_post/:id', async function (req, res) {  
-    const id = +req.params.id || -1;
-    const tag_post = await tagPostModel.postInTagPost(id);
-    const _post = await postModel.singlePostById(id);
-    res.render('viewAdmin/viewPost/tagToPost.hbs', { 
-        layout: false,
-        empty: tag_post.length === 0,
-        tag_posts: tag_post,
-        post: _post[0] });
+router.get('/post/tag_post/:id', async function (req, res) {
+    if (!req.session.isAuthenticated || parseInt(req.session.authUser.permission, 10) != 4) {
+        res.redirect('/');
+    }
+    else {
+        const id = +req.params.id || -1;
+        const tag_post = await tagPostModel.postInTagPost(id);
+        const _post = await postModel.singlePostById(id);
+        res.render('viewAdmin/viewPost/tagToPost.hbs', {
+            layout: false,
+            empty: tag_post.length === 0,
+            tag_posts: tag_post,
+            post: _post[0]
+        });
+    }
 });
 router.get('/post_tag/add/:id', async function (req, res) {
-    
-    const id = +req.params.id || -1;
-    const _post  = await postModel.singlePostById(id);
-    const tags = await tagModel.All();
-    req.session.prevURL = req.headers.referer;
-    res.render('viewAdmin/viewPost/addTagPost.hbs', { layout: false, post:_post[0],tags });
+    if (!req.session.isAuthenticated || parseInt(req.session.authUser.permission, 10) != 4) {
+        res.redirect('/');
+    }
+    else {
+        const id = +req.params.id || -1;
+        const _post = await postModel.singlePostById(id);
+        const tags = await tagModel.All();
+        req.session.prevURL = req.headers.referer;
+        res.render('viewAdmin/viewPost/addTagPost.hbs', { layout: false, post: _post[0], tags });
+    }
 });
 /*router.get('/post/add', function (req, res) {
     res.render('viewAdmin/viewPost/add.hbs', {
@@ -444,5 +522,55 @@ router.post('/post/add', async function (req, res) {
         layout: false
     });
 }); */
+//                              END OF POST
 
+//                          ADMIN USER
+
+router.get('/user', async function (req, res) {
+    if (!req.session.isAuthenticated || parseInt(req.session.authUser.permission, 10) != 4) {
+        res.redirect('/');
+    }
+    else {
+        const listUser = await userModel.All();
+        res.render('viewAdmin/viewUser/list.hbs',
+            {
+                layout: false,
+                users: listUser,
+                empty: listUser.length === 0
+            });
+    }
+});
+
+router.get('/user/add', function (req, res) {
+    if (!req.session.isAuthenticated || parseInt(req.session.authUser.permission, 10) != 4) {
+        res.redirect('/');
+    }
+    else {
+        res.render('viewAdmin/viewCategory/add.hbs', {
+            layout: false
+        });
+    }
+});
+
+router.post('/user/add', async function (req, res) {
+    await cateModel.add1(req.body);
+    res.render('viewAdmin/viewCategory/add.hbs', {
+        layout: false
+    });
+});
+
+router.get('/user/detail/:id', async function (req, res) {
+    if (!req.session.isAuthenticated || parseInt(req.session.authUser.permission, 10) != 4) {
+        res.redirect('/');
+    }
+    else {
+        const id = +req.params.id || -1;
+        const rows = await userModel.singleByID2(id);
+        if (rows.length === 0)
+            return res.send('Invalid parameter.');
+
+        const user = rows[0];
+        res.render('viewAdmin/viewUser/detail.hbs', { layout: false, user });
+    }
+});
 module.exports = router;
