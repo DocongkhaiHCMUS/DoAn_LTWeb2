@@ -11,6 +11,7 @@ router.get('/change', async function (req, res) {
     }
     else {
         res.render('viewPass/change');
+        req.session.prevURL = req.headers.referer;
     }
 })
 
@@ -29,7 +30,7 @@ router.post('/change', async function (req, res) {
     }
     us.password = bcrypt.hashSync(newpass, 10);
     userModel.patch(us);
-    res.redirect(`${req.headers.referer}`);
+    res.redirect(req.session.prevURL);
 })
 router.get('/forgot', function (req, res) {
     res.render('viewPass/forgot');
