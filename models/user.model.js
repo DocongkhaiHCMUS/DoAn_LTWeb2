@@ -13,7 +13,10 @@ module.exports = {
     singleByID: (ID) => {
         return db.load(`select us.* from ${TBL_User} where us.id = ${ID} and us.delete =0`)
     },
-
+    singleByID2: (ID) => {
+        return db.load(`select * from ${TBL_User} where id = ${ID}`)
+    },
+    All: () => db.load(`select * from ${TBL_User} order by permission desc `),
     add: (entity) => {
 
         entity['create_date'] = moment().format('YYYY/MM/DD HH:mm:ss');
