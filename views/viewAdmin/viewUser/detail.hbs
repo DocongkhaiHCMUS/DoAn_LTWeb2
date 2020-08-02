@@ -2,8 +2,7 @@
 <html>
 
 <head>
-    <title>Chỉnh sửa thể loại báo cấp 1</title>
-
+    <title>Chi tiết người dùng</title>
     <meta name="viewport"
         content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
     <link rel="icon" type="image/png" href="/public/img/logo-2.png" />
@@ -13,10 +12,22 @@
     <link rel="stylesheet" type="text/css" href="/public/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/public/css/font-awesome.min.css">
+    <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css">
     <!-- End import lib -->
 
     <link rel="stylesheet" type="text/css" href="/public/css/admin.css">
+    <style>
+        @import url(https://fonts.googleapis.com/css?family=Roboto:400,500,700,300,100);
 
+        .wrapper {
+            background-color: #4AC29A;
+            font-family: "Roboto", helvetica, arial, sans-serif;
+            font-size: 16px;
+            font-weight: 400;
+            text-rendering: optimizeLegibility;
+        }
+    </style>
 </head>
 
 <body class="overlay-scrollbar">
@@ -38,7 +49,10 @@
         </ul>
         <!-- end nav left -->
         <!-- form -->
-
+        <form class="navbar-search">
+            <input type="text" name="Search" class="navbar-search-input" placeholder="What you looking for...">
+            <i class="fa fa-search" aria-hidden="true"></i>
+        </form>
         <!-- end form -->
         <!-- nav right -->
         <ul class="navbar-nav nav-right">
@@ -58,11 +72,11 @@
                             </a>
                         </li>
                         <li class="dropdown-menu-item">
-                              <a href="/pass/change" class="dropdown-menu-link">
+                            <a href="#" class="dropdown-menu-link">
                                 <div>
                                     <i class="fa fa-cog" aria-hidden="true"></i>
                                 </div>
-                                <span>Change Password</span>
+                                <span>Settings</span>
                             </a>
                         </li>
                         <li class="dropdown-menu-item">
@@ -122,31 +136,50 @@
     <!-- end sidebar -->
     <!-- main content -->
     <div class="wrapper">
-        <form id="frmEditCat" method="POST" onvalidate>
+        <form action="/admin/user/update" method="POST">
             <label for="id">#</label>
-            <input type="text" id="txtCatID" name="id" readonly value="{{this.category.id}}">
-            <label for="name">Tên thể loại</label>
-            <input type="text" id="name" name="name" value="{{this.category.name}}" autofocus required>
-            <a href="/admin/category" role="button" title="Back to List">
+            <input type="text" id="id" name="id" value="{{this.user.id}}" readonly>
+            <label for="user_name">Tên đăng nhập</label>
+            <input type="text" id="user_name" name="user_name" value="{{this.user.user_name}}" autofocus required>
+            <label for="display_name">Tên hiển thị</label>
+            <input type="text" id="display_name" name="display_name" value="{{this.user.display_name}}" required>
+            <label for="DOB">Ngày sinh</label>
+            <input id="inputDOB" type="text" name="DOB" value="{{this.user.DOB}}">
+            <label for="gender"> Giới tính</label>
+            <select name="author">
+                {{#if this.user.gender}}
+                <option value="1" selected>&#xf182; Nữ </option>
+                <option value="0">&#xf183; Nam</option>
+                {{else}}
+                <option value="1">&#xf182; Nữ </option>
+                <option value="0" selected>&#xf183; Nam</option>
+                {{/if}}
+            </select>
+            <br><br>
+            <i class="fa fa-clock-o" aria-hidden="true"></i>
+            <label for="time_out">Time out</label>
+            <input type="text" id="txttime_out" name="time_out" >
+            <label for="create_date">Ngày tạo</label>
+            <input type="text" id="" name="" value="{{parseTime this.user.create_date}}" readonly>
+            <hr>
+            <a href="/admin/user" role="button" title="Back to List">
                 <i class="fa fa-backward" aria-hidden="true"></i>
             </a>
-            {{#if this.category.delete}}
-                <button type="submit"  title="Khôi phục" formaction="/admin/category/restore">
-                <i class="fa fa-undo" aria-hidden="true"></i>
-            </button>
-            {{/if}}
-            <button type="submit"  title="Xóa thể loại" formaction="/admin/category/del">
-                <i class="fa fa-trash" aria-hidden="true"></i>
-            </button>
-            <button type="submit"  formaction="/admin/category/update">
-                <i class="fa fa-check" aria-hidden="true"></i>
-                Lưu
-            </button>
+            <input type="submit" value="Lưu">
         </form>
     </div>
     <!-- end main content -->
     <!-- import script -->
     <script src="/public/js/admin.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js">
+    </script>
+    <script>
+        $('#inputDOB').datetimepicker({
+            format: 'd/m/Y',
+            timepicker: false,
+            mask: true
+        });
+    </script>
     <!-- end import script -->
 </body>
 

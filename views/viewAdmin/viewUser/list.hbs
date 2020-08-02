@@ -2,21 +2,37 @@
 <html>
 
 <head>
-    <title>Chỉnh sửa thể loại báo cấp 1</title>
+    <title>Danh sách người dùng </title>
 
     <meta name="viewport"
         content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
     <link rel="icon" type="image/png" href="/public/img/logo-2.png" />
 
     <!-- Import lib -->
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.css">
     <link rel="stylesheet" type="text/css" href="/public/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/public/css/font-awesome.min.css">
+
+
+    <!-- Custom stlylesheet -->
+    <link type="text/css" rel="stylesheet" href="/public/css/style.css" />
+    <link type="text/css" rel="stylesheet" href="/public/css/style_of_mine.css">
+    <link rel="stylesheet" type="text/css" href="/public/css/admin.css">
     <!-- End import lib -->
 
-    <link rel="stylesheet" type="text/css" href="/public/css/admin.css">
 
+
+    <style>
+        @import url(https://fonts.googleapis.com/css?family=Roboto:400,500,700,300,100);
+
+        .wrapper {
+            background-color: mediumaquamarine;
+            font-family: "Roboto", helvetica, arial, sans-serif;
+            font-size: 16px;
+            font-weight: 400;
+            text-rendering: optimizeLegibility;
+        }
+    </style>
 </head>
 
 <body class="overlay-scrollbar">
@@ -38,7 +54,10 @@
         </ul>
         <!-- end nav left -->
         <!-- form -->
-
+        <form class="navbar-search">
+            <input type="text" name="Search" class="navbar-search-input" placeholder="What you looking for...">
+            <i class="fa fa-search" aria-hidden="true"></i>
+        </form>
         <!-- end form -->
         <!-- nav right -->
         <ul class="navbar-nav nav-right">
@@ -58,11 +77,11 @@
                             </a>
                         </li>
                         <li class="dropdown-menu-item">
-                              <a href="/pass/change" class="dropdown-menu-link">
+                            <a href="#" class="dropdown-menu-link">
                                 <div>
                                     <i class="fa fa-cog" aria-hidden="true"></i>
                                 </div>
-                                <span>Change Password</span>
+                                <span>Settings</span>
                             </a>
                         </li>
                         <li class="dropdown-menu-item">
@@ -122,31 +141,64 @@
     <!-- end sidebar -->
     <!-- main content -->
     <div class="wrapper">
-        <form id="frmEditCat" method="POST" onvalidate>
-            <label for="id">#</label>
-            <input type="text" id="txtCatID" name="id" readonly value="{{this.category.id}}">
-            <label for="name">Tên thể loại</label>
-            <input type="text" id="name" name="name" value="{{this.category.name}}" autofocus required>
-            <a href="/admin/category" role="button" title="Back to List">
-                <i class="fa fa-backward" aria-hidden="true"></i>
+
+        <div class="table-title">
+            <h3 style="color: mediumvioletred;">Danh sách người dùng</h3>
+        </div>
+        <br>
+        <div style="float:right">
+            <a class="btn success" href="/admin/user/add" role="button" title="Thêm người dùng">
+                <i class="fa fa-plus" aria-hidden="true"></i>
+                Thêm người dùng
             </a>
-            {{#if this.category.delete}}
-                <button type="submit"  title="Khôi phục" formaction="/admin/category/restore">
-                <i class="fa fa-undo" aria-hidden="true"></i>
-            </button>
-            {{/if}}
-            <button type="submit"  title="Xóa thể loại" formaction="/admin/category/del">
-                <i class="fa fa-trash" aria-hidden="true"></i>
-            </button>
-            <button type="submit"  formaction="/admin/category/update">
-                <i class="fa fa-check" aria-hidden="true"></i>
-                Lưu
-            </button>
-        </form>
+        </div>
+        <br><br>
+        <table class="table-fill">
+            <thead>
+                <tr>
+                    <th class="text-left">Tên đăng nhập</th>
+                    <th class="text-left">Tên hiển thị</th>
+                    <th class="text-left">Email</th>
+                    <th class="text-left">Trạng thái</th>
+                    <th class="text-left">&nbsp;</th>
+                </tr>
+            </thead>
+            <tbody class="table-hover">
+                {{#each this.users}}
+                <tr>
+                    <td class="text-left">{{user_name}}</td>
+                    <td class="text-left" >{{display_name}}</td>
+                    <td class="text-left">{{email}}</td>
+                    {{#if delete}}
+                    <td class="text-center">
+                        <i class="fa fa-lock" aria-hidden="true" title="Bị khóa"></i>
+                    </td>
+                    {{else}}
+                    <td class="text-center">
+                        <i class="fa fa-unlock" aria-hidden="true"></i>
+                    </td>
+                    {{/if}}
+                    <td class="text-right">
+                        <a class="" href="/admin/user/detail/{{id}}" title="Chi tiết">
+                            <i class="fa fa-pencil" aria-hidden="true"></i>
+                        </a>                     
+                    </td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
     </div>
     <!-- end main content -->
     <!-- import script -->
     <script src="/public/js/admin.js"></script>
+    <script>
+        $('.article-pagination .disable').on('click', function (e) {
+            e.preventDefault();
+        })
+    </script>
+    <script src="/public/js/jquery.min.js"></script>
+    <script src="/public/js/main.js"></script>
+
     <!-- end import script -->
 </body>
 
