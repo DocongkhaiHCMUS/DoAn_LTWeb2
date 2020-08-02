@@ -11,7 +11,7 @@ module.exports = {
     },
 
     singleByID: (ID) => {
-        return db.load(`select us.* from ${TBL_User} where us.id = ${ID} and us.delete =0`)
+        return db.load(`select us.* from ${TBL_User} us where us.id = ${ID} and us.delete =0`)
     },
 
     add: (entity) => {

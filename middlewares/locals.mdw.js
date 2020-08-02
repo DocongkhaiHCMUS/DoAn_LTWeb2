@@ -5,12 +5,14 @@ const moment = require('moment');
 const LRU = require("lru-cache");
 
 
-const options = { max: 500
+const options = {
+    max: 500
     , length: function (n, key) { return n * 2 + key.length }
     , dispose: function (key, n) { n.close() }
-    , maxAge: 1000 * 60 * 60 * 24 }
+    , maxAge: 1000 * 60 * 60 * 24
+}
 
- const Cache = new LRU(options)
+const Cache = new LRU(options)
 
 // const Cache = new nodeCache();
 
@@ -296,8 +298,9 @@ module.exports = function (app) {
 
         //local Authentication
         if (req.session.isAuthenticated && req.session.authUser) {
-            res.locals.lcIsAuthenticated = req.session.isAuthenticated;
-            res.locals.lcUser = req.session.authUser;
+            app.locals.lcIsAuthenticated = req.session.isAuthenticated;
+            app.locals.lcUser = req.session.authUser;
+            app.locals.lcSubcriber = (req.session.authUser.permission === 1);
         }
         next();
     });

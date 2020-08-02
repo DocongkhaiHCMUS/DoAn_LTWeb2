@@ -104,6 +104,17 @@ router.get('/cat1/:id', async function (req, res) {
         return moment(item.publish_date).diff(moment(), 'seconds') >= 0;
     })
 
+    //sort all premium if account is subscriber
+    if (req.app.locals.lcSubcriber) {
+        listPost = listPost.sort(function (a, b) {
+            if (b.premum && !a.premium)
+                return 1;
+            if (!b.premum && a.premium)
+                return -1;
+            return 0;
+        })
+    }
+
     res.render('viewCategory/category.hbs', {
         listPost,
         cat1,
@@ -218,6 +229,17 @@ router.get('/cat2/:id', async function (req, res) {
         moment.locale('vi');
         return moment(item.publish_date).diff(moment(), 'seconds') <= 0;
     })
+
+    //sort all premium if account is subscriber
+    if (req.app.locals.lcSubcriber) {
+        listPost = listPost.sort(function (a, b) {
+            if (b.premum && !a.premium)
+                return 1;
+            if (!b.premum && a.premium)
+                return -1;
+            return 0;
+        })
+    }
 
     res.render('viewCategory/category.hbs', {
         listPost,
