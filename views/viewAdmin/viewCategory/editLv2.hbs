@@ -2,30 +2,20 @@
 <html>
 
 <head>
-    <title>News24H Admin</title>
+    <title>Chỉnh sửa thể loại báo cấp 2</title>
 
     <meta name="viewport"
         content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
     <link rel="icon" type="image/png" href="/public/img/logo-2.png" />
 
     <!-- Import lib -->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.css">
     <link rel="stylesheet" type="text/css" href="/public/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/public/css/font-awesome.min.css">
     <!-- End import lib -->
 
     <link rel="stylesheet" type="text/css" href="/public/css/admin.css">
-    <style>
-        .wrapper {
-            background: #4568DC;
-            /* fallback for old browsers */
-            background: -webkit-linear-gradient(to left, #B06AB3, #4568DC);
-            /* Chrome 10-25, Safari 5.1-6 */
-            background: linear-gradient(to left, #B06AB3, #4568DC);
-            /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-
-        }
-    </style>
 </head>
 
 <body class="overlay-scrollbar">
@@ -47,10 +37,7 @@
         </ul>
         <!-- end nav left -->
         <!-- form -->
-        <form class="navbar-search">
-            <input type="text" name="Search" class="navbar-search-input" placeholder="What you looking for...">
-            <i class="fa fa-search" aria-hidden="true"></i>
-        </form>
+
         <!-- end form -->
         <!-- nav right -->
         <ul class="navbar-nav nav-right">
@@ -134,7 +121,36 @@
     <!-- end sidebar -->
     <!-- main content -->
     <div class="wrapper">
-        <p style="text-align: center;"> Welcome back Admin</p>
+        <form id="frmEditCat" method="POST">
+            <label for="id">#</label>
+            <input type="text" id="txtCatID" name="id" readonly value="{{this.category.id}}">
+            <label for="name">Tên thể loại</label>
+            <input type="text" id="name" name="name" value="{{this.category.name}}" autofocus required>
+            <label for="txtHoidap">Chọn thể loại cấp 1</label>
+            <select name="category_level1">
+                {{#each this.catLv1 }}
+                <option value="{{id}}" {{#if isActive}}
+                    selected
+                {{/if}}>{{name}}</option>
+                {{/each}}
+            </select>
+            <hr>
+            <a  href="/admin/category" role="button" title="Back to List">
+                <i class="fa fa-backward" aria-hidden="true"></i>
+            </a>
+            {{#if this.category.delete}}
+            <button type="submit"  title="Khôi phục" formaction="/admin/categorylv2/restore">
+                <i class="fa fa-undo" aria-hidden="true"></i>
+            </button>
+            {{/if}}
+            <button type="submit"  title="Xóa thể loại" formaction="/admin/categorylv2/del">
+                <i class="fa fa-trash" aria-hidden="true"></i>
+            </button>
+            <button type="submit"  formaction="/admin/categorylv2/update">
+                <i class="fa fa-check" aria-hidden="true"></i>
+                Lưu
+            </button>
+        </form>
     </div>
     <!-- end main content -->
     <!-- import script -->

@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>News24H Admin</title>
+    <title>Thêm thể loại báo cấp 1</title>
 
     <meta name="viewport"
         content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
@@ -15,17 +15,6 @@
     <!-- End import lib -->
 
     <link rel="stylesheet" type="text/css" href="/public/css/admin.css">
-    <style>
-        .wrapper {
-            background: #4568DC;
-            /* fallback for old browsers */
-            background: -webkit-linear-gradient(to left, #B06AB3, #4568DC);
-            /* Chrome 10-25, Safari 5.1-6 */
-            background: linear-gradient(to left, #B06AB3, #4568DC);
-            /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-
-        }
-    </style>
 </head>
 
 <body class="overlay-scrollbar">
@@ -47,10 +36,7 @@
         </ul>
         <!-- end nav left -->
         <!-- form -->
-        <form class="navbar-search">
-            <input type="text" name="Search" class="navbar-search-input" placeholder="What you looking for...">
-            <i class="fa fa-search" aria-hidden="true"></i>
-        </form>
+
         <!-- end form -->
         <!-- nav right -->
         <ul class="navbar-nav nav-right">
@@ -134,7 +120,14 @@
     <!-- end sidebar -->
     <!-- main content -->
     <div class="wrapper">
-        <p style="text-align: center;"> Welcome back Admin</p>
+        <form id="frmAddCat" action="" method="POST" onvalidate>
+            <label for="name">Tên thể loại</label>
+            <input type="text" id="name" name="name" autofocus required>
+            <a href="/admin/category" role="button" title="Back to List">
+                <i class="fa fa-backward" aria-hidden="true"></i>
+            </a>
+            <input type="submit" value="Thêm">
+        </form>
     </div>
     <!-- end main content -->
     <!-- import script -->

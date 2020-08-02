@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>News24H Admin</title>
+    <title>Chi tiết bài tiết</title>
 
     <meta name="viewport"
         content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
@@ -12,18 +12,19 @@
     <link rel="stylesheet" type="text/css" href="/public/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/public/css/font-awesome.min.css">
+
     <!-- End import lib -->
 
     <link rel="stylesheet" type="text/css" href="/public/css/admin.css">
     <style>
-        .wrapper {
-            background: #4568DC;
-            /* fallback for old browsers */
-            background: -webkit-linear-gradient(to left, #B06AB3, #4568DC);
-            /* Chrome 10-25, Safari 5.1-6 */
-            background: linear-gradient(to left, #B06AB3, #4568DC);
-            /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+        @import url(https://fonts.googleapis.com/css?family=Roboto:400,500,700,300,100);
 
+        .wrapper {
+            background-color: #4AC29A;
+            font-family: "Roboto", helvetica, arial, sans-serif;
+            font-size: 16px;
+            font-weight: 400;
+            text-rendering: optimizeLegibility;
         }
     </style>
 </head>
@@ -70,7 +71,7 @@
                             </a>
                         </li>
                         <li class="dropdown-menu-item">
-                            <a href="/pass/change" class="dropdown-menu-link">
+                           <a href="/pass/change" class="dropdown-menu-link">
                                 <div>
                                     <i class="fa fa-cog" aria-hidden="true"></i>
                                 </div>
@@ -134,7 +135,76 @@
     <!-- end sidebar -->
     <!-- main content -->
     <div class="wrapper">
-        <p style="text-align: center;"> Welcome back Admin</p>
+        <form action="/admin/post/update" method="POST">
+            <label for="id">#</label>
+            <input type="text" id="id" name="id" value="{{this.post.id}}" readonly>
+            <label for="title">Tên bài viết</label>
+            <input type="text" id="title" name="title" value="{{this.post.title}}" autofocus required>
+            <label for="tiny_des">Mô tả ngắn</label>
+            <input type="text" id="tiny_des" name="tiny_des" value="{{this.post.tiny_des}}" required>
+            <label for="tiny_des">Mô tả đầy đủ</label>
+            <textarea type="text" id="full_des" name="full_des" required> {{this.post.full_des}}</textarea>
+            <i class="fa fa-paint-brush" aria-hidden="true"></i>
+            <label for="author">Tác giả</label>
+            <select name="author">
+                {{#each this.users }}
+                <option value="{{id}}" {{#if isAuthor}} selected {{/if}}>&#xf2c0; {{display_name}}</option>
+                {{/each}}
+            </select>
+            <br><br>
+            <i class="fa fa-genderless" aria-hidden="true"></i>
+            <label for="premium">Loại bài viết</label>
+            <select name="premium">
+                {{#if this.post.premium}}
+                <option value="1" selected> &#xf219; Premium </option>
+                <option value="0">Thường</option>
+                {{else}}
+                <option value="1"> &#xf219; Premium</option>
+                <option value="0" selected>Thường </option>
+                {{/if}}
+            </select>
+            <p>
+                <i class="fa fa-clock-o" aria-hidden="true"></i>
+                Sửa lần cuối vào lúc: {{parseTime this.post.modifile_date}}
+            </p>
+            <p>
+                <i class="fa fa-clock-o" aria-hidden="true"></i>
+                Ngày ra mắt: {{parseTime this.post.publish_date}}
+            </p>
+            <label for="status">Trạng thái</label>
+            <select name="status">
+                {{#if this.post.status}}
+                <option value="0">&#xf00d; Draft</option>
+                <option value="1" selected>&#xf14a; Đã xuất bản</option>
+                {{else}}
+                <option value="0" selected>&#xf00d; Draft</option>
+                <option value="1">&#xf14a; Đã xuất bản</option>
+                {{/if}}
+            </select>
+            <br><br>
+            <label for="delete">Tình trạng</label>
+            <select name="delete">
+                {{#if this.post.delete}}
+                <option value="1" selected>đang khóa &#xf119;</option>
+                <option value="0">không khóa &#xf118;</option>
+                {{else}}
+                <option value="1">đang khóa &#xf119;</option>
+                <option value="0" selected>không khóa &#xf118;</option>
+                {{/if}}
+            </select>
+            <label for="category">Thể loại</label>
+           <select name="category">
+                {{#each this.cats2}}
+                <option value="{{id}}" {{#if isCat2}} selected {{/if}}>{{name}}</option>
+                {{/each}}
+            </select>
+            <p>Lượt xem: {{this.post.views}}</p>
+            <hr>
+            <a  href="/admin/post" role="button" title="Back to List">
+                <i class="fa fa-backward" aria-hidden="true"></i>
+            </a>
+            <input type="submit" value="Lưu">
+        </form>
     </div>
     <!-- end main content -->
     <!-- import script -->

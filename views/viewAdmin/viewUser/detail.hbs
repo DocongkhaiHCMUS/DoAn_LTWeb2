@@ -2,8 +2,7 @@
 <html>
 
 <head>
-    <title>News24H Admin</title>
-
+    <title>Chi tiết người dùng</title>
     <meta name="viewport"
         content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
     <link rel="icon" type="image/png" href="/public/img/logo-2.png" />
@@ -12,18 +11,20 @@
     <link rel="stylesheet" type="text/css" href="/public/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/public/css/font-awesome.min.css">
+    <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css">
     <!-- End import lib -->
 
     <link rel="stylesheet" type="text/css" href="/public/css/admin.css">
     <style>
-        .wrapper {
-            background: #4568DC;
-            /* fallback for old browsers */
-            background: -webkit-linear-gradient(to left, #B06AB3, #4568DC);
-            /* Chrome 10-25, Safari 5.1-6 */
-            background: linear-gradient(to left, #B06AB3, #4568DC);
-            /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+        @import url(https://fonts.googleapis.com/css?family=Roboto:400,500,700,300,100);
 
+        .wrapper {
+            background-color: #4AC29A;
+            font-family: "Roboto", helvetica, arial, sans-serif;
+            font-size: 16px;
+            font-weight: 400;
+            text-rendering: optimizeLegibility;
         }
     </style>
 </head>
@@ -70,11 +71,11 @@
                             </a>
                         </li>
                         <li class="dropdown-menu-item">
-                            <a href="/pass/change" class="dropdown-menu-link">
+                            <a href="#" class="dropdown-menu-link">
                                 <div>
                                     <i class="fa fa-cog" aria-hidden="true"></i>
                                 </div>
-                                <span>Change Password</span>
+                                <span>Settings</span>
                             </a>
                         </li>
                         <li class="dropdown-menu-item">
@@ -134,11 +135,50 @@
     <!-- end sidebar -->
     <!-- main content -->
     <div class="wrapper">
-        <p style="text-align: center;"> Welcome back Admin</p>
+        <form action="/admin/user/update" method="POST">
+            <label for="id">#</label>
+            <input type="text" id="id" name="id" value="{{this.user.id}}" readonly>
+            <label for="user_name">Tên đăng nhập</label>
+            <input type="text" id="user_name" name="user_name" value="{{this.user.user_name}}" autofocus required>
+            <label for="display_name">Tên hiển thị</label>
+            <input type="text" id="display_name" name="display_name" value="{{this.user.display_name}}" required>
+            <label for="DOB">Ngày sinh</label>
+            <input id="inputDOB" type="text" name="DOB" value="{{this.user.DOB}}">
+            <label for="gender"> Giới tính</label>
+            <select name="author">
+                {{#if this.user.gender}}
+                <option value="1" selected>&#xf182; Nữ </option>
+                <option value="0">&#xf183; Nam</option>
+                {{else}}
+                <option value="1">&#xf182; Nữ </option>
+                <option value="0" selected>&#xf183; Nam</option>
+                {{/if}}
+            </select>
+            <br><br>
+            <i class="fa fa-clock-o" aria-hidden="true"></i>
+            <label for="time_out">Time out</label>
+            <input type="text" id="txttime_out" name="time_out" >
+            <label for="create_date">Ngày tạo</label>
+            <input type="text" id="" name="" value="{{parseTime this.user.create_date}}" readonly>
+            <hr>
+            <a href="/admin/user" role="button" title="Back to List">
+                <i class="fa fa-backward" aria-hidden="true"></i>
+            </a>
+            <input type="submit" value="Lưu">
+        </form>
     </div>
     <!-- end main content -->
     <!-- import script -->
     <script src="/public/js/admin.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js">
+    </script>
+    <script>
+        $('#inputDOB').datetimepicker({
+            format: 'd/m/Y',
+            timepicker: false,
+            mask: true
+        });
+    </script>
     <!-- end import script -->
 </body>
 

@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>News24H Admin</title>
+    <title>Danh sách nhãn</title>
 
     <meta name="viewport"
         content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
@@ -12,18 +12,59 @@
     <link rel="stylesheet" type="text/css" href="/public/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/public/css/font-awesome.min.css">
+
+
+    <!-- Custom stlylesheet -->
+    <link type="text/css" rel="stylesheet" href="/public/css/style.css" />
+    <link type="text/css" rel="stylesheet" href="/public/css/style_of_mine.css">
+    <link rel="stylesheet" type="text/css" href="/public/css/admin.css">
     <!-- End import lib -->
 
-    <link rel="stylesheet" type="text/css" href="/public/css/admin.css">
-    <style>
-        .wrapper {
-            background: #4568DC;
-            /* fallback for old browsers */
-            background: -webkit-linear-gradient(to left, #B06AB3, #4568DC);
-            /* Chrome 10-25, Safari 5.1-6 */
-            background: linear-gradient(to left, #B06AB3, #4568DC);
-            /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 
+
+    <style>
+        @import url(https://fonts.googleapis.com/css?family=Roboto:400,500,700,300,100);
+
+        .wrapper {
+            background-color: mediumaquamarine;
+            font-family: "Roboto", helvetica, arial, sans-serif;
+            font-size: 16px;
+            font-weight: 400;
+            text-rendering: optimizeLegibility;
+        }
+
+        div.table-title {
+            display: block;
+            margin: auto;
+            max-width: 600px;
+            padding: 5px;
+            width: 100%;
+        }
+
+        .table-title h3 {
+            color: #fafafa;
+            font-size: 30px;
+            font-weight: 400;
+            font-style: normal;
+            font-family: "Roboto", helvetica, arial, sans-serif;
+            text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.1);
+            text-transform: uppercase;
+        }
+
+
+        /*** Table Styles **/
+
+        .table-fill {
+            background: white;
+            border-radius: 3px;
+            border-collapse: collapse;
+            height: 320px;
+            margin: auto;
+            max-width: 990px;
+            padding: 5px;
+            width: 100%;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+            animation: float 5s infinite;
         }
     </style>
 </head>
@@ -70,11 +111,11 @@
                             </a>
                         </li>
                         <li class="dropdown-menu-item">
-                            <a href="/pass/change" class="dropdown-menu-link">
+                            <a href="#" class="dropdown-menu-link">
                                 <div>
                                     <i class="fa fa-cog" aria-hidden="true"></i>
                                 </div>
-                                <span>Change Password</span>
+                                <span>Settings</span>
                             </a>
                         </li>
                         <li class="dropdown-menu-item">
@@ -134,11 +175,82 @@
     <!-- end sidebar -->
     <!-- main content -->
     <div class="wrapper">
-        <p style="text-align: center;"> Welcome back Admin</p>
+
+        <div class="table-title">
+            <h3 style="color: mediumvioletred;">Danh sách nhãn</h3>
+        </div>
+        <br>
+        <div style="float:right">
+            <a class="btn success" href="/admin/tag/add" role="button" title="Thêm nhãn">
+                <i class="fa fa-plus" aria-hidden="true"></i>
+                Thêm nhãn
+            </a>
+        </div>
+        <br><br>
+        <table class="table-fill">
+            <thead>
+                <tr>
+                    <th class="text-left">Tên nhãn</th>
+                    <th class="text-left">Ngày tạo</th>
+                    <th class="text-left">Chỉnh sửa lần cuối</th>
+                    <th class="text-left=">Tình trạng</th>
+                    <th class="text-left">&nbsp;</th>
+                </tr>
+            </thead>
+            <tbody class="table-hover">
+                {{#each this.tags}}
+                <tr>
+                    <td class="text-left">{{name}}</td>
+                    <td class="text-left" id="txtDateCreate">{{parseTime create_date}}</td>
+                    <td class="text-left">{{parseTime modifile_date}}</td>
+                    {{#if delete}}
+                    <td class="text-center">
+                        <i class="fa fa-lock" aria-hidden="true" title="Bị khóa"></i>
+                    </td>
+                    {{else}}
+                    <td class="text-center">
+                        <i class="fa fa-unlock" aria-hidden="true"></i>
+                    </td>
+
+                    {{/if}}
+                    <td class="text-right">
+                        <a class="" href="/admin/tag/edit/{{id}}" title="Chỉnh sửa">
+                            <i class="fa fa-pencil" aria-hidden="true"></i>
+                        </a>
+                        &nbsp;&nbsp;&nbsp;
+                        <a class="" href="/admin/tag/detail/{{id}}" title="Các bài viết chứa nhãn">
+                            <i class="fa fa-info" aria-hidden="true"></i>
+                        </a>
+                    </td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+        <div class="article-pagination">
+            <ul>
+                <li><a {{#unless can_go_prev}} class="disable" {{/unless}} href="?page={{prev_value}}"><i
+                            class="fa fa-angle-double-left"></i></a></li>
+                {{#each pageItems}}
+                <li {{#if active}} class="active" {{/if}}>
+                    <a {{#if disable}} class="disable" {{/if}} {{#if active}} class="active" {{/if}}
+                        href="?page={{value}}">{{value}}</a></li>
+                {{/each}}
+                <li><a {{#unless can_go_next}} class="disable" {{/unless}} href="?page={{next_value}}"><i
+                            class="fa fa-angle-double-right"></i></a></li>
+            </ul>
+        </div>
     </div>
     <!-- end main content -->
     <!-- import script -->
     <script src="/public/js/admin.js"></script>
+    <script>
+        $('.article-pagination .disable').on('click', function (e) {
+            e.preventDefault();
+        })
+    </script>
+    <script src="/public/js/jquery.min.js"></script>
+    <script src="/public/js/main.js"></script>
+
     <!-- end import script -->
 </body>
 

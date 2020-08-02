@@ -2,13 +2,14 @@
 <html>
 
 <head>
-    <title>News24H Admin</title>
+    <title>Danh sách thể loại báo</title>
 
     <meta name="viewport"
         content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
     <link rel="icon" type="image/png" href="/public/img/logo-2.png" />
 
     <!-- Import lib -->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.css">
     <link rel="stylesheet" type="text/css" href="/public/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/public/css/font-awesome.min.css">
@@ -16,16 +17,22 @@
 
     <link rel="stylesheet" type="text/css" href="/public/css/admin.css">
     <style>
-        .wrapper {
-            background: #4568DC;
-            /* fallback for old browsers */
-            background: -webkit-linear-gradient(to left, #B06AB3, #4568DC);
-            /* Chrome 10-25, Safari 5.1-6 */
-            background: linear-gradient(to left, #B06AB3, #4568DC);
-            /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+        @import url(https://fonts.googleapis.com/css?family=Roboto:400,500,700,300,100);
 
+        .wrapper {
+            background: #43C6AC;
+            /* fallback for old browsers */
+            background: -webkit-linear-gradient(to left, #F8FFAE, #43C6AC);
+            /* Chrome 10-25, Safari 5.1-6 */
+            background: linear-gradient(to left, #F8FFAE, #43C6AC);
+            /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+            font-family: "Roboto", helvetica, arial, sans-serif;
+            font-size: 16px;
+            font-weight: 400;
+            text-rendering: optimizeLegibility;
         }
     </style>
+    {{{_sections.css}}}
 </head>
 
 <body class="overlay-scrollbar">
@@ -70,7 +77,7 @@
                             </a>
                         </li>
                         <li class="dropdown-menu-item">
-                            <a href="/pass/change" class="dropdown-menu-link">
+                             <a href="/pass/change" class="dropdown-menu-link">
                                 <div>
                                     <i class="fa fa-cog" aria-hidden="true"></i>
                                 </div>
@@ -134,7 +141,60 @@
     <!-- end sidebar -->
     <!-- main content -->
     <div class="wrapper">
-        <p style="text-align: center;"> Welcome back Admin</p>
+        {{#if this.empty}}
+        <div class="table-title">
+            <h3>Danh sách thể loại rỗng.</h3>
+        </div>
+        {{else}}
+        <div class="table-title">
+            <h3>Danh sách thể loại báo cấp 1</h3>
+        </div>
+        <h4>
+            <a class="btn btn success" href="/admin/category/add" role="button" title="Thêm thể loại">
+                <i class="fa fa-plus" aria-hidden="true"></i>
+                Thêm thể loại cấp 1
+            </a>
+        </h4>
+        <table class="table-fill">
+            <thead>
+                <tr>
+                    <th class="text-left">Tên thể loại</th>
+                    <th class="text-left">Ngày tạo</th>
+                    <th class="text-left">Chỉnh sửa lần cuối</th>
+                    <th class="text-left=">Tình trạng</th>
+                    <th class="text-left">&nbsp;</th>
+                </tr>
+            </thead>
+            <tbody class="table-hover">
+                {{#each this.categories1}}
+                <tr>
+                    <td class="text-left">{{name}}</td>
+                    <td class="text-left" id="txtDateCreate">{{parseTime create_date}}</td>
+                    <td class="text-left">{{parseTime modifile_date}}</td>
+                    {{#if delete}}
+                    <td class="text-center">
+                        <i class="fa fa-lock" aria-hidden="true" title="Bị khóa"></i>
+                    </td>
+                    {{else}}
+                    <td class="text-center">
+                        <i class="fa fa-unlock" aria-hidden="true"></i>
+                    </td>
+
+                    {{/if}}
+                    <td class="text-right">
+                        <a class="" href="/admin/category/edit/{{id}}" title="Chỉnh sửa">
+                            <i class="fa fa-pencil" aria-hidden="true"></i>
+                        </a>
+                        &nbsp;&nbsp;&nbsp;
+                        <a class="" href="/admin/category/detail/{{id}}" title="Chi tiết">
+                            <i class="fa fa-info" aria-hidden="true"></i>
+                        </a>
+                    </td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+        {{/if}}
     </div>
     <!-- end main content -->
     <!-- import script -->

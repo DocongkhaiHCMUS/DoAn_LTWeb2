@@ -2,30 +2,20 @@
 <html>
 
 <head>
-    <title>News24H Admin</title>
+    <title>Thêm nhãn vào bài viết </title>
 
     <meta name="viewport"
         content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
     <link rel="icon" type="image/png" href="/public/img/logo-2.png" />
 
     <!-- Import lib -->
+   
     <link rel="stylesheet" type="text/css" href="/public/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/public/css/font-awesome.min.css">
     <!-- End import lib -->
 
     <link rel="stylesheet" type="text/css" href="/public/css/admin.css">
-    <style>
-        .wrapper {
-            background: #4568DC;
-            /* fallback for old browsers */
-            background: -webkit-linear-gradient(to left, #B06AB3, #4568DC);
-            /* Chrome 10-25, Safari 5.1-6 */
-            background: linear-gradient(to left, #B06AB3, #4568DC);
-            /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-
-        }
-    </style>
 </head>
 
 <body class="overlay-scrollbar">
@@ -47,10 +37,7 @@
         </ul>
         <!-- end nav left -->
         <!-- form -->
-        <form class="navbar-search">
-            <input type="text" name="Search" class="navbar-search-input" placeholder="What you looking for...">
-            <i class="fa fa-search" aria-hidden="true"></i>
-        </form>
+
         <!-- end form -->
         <!-- nav right -->
         <ul class="navbar-nav nav-right">
@@ -70,11 +57,11 @@
                             </a>
                         </li>
                         <li class="dropdown-menu-item">
-                            <a href="/pass/change" class="dropdown-menu-link">
+                            <a href="#" class="dropdown-menu-link">
                                 <div>
                                     <i class="fa fa-cog" aria-hidden="true"></i>
                                 </div>
-                                <span>Change Password</span>
+                                <span>Settings</span>
                             </a>
                         </li>
                         <li class="dropdown-menu-item">
@@ -134,7 +121,25 @@
     <!-- end sidebar -->
     <!-- main content -->
     <div class="wrapper">
-        <p style="text-align: center;"> Welcome back Admin</p>
+        <form  method="POST">
+            <label for="id">#</label>
+            <input type="text"  name="tag" readonly value="{{this.tag.id}}">
+            <p>Tên nhãn : {{this.tag.name}}</p>
+            <label for="txtHoidap">Chọn bài viết</label>
+            <select name="post">
+                {{#each this.posts }}
+                <option value="{{id}}">ID:{{id}}  , {{title}}</option>
+                {{/each}}
+            </select>
+            <hr>
+            <a  href="/admin/tag" role="button" title="Back to List">
+                <i class="fa fa-backward" aria-hidden="true"></i>
+            </a>
+            <button type="submit" formaction="/admin/tag_post/add">
+                <i class="fa fa-check" aria-hidden="true"></i>
+                Gắn nhãn
+            </button>
+        </form>
     </div>
     <!-- end main content -->
     <!-- import script -->

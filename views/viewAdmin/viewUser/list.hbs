@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>News24H Admin</title>
+    <title>Danh sách người dùng </title>
 
     <meta name="viewport"
         content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
@@ -12,18 +12,25 @@
     <link rel="stylesheet" type="text/css" href="/public/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/public/css/font-awesome.min.css">
+
+
+    <!-- Custom stlylesheet -->
+    <link type="text/css" rel="stylesheet" href="/public/css/style.css" />
+    <link type="text/css" rel="stylesheet" href="/public/css/style_of_mine.css">
+    <link rel="stylesheet" type="text/css" href="/public/css/admin.css">
     <!-- End import lib -->
 
-    <link rel="stylesheet" type="text/css" href="/public/css/admin.css">
-    <style>
-        .wrapper {
-            background: #4568DC;
-            /* fallback for old browsers */
-            background: -webkit-linear-gradient(to left, #B06AB3, #4568DC);
-            /* Chrome 10-25, Safari 5.1-6 */
-            background: linear-gradient(to left, #B06AB3, #4568DC);
-            /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 
+
+    <style>
+        @import url(https://fonts.googleapis.com/css?family=Roboto:400,500,700,300,100);
+
+        .wrapper {
+            background-color: mediumaquamarine;
+            font-family: "Roboto", helvetica, arial, sans-serif;
+            font-size: 16px;
+            font-weight: 400;
+            text-rendering: optimizeLegibility;
         }
     </style>
 </head>
@@ -70,11 +77,11 @@
                             </a>
                         </li>
                         <li class="dropdown-menu-item">
-                            <a href="/pass/change" class="dropdown-menu-link">
+                            <a href="#" class="dropdown-menu-link">
                                 <div>
                                     <i class="fa fa-cog" aria-hidden="true"></i>
                                 </div>
-                                <span>Change Password</span>
+                                <span>Settings</span>
                             </a>
                         </li>
                         <li class="dropdown-menu-item">
@@ -134,11 +141,64 @@
     <!-- end sidebar -->
     <!-- main content -->
     <div class="wrapper">
-        <p style="text-align: center;"> Welcome back Admin</p>
+
+        <div class="table-title">
+            <h3 style="color: mediumvioletred;">Danh sách người dùng</h3>
+        </div>
+        <br>
+        <div style="float:right">
+            <a class="btn success" href="/admin/user/add" role="button" title="Thêm người dùng">
+                <i class="fa fa-plus" aria-hidden="true"></i>
+                Thêm người dùng
+            </a>
+        </div>
+        <br><br>
+        <table class="table-fill">
+            <thead>
+                <tr>
+                    <th class="text-left">Tên đăng nhập</th>
+                    <th class="text-left">Tên hiển thị</th>
+                    <th class="text-left">Email</th>
+                    <th class="text-left">Trạng thái</th>
+                    <th class="text-left">&nbsp;</th>
+                </tr>
+            </thead>
+            <tbody class="table-hover">
+                {{#each this.users}}
+                <tr>
+                    <td class="text-left">{{user_name}}</td>
+                    <td class="text-left" >{{display_name}}</td>
+                    <td class="text-left">{{email}}</td>
+                    {{#if delete}}
+                    <td class="text-center">
+                        <i class="fa fa-lock" aria-hidden="true" title="Bị khóa"></i>
+                    </td>
+                    {{else}}
+                    <td class="text-center">
+                        <i class="fa fa-unlock" aria-hidden="true"></i>
+                    </td>
+                    {{/if}}
+                    <td class="text-right">
+                        <a class="" href="/admin/user/detail/{{id}}" title="Chi tiết">
+                            <i class="fa fa-pencil" aria-hidden="true"></i>
+                        </a>                     
+                    </td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
     </div>
     <!-- end main content -->
     <!-- import script -->
     <script src="/public/js/admin.js"></script>
+    <script>
+        $('.article-pagination .disable').on('click', function (e) {
+            e.preventDefault();
+        })
+    </script>
+    <script src="/public/js/jquery.min.js"></script>
+    <script src="/public/js/main.js"></script>
+
     <!-- end import script -->
 </body>
 

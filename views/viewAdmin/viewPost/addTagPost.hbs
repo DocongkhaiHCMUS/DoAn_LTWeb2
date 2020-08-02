@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>News24H Admin</title>
+    <title>Thêm nhãn vào bài viết </title>
 
     <meta name="viewport"
         content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
@@ -15,17 +15,6 @@
     <!-- End import lib -->
 
     <link rel="stylesheet" type="text/css" href="/public/css/admin.css">
-    <style>
-        .wrapper {
-            background: #4568DC;
-            /* fallback for old browsers */
-            background: -webkit-linear-gradient(to left, #B06AB3, #4568DC);
-            /* Chrome 10-25, Safari 5.1-6 */
-            background: linear-gradient(to left, #B06AB3, #4568DC);
-            /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-
-        }
-    </style>
 </head>
 
 <body class="overlay-scrollbar">
@@ -47,10 +36,7 @@
         </ul>
         <!-- end nav left -->
         <!-- form -->
-        <form class="navbar-search">
-            <input type="text" name="Search" class="navbar-search-input" placeholder="What you looking for...">
-            <i class="fa fa-search" aria-hidden="true"></i>
-        </form>
+
         <!-- end form -->
         <!-- nav right -->
         <ul class="navbar-nav nav-right">
@@ -134,7 +120,25 @@
     <!-- end sidebar -->
     <!-- main content -->
     <div class="wrapper">
-        <p style="text-align: center;"> Welcome back Admin</p>
+        <form  method="POST">
+            <label for="id">#</label>
+            <input type="text"  name="post" readonly value="{{this.post.id}}">
+            <p>Tên bài viết : {{this.post.title}}</p>
+            <label for="txtHoidap">Chọn nhãn</label>
+            <select name="tag">
+                {{#each this.tags }}
+                <option value="{{id}}">ID: {{id}}  , {{name}}</option>
+                {{/each}}
+            </select>
+            <hr>
+            <a  href="/admin/post" role="button" title="Back to List">
+                <i class="fa fa-backward" aria-hidden="true"></i>
+            </a>
+            <button type="submit" formaction="/admin/tag_post/add">
+                <i class="fa fa-check" aria-hidden="true"></i>
+                Lưu
+            </button>
+        </form>
     </div>
     <!-- end main content -->
     <!-- import script -->
