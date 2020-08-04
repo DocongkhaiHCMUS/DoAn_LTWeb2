@@ -44,16 +44,22 @@ module.exports = {
         return db.load(`select p.*,tag.name as tag_name from ${TBL_Post} p join ${TBL_TagPost} tp on p.id = tp.post join 
                         ${TBL_Tag} tag on tp.tag = tag.id and tag.id = ${idTag} where p.delete = 0 limit ${limit} offset ${offset}`);
     },
+    postTag: () => {
+        return db.load(`SELECT p.*, GROUP_CONCAT(tag.name) as 'tags'
+                        FROM tag_post tp, tag tag, post p 
+                        WHERE p.id = tp.post and tp.tag = tag.id 
+                        GROUP by p.id`);
+    },
     countByIDTag: (idTag) => {
         return db.load(`select count(*) as total from ${TBL_Post} p join ${TBL_TagPost} tp on p.id = tp.post join 
-                            ${TBL_Tag} tag on tp.tag = tag.id and tag.id = ${idTag} where p.delete = 0`);
+                            ${TBL_Tag} tag on tp.tag = tag.id and tag.id = ${idTag} where p.delete = 0 p.id <= 20`);
     },
 
     searchText: (text,limit,offset) =>{
         return db.load(`SELECT p.* FROM ${TBL_Post} p
         WHERE MATCH (title,tiny_des,full_des) 
         AGAINST ('${text}' IN NATURAL LANGUAGE MODE)
-        limit ${limit} offset ${offset}
+        limit ${limit} offset ${offset} 
         `)
     },
 
@@ -96,5 +102,17 @@ module.exports = {
         entity['modifile_date'] = moment().format('YYYY/MM/DD HH:mm:ss');
 
         return db.patch(TBL_Post, entity, condition)
-    }
+    },
+
+    // patch_tag: (entity) => {
+    //     const condition = {
+    //         id: entity.id
+    //     }
+
+    //     delete entity.id;
+
+    //     entity['modifile_date'] = moment().format('YYYY/MM/DD HH:mm:ss');
+
+    //     return db.patch_tag(TBL_Tag, entity, condition)
+    // }
 };

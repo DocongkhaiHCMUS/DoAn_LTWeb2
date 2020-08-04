@@ -7,7 +7,7 @@ const moment = require('moment');
 limit = config.pagination.limit;
 
 router.get('/', async function (req, res) {
-    const list  = await modelPost.load();
+    const list  = await modelPost.postTag();
     res.render('viewEditor/editor', {
         editor: list,
         empty: list.length === 0

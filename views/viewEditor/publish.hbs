@@ -4,7 +4,7 @@
     </div>
 
     <div class="card-body">
-        <form method="POST">
+        <form method="POST" style="width: 1000px; align-items: center;">
             <div class="form-group">
                 <label for="txtID">id</label>
                 <input type="text" class="form-control" id="txtID" name="id" readonly value="{{this.editor.id}}">
@@ -18,10 +18,10 @@
 
             <div class="form-group">
                 <label for="txtTag">Nhãn </label>
-                <input type="text" class="form-control" id="txtTag" name="source" value="{{this.editor.source}}">
+                <input type="text" class="form-control" id="txtTag" name="tags" value="{{this.editor.tags}}">
             </div>
 
-            <div class="form-group">
+            <div class="form-group" style="width: 300px;">
                 <label for="txtPublish_date">Thời gian đăng bài </label>
                 <input type="datetime-local" class="form-control" id="txtPublish_date" name="publish_date"
                     value="{{this.editor.publish_date}}">
