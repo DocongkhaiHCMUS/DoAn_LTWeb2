@@ -7,7 +7,8 @@
         "database": "news"
     },
     "pagination": {
-        "limit": 6
+        "limit": 6,
+        "limitAdmin":10
     },
     "server": {
         "PORT": 3000

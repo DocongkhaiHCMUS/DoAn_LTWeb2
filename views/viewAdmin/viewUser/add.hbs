@@ -9,28 +9,16 @@
     <link rel="icon" type="image/png" href="/public/img/logo-2.png" />
 
     <!-- Import lib -->
+    <link rel="stylesheet" href="/public//css/_login.css">
     <link type="text/css" rel="stylesheet" href="/public/css/bootstrap.min.css" />
     <link type="text/css" rel="stylesheet" href="/public/css/style.css" />
-	<link type="text/css" rel="stylesheet" href="/public/css/style_of_mine.css">
-    <link rel="stylesheet" type="text/css" href="/public/css/all.min.css">
+    <link type="text/css" rel="stylesheet" href="/public/css/style_of_mine.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/public/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/public/css/admin.css">
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css">
     <!-- End import lib -->
-
-    <link rel="stylesheet" type="text/css" href="/public/css/admin.css">
-    <style>
-        .wrapper {
-            background: #4568DC;
-            /* fallback for old browsers */
-            background: -webkit-linear-gradient(to left, #B06AB3, #4568DC);
-            /* Chrome 10-25, Safari 5.1-6 */
-            background: linear-gradient(to left, #B06AB3, #4568DC);
-            /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-
-        }
-    </style>
 </head>
 
 <body class="overlay-scrollbar">
@@ -140,182 +128,180 @@
     <!-- main content -->
     <div class="wrapper">
         <div class="demo-1">
-    <div class="main-agileits reg">
-        <!--form-stars-here-->
-        <div class="form-w3-agile">
-            <h2>Đăng Ký</h2>
-            <form id="frmReg" action="./register" method="post" novalidate>
-                {{#if error}}
-                <h3 class="alert">
-                    <p>
-                        <i class='fa fa-exclamation-triangle' aria-hidden='true'>&nbsp;</i>
-                        {{error.err}}
-                    <p>
-                </h3>
-                {{/if}}
+            <div class="main-agileits reg">
+                <!--form-stars-here-->
+                <div class="form-w3-agile">
+                    <h2>Thêm tài khoản</h2>
+                    {{#if err}}
+                    <h3 class="alert">
+                        <p>
+                            <i class='fa fa-exclamation-triangle' aria-hidden='true'>&nbsp;</i>
+                            {{err}}
+                        <p>
+                    </h3>
+                    {{/if}}
+                    <h4 id="txtValidate" class="alert d-none"></h4>
+                    <form id="frmReg" action="/admin/user/add" method="post" novalidate>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-sub-w3">
+                                    <input id="inputName" type="text" name="user_name" placeholder="UserName"
+                                        autofocus />
+                                    <label for="inputName">UserName</label>
+                                    <div class="icon-w3">
+                                        <i class="fa fa-user" aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                                <div class="form-sub-w3">
+                                    <input id="inputPassword" type="password" name="password" placeholder="Password" />
+                                    <label>Password</label>
+                                    <div class="icon-w3">
+                                        <i class="fa fa-unlock-alt" aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                                <div class="form-sub-w3">                       
+                                    <input id="inputConfPassword" type="password" placeholder="Confirm Password" />
+                                    <label>Confirm Password</label>
+                                     <div class="icon-w3">
+                                        <i class="fa fa-unlock-alt" aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-sub-w3">
+                                    <input id="inputDName" type="text" name="display_name" placeholder="Display name" />
+                                    <label>Display name</label>
+                                    <div class="icon-w3">
+                                        <i class="fa fa-user" aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                                <div class="form-sub-w3">                                   
+                                    <input id="inputEmail" type="text" name="email" placeholder="Email" />
+                                    <label>Email</label>
+                                    <div class="icon-w3">
+                                        <i class="fa fa-envelope" aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                                <div class="form-sub-w3">                                  
+                                    <input id="inputDOB" type="text" name="dob" placeholder="DOB" />
+                                    <label>DOB</label>
+                                    <div class="icon-w3">
+                                        <i class="fa fa-calendar" aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-sub-w3">
+                                    <select name="gender">
+                                        <option value="0">&#xf183; Nam</option>
+                                        <option value="1">&#xf182; Nữ</option>
+                                    </select>
 
-                <h4 id="txtValidate" class="alert d-none">
+                                    <label>Giới tính: </label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-sub-w3">
+                                    <select name="permission">
+                                        {{#each this.pers }}
+                                        <option value="{{id}}">{{name}} </option>
+                                        {{/each}}
+                                    </select>
+                                    <label>Quyền hạn: </label>
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="mt1">
+                        <div class="clear"></div>
+                        <div class="submit-w3l">
+                            <input id="btnSignIn" type="submit" value="Xác nhận">
+                        </div>
+                    </form>
+                </div>
 
-                </h4>
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="form-sub-w3">
-                            <input id="inputName" type="text" name="user_name" placeholder="UserName" autofocus />
-                            <label for="inputName">UserName</label>
-                            <div class="icon-w3">
-                                <i class="fa fa-user" aria-hidden="true"></i>
-                            </div>
-                        </div>
-                        <div class="form-sub-w3">
-                            <input id="inputPassword" type="password" name="password" placeholder="Password" />
-                            <label>Password</label>
-                            <div class="icon-w3">
-                                <i class="fa fa-unlock-alt" aria-hidden="true"></i>
-                            </div>
-                        </div>
-                        <div class="form-sub-w3">
-                            <input id="inputConfPassword" type="password" name="confpassword"
-                                placeholder="Confirm Password" />
-                            <label>Confirm Password</label>
-                            <div class="icon-w3">
-                                <i class="fa fa-unlock-alt" aria-hidden="true"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="form-sub-w3">
-                            <input id="inputDName" type="text" name="display_name" placeholder="Display name" />
-                            <label>Display name</label>
-                            <div class="icon-w3">
-                                <i class="fa fa-user" aria-hidden="true"></i>
-                            </div>
-                        </div>
-                        <div class="form-sub-w3">
-                            <input id="inputEmail" type="text" name="email" placeholder="Email" />
-                            <label>Email</label>
-                            <div class="icon-w3">
-                                <i class="fa fa-envelope" aria-hidden="true"></i>
-                            </div>
-                        </div>
-                        <div class="form-sub-w3">
-                            <input id="inputDOB" type="text" name="dob" placeholder="DOB" />
-                            <label>DOB</label>
-                            <div class="icon-w3">
-                                <i class="fa fa-calendar" aria-hidden="true"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <hr class="mt1">
-                <div class="clear"></div>
-                <div class="submit-w3l">
-                    <input id="btnSignIn" type="submit" value="Xác nhận">
-                </div>
-            </form>
+                <!--//form-ends-here-->
+            </div>
         </div>
-
-        <!--//form-ends-here-->
-    </div>
-</div>
     </div>
     <!-- end main content -->
     <!-- import script -->
     <script src="/public/js/admin.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js">
-</script>
-<script>
-    $('#inputDOB').datetimepicker({
-        format: 'd/m/Y',
-        timepicker: false,
-        mask: true
-    });
-    //handling when btnSignIn submit
-    $('#frmReg').submit(function (e) {
-        e.preventDefault();
+    </script>
+    <script>
+        $('#inputDOB').datetimepicker({
+            format: 'd/m/Y',
+            timepicker: false,
+            mask: true
+        });
+        //handling when btnSignIn submit
+        $('#frmReg').submit(function (e) {
+            e.preventDefault();
 
-        if (validate() == 1) {
+            if (validate() == 1) {
 
-            // remove all error before 
-            $('#txtValidate').empty();
-            // add error text
-            let error = $("<p></p>").append("<i class='fa fa-exclamation-triangle' aria-hidden='true'>&nbsp;</i>Vui lòng nhập thông tin !");
-            $('#txtValidate').append(error);
-            if ($('#txtValidate').hasClass('d-none'))
-                $('#txtValidate').removeClass('d-none')
-        }
-        else if (confirm() == 1) {
-            // remove all error before 
-            $('#txtValidate').empty();
-            // add error text
-            let error = $("<p></p>").append("<i class='fa fa-exclamation-triangle' aria-hidden='true'>&nbsp;</i>Xác nhận mật khẩu không khớp !");
-            $('#txtValidate').append(error);
-            if ($('#txtValidate').hasClass('d-none'))
-                $('#txtValidate').removeClass('d-none')
-        }
-        else if (validateEmail() == 1) {
-            // remove all error before 
-            $('#txtValidate').empty();
-            // add error text
-            let error = $("<p></p>").append("<i class='fa fa-exclamation-triangle' aria-hidden='true'>&nbsp;</i>Email không hợp lệ !");
-            $('#txtValidate').append(error);
-            if ($('#txtValidate').hasClass('d-none'))
-                $('#txtValidate').removeClass('d-none')
-        }
-        else {
-            validateAvailable();
-        }
-    });
-
-    function validate() {
-        let name = $('#inputName').val();
-        let pass = $('#inputPassword').val();
-        let email = $('#inputEmail').val();
-        let confpass = $('#inputConfPassword').val();
-        let disName = $('#inputDName').val();
-        if (!name || !pass || !email || !confpass || !disName)
-            return 1;
-    }
-
-    function confirm() {
-        let pass = $('#inputPassword').val();
-        let confpass = $('#inputConfPassword').val();
-        if (pass != confpass)
-            return 1;
-    }
-
-    function validateEmail() {
-        const regexEmail = /.+@[a-zA-Z]+\.[a-zA-Z]+/g;
-
-        let regexE = new RegExp(regexEmail);
-
-        let email = $('#inputEmail').val();
-
-        if (!regexE.test(email))
-            return 1;
-    }
-
-    function validateAvailable() {
-        let name = $('#inputName').val();
-
-        $.getJSON(`/register/is-available?user=${name}`, function (data) {
-            if (data === true) {
-                if ($('#txtValidate').hasClass('d-none') == false)
-                    $('#txtValidate').addClass('d-none')
-                $('#frmReg').off('submit').submit();
-            }
-            else {
                 // remove all error before 
                 $('#txtValidate').empty();
                 // add error text
-                let error = $("<p></p>").append("<i class='fa fa-exclamation-triangle' aria-hidden='true'>&nbsp;</i>UserName đã tồn tại !");
+                let error = $("<p></p>").append("<i class='fa fa-exclamation-triangle' aria-hidden='true'>&nbsp;</i>Vui lòng nhập thông tin !");
                 $('#txtValidate').append(error);
                 if ($('#txtValidate').hasClass('d-none'))
                     $('#txtValidate').removeClass('d-none')
             }
-        })
-    }
+            else if (confirm() == 1) {
+                // remove all error before 
+                $('#txtValidate').empty();
+                // add error text
+                let error = $("<p></p>").append("<i class='fa fa-exclamation-triangle' aria-hidden='true'>&nbsp;</i>Xác nhận mật khẩu không khớp !");
+                $('#txtValidate').append(error);
+                if ($('#txtValidate').hasClass('d-none'))
+                    $('#txtValidate').removeClass('d-none')
+            }
+            else if (validateEmail() == 1) {
+                // remove all error before 
+                $('#txtValidate').empty();
+                // add error text
+                let error = $("<p></p>").append("<i class='fa fa-exclamation-triangle' aria-hidden='true'>&nbsp;</i>Email không hợp lệ !");
+                $('#txtValidate').append(error);
+                if ($('#txtValidate').hasClass('d-none'))
+                    $('#txtValidate').removeClass('d-none')
+            }
+            else {
+                if ($('#txtValidate').hasClass('d-none') == false)
+                    $('#txtValidate').addClass('d-none')
+                $('#frmReg').off('submit').submit();
+            }
+        });
 
-</script>
+        function validate() {
+            let name = $('#inputName').val();
+            let pass = $('#inputPassword').val();
+            let email = $('#inputEmail').val();
+            let confpass = $('#inputConfPassword').val();
+            let disName = $('#inputDName').val();
+            if (!name || !pass || !email || !confpass || !disName)
+                return 1;
+        }
+
+        function confirm() {
+            let pass = $('#inputPassword').val();
+            let confpass = $('#inputConfPassword').val();
+            if (pass != confpass)
+                return 1;
+        }
+
+        function validateEmail() {
+            const regexEmail = /.+@[a-zA-Z]+\.[a-zA-Z]+/g;
+
+            let regexE = new RegExp(regexEmail);
+
+            let email = $('#inputEmail').val();
+
+            if (!regexE.test(email))
+                return 1;
+        }
+    </script>
     <!-- end import script -->
 </body>
 

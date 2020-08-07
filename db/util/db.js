@@ -77,6 +77,18 @@ module.exports = {
             });
         })
     },
+    deleteAllPostByCat2: function(ID){
+        return new Promise(function(resolve,reject){
+            const sql =`update post p set p.delete = 1 where p.category = ${ID}`;
+            pool.query(sql,ID, function (error, results) {
+                if (error) {
+                    return reject(error);
+                }
+
+                resolve(results);
+            });
+        })
+    },
     deleteAllTagPostByPost: function(ID){
         return new Promise(function(resolve,reject){
             const sql =`update tag_post tp set tp.delete = 1 where tp.post = ${ID}`;

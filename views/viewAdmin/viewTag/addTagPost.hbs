@@ -9,7 +9,7 @@
     <link rel="icon" type="image/png" href="/public/img/logo-2.png" />
 
     <!-- Import lib -->
-   
+
     <link rel="stylesheet" type="text/css" href="/public/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/public/css/font-awesome.min.css">
@@ -121,18 +121,19 @@
     <!-- end sidebar -->
     <!-- main content -->
     <div class="wrapper">
-        <form  method="POST">
+        <form method="POST">
             <label for="id">#</label>
-            <input type="text"  name="tag" readonly value="{{this.tag.id}}">
+            <input type="text" name="tag" readonly value="{{this.tag.id}}">
             <p>Tên nhãn : {{this.tag.name}}</p>
-            <label for="txtHoidap">Chọn bài viết</label>
-            <select name="post">
+            <label for="post">Chọn bài viết</label>
+            <input list="post_" name="post" id="post">
+            <datalist id="post_">
                 {{#each this.posts }}
-                <option value="{{id}}">ID:{{id}}  , {{title}}</option>
+                <option value="{{id}}">{{title}}</option>
                 {{/each}}
-            </select>
+            </datalist>
             <hr>
-            <a  href="/admin/tag" role="button" title="Back to List">
+            <a href="/admin/tag" role="button" title="Back to List">
                 <i class="fa fa-backward" aria-hidden="true"></i>
             </a>
             <button type="submit" formaction="/admin/tag_post/add">

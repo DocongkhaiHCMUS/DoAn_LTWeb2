@@ -7,6 +7,11 @@ const config = require('../db/config/config.json');
 const tagPostModel = require('../models/tag-post.model');
 const postModel = require('../models/post.model');
 const userModel = require('../models/user.model');
+const perModel = require('../models/permission.model');
+const AssignModel = require('../models/assign.model');
+const bcrypt = require('bcrypt');
+const moment = require('moment');
+const assignModel = require('../models/assign.model');
 // router.use(function (req, res, next) {
 //     req.app.set('view options', { layout: 'admin.hbs' });
 //     next();
@@ -173,6 +178,7 @@ router.post('/categorylv2/del', async function (req, res) {
         delete: 1
     }
     await cateModel.patch2(entity);
+    await postModel.deteleAllPostByCat2(req.body.id);
     res.redirect(req.headers.referer);
 });
 //                              END ADMIN CATEGORY
@@ -188,16 +194,16 @@ router.get('/tag', async function (req, res) {
         if (page < 0 || !page) {
             page = 1;
         }
-        const offset = (page - 1) * config.pagination.limit;
+        const offset = (page - 1) * config.pagination.limitAdmin;
 
         const [list, total] = await Promise.all([
             //config.pagination.limit
-            tagModel.pageByTag(config.pagination.limit, offset),
+            tagModel.pageByTag(config.pagination.limitAdmin, offset),
             tagModel.countByTag()
         ]);
 
         // const total = await productModel.countByCat(req.params.catId);
-        const nPages = Math.ceil(total / config.pagination.limit);
+        const nPages = Math.ceil(total / config.pagination.limitAdmin);
         const pageItems = [];
 
         if (1 == page)
@@ -381,14 +387,14 @@ router.get('/post', async function (req, res) {
         if (page < 0 || !page) {
             page = 1;
         }
-        const offset = (page - 1) * config.pagination.limit;
+        const offset = (page - 1) * config.pagination.limitAdmin;
 
         const [list, total] = await Promise.all([
             //config.pagination.limit
-            postModel.pageByPost(config.pagination.limit, offset),
+            postModel.pageByPost(config.pagination.limitAdmin, offset),
             postModel.countByPost()
         ]);
-        const nPages = Math.ceil(total / config.pagination.limit);
+        const nPages = Math.ceil(total / config.pagination.limitAdmin);
         const pageItems = [];
 
         if (1 == page)
@@ -468,8 +474,8 @@ router.get('/post/detail/:id', async function (req, res) {
             }
             i++;
         }
-        while(i< categoryLv2.length){
-            if(categoryLv2[i].id === _post[0].category){
+        while (i < categoryLv2.length) {
+            if (categoryLv2[i].id === _post[0].category) {
                 categoryLv2[i].isCat2 = true;
                 break;
             }
@@ -542,6 +548,22 @@ router.get('/user', async function (req, res) {
     }
     else {
         const listUser = await userModel.All();
+        let i = 0;
+        while (i < listUser.length) {
+            if (parseInt(listUser[i].permission, 10) === 2) {
+                listUser[i].isWriter = true;
+            }
+            else if (parseInt(listUser[i].permission, 10) === 3) {
+                listUser[i].isEditor = true;
+            }
+            else if (parseInt(listUser[i].permission, 10) === 4) {
+                listUser[i].isAdmin = true;
+            }
+            else {
+                listUser[i].isSubscriber = true;
+            }
+            i++;
+        }
         res.render('viewAdmin/viewUser/list.hbs',
             {
                 layout: false,
@@ -551,22 +573,42 @@ router.get('/user', async function (req, res) {
     }
 });
 
-router.get('/user/add', function (req, res) {
+router.get('/user/add', async function (req, res) {
     if (!req.session.isAuthenticated || parseInt(req.session.authUser.permission, 10) != 4) {
         res.redirect('/');
     }
     else {
+        const pers = await perModel.load();
         res.render('viewAdmin/viewUser/add.hbs', {
-            layout: false
+            layout: false,
+            pers
         });
     }
 });
 
 router.post('/user/add', async function (req, res) {
-    await cateModel.add1(req.body);
-    res.render('viewAdmin/viewCategory/add.hbs', {
-        layout: false
-    });
+    const hashPass = bcrypt.hashSync(req.body.password, 10);
+    const user = await userModel.singleByUserName(req.body.username);
+    const us = user[0];
+    if (us) {
+        res.render('viewAdmin/viewUser/add.hbs', {
+            err: 'Tên tài khoản đã tồn tại.'
+        });
+    }
+    else {
+        let new_user = {
+            user_name: req.body.user_name,
+            display_name: req.body.display_name,
+            password: hashPass,
+            email: req.body.email,
+            DOB: moment(req.body.dob, 'DD/MM/YYYY'),
+            permission: req.body.permission,
+            gender: req.body.gender,
+            time_out: moment("00/00/0000", 'DD/MM/YYYY')
+        }
+        userModel.add(new_user);
+        res.redirect('/admin/user');
+    }
 });
 
 router.get('/user/detail/:id', async function (req, res) {
@@ -576,11 +618,39 @@ router.get('/user/detail/:id', async function (req, res) {
     else {
         const id = +req.params.id || -1;
         const rows = await userModel.singleByID2(id);
-        if (rows.length === 0)
+        if (rows.length === 0) {
             return res.send('Invalid parameter.');
+        }
 
         const user = rows[0];
-        res.render('viewAdmin/viewUser/detail.hbs', { layout: false, user });
+        const pers = await perModel.load();
+        let i = 0;
+        while (i < pers.length) {
+            if (user.permission === pers[i].id) {
+                pers[i].Select = true;
+                break;
+            }
+            i++;
+        }
+        res.render('viewAdmin/viewUser/detail.hbs', { layout: false, user, pers });
+    }
+});
+router.post('/user/update', async function (req, res) {
+    await userModel.patch(req.body);
+    // if (parseInt(req.body.delete, 10) === 1) {
+    //     await postModel.deleteAllTagPostByPost(req.body.id);
+    // }
+    res.redirect(req.headers.referer);
+});
+router.get('/user/assign/:id', async function (req, res) {
+    if (!req.session.isAuthenticated || parseInt(req.session.authUser.permission, 10) != 4) {
+        res.redirect('/');
+    }
+    else {
+        const id = +req.params.id || -1;
+        const rows = await assignModel.singleByUser(id);
+        const _user = await userModel.singleByID2(id);
+        res.render('viewAdmin/viewUser/CategoryEditor.hbs', { layout: false, assign: rows,user: _user[0] });
     }
 });
 module.exports = router;

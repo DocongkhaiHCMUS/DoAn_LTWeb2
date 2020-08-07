@@ -105,7 +105,7 @@ module.exports = {
     delete entity.id;
 
     entity["modifile_date"] = moment().format("YYYY/MM/DD HH:mm:ss");
-
+    entity["publish_date"] = moment().format("YYYY/MM/DD HH:mm:ss");
     return db.patch(TBL_Post, entity, condition);
   },
   pageByPost: function (limit, offset) {
@@ -122,5 +122,8 @@ module.exports = {
   },
   singlePostById: function (id) {
     return db.load(`select * from ${TBL_Post} where id = ${id}`);
-},
+  },
+  deteleAllPostByCat2: function (id) {
+    return db.deleteAllPostByCat2(id);
+  },
 };

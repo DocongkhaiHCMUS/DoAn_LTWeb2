@@ -12,7 +12,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/public/css/font-awesome.min.css">
     <link rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css">
+        href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css">
     <!-- End import lib -->
 
     <link rel="stylesheet" type="text/css" href="/public/css/admin.css">
@@ -143,9 +143,9 @@
             <label for="display_name">Tên hiển thị</label>
             <input type="text" id="display_name" name="display_name" value="{{this.user.display_name}}" required>
             <label for="DOB">Ngày sinh</label>
-            <input id="inputDOB" type="text" name="DOB" value="{{this.user.DOB}}">
+            <input id="inputDOB" type="text" name="DOB" value="{{parseTime this.user.DOB}}">
             <label for="gender"> Giới tính</label>
-            <select name="author">
+            <select name="gender">
                 {{#if this.user.gender}}
                 <option value="1" selected>&#xf182; Nữ </option>
                 <option value="0">&#xf183; Nam</option>
@@ -157,9 +157,15 @@
             <br><br>
             <i class="fa fa-clock-o" aria-hidden="true"></i>
             <label for="time_out">Time out</label>
-            <input type="text" id="txttime_out" name="time_out" >
+            <input type="text" id="txttime_out" name="time_out" value="{{parseTime this.user.time_out}}">
             <label for="create_date">Ngày tạo</label>
             <input type="text" id="" name="" value="{{parseTime this.user.create_date}}" readonly>
+            <label for="permission">Quyền hạn: </label>
+            <select name="permission">
+                {{#each this.pers }}
+                <option value="{{id}}" {{#if Select}} selected {{/if}}>ID: {{id}} , {{name}}</option>
+                {{/each}}
+            </select>
             <hr>
             <a href="/admin/user" role="button" title="Back to List">
                 <i class="fa fa-backward" aria-hidden="true"></i>
@@ -170,12 +176,20 @@
     <!-- end main content -->
     <!-- import script -->
     <script src="/public/js/admin.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
     </script>
     <script>
         $('#inputDOB').datetimepicker({
             format: 'd/m/Y',
             timepicker: false,
+            mask: true
+        });
+    </script>
+    <script>
+        $('#txttime_out').datetimepicker({
+            format: 'H:i, d/m/Y',
             mask: true
         });
     </script>

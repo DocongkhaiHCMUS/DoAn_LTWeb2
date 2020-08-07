@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Chi tiết bài tiết</title>
+    <title>Danh sách chuyên mục được phân công</title>
 
     <meta name="viewport"
         content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
@@ -12,16 +12,21 @@
     <link rel="stylesheet" type="text/css" href="/public/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/public/css/font-awesome.min.css">
-    <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css">
+
+
+    <!-- Custom stlylesheet -->
+    <link type="text/css" rel="stylesheet" href="/public/css/style.css" />
+    <link type="text/css" rel="stylesheet" href="/public/css/style_of_mine.css">
+    <link rel="stylesheet" type="text/css" href="/public/css/admin.css">
     <!-- End import lib -->
 
-    <link rel="stylesheet" type="text/css" href="/public/css/admin.css">
+
+
     <style>
         @import url(https://fonts.googleapis.com/css?family=Roboto:400,500,700,300,100);
 
         .wrapper {
-            background-color: #4AC29A;
+            background-color: mediumaquamarine;
             font-family: "Roboto", helvetica, arial, sans-serif;
             font-size: 16px;
             font-weight: 400;
@@ -136,93 +141,68 @@
     <!-- end sidebar -->
     <!-- main content -->
     <div class="wrapper">
-        <form action="/admin/post/update" method="POST">
-            <label for="id">#</label>
-            <input type="text" id="id" name="id" value="{{this.post.id}}" readonly>
-            <label for="title">Tên bài viết</label>
-            <input type="text" id="title" name="title" value="{{this.post.title}}" autofocus required>
-            <label for="tiny_des">Mô tả ngắn</label>
-            <input type="text" id="tiny_des" name="tiny_des" value="{{this.post.tiny_des}}" required>
-            <label for="tiny_des">Mô tả đầy đủ</label>
-            <textarea type="text" id="full_des" name="full_des" required> {{this.post.full_des}}</textarea>
-            <i class="fa fa-paint-brush" aria-hidden="true"></i>
-            <label for="author">Tác giả</label>
-            <select name="author">
-                {{#each this.users }}
-                <option value="{{id}}" {{#if isAuthor}} selected {{/if}}>&#xf2c0; {{display_name}}</option>
-                {{/each}}
-            </select>
-            <br><br>
-            <i class="fa fa-genderless" aria-hidden="true"></i>
-            <label for="premium">Loại bài viết</label>
-            <select name="premium">
-                {{#if this.post.premium}}
-                <option value="1" selected> &#xf219; Premium </option>
-                <option value="0">Thường</option>
-                {{else}}
-                <option value="1"> &#xf219; Premium</option>
-                <option value="0" selected>Thường </option>
-                {{/if}}
-            </select>
-            <p>
-                <i class="fa fa-clock-o" aria-hidden="true"></i>
-                Sửa lần cuối vào lúc: {{parseTime this.post.modifile_date}}
-            </p>
-            <label for="publish_date">
-                <i class="fa fa-clock-o" aria-hidden="true"></i>
-                Ngày ra mắt
-            </label>
-            <input id="input" type="text" name="publish_date" value="{{parseTime this.post.publish_date}}">
-            <label for="status">Trạng thái</label>
-            <select name="status">
-                {{#if this.post.status}}
-                <option value="0">&#xf00d; Draft</option>
-                <option value="1" selected>&#xf14a; Đã xuất bản</option>
-                {{else}}
-                <option value="0" selected>&#xf00d; Draft</option>
-                <option value="1">&#xf14a; Đã xuất bản</option>
-                {{/if}}
-            </select>
-            <br><br>
-            <label for="delete">Tình trạng</label>
-            <select name="delete">
-                {{#if this.post.delete}}
-                <option value="1" selected>đang khóa &#xf119;</option>
-                <option value="0">không khóa &#xf118;</option>
-                {{else}}
-                <option value="1">đang khóa &#xf119;</option>
-                <option value="0" selected>không khóa &#xf118;</option>
-                {{/if}}
-            </select>
-            <br><br>
-            <label for="category">Thể loại</label>
-            <input list="catLv2" name="category" id="category" value="{{this.post.category}}">
-            <datalist id="catLv2">
-                {{#each this.cats2}}
-                <option value="{{id}}" {{#if isCat2}} selected {{/if}}>{{name}}</option>
-                {{/each}}
-            </datalist>
-            <p>Lượt xem: {{this.post.views}}</p>
-            <hr>
-            <a href="/admin/post" role="button" title="Back to List">
-                <i class="fa fa-backward" aria-hidden="true"></i>
+
+        <div class="table-title">
+            <h3 style="color: mediumvioletred;">Danh sách chuyên mục đã phân công</h3>
+        </div>
+        <p>Biên tập viên: {{this.user.display_name}} </p>
+        <br>
+        <div style="float:right">
+            <a class="btn success" href="/admin/user/addAssign/{{this.user.id}}" role="button" title="Thêm người dùng">
+                <i class="fa fa-plus" aria-hidden="true"></i>
+                Phân công thêm
             </a>
-            <input type="submit" value="Lưu">
-        </form>
+        </div>
+        <br><br>
+        <table class="table-fill">
+            <thead>
+                <tr>
+                    <th class="text-left">Chuyên mục</th>
+                    <th class="text-left">Tình trạng</th>
+                    <th class="text-left">&nbsp;</th>
+                </tr>
+            </thead>
+            <tbody class="table-hover">
+                {{#each this.assign}}
+                <tr>
+                    <td class="text-left">
+                        {{name}}
+                    </td>
+                    {{#if delete}}
+                    <td class="text-center" style="color: red;">
+                        Đã ngừng phân công
+                    </td>
+                     <td class="text-center">
+                        <a class="" href="/admin/user/detail/{{id}}" title="Phân công lại">
+                            <i class="fa fa-refresh" aria-hidden="true"></i>
+                        </a>
+                    </td>
+                    {{else}}
+                    <td class="text-center" style="color: blue;">
+                        Đang được phân công
+                    </td>
+                      <td class="text-center">
+                        <a class="" href="/admin/user/detail/{{id}}" title="Ngừng phân công">
+                            <i class="fa fa-trash" aria-hidden="true"></i>
+                        </a>
+                    </td>
+                    {{/if}}               
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
     </div>
     <!-- end main content -->
     <!-- import script -->
     <script src="/public/js/admin.js"></script>
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script
-        src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
-    </script>
     <script>
-        $('#input').datetimepicker({
-            format: 'H:i, d/m/Y',
-            mask: true
-        });
+        $('.article-pagination .disable').on('click', function (e) {
+            e.preventDefault();
+        })
     </script>
+    <script src="/public/js/jquery.min.js"></script>
+    <script src="/public/js/main.js"></script>
+
     <!-- end import script -->
 </body>
 

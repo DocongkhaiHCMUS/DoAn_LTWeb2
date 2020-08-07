@@ -77,7 +77,7 @@
                             </a>
                         </li>
                         <li class="dropdown-menu-item">
-                             <a href="/pass/change" class="dropdown-menu-link">
+                            <a href="/pass/change" class="dropdown-menu-link">
                                 <div>
                                     <i class="fa fa-cog" aria-hidden="true"></i>
                                 </div>
@@ -168,11 +168,13 @@
             <tbody class="table-hover">
                 {{#each this.categories1}}
                 <tr>
-                    <td class="text-left">{{name}}</td>
+                    <td class="text-left">
+                        <b>{{name}}</b>
+                    </td>
                     <td class="text-left" id="txtDateCreate">{{parseTime create_date}}</td>
                     <td class="text-left">{{parseTime modifile_date}}</td>
                     {{#if delete}}
-                    <td class="text-center">
+                    <td class="text-center" style="color: red;">
                         <i class="fa fa-lock" aria-hidden="true" title="Bị khóa"></i>
                     </td>
                     {{else}}

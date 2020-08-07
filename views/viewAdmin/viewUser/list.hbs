@@ -77,11 +77,11 @@
                             </a>
                         </li>
                         <li class="dropdown-menu-item">
-                            <a href="#" class="dropdown-menu-link">
+                            <a href="/pass/change" class="dropdown-menu-link">
                                 <div>
                                     <i class="fa fa-cog" aria-hidden="true"></i>
                                 </div>
-                                <span>Settings</span>
+                                <span>Change Password</span>
                             </a>
                         </li>
                         <li class="dropdown-menu-item">
@@ -156,6 +156,7 @@
         <table class="table-fill">
             <thead>
                 <tr>
+                     <th class="text-left">#</th>
                     <th class="text-left">Tên đăng nhập</th>
                     <th class="text-left">Tên hiển thị</th>
                     <th class="text-left">Email</th>
@@ -166,11 +167,25 @@
             <tbody class="table-hover">
                 {{#each this.users}}
                 <tr>
+                    <td class="text-left">
+                        {{#if isAdmin}}
+                           <b style="color: #000080">Admin</b>
+                        {{/if}}
+                        {{#if isEditor}}
+                          <b style="color:#4169E1 ;">Biên tập viên</b>
+                        {{/if}}
+                        {{#if isWriter}}
+                          <b style="color:#87CEFA ;">Phóng viên</b>
+                        {{/if}}
+                        {{#if isSubscriber}}
+                           <b>Người dùng</b>
+                        {{/if}}
+                    </td>
                     <td class="text-left">{{user_name}}</td>
-                    <td class="text-left" >{{display_name}}</td>
+                    <td class="text-left">{{display_name}}</td>
                     <td class="text-left">{{email}}</td>
                     {{#if delete}}
-                    <td class="text-center">
+                    <td class="text-center" style="color: red;">
                         <i class="fa fa-lock" aria-hidden="true" title="Bị khóa"></i>
                     </td>
                     {{else}}
@@ -181,7 +196,12 @@
                     <td class="text-right">
                         <a class="" href="/admin/user/detail/{{id}}" title="Chi tiết">
                             <i class="fa fa-pencil" aria-hidden="true"></i>
-                        </a>                     
+                        </a>
+                        {{#if isEditor}}
+                        <a class="" href="/admin/user/assign/{{id}}" title="Danh sách chuyên mục được phân công">
+                            <i class="fa fa-briefcase" aria-hidden="true"></i>
+                        </a>
+                        {{/if}}
                     </td>
                 </tr>
                 {{/each}}

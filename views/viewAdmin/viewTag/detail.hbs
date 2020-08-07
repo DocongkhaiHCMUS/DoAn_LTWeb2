@@ -162,11 +162,11 @@
             <tbody class="table-hover">
                 {{#each this.tag_post}}
                 <tr>
-                    <td class="text-left">{{title}}</td>
+                    <td class="text-left"><b>{{title}}</b></td>
                     <form method="POST">
                         <input hidden name="id" value="{{tpid}}">
                         {{#if delete}}
-                        <td class="text-center">
+                        <td class="text-center" style="color: red;">
                             <i class="fa fa-lock" aria-hidden="true"></i>
                         </td>
                         <td class="text-right">

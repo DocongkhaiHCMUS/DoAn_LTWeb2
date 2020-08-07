@@ -127,26 +127,25 @@
             <label for="name">Tên thể loại</label>
             <input type="text" id="name" name="name" value="{{this.category.name}}" autofocus required>
             <label for="txtHoidap">Chọn thể loại cấp 1</label>
-            <select name="category_level1">
+            <input list="catLv1" name="category_level1" id="category_level1">
+            <datalist id="catLv1">
                 {{#each this.catLv1 }}
-                <option value="{{id}}" {{#if isActive}}
-                    selected
-                {{/if}}>{{name}}</option>
+                <option value="{{id}}" {{#if isActive}} selected {{/if}}>{{name}}</option>
                 {{/each}}
-            </select>
+            </datalist>
             <hr>
-            <a  href="/admin/category" role="button" title="Back to List">
+            <a href="/admin/category" role="button" title="Back to List">
                 <i class="fa fa-backward" aria-hidden="true"></i>
             </a>
             {{#if this.category.delete}}
-            <button type="submit"  title="Khôi phục" formaction="/admin/categorylv2/restore">
+            <button type="submit" title="Khôi phục" formaction="/admin/categorylv2/restore">
                 <i class="fa fa-undo" aria-hidden="true"></i>
             </button>
             {{/if}}
-            <button type="submit"  title="Xóa thể loại" formaction="/admin/categorylv2/del">
+            <button type="submit" title="Xóa thể loại" formaction="/admin/categorylv2/del">
                 <i class="fa fa-trash" aria-hidden="true"></i>
             </button>
-            <button type="submit"  formaction="/admin/categorylv2/update">
+            <button type="submit" formaction="/admin/categorylv2/update">
                 <i class="fa fa-check" aria-hidden="true"></i>
                 Lưu
             </button>
