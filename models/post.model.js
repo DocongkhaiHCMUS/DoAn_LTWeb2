@@ -110,7 +110,7 @@ module.exports = {
   },
   pageByPost: function (limit, offset) {
     return db.load(
-      `select * from ${TBL_Post} order by title limit ${limit} offset ${offset} `
+      `select * from ${TBL_Post} order by create_date desc limit ${limit} offset ${offset} `
     );
   },
   countByPost: async function () {

@@ -179,7 +179,11 @@ router.post('/categorylv2/del', async function (req, res) {
         delete: 1
     }
     await cateModel.patch2(entity);
-    await postModel.deteleAllPostByCat2(req.body.id);
+    let rows = await postModel.countByIDCat2(req.body.id);
+    const count = rows[0].total;
+    if(parseInt(count, 10) > 0){
+       await postModel.deteleAllPostByCat2(req.body.id);
+    }
     res.redirect(req.headers.referer);
 });
 //                              END ADMIN CATEGORY

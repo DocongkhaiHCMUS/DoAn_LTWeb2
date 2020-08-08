@@ -139,6 +139,12 @@
         <div class="table-title">
             <h3>Nhãn này không thuộc bài viết nào.</h3>
         </div>
+        <div>
+            <a class="btn success" href="/admin/tag_post/add/{{this.tag.id}}" role="button">
+                <i class="fa fa-plus" aria-hidden="true"></i>
+                Gắn nhãn vào bài viết
+            </a>
+        </div>
         {{else}}
         <div class="table-title">
             <h3>Danh sách bài viết có chứa nhãn <b style="color: green;">{{this.tag.name}}</b></h3>
@@ -190,6 +196,10 @@
             </tbody>
         </table>
         {{/if}}
+        <a class="btn success" href="/admin/tag" role="button">
+            <i class="fa fa-plus" aria-hidden="true"></i>
+            Trở lại
+        </a>
     </div>
     <!-- end main content -->
     <!-- import script -->
