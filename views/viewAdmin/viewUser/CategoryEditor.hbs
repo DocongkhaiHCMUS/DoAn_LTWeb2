@@ -147,7 +147,7 @@
         </div>
         <p>Biên tập viên: {{this.user.display_name}} </p>
         <br>
-         <div style="float:right">
+        <div style="float:right">
             <a class="btn success" href="/admin/user/addAssign/{{this.user.id}}" role="button" title="Thêm người dùng">
                 <i class="fa fa-plus" aria-hidden="true"></i>
                 Phân công chuyên mục
@@ -168,29 +168,39 @@
                     <td class="text-left">
                         {{name}}
                     </td>
-                    {{#if delete}}
-                    <td class="text-center" style="color: red;">
-                        Đã ngừng phân công
-                    </td>
-                     <td class="text-center">
-                        <a class="" href="/admin/user/detail/{{id}}" title="Phân công lại">
-                            <i class="fa fa-refresh" aria-hidden="true"></i>
-                        </a>
-                    </td>
-                    {{else}}
-                    <td class="text-center" style="color: blue;">
-                        Đang được phân công
-                    </td>
-                      <td class="text-center">
-                        <a class="" href="/admin/user/detail/{{id}}" title="Ngừng phân công">
-                            <i class="fa fa-trash" aria-hidden="true"></i>
-                        </a>
-                    </td>
-                    {{/if}}               
+                    <form method="POST">
+                        <input hidden name="id" value="{{id}}">
+                        {{#if delete}}
+                        <td class="text-center" style="color: red;">
+                            Đã ngừng phân công
+                        </td>
+                        <td class="text-center">
+                            <button type="submit" title="Phân công lại" formaction="/admin/assign/restore">
+                                <i class="fa fa-refresh" aria-hidden="true"></i>
+                            </button>                 
+                        </td>
+                        {{else}}
+                        <td class="text-center" style="color: blue;">
+                            Đang được phân công
+                        </td>
+                        <td class="text-center">
+                             <button type="submit" title="Ngừng phân công" formaction="/admin/assign/del">
+                                <i class="fa fa-trash" aria-hidden="true"></i>
+                            </button>                       
+                        </td>
+                        {{/if}}
+                    </form>
                 </tr>
                 {{/each}}
             </tbody>
         </table>
+        <div>
+            <a class="btn success" href="/admin/user" role="button">
+                <i class="fa fa-backward" aria-hidden="true"></i>
+                Trở lại
+            </a>
+        </div>
+
     </div>
     <!-- end main content -->
     <!-- import script -->

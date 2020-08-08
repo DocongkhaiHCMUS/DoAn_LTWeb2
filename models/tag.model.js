@@ -21,14 +21,14 @@ module.exports = {
         delete entity.id;
         return db.patch(TBL_Tag, entity, condition);
     },
-    deteleAllTagPostByTag :function(id){
+    deteleAllTagPostByTag: function (id) {
         return db.deleteAllTagPostByTag(id);
     },
     pageByTag: function (limit, offset) {
-        return db.load(`select * from ${TBL_Tag} order by name limit ${limit} offset ${offset} `);
-      },
-      countByTag: async function () {
+        return db.load(`select * from ${TBL_Tag} order by create_date desc limit ${limit} offset ${offset} `);
+    },
+    countByTag: async function () {
         const rows = await db.load(`select count(*) as total from ${TBL_Tag}`);
         return rows[0].total;
-      },
+    },
 };

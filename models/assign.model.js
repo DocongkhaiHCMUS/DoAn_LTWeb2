@@ -34,5 +34,18 @@ module.exports = {
         entity['modifile_date'] = moment().format('YYYY/MM/DD HH:mm:ss');
 
         return db.patch(TBL_Assign, entity, condition)
+    },
+    restore: (ID) => {
+        let condition = {
+            id: ID,
+        };
+
+        let entity = {
+            delete: 0,
+        };
+
+        entity["modifile_date"] = moment().format("YYYY/MM/DD HH:mm:ss");
+
+        return db.patch(TBL_Assign, entity, condition);
     }
 };
