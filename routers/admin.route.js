@@ -282,7 +282,6 @@ router.get('/tag/add', function (req, res) {
 });
 
 router.post('/tag/add', async function (req, res) {
-    console.log(req.body);
     await tagModel.add(req.body);
     res.render('viewAdmin/viewTag/add.hbs', {
         layout: false
@@ -606,7 +605,7 @@ router.post('/user/add', async function (req, res) {
             display_name: req.body.display_name,
             password: hashPass,
             email: req.body.email,
-            DOB: moment(req.body.dob, 'DD/MM/YYYY'),
+            DOB: moment(req.body.DOB, 'YY/MM/YYYY').format('YYYY-MM-DD'),
             permission: req.body.permission,
             gender: req.body.gender,
             time_out: moment("00/00/0000", 'DD/MM/YYYY')
@@ -668,6 +667,7 @@ router.get('/user/addAssign/:id', async function (req, res) {
         const id = +req.params.id || -1;
         const editor = await userModel.singleByID2(id);
         const cat1 = await cateModel.loadCat1ByAssign(id);
+        
         req.session.prevURL  = req.headers.referer;
         res.render('viewAdmin/viewUser/addAssign.hbs', { layout: false, Editor: editor[0],Cat1: cat1 });
     }
@@ -675,5 +675,19 @@ router.get('/user/addAssign/:id', async function (req, res) {
 router.post('/user/addAssign/add', async function (req, res) {
     await AssignModel.add(req.body);
     res.redirect( req.session.prevURL);
+});
+
+//                              RESTORE,DELETE  ASSIGN
+router.post('/assign/restore', async function (req, res) {
+    var entity = {
+        id: req.body.id,
+        delete: 0
+    }
+    await AssignModel.restore(req.body.id)
+    res.redirect(req.headers.referer);
+});
+router.post('/assign/del', async function (req, res) {
+    await AssignModel.delete(req.body.id)
+    res.redirect(req.headers.referer);
 });
 module.exports = router;
