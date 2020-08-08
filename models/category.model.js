@@ -3,12 +3,15 @@ const moment = require('moment');
 
 const TBL_Cat1 = 'category_level1';
 const TBL_Cat2 = 'category_level2';
+const TBL_Assign = 'assign';
 
 module.exports = {
     load: () => db.load(`select cat1.id id_cat1, cat1.name cat1,cat2.id id_cat2, cat2.name cat2 from ${TBL_Cat2} cat2 
     join ${TBL_Cat1} cat1 on cat2.category_level1 = cat1.id and cat1.delete = 0 and cat2.delete = 0`),
     load_cat1: () => db.load(`select cat1.id id,cat1.name name from ${TBL_Cat1} cat1 where cat1.delete = 0`),
     load_cat2: () => db.load(`select cat2.id id,cat2.name name,cat2.category_level1 from ${TBL_Cat2} cat2 where cat2.delete = 0`),
+    loadCat1ByAssign: (id) => db.load(`select cat1.id id,cat1.name name from ${TBL_Cat1} cat1 , ${TBL_Assign} ass
+     where cat1.delete = 0 and cat1.id <> ass.category and ass.user = ${id}`),
 
     singleCatByIDCat2: (ID) => db.load(`select cat2.id id_cat2,cat2.name name_cat2,cat1.id id_cat1, cat1.name name_cat1 from ${TBL_Cat2} cat2 join 
     ${TBL_Cat1} cat1 on cat2.category_level1 = cat1.id and cat2.id = ${ID} and cat2.delete = 0`),
@@ -66,7 +69,7 @@ module.exports = {
         }
         return db.delele(TBL_Cat1, condition);
     },
-    deteleAllbyCatLv2 :function(id){
+    delAllCat2byCat1 :function(id){
         return db.deleteAllCat2(id);
     }
 };
