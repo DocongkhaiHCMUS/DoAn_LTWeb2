@@ -25,7 +25,7 @@ router.get('/', function (req, res) {
         res.render('layouts/admin.hbs', { layout: false });
     }
 });
-//                                          ADMIN CATEGORY 
+//                                          ADMIN CATEGORY1 
 router.get('/category', async function (req, res) {
     if (!req.session.isAuthenticated || parseInt(req.session.authUser.permission, 10) != 4) {
         res.redirect('/');
@@ -81,7 +81,7 @@ router.post('/category/del', async function (req, res) {
         delete: 1
     }
     await cateModel.patch1(entity);
-    await cateModel.deteleAllbyCatLv2(req.body.id);
+    await cateModel.delAllCat2byCat1(req.body.id);
     res.redirect('/admin/category');
 });
 
@@ -144,6 +144,7 @@ router.get('/categorylv2/edit/:id', async function (req, res) {
         while (i < cat1.length) {
             if (category.category_level1 === cat1[i].id) {
                 cat1[i].isActive = true;
+                break;
             }
             i++;
         }
@@ -652,5 +653,23 @@ router.get('/user/assign/:id', async function (req, res) {
         const _user = await userModel.singleByID2(id);
         res.render('viewAdmin/viewUser/CategoryEditor.hbs', { layout: false, assign: rows,user: _user[0] });
     }
+});
+
+//                          View add Assign for  Editor
+router.get('/user/addAssign/:id', async function (req, res) {
+    if (!req.session.isAuthenticated || parseInt(req.session.authUser.permission, 10) != 4) {
+        res.redirect('/');
+    }
+    else {
+        const id = +req.params.id || -1;
+        const editor = await userModel.singleByID2(id);
+        const cat1 = await cateModel.loadCat1ByAssign(id);
+        req.session.prevURL  = req.headers.referer;
+        res.render('viewAdmin/viewUser/addAssign.hbs', { layout: false, Editor: editor[0],Cat1: cat1 });
+    }
+});
+router.post('/user/addAssign/add', async function (req, res) {
+    await AssignModel.add(req.body);
+    res.redirect( req.session.prevURL);
 });
 module.exports = router;
