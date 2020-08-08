@@ -163,8 +163,18 @@
             <label for="permission">Quyền hạn: </label>
             <select name="permission">
                 {{#each this.pers }}
-                <option value="{{id}}" {{#if Select}} selected {{/if}}>ID: {{id}} , {{name}}</option>
+                <option value="{{id}}" {{#if Select}} selected {{/if}}>{{name}}</option>
                 {{/each}}
+            </select>
+            <label for="delete">Tình trạng</label>
+            <select name="delete">
+                {{#if this.user.delete}}
+                <option value="1" selected>đang khóa &#xf119;</option>
+                <option value="0">không khóa &#xf118;</option>
+                {{else}}
+                <option value="1">đang khóa &#xf119;</option>
+                <option value="0" selected>không khóa &#xf118;</option>
+                {{/if}}
             </select>
             <hr>
             <a href="/admin/user" role="button" title="Back to List">

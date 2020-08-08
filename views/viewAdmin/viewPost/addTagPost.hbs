@@ -12,6 +12,7 @@
     <link rel="stylesheet" type="text/css" href="/public/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/public/css/font-awesome.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
     <!-- End import lib -->
 
     <link rel="stylesheet" type="text/css" href="/public/css/admin.css">
@@ -124,8 +125,8 @@
             <label for="id">#</label>
             <input type="text"  name="post" readonly value="{{this.post.id}}">
             <p>Tên bài viết : {{this.post.title}}</p>
-            <label for="txtHoidap">Chọn nhãn</label>
-            <select name="tag">
+            <label >Chọn nhãn</label>
+            <select name="tag" class="js-example-basic-single">
                 {{#each this.tags }}
                 <option value="{{id}}">ID: {{id}}  , {{name}}</option>
                 {{/each}}
@@ -143,6 +144,13 @@
     <!-- end main content -->
     <!-- import script -->
     <script src="/public/js/admin.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.js-example-basic-single').select2();
+        });
+    </script>
     <!-- end import script -->
 </body>
 
