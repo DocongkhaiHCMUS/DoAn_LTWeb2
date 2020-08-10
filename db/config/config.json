@@ -4,7 +4,7 @@
         "host": "localhost",
         "user": "root",
         "password": "",
-        "database": "news"
+        "database": "news1"
     },
     "pagination": {
         "limit": 6

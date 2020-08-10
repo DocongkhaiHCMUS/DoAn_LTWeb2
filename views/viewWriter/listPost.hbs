@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--tiny mce-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <!--bootstrap-->
+    <link type="text/css" rel="stylesheet" href="/public/css/bootstrap.min.css" />
+    <!-- Font Awesome Icon -->
+    <link rel="stylesheet" href="/public/css/font-awesome.min.css">
+
+    <!-- Custom stlylesheet -->
+    <link type="text/css" rel="stylesheet" href="/public/css/style.css" />
+    <link type="text/css" rel="stylesheet" href="/public/css/style_of_mine.css">
+    <!-- Owl Carousel -->
+	  <link type="text/css" rel="stylesheet" href="/public/css/owl.carousel.css" />
+	  <link type="text/css" rel="stylesheet" href="/public/css/owl.theme.default.css" />
+    <link
+		href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+		rel="stylesheet">
+    <title>List Post</title>
+</head>
+<body>
+  <a href="/" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Back to Home</a>
+  
+  
+<div class="py-5">
+    <div class="container">
+      <div class="row hidden-md-up">
+        
+        {{#each this.list}}
+        <div class="col-md-6 col-sm-6">
+			<article class="article">
+
+				<div class="article-img">
+					<img class="img-responsive"
+						src="/public/img/img_post/{{folder_img}}/{{avatar}}.jpg" alt="">
+				</div>
+
+				<div class="article-body">
+					<ul class="article-info">
+						<li class="article-category">
+							<a href="/category/cat1/{{cat1id}}">{{cat1name}}</a>
+						</li>
+						<li class="article-category">
+							<a href="/category/cat2/{{cat1id}}">{{cat2name}}</a>
+						</li>
+						<li class="article-type">
+							<i class="fa fa-file-text"></i>
+						</li>
+					</ul>
+					<h4 class="article-title">
+						<a href="/post/{{id}}">{{title}}</a>
+					</h4>
+					<h5 class="article-description">
+						{{tiny_des}}
+					</h5>
+					
+					
+					{{#when status 'eq' 3}}
+						
+						<a href="/writer/modifiedpost/{{id}}" class="btn btn-secondary">
+						Chỉnh sửa
+					</a>
+ 					{{/when}}
+					{{#when status 'eq' 4}}
+						<a href="/writer/modifiedpost/{{id}}" class="btn btn-secondary">
+						Chỉnh sửa
+					</a>
+ 					{{/when}}
+					<ul class="article-meta">
+						<li>
+							<i class="fa fa-clock-o">&nbsp;</i>{{parseTime publish_date}}
+						</li>
+						<li>
+							<i class="fa fa-eye">&nbsp;</i>{{views}}
+						</li>
+					</ul>
+					{{#when status 'eq' 1}}
+						<ul class="article-meta">
+						<li>
+							<h3>Đã được xuất bản </h3>
+						</li>
+					</ul>
+ 					{{/when}}
+					{{#when status 'eq' 2}}
+						<ul class="article-meta">
+						<li>
+							<h3>Đã được kiểm duyệt, chưa được xuất bản</h3>
+						</li>
+					</ul>
+ 					{{/when}}
+					 {{#when status 'eq' 3}}
+						<ul class="article-meta">
+						<li>
+							<h3>Chưa được duyệt</h3>
+						</li>
+					</ul>
+ 					{{/when}}
+					 {{#when status 'eq' 4}}
+						<ul class="article-meta">
+						<li>
+							<h3>Đã từ chối</h3>
+						</li>
+					</ul>
+ 					{{/when}}
+					<h4>{{reason}}</h4>
+					
+					
+					
+				</div>
+			</article>
+		</div>
+        {{/each}}
+
+        
+      </div>
+    </div>
+  </div>
+  <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"></script>
+  <script src="https://pingendo.com/assets/bootstrap/bootstrap-4.0.0-alpha.6.min.js"></script>
+  <script src="/public/js/jquery.min.js"></script>
+	<script src="/public/js/bootstrap.min.js"></script>
+	<script src="/public/js/owl.carousel.min.js"></script>
+	<script src="/public/js/main.js"></script>
+	<script src="/public/js/boostrap-hover-dropdown.js"></script>
+</body>

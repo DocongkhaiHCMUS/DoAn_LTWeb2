@@ -3,16 +3,17 @@ const router = express.Router();
 
 router.get('/', function (req, res) {
     
-    if (!req.session.athUser)
+    if (!req.session.authUser)
         res.render('home.hbs'); 
 
-    else if (req.session.athUser.permission == 2)
+    else if (req.session.authUser.permission == 2)
     {
         res.render('home.hbs', {
-            isWriter: true
+            isWriter: true,
+            id: req.session.authUser.id
         });
     }
-    else if (req.session.athUser.permission == 33)
+    else if (req.session.authUser.permission == 33)
     {
         res.render('home.hbs', {
             isEditor: true
