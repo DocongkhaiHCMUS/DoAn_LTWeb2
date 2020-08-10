@@ -1,3 +1,19 @@
+{{#section 'css'}}
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
+{{/section}}
+
+{{#section 'js'}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+
+<Script>
+    $(document).ready(function () {
+        var selected_tags = $('#selected_tags').select2();
+        //$('#selectCategory').select2();
+    });
+</Script>
+{{/section}}
+
 <div class="card" style="margin-top:150px; margin-left:50px; margin-right:50px;">
     <div class="card-header">
         <h4>Duyệt bài</h4>
@@ -5,33 +21,36 @@
 
     <div class="card-body">
         <form method="POST" style="width: 1000px; align-items: center;">
-            <div class="form-group">
-                <label for="txtID">id</label>
-                <input type="text" class="form-control" id="txtID" name="id" readonly value="{{this.editor.id}}">
+
+            <div class="form-group" style="width: 300px;">
+                <label for="nCategory">Danh mục </label>
+                <input type="number" class="form-control" id="nCategory" name="category" value="{{post.category}}">
+            </div>
+            
+            <div hidden class="form-group" style="width: 300px;">
+                <label for="nID">ID </label>
+                <input type="number" class="form-control" id="nID" name="id" value="{{post.id}}">
             </div>
 
-            <div class="form-group">
-                <label for="txtCategory">Danh mục </label>
-                <input type="text" class="form-control" id="txtCategory" name="category" autofocus
-                    value="{{this.editor.category}}">
-            </div>
-
-            <div class="form-group">
-                <label for="txtTag">Nhãn </label>
-                <input type="text" class="form-control" id="txtTag" name="tags" value="{{this.editor.tags}}">
-            </div>
+            <label for="txtTag"> Nhãn </label>
+            <select class="js-example-basic-multiple" style="width: 100%;" id="selected_tags" name="selected_tags"
+                multiple="multiple">
+                {{#each tag}}
+                <option value='{{tag.name}}'>{{tag.name}}</option>
+                {{/each}}
+            </select>
 
             <div class="form-group" style="width: 300px;">
                 <label for="txtPublish_date">Thời gian đăng bài </label>
                 <input type="datetime-local" class="form-control" id="txtPublish_date" name="publish_date"
-                    value="{{this.editor.publish_date}}">
+                    value="{{post.publish_date}}">
             </div>
 
             <a class="btn btn-success" href="/editor" title="Back to list" role="button">
                 <i class="fa fa-backward" aria-hidden="true"></i>
             </a>
 
-            <button formaction="/editor/update" type="submit" class="btn btn-primary">
+            <button formaction="/editor/update_publish" type="submit" class="btn btn-primary">
                 <i class="fa fa-check" aria-hidden="true"></i>
                 Duyệt
             </button>

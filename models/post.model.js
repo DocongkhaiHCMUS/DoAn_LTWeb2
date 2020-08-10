@@ -1,5 +1,10 @@
 const db = require('../db/util/db');
 const moment = require('moment');
+
+const mysql = require('mysql');
+const config = require('../db/config/config.json');
+var pool = mysql.createPool(config.mysql);
+
 const { text } = require('express');
 
 const TBL_Post = 'post';
@@ -46,10 +51,10 @@ module.exports = {
     },
     postTag: () => {
         return db.load(`SELECT p.*, GROUP_CONCAT(tag.name) as 'tags'
-                        FROM tag_post tp, tag tag, post p 
-                        WHERE p.id = tp.post and tp.tag = tag.id 
+                        FROM tag_post tp, tag tag, post p
+                        WHERE tp.tag = tag.id AND p.id = tp.post
                         GROUP by p.id`);
-    },
+    },  
     countByIDTag: (idTag) => {
         return db.load(`select count(*) as total from ${TBL_Post} p join ${TBL_TagPost} tp on p.id = tp.post join 
                             ${TBL_Tag} tag on tp.tag = tag.id and tag.id = ${idTag} where p.delete = 0 p.id <= 20`);
@@ -103,16 +108,4 @@ module.exports = {
 
         return db.patch(TBL_Post, entity, condition)
     },
-
-    // patch_tag: (entity) => {
-    //     const condition = {
-    //         id: entity.id
-    //     }
-
-    //     delete entity.id;
-
-    //     entity['modifile_date'] = moment().format('YYYY/MM/DD HH:mm:ss');
-
-    //     return db.patch_tag(TBL_Tag, entity, condition)
-    // }
 };

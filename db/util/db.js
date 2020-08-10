@@ -41,6 +41,7 @@ module.exports = {
             });
         });
     },
+
     delete: function(table, ID){
         return new Promise(function(resolve,reject){
             const sql =`delete from ${table} where ?`;
