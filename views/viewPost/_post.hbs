@@ -1,3 +1,31 @@
+{{#section 'js'}}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            var specialElementHandler = {
+                "#editor": function(element, renderer){
+                    return true;
+
+                }
+            }
+            $("#submit").click(function(){
+                var doc = new jsPDF();
+                doc.setFontSize(10);
+
+                var title = document.getElementById("title").textContent;
+                var tiny_des = document.getElementById("tiny_des").textContent;
+                var full_des = document.getElementById("full_des").textContent;
+                var y = 30;
+                doc.text(0,y,title)
+                doc.text(-60,y+20,tiny_des)
+                doc.text(-60,y+20,tiny_des)
+                doc.save(title+".pdf")
+            })
+
+        })
+    </script>
+{{/section}}
 <!-- SECTION -->
 <div class="section">
     <!-- CONTAINER -->
@@ -17,36 +45,39 @@
                 <!-- /breadcrumb -->
 
                 <!-- ARTICLE POST -->
-                <article class="article article-post">
-                    {{!-- <div class="article-share">
-						<a href="#" class="facebook"><i class="fa fa-facebook"></i></a>
-						<a href="#" class="twitter"><i class="fa fa-twitter"></i></a>
-						<a href="#" class="google"><i class="fa fa-google-plus"></i></a>
-					</div> --}}
-                    <div class="article-main-img">
-                        <img src="/public/img/img_post/{{post.folder_img}}/{{post.avatar}}.jpg" alt="">
-                    </div>
-                    <div class="article-body">
-                        <ul class="article-info">
-                            <li class="article-category"><a
-                                    href="/category/cat1/{{post.category.id_cat1}}">{{post.category.name_cat1}}</a></li>
-                            <li class="article-category"><a
-                                    href="/category/cat2/{{post.category.id_cat2}}">{{post.category.name_cat2}}</a></li>
-                            <li class="article-type"><i class="fa fa-file-text"></i></li>
-                        </ul>
-                        <h1 class="article-title">{{post.title}}</h1>
-                        <ul class="article-meta">
-                            <li><i class="fa fa-clock-o">&nbsp;</i>{{parseTime post.publish_date}}</li>
-                            <li><i class="fa fa-eye">&nbsp;</i>{{post.views}}</li>
-                        </ul>
-                        <p class="post_tiny_des">
-                            "&nbsp;{{post.tiny_des}}&nbsp;"
-                        </p>
-                        {{#each post.full_des}}
-                        {{{text}}}
-                        {{/each}}
-                    </div>
-                </article>
+                    <article class="article article-post" >
+                        {{!-- <div class="article-share">
+                            <a href="#" class="facebook"><i class="fa fa-facebook"></i></a>
+                            <a href="#" class="twitter"><i class="fa fa-twitter"></i></a>
+                            <a href="#" class="google"><i class="fa fa-google-plus"></i></a>
+                        </div> --}}
+                        <div class="article-main-img">
+                            <img src="/public/img/img_post/{{post.folder_img}}/{{post.avatar}}.jpg" alt="">
+                        </div>
+                        <div class="article-body">
+                            <ul class="article-info">
+                                <li class="article-category"><a
+                                        href="/category/cat1/{{post.category.id_cat1}}">{{post.category.name_cat1}}</a></li>
+                                <li class="article-category"><a
+                                        href="/category/cat2/{{post.category.id_cat2}}">{{post.category.name_cat2}}</a></li>
+                                <li class="article-type"><i class="fa fa-file-text"></i></li>
+                            </ul>
+                            <h1 class="article-title" id="title">{{post.title}}</h1>
+                            <ul class="article-meta">
+                                <li><i class="fa fa-clock-o">&nbsp;</i>{{parseTime post.publish_date}}</li>
+                                <li><i class="fa fa-eye">&nbsp;</i>{{post.views}}</li>
+                            </ul>
+                            
+                            <p class="post_tiny_des" id="tiny_des">
+                                "&nbsp;{{post.tiny_des}}&nbsp;"
+                            </p>
+                            <p id="full_des">
+                                {{#each post.full_des}}
+                                {{{text}}}
+                                {{/each}}   
+                            </p>
+                    </article>
+                <button type="submit" id="submit"class="btn btn-lg btn-success btn-block" >Submit</button>
                 <!-- /ARTICLE POST -->
 
                 <!-- widget tags -->
