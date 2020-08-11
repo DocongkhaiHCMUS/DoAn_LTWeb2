@@ -143,12 +143,13 @@ router.get('/:id', async function (req, res) {
     // add list tag into post
     post['listTag'] = tag;
 
-
     res.render('viewPost/_post.hbs', {
         post,
-        relPost
+        relPost,
     });
 
 });
+
+
 
 module.exports = router;
