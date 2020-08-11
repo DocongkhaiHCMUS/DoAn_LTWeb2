@@ -90,6 +90,7 @@ router.post('/editor' ,async function (req, res) {
     pdf: "no_pdf",
     status :3
   }
+  console.log(entity1);
   await postModel.add(entity1)
 
   //////////add tag_post//////////

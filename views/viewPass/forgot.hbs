@@ -16,18 +16,17 @@
             </h3>
             {{/if}}
             <h4 id="txtValidate" class="alert d-none"></h4>
-            <form action="/pass/forgot" method="POST" novalidate>
-                {{!-- <label for="oldPassword" style="color: white;">Tên đăng nhập</label> --}}
+            <form id="frmForgot" action="/pass/forgot" method="POST" novalidate>
                 <div class="form-sub-w3">
-                    <input type="text" id="inputUsername" name="username" placeholder="User name"
-                        required="">
+                    <input type="text" id="inputUsername" name="username" placeholder="User name" required="">
+                    <label for="">User name</label>
                     <div class="icon-w3">
                         <i class="fa fa-user" aria-hidden="true"></i>
                     </div>
                 </div>
                 <div class="submit-w3l">
                     <input id="btnForgot" type="submit" value="Xác nhận" formaction="/pass/forgot">
-                </div>  
+                </div>
             </form>
 
         </div>

@@ -4,16 +4,19 @@ const moment = require('moment');
 const TBL_User = 'user';
 
 module.exports = {
-    load: () => db.load(`select * from ${TBL_User}`),
+    load: () => db.load(`select us.* from ${TBL_User} us where us.delete =0 `),
 
     singleByUserName: (userName) => {
-        return db.load(`select * from ${TBL_User} where user_name = '${userName}'`)
+        return db.load(`select us.* from ${TBL_User} us where us.user_name = '${userName}' and us.delete =0 `)
     },
 
     singleByID: (ID) => {
+        return db.load(`select us.* from ${TBL_User} us where us.id = ${ID} and us.delete =0`)
+    },
+    singleByID2: (ID) => {
         return db.load(`select * from ${TBL_User} where id = ${ID}`)
     },
-
+    All: () => db.load(`select * from ${TBL_User} order by permission desc `),
     add: (entity) => {
 
         entity['create_date'] = moment().format('YYYY/MM/DD HH:mm:ss');
@@ -42,7 +45,8 @@ module.exports = {
         delete entity.id;
 
         entity['modifile_date'] = moment().format('YYYY/MM/DD HH:mm:ss');
-
+        entity['DOB'] = moment().format('YYYY/MM/DD HH:mm:ss');
+        entity['time_out'] = moment().format('YYYY/MM/DD HH:mm:ss');
         return db.patch(TBL_User, entity, condition)
     }
 };

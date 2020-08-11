@@ -1,22 +1,30 @@
 const express = require('express');
 const router = express.Router();
 
+// router.use(function (req, res, next) {
+//     req.app.set('view options', { layout: 'other' });
+//     next();
+// })
+
 router.get('/', function (req, res) {
-    
+
     if (!req.session.authUser)
-        res.render('home.hbs'); 
-    else if (req.session.authUser.permission == 2)
-    {
+        res.render('home.hbs');
+    else if (req.session.authUser.permission == 1)
+        res.render('home.hbs');
+    else if (req.session.authUser.permission == 2) {
         res.render('home.hbs', {
             isWriter: true,
             id: req.session.authUser.id
         });
     }
-    else if (req.session.authUser.permission == 33)
-    {
+    else if (req.session.authUser.permission == 3) {
         res.render('home.hbs', {
             isEditor: true
         });
+    }
+    else if (req.session.authUser.permission == 4) {
+        res.redirect('/admin');
     }
 })
 

@@ -3,16 +3,16 @@ const express = require('express');
 //registerHelper
 var hbs = require('handlebars');
 hbs.registerHelper("when", (operand_1, operator, operand_2, options) => {
-    let operators = {                     //  {{#when <operand1> 'eq' <operand2>}}
-      'eq': (l,r) => l == r,              //  {{/when}}
+    let operators = {
+      'eq': (l,r) => l == r,              
       'noteq': (l,r) => l != r,
-      'gt': (l,r) => (+l) > (+r),                        // {{#when var1 'eq' var2}}
-      'gteq': (l,r) => ((+l) > (+r)) || (l == r),        //               eq
-      'lt': (l,r) => (+l) < (+r),                        // {{else when var1 'gt' var2}}
-      'lteq': (l,r) => ((+l) < (+r)) || (l == r),        //               gt
-      'or': (l,r) => l || r,                             // {{else}}
-      'and': (l,r) => l && r,                            //               lt
-      '%': (l,r) => (l % r) === 0                        // {{/when}}
+      'gt': (l,r) => (+l) > (+r),                        
+      'gteq': (l,r) => ((+l) > (+r)) || (l == r),        
+      'lt': (l,r) => (+l) < (+r),                        
+      'lteq': (l,r) => ((+l) < (+r)) || (l == r),        
+      'or': (l,r) => l || r,                             
+      'and': (l,r) => l && r,                            
+      '%': (l,r) => (l % r) === 0
     }
     let result = operators[operator](operand_1,operand_2);
     if(result) return options.fn(this); 
@@ -23,7 +23,6 @@ hbs.registerHelper("when", (operand_1, operator, operand_2, options) => {
 require('express-async-errors');
 
 const app = express();
-
 app.use(express.urlencoded({
     extended: true
 }));
@@ -45,8 +44,8 @@ const restrict = require('./middlewares/authenticated.mdw');
 //require local variables
 require('./middlewares/locals.mdw')(app);
 
-//config passport Facebook
-require('./middlewares/passport_FB.mdw')(app);
+// //config passport Facebook
+// require('./middlewares/passport_FB.mdw')(app);
 
 // CODE IN HERE
 
@@ -103,7 +102,7 @@ app.use(function (req, res) {
 
 
 
-const PORT = 3000;
+const PORT = 3001;
 app.listen(PORT, () => {
-    console.log(`App is running at http://localhost:${PORT} :))) !`);
+    console.log(`App is running at http://localhost:3000 :))) !`);
 })

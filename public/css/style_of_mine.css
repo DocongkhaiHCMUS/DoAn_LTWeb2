@@ -3,8 +3,74 @@
   margin: 0;
 }
 
+.premium {
+    padding: 0px 15px;
+    color: #fff !important;
+    font-size: 12.5px;
+    text-transform: uppercase;
+    font-weight: 600;
+    height: 30px;
+    line-height: 30px;
+    background: #fdbe00;
+}
+input:focus::-webkit-input-placeholder {
+  color: transparent;
+}
+.reg .form-w3-agile h2 {
+  margin-bottom: 47px !important;
+}
+
+.form-sub-w3 input[type="password"] {
+  padding: 20px 30px 20px 10px !important;
+}
+
+.main-agileits.reg {
+  width: 50%;
+}
+
+.d-none {
+  display: none !important;
+}
+
+.d-block {
+  display: block !important;
+}
+
+.form-sub-w3 input:focus + label {
+  top: 0.4rem;
+  font-size: 11px;
+  color: #407204;
+  outline: none;
+}
+
+.form-sub-w3 input:focus + label.clear{
+  position: static !important;
+  display: inline-block;
+  font-size: 16px !important;
+  font-weight: 500 !important;
+  color: #fff;
+}
+
+label.clear {
+  position: static;
+  display: inline-block;
+}
+
+
+label {
+  position: absolute;
+  display: block;
+  letter-spacing: 2px;
+  top: 1.6rem;
+  font-size: 15px;
+  font-weight: 400;
+  left: 1.1rem;
+  color: transparent;
+  transition: all 0.2s linear;
+}
+
 .widget-tags h4 {
-    clear: both;
+  clear: both;
 }
 
 .search-form form .input {

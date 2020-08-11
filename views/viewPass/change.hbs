@@ -60,26 +60,26 @@
 
             </h4>
             <form id="frmChangePass" action="" method="POST" novalidate>
-                {{!-- <label for="oldPassword" style="color: white;">Mật khẩu cũ</label> --}}
                 <div class="form-sub-w3">
-                    <input type="password" id="oldPassword" name="Mật khẩu cũ"
+                    <input type="password" id="oldPassword" name="old_password"
                         placeholder="Old password" autofocus required="">
+                        <label for="">Old password</label>
                     <div class="icon-w3">
                         <i class="fa fa-unlock-alt" aria-hidden="true"></i>
                     </div>
                 </div>
-                {{!-- <label for="inputPassword" style="color: white;">Mật khẩu mới</label> --}}
                 <div class="form-sub-w3">
-                    <input type="password" id="inputPassword" name="Mật khẩu mới"
-                        placeholder="Password" required="">
+                    <input type="password" id="inputPassword" name="new_password"
+                        placeholder="New Password" required="">
+                        <label for="">New password</label>
                     <div class="icon-w3">
                         <i class="fa fa-unlock-alt" aria-hidden="true"></i>
                     </div>
                 </div>
-                {{!-- <label for="inputFirmPassword" style="color: white;">Xác nhận mật khẩu</label> --}}
                 <div class="form-sub-w3">
-                    <input type="password" id="inputFirmPassword" name="Xác nhận mật khẩu"
-                        placeholder="Password" require="">
+                    <input type="password" id="inputFirmPassword" name="confirm_pass"
+                        placeholder="Confirm New Password" require="">
+                        <label for="">Confirm New Password</label>
                     <div class="icon-w3">
                         <i class="fa fa-unlock-alt" aria-hidden="true"></i>
                     </div>

@@ -1,0 +1,200 @@
+{{#section 'css'}}
+<link rel="stylesheet" href="/public//css/_login.css">
+<link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css">
+{{/section}}
+
+{{#section 'js'}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js">
+</script>
+<script>
+    $('#inputDOB').datetimepicker({
+        format: 'd/m/Y',
+        timepicker: false,
+        mask: true
+    });
+    //handling when btnSignIn submit
+    $('#frmReg').submit(function (e) {
+        e.preventDefault();
+
+        if (validate() == 1) {
+
+            // remove all error before 
+            $('#txtValidate').empty();
+            // add error text
+            let error = $("<p></p>").append("<i class='fa fa-exclamation-triangle' aria-hidden='true'>&nbsp;</i>Vui lòng nhập thông tin !");
+            $('#txtValidate').append(error);
+            if ($('#txtValidate').hasClass('d-none'))
+                $('#txtValidate').removeClass('d-none')
+        }
+        else if (confirm() == 1) {
+            // remove all error before 
+            $('#txtValidate').empty();
+            // add error text
+            let error = $("<p></p>").append("<i class='fa fa-exclamation-triangle' aria-hidden='true'>&nbsp;</i>Xác nhận mật khẩu không khớp !");
+            $('#txtValidate').append(error);
+            if ($('#txtValidate').hasClass('d-none'))
+                $('#txtValidate').removeClass('d-none')
+        }
+        else if (validateEmail() == 1) {
+            // remove all error before 
+            $('#txtValidate').empty();
+            // add error text
+            let error = $("<p></p>").append("<i class='fa fa-exclamation-triangle' aria-hidden='true'>&nbsp;</i>Email không hợp lệ !");
+            $('#txtValidate').append(error);
+            if ($('#txtValidate').hasClass('d-none'))
+                $('#txtValidate').removeClass('d-none')
+        }
+        else {
+            validateAvailable();
+        }
+    });
+
+    function validate() {
+        let name = $('#inputName').val();
+        let pass = $('#inputPassword').val();
+        let email = $('#inputEmail').val();
+        let confpass = $('#inputConfPassword').val();
+        let disName = $('#inputDName').val();
+        if (!name || !pass || !email || !confpass || !disName)
+            return 1;
+    }
+
+    function confirm() {
+        let pass = $('#inputPassword').val();
+        let confpass = $('#inputConfPassword').val();
+        if (pass != confpass)
+            return 1;
+    }
+
+    function validateEmail() {
+        const regexEmail = /.+@[a-zA-Z]+\.[a-zA-Z]+/g;
+
+        let regexE = new RegExp(regexEmail);
+
+        let email = $('#inputEmail').val();
+
+        if (!regexE.test(email))
+            return 1;
+    }
+
+    function validateAvailable() {
+        let name = $('#inputName').val();
+
+        $.getJSON(`/register/is-available?user=${name}`, function (data) {
+            if (data === true) {
+                if ($('#txtValidate').hasClass('d-none') == false)
+                    $('#txtValidate').addClass('d-none')
+                $('#frmReg').off('submit').submit();
+            }
+            else {
+                // remove all error before 
+                $('#txtValidate').empty();
+                // add error text
+                let error = $("<p></p>").append("<i class='fa fa-exclamation-triangle' aria-hidden='true'>&nbsp;</i>UserName đã tồn tại !");
+                $('#txtValidate').append(error);
+                if ($('#txtValidate').hasClass('d-none'))
+                    $('#txtValidate').removeClass('d-none')
+            }
+        })
+    }
+
+</script>
+{{/section}}
+
+<div class="demo-1">
+    <div class="main-agileits reg">
+        <!--form-stars-here-->
+        <div class="form-w3-agile">
+            <h2>Đăng Ký</h2>
+            <form id="frmReg" action="./register" method="post" novalidate>
+                {{#if error}}
+                <h3 class="alert">
+                    <p>
+                        <i class='fa fa-exclamation-triangle' aria-hidden='true'>&nbsp;</i>
+                        {{error.err}}
+                    <p>
+                </h3>
+                {{/if}}
+
+                <h4 id="txtValidate" class="alert d-none">
+
+                </h4>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-sub-w3">
+                            <input id="inputName" type="text" name="user_name" placeholder="UserName" autofocus />
+                            <label for="inputName">UserName</label>
+                            <div class="icon-w3">
+                                <i class="fa fa-user" aria-hidden="true"></i>
+                            </div>
+                        </div>
+                        <div class="form-sub-w3">
+                            <input id="inputPassword" type="password" name="password" placeholder="Password" />
+                            <label>Password</label>
+                            <div class="icon-w3">
+                                <i class="fa fa-unlock-alt" aria-hidden="true"></i>
+                            </div>
+                        </div>
+                        <div class="form-sub-w3">
+                            <input id="inputConfPassword" type="password" name="confpassword"
+                                placeholder="Confirm Password" />
+                            <label>Confirm Password</label>
+                            <div class="icon-w3">
+                                <i class="fa fa-unlock-alt" aria-hidden="true"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-sub-w3">
+                            <input id="inputDName" type="text" name="display_name" placeholder="Display name" />
+                            <label>Display name</label>
+                            <div class="icon-w3">
+                                <i class="fa fa-user" aria-hidden="true"></i>
+                            </div>
+                        </div>
+                        <div class="form-sub-w3">
+                            <input id="inputEmail" type="text" name="email" placeholder="Email" />
+                            <label>Email</label>
+                            <div class="icon-w3">
+                                <i class="fa fa-envelope" aria-hidden="true"></i>
+                            </div>
+                        </div>
+                        <div class="form-sub-w3">
+                            <input id="inputDOB" type="text" name="dob" placeholder="DOB" />
+                            <label>DOB</label>
+                            <div class="icon-w3">
+                                <i class="fa fa-calendar" aria-hidden="true"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr class="mt1">
+                <div class="clear"></div>
+                <div class="submit-w3l">
+                    <input id="btnSignIn" type="submit" value="Xác nhận">
+                </div>
+            </form>
+            <div class="social w3layouts">
+                <div class="header-social wthree">
+                    <div class="line-mid">
+                        <h4>hoặc</h4>
+                    </div>
+                    <ul>
+                        <li>
+                            <a class="f" href="/register/auth/facebook">
+                                <span class="fa fa-facebook" aria-hidden="true"></span>
+                                Đăng Ký với Facebook
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="clear"></div>
+            </div>
+            <hr>
+            <p class="p-bottom-w3ls1">Bạn đã có tài khoản?<a class href="/login">&nbsp;Đăng nhập</a></p>
+        </div>
+
+        <!--//form-ends-here-->
+    </div>
+</div>
