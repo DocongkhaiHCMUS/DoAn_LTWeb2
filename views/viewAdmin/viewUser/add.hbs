@@ -18,6 +18,7 @@
     <link rel="stylesheet" type="text/css" href="/public/css/admin.css">
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css">
+    <link rel="stylesheet" href="/public/css/font-awesome.min.css">
     <!-- End import lib -->
 </head>
 
@@ -128,7 +129,7 @@
     <!-- main content -->
     <div class="wrapper">
         <div class="demo-1">
-            <div class="main-agileits reg">
+            <div class="main-agileits reg adminreg">
                 <!--form-stars-here-->
                 <div class="form-w3-agile">
                     <h2>Thêm tài khoản</h2>
@@ -159,10 +160,10 @@
                                         <i class="fa fa-unlock-alt" aria-hidden="true"></i>
                                     </div>
                                 </div>
-                                <div class="form-sub-w3">                       
+                                <div class="form-sub-w3">
                                     <input id="inputConfPassword" type="password" placeholder="Confirm Password" />
                                     <label>Confirm Password</label>
-                                     <div class="icon-w3">
+                                    <div class="icon-w3">
                                         <i class="fa fa-unlock-alt" aria-hidden="true"></i>
                                     </div>
                                 </div>
@@ -175,14 +176,14 @@
                                         <i class="fa fa-user" aria-hidden="true"></i>
                                     </div>
                                 </div>
-                                <div class="form-sub-w3">                                   
+                                <div class="form-sub-w3">
                                     <input id="inputEmail" type="text" name="email" placeholder="Email" />
                                     <label>Email</label>
                                     <div class="icon-w3">
                                         <i class="fa fa-envelope" aria-hidden="true"></i>
                                     </div>
                                 </div>
-                                <div class="form-sub-w3">                                  
+                                <div class="form-sub-w3">
                                     <input id="inputDOB" type="text" name="DOB" placeholder="DOB" />
                                     <label>DOB</label>
                                     <div class="icon-w3">
@@ -193,8 +194,10 @@
                             <div class="col-md-6">
                                 <div class="form-sub-w3">
                                     <select name="gender">
-                                        <option value="0">&#xf183; Nam</option>
-                                        <option value="1">&#xf182; Nữ</option>
+                                        <option value="0"><i class="fa fa-male" aria-hidden="true">&nbsp;</i> Nam
+                                        </option>
+                                        <option value="1"> <i class="fa fa-female" aria-hidden="true">&nbsp;</i> Nữ
+                                        </option>
                                     </select>
 
                                     <label>Giới tính: </label>
