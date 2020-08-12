@@ -10,7 +10,7 @@
     <!-- Import lib -->
     <link rel="stylesheet" type="text/css" href="/public/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/public/css/font-awesome.min.css">
+    {{!-- <link rel="stylesheet" href="/public/css/font-awesome.min.css"> --}}
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css">
     <!-- End import lib -->
@@ -169,11 +169,11 @@
             <label for="delete">Tình trạng</label>
             <select name="delete">
                 {{#if this.user.delete}}
-                <option value="1" selected>đang khóa &#xf119;</option>
-                <option value="0">không khóa &#xf118;</option>
+                <option value="1" selected>đang khóa <i class="fa fa-frown-o" aria-hidden="true"></i></option>
+                <option value="0">không khóa <i class="fa fa-smile-o" aria-hidden="true"></i></option>
                 {{else}}
-                <option value="1">đang khóa &#xf119;</option>
-                <option value="0" selected>không khóa &#xf118;</option>
+                <option value="1">đang khóa  <i class="fa fa-frown-o" aria-hidden="true"></option>
+                <option value="0" selected>không khóa<i class="fa fa-smile-o" aria-hidden="true"></i></option>
                 {{/if}}
             </select>
             <hr>
@@ -187,6 +187,7 @@
     <!-- import script -->
     <script src="/public/js/admin.js"></script>
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://use.fontawesome.com/c4229e64ed.js"></script>
     <script
         src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
     </script>
