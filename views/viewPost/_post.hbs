@@ -309,7 +309,7 @@
                         </div>
                         <div class="article-body">
                             <ul class="article-info">
-                                {{#if premium}}
+                                {{#if relPost.premium}}
                                 <li class="premium">Premium</li>
                                 {{/if}}
                             </ul>
@@ -329,18 +329,18 @@
 
                     {{#each relPost}}
                     <article class="article">
-                        <div {{#if premium}} id="lock-premium" {{/if}} class="article-img">
+                        <div {{#if relPost.premium}} id="lock-premium" {{/if}} class="article-img">
                             <a href="/post/{{relPost.id}}">
                                 <img src="/public/img/img_post/{{relPost.folder_img}}/{{relPost.avatar}}.jpg" alt="">
                             </a>
                         </div>
                         <div class="article-body">
                             <ul class="article-info">
-                                {{#if premium}}
+                                {{#if relPost.premium}}
                                 <li class="premium">Premium</li>
                                 {{/if}}
                             </ul>
-                            <h4 {{#if premium}} id="lock-premium" {{/if}} class="article-title">
+                            <h4 {{#if relPost.premium}} id="lock-premium" {{/if}} class="article-title">
                                 <a href="/post/{{relPost.id}}">{{relPost.title}}</a></h4>
                             <ul class="article-meta">
                                 <li><i class="fa fa-clock-o">&nbsp;</i>{{parseTime relPost.publish_date}}</li>

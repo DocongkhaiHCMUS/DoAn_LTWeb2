@@ -12,12 +12,23 @@
     <link rel="stylesheet" type="text/css" href="/public/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/public/css/font-awesome.min.css">
+
+    <!-- Custom stlylesheet -->
+    <link type="text/css" rel="stylesheet" href="/public/css/bootstrap.min.css" />
+    <link type="text/css" rel="stylesheet" href="/public/css/style.css" />
+    <link type="text/css" rel="stylesheet" href="/public/css/style_of_mine.css">
+    <link rel="stylesheet" type="text/css" href="/public/css/admin.css">
     <!-- End import lib -->
 
-    <link rel="stylesheet" type="text/css" href="/public/css/admin.css">
+    {{{_sections.css}}}
+
     <style>
         .wrapper {
             background: #4568DC;
+
+            font-family: "Roboto", helvetica, arial, sans-serif;
+            font-size: 16px;
+            font-weight: 400;
             /* fallback for old browsers */
             background: -webkit-linear-gradient(to left, #B06AB3, #4568DC);
             /* Chrome 10-25, Safari 5.1-6 */
@@ -132,14 +143,17 @@
         </ul>
     </div>
     <!-- end sidebar -->
-    <!-- main content -->
-    <div class="wrapper">
-        <p style="text-align: center;"> Welcome back Admin</p>
-    </div>
-    <!-- end main content -->
-    <!-- import script -->
-    <script src="/public/js/admin.js"></script>
-    <!-- end import script -->
+
+    {{{body}}}
+
 </body>
+
+<!-- import script -->
+<script src="/public/js/admin.js"></script>
+<script src="/public/js/jquery.min.js"></script>
+<script src="https://use.fontawesome.com/c4229e64ed.js"></script>
+
+{{{_sections.js}}}
+<!-- end import script -->
 
 </html>

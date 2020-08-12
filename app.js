@@ -29,12 +29,11 @@ require('./middlewares/locals.mdw')(app);
 
 // CODE IN HERE
 
+//set layout for guest
+app.use(require('./middlewares/set_layout_guest.mdw'));
+
 //set link home
 app.get('/', require('./routers/home.route'))
-
-// app.get('/post', function (req, res) {
-//     res.render('post.hbs');
-// })
 
 //require all router
 app.use('/guest', require('./routers/default.route'));
