@@ -22,11 +22,16 @@ router.get("/publish/:id", async function (req, res) {
   //get data in db
   const rows = await modelPost.singleByID(id);
   const tag = await modelTagPost.singleByPost(id);
-  //const cat = await modelPost.singleByIDCat2(id);
+  const tag_all = await modelTagPost.load();
 
   // tag
   for (let i = 0; i < tag.length; i++) {
     tag[i] = { tag: tag[i] };
+  }
+
+  // tag_all
+  for (let i = 0; i < tag_all.length; i++) {
+    tag_all[i] = { tag_all: tag_all[i] };
   }
 
   const post = rows[0];
@@ -34,6 +39,7 @@ router.get("/publish/:id", async function (req, res) {
   res.render("viewEditor/publish.hbs", {
     post,
     tag,
+    tag_all,
     //catName,
   });
 });
@@ -55,40 +61,47 @@ router.post("/update_publish", async function (req, res) {
     modelPost.singleByID(id),
     modelTagPost.singleByPost(id),
   ]);
+
+  console.log(req.body);
   //Create var was be give value change
   request_ = req.body;
   req_category = req.body.category;
   req_tags = req.body.selected_tags;
   req_dateP = req.body.publish_date;
+  req_tagsADD = req.body.add_tags;
 
+  console.log(req_tagsADD);
   //Process date, if values change, we will change value in db
+  let checkTagNumber;
   if (request_ != null) {
-    let i,
-      j = 0;
-    for (i = 0; i < tag.length; i++) {
-      // Check tag empty
-      if (req_tags == null) {
-        console.log("no data");
-        if (tag[i].name != req_tags) {
-          if (tag[i].name != "") {
-            await modelTagPost.patch_tag(tag[i].tag);
-          }
-        } else {
-          j++;
+    ////////////////////CHECK Tags
+
+    if (req_tags == null) {
+      checkTagNumber = 1;
+      for (let i = 0; i < tag.length; i++) {
+        if (tag[i].name != "") {
+          await modelTagPost.patch_tag(tag[i].tag);
         }
       }
-      // Check tag have 1 or much tags
-      else if (req_tags.length > 3) {
+    } else if (Array.isArray(req_tags) == false) {
+      checkTagNumber = 2;
+      for (let i = 0; i < tag.length; i++) {
         if (tag[i].name != req_tags) {
           if (tag[i].name != "") {
             await modelTagPost.patch_tag(tag[i].tag);
           }
         } else {
-          j++;
+          continue;
         }
-      } else {
+      }
+    }
+    //Request Tag has tags AND Tag by Writer > more
+    else if (Array.isArray(req_tags) == true) {
+      checkTagNumber = 3;
+      let j = 0;
+      for (let i = 0; i < tag.length; i++) {
         if (tag[i].name != req_tags[j]) {
-          if (tag[i].name != null) {
+          if (tag[i].name != "") {
             await modelTagPost.patch_tag(tag[i].tag);
           }
         } else {
@@ -97,9 +110,79 @@ router.post("/update_publish", async function (req, res) {
       }
     }
 
+
+    //////////////////////////Tags added
+    //WE need create array include items in Tag to add
+    // if (req_tagsADD == null) {
+      
+    // }
+    // // Case Tags added just one tag. 
+    // else if (Array.isArray(req_tagsADD) == false) {
+    //   let temp = false;
+    //   if(checkTagNumber == 1){
+    //     //xxx
+    //     await modelTagPost.add(req_tagsADD);
+    //   }
+    //   else if(checkTagNumber == 2){
+    //     if(req_tagsADD != req_tags){
+    //       //xxx
+    //       await modelTagPost.add(req_tagsADD);
+    //     }
+    //   }
+    //   else {
+    //     for(let i = 0; i < req_tags.length; i++) {
+    //       if(req_tags[i] == req_tagsADD){
+    //         temp = true;
+    //         break;
+    //       }
+    //     }
+    //     if(temp == false)
+    //     {
+    //       await modelTagPost.add(req_tagsADD);
+    //       //xxx
+    //     }
+    //   }
+    // }
+    // // Case Tags added has more tags. 
+    // else if (Array.isArray(req_tagsADD) == true) {
+    //   let temp = false;
+    //   if(checkTagNumber == 1){
+    //     for(let i = 0; i < req_tagsADD.length; i++) {
+    //       await modelTagPost.add(req_tagsADD[i]);
+    //       //xxx
+    //     }
+    //   }
+    //   else if(checkTagNumber == 2){
+    //     for(let i = 0; i < req_tagsADD.length; i++) {
+    //       if(req_tags != req_tagsADD[i]){
+    //         await modelTagPost.add(req_tagsADD[i]);
+    //         //xxx
+    //       }
+    //     }
+    //   }
+    //   else {
+    //     for(let i = 0; i < req_tagsADD.length; i++) {
+    //       for(let j = 0; j < req_tags.length; j++) {
+    //         if(req_tags[j] == req_tagsADD[i]){
+    //           temp = true;
+    //           break;
+    //         }
+    //       }
+    //       if(temp == false)
+    //       {
+    //         await modelTagPost.add(req_tagsADD[i]);
+    //         //xxx
+    //       }
+    //     }
+    //   }
+    // }
+
+
+    //Update publish_date
     if (req_dateP != list[0].publish_date) {
       await modelTagPost.patch_post(request_);
     }
+    //Update Category
     if (req_category != list[0].category) {
       await modelTagPost.patch_post(request_);
     }
