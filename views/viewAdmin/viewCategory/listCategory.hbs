@@ -11,55 +11,58 @@
     </div>
     {{else}}
     <div class="table-title">
-        <h3>Danh sách thể loại báo cấp 1</h3>
+        <h3>Danh sách thể loại cấp 1</h3>
     </div>
-    <h4>
-        <a class="btn btn success" href="/admin/category/add" role="button" title="Thêm thể loại">
-            <i class="fa fa-plus" aria-hidden="true"></i>
-            Thêm thể loại cấp 1
-        </a>
-    </h4>
-    <table class="table-fill">
-        <thead>
-            <tr>
-                <th class="text-left">Tên thể loại</th>
-                <th class="text-left">Ngày tạo</th>
-                <th class="text-left">Chỉnh sửa lần cuối</th>
-                <th class="text-left=">Tình trạng</th>
-                <th class="text-left">&nbsp;</th>
-            </tr>
-        </thead>
-        <tbody class="table-hover">
-            {{#each this.categories1}}
-            <tr>
-                <td class="text-left">
-                    <b>{{name}}</b>
-                </td>
-                <td class="text-left" id="txtDateCreate">{{parseTime create_date}}</td>
-                <td class="text-left">{{parseTime modifile_date}}</td>
-                {{#if delete}}
-                <td class="text-center" style="color: red;">
-                    <i class="fa fa-lock" aria-hidden="true" title="Bị khóa"></i>
-                </td>
-                {{else}}
-                <td class="text-center">
-                    <i class="fa fa-unlock" aria-hidden="true"></i>
-                </td>
+    <div class="panel panel-default">
+        <!-- Default panel contents -->
+        <div class="panel-heading">
+            <h2>Danh sách thể loại cấp 1</h2>
+            <a class="btn btn success" href="/admin/category/add" role="button" title="Thêm thể loại">
+                <i class="fa fa-plus" aria-hidden="true"></i>
+                Thêm thể loại cấp 1
+            </a>
+        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Tên thể loại</th>
+                    <th>Ngày tạo</th>
+                    <th>Chỉnh sửa lần cuối</th>
+                    <th class="text-left=">Tình trạng</th>
+                    <th>Hành động</th>
+                </tr>
+            </thead>
+            <tbody class="table-hover">
+                {{#each this.categories1}}
+                <tr>
+                    <td>
+                        <b>{{name}}</b>
+                    </td>
+                    <td id="txtDateCreate">{{parseTime create_date}}</td>
+                    <td>{{parseTime modifile_date}}</td>
+                    {{#if delete}}
+                    <td class="text-center" style="color: red;">
+                        <i class="fa fa-lock" aria-hidden="true" title="Bị khóa"></i>
+                    </td>
+                    {{else}}
+                    <td class="text-center">
+                        <i class="fa fa-unlock" aria-hidden="true"></i>
+                    </td>
 
-                {{/if}}
-                <td class="text-right">
-                    <a class="" href="/admin/category/edit/{{id}}" title="Chỉnh sửa">
-                        <i class="fa fa-pencil" aria-hidden="true"></i>
-                    </a>
-                    &nbsp;&nbsp;&nbsp;
-                    <a class="" href="/admin/category/detail/{{id}}" title="Chi tiết">
-                        <i class="fa fa-info" aria-hidden="true"></i>
-                    </a>
-                </td>
-            </tr>
-            {{/each}}
-        </tbody>
-    </table>
-    {{/if}}
+                    {{/if}}
+                    <td class="d-flex">
+                        <a class="btn btn-primary" href="/admin/category/edit/{{id}}" title="Chỉnh sửa">
+                            <i class="fa fa-pencil" aria-hidden="true"></i>
+                        </a>
+                        <a class="btn btn-info" href="/admin/category/detail/{{id}}" title="Chi tiết">
+                            <i class="fa fa-info" aria-hidden="true"></i>
+                        </a>
+                    </td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+        {{/if}}
+    </div>
 </div>
 <!-- end main content -->

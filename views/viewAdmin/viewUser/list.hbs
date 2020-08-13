@@ -10,69 +10,72 @@
 <div class="wrapper">
 
     <div class="table-title">
-        <h3 style="color: mediumvioletred;">Danh sách người dùng</h3>
+        <h3>Danh sách người dùng</h3>
     </div>
-    <br>
-    <div style="float:right">
-        <a class="btn success" href="/admin/user/add" role="button" title="Thêm người dùng">
-            <i class="fa fa-plus" aria-hidden="true"></i>
-            Thêm người dùng
-        </a>
+    <div class="panel panel-default">
+        <!-- Default panel contents -->
+        <div class="panel-heading">
+            <h2>Danh sách người dùng</h2>
+            <a class="btn success" href="/admin/user/add" role="button" title="Thêm người dùng">
+                <i class="fa fa-plus" aria-hidden="true"></i>
+                Thêm người dùng
+            </a>
+        </div>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th class="text-left">Loại người dùng</th>
+                    <th class="text-left">Tên đăng nhập</th>
+                    <th class="text-left">Tên hiển thị</th>
+                    <th class="text-left">Email</th>
+                    <th class="text-left">Trạng thái</th>
+                    <th class="text-left">Hàng động</th>
+                </tr>
+            </thead>
+            <tbody class="table-hover">
+                {{#each this.users}}
+                <tr>
+                    <td>
+                        {{#if isAdmin}}
+                        <b style="color: #000080">Admin</b>
+                        {{/if}}
+                        {{#if isEditor}}
+                        <b style="color:#4169E1 ;">Biên tập viên</b>
+                        {{/if}}
+                        {{#if isWriter}}
+                        <b style="color:#87CEFA ;">Phóng viên</b>
+                        {{/if}}
+                        {{#if isSubscriber}}
+                        <b>Người dùng</b>
+                        {{/if}}
+                    </td>
+                    <td>{{user_name}}</td>
+                    <td>{{display_name}}</td>
+                    <td>{{email}}</td>
+                    {{#if delete}}
+                    <td class="text-center" style="color: red;">
+                        <i class="fa fa-lock" aria-hidden="true" title="Bị khóa"></i>
+                    </td>
+                    {{else}}
+                    <td class="text-center">
+                        <i class="fa fa-unlock" aria-hidden="true"></i>
+                    </td>
+                    {{/if}}
+                    <td class="d-flex">
+                        <a class="btn btn-primary" href="/admin/user/detail/{{id}}" title="Chi tiết">
+                            <i class="fa fa-pencil" aria-hidden="true"></i>
+                        </a>
+                        {{#if isEditor}}
+                        <a class="btn btn-info" href="/admin/user/assign/{{id}}" title="Danh sách chuyên mục được phân công">
+                            <i class="fa fa-briefcase" aria-hidden="true"></i>
+                        </a>
+                        {{/if}}
+                    </td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
     </div>
-    <br><br>
-    <table class="table-fill">
-        <thead>
-            <tr>
-                <th class="text-left">#</th>
-                <th class="text-left">Tên đăng nhập</th>
-                <th class="text-left">Tên hiển thị</th>
-                <th class="text-left">Email</th>
-                <th class="text-left">Trạng thái</th>
-                <th class="text-left">&nbsp;</th>
-            </tr>
-        </thead>
-        <tbody class="table-hover">
-            {{#each this.users}}
-            <tr>
-                <td class="text-left">
-                    {{#if isAdmin}}
-                    <b style="color: #000080">Admin</b>
-                    {{/if}}
-                    {{#if isEditor}}
-                    <b style="color:#4169E1 ;">Biên tập viên</b>
-                    {{/if}}
-                    {{#if isWriter}}
-                    <b style="color:#87CEFA ;">Phóng viên</b>
-                    {{/if}}
-                    {{#if isSubscriber}}
-                    <b>Người dùng</b>
-                    {{/if}}
-                </td>
-                <td class="text-left">{{user_name}}</td>
-                <td class="text-left">{{display_name}}</td>
-                <td class="text-left">{{email}}</td>
-                {{#if delete}}
-                <td class="text-center" style="color: red;">
-                    <i class="fa fa-lock" aria-hidden="true" title="Bị khóa"></i>
-                </td>
-                {{else}}
-                <td class="text-center">
-                    <i class="fa fa-unlock" aria-hidden="true"></i>
-                </td>
-                {{/if}}
-                <td class="text-right">
-                    <a class="" href="/admin/user/detail/{{id}}" title="Chi tiết">
-                        <i class="fa fa-pencil" aria-hidden="true"></i>
-                    </a>
-                    {{#if isEditor}}
-                    <a class="" href="/admin/user/assign/{{id}}" title="Danh sách chuyên mục được phân công">
-                        <i class="fa fa-briefcase" aria-hidden="true"></i>
-                    </a>
-                    {{/if}}
-                </td>
-            </tr>
-            {{/each}}
-        </tbody>
-    </table>
 </div>
 <!-- end main content -->

@@ -12,56 +12,63 @@
     </div>
     {{else}}
     <div class="table-title">
-        <h3>Danh sách bài viết có chứa nhãn <b style="color: green;">{{this.tag.name}}</b></h3>
+        <h3>Danh sách bài viết có chứa nhãn</h3>
     </div>
     <br><br>
     <div>
-        <a class="btn success" href="/admin/tag_post/add/{{this.tag.id}}" role="button">
-            <i class="fa fa-plus" aria-hidden="true"></i>
-            Gắn nhãn vào bài viết
-        </a>
+
     </div>
-    <br><br>
-    <table class="table-fill">
-        <thead>
-            <tr>
-                <th class="text-left">Tên bài viết</th>
-                <th class="text-left=">Tình trạng</th>
-                <th class="text-left">&nbsp;</th>
-            </tr>
-        </thead>
-        <tbody class="table-hover">
-            {{#each this.tag_post}}
-            <tr>
-                <td class="text-left"><b>{{title}}</b></td>
-                <form method="POST">
-                    <input hidden name="id" value="{{tpid}}">
-                    {{#if delete}}
-                    <td class="text-center" style="color: red;">
-                        <i class="fa fa-lock" aria-hidden="true"></i>
-                    </td>
-                    <td class="text-right">
-                        <button type="submit" title="Mở khóa" formaction="/admin/tag_post/restore">
-                            <i class="fa fa-refresh" aria-hidden="true"></i>
-                        </button>
-                    </td>
-                    {{else}}
-                    <td class="text-center">
-                        <i class="fa fa-unlock" aria-hidden="true"></i>
-                    </td>
-                    <td class="text-right">
-                        <button type="submit" title="Khóa" formaction="/admin/tag_post/del">
-                            <i class="fa fa-recycle" aria-hidden="true"></i>
-                        </button>
-                    </td>
-                    {{/if}}
-                </form>
-            </tr>
-            {{/each}}
-        </tbody>
-    </table>
-    {{/if}}
-    <div>
+    <div class="panel panel-default">
+        <!-- Default panel contents -->
+        <div class="panel-heading">
+            <h3>Danh sách bài viết có chứa nhãn - "{{this.tag.name}}"</b></h3>
+            <a class="btn success" href="/admin/tag_post/add/{{this.tag.id}}" role="button">
+                <i class="fa fa-plus" aria-hidden="true"></i>
+                Gắn nhãn vào bài viết
+            </a>
+        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th class="text-left">Tên bài viết</th>
+                    <th class="text-left=">Tình trạng</th>
+                    <th class="text-left">&nbsp;</th>
+                </tr>
+            </thead>
+            <tbody class="table-hover">
+                {{#each this.tag_post}}
+                <tr>
+                    <td class="text-left"><b>{{title}}</b></td>
+                    <form method="POST">
+                        <input hidden name="id" value="{{tpid}}">
+                        {{#if delete}}
+                        <td class="text-center" style="color: red;">
+                            <i class="fa fa-lock" aria-hidden="true"></i>
+                        </td>
+                        <td class="d-flex">
+                            <button class="btn btn-success" type="submit" title="Mở khóa"
+                                formaction="/admin/tag_post/restore">
+                                <i class="fa fa-refresh" aria-hidden="true"></i>
+                            </button>
+                        </td>
+                        {{else}}
+                        <td class="text-center">
+                            <i class="fa fa-unlock" aria-hidden="true"></i>
+                        </td>
+                        <td class="d-flex">
+                            <button class="btn btn-danger" type="submit" title="Khóa" formaction="/admin/tag_post/del">
+                                <i class="fa fa-recycle" aria-hidden="true"></i>
+                            </button>
+                        </td>
+                        {{/if}}
+                    </form>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+        {{/if}}
+    </div>
+    <div class="foot">
         <a class="btn success" href="/admin/tag" role="button">
             <i class="fa fa-backward" aria-hidden="true"></i>
             Trở lại

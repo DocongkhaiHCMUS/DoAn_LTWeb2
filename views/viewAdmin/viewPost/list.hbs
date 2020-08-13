@@ -13,50 +13,51 @@
     </div>
     {{else}}
     <div class="table-title">
-        <h3 style="color: indigo;">Danh sách bài viết</h3>
+        <h3>Danh sách bài viết</h3>
     </div>
-    <br><br>
-    <h4>
-        <a class="btn success" href="/admin/post/add" role="button" title="Thêm bài viết">
-            <i class="fa fa-plus" aria-hidden="true"></i>
-            Tạo bài viết
-        </a>
-    </h4>
-    <br><br>
-    <table class="table-fill">
-        <thead>
-            <tr>
-                <th class="text-left">Tên bài viết</th>
-                <th class="text-left">Ngày tạo</th>
-                <th class="text-left">Avartar</th>
-                <th class="text-left=">Mô tả</th>
-                <th class="text-left">&nbsp;</th>
-            </tr>
-        </thead>
-        <tbody class="table-hover">
-            {{#each this.posts}}
-            <tr>
-                <td class="text-left"><b>{{title}}</b></td>
-                <td class="text-left" id="txtDateCreate">{{parseTime create_date}}</td>
-                <td class="text-left">
-                    <img src="/public/img/img_post/{{folder_img}}/{{avatar}}.jpg" alt="" width="100" height="100">
-                </td>
-                <td class="text-left">{{tiny_des}}</td>
+    <div class="panel panel-default">
+        <!-- Default panel contents -->
+        <div class="panel-heading">
+            <h2>Danh sách bài viết</h2>
+            <a class="btn success" href="/admin/post/add" role="button" title="Thêm bài viết">
+                <i class="fa fa-plus" aria-hidden="true"></i>
+                Tạo bài viết
+            </a>
+        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Tên bài viết</th>
+                    <th>Ngày tạo</th>
+                    <th>Avartar</th>
+                    <th>Mô tả</th>
+                    <th>Hành động</th>
+                </tr>
+            </thead>
+            <tbody class="table-hover">
+                {{#each this.posts}}
+                <tr>
+                    <td><b>{{title}}</b></td>
+                    <td id="txtDateCreate">{{parseTime create_date}}</td>
+                    <td>
+                        <img src="/public/img/img_post/{{folder_img}}/{{avatar}}.jpg" alt="" width="100" height="100">
+                    </td>
+                    <td>{{tiny_des}}</td>
 
-                <td class="text-right td-post">
-                    <a class="" href="/admin/post/tag_post/{{id}}" title="Nhãn gắn bài viết">
-                        <i class="fa fa-tags" aria-hidden="true"></i>
-                    </a>
-                    &nbsp;&nbsp;&nbsp;
-                    <a class="" href="/admin/post/detail/{{id}}" title="Chi tiết / chỉnh sửa">
-                        <i class="fa fa-pencil" aria-hidden="true"></i>
-                    </a>
-                </td>
-            </tr>
-            {{/each}}
-        </tbody>
-    </table>
-    <div class="article-pagination">
+                    <td class="d-inline-b">
+                        <a class="btn btn-success" href="/admin/post/tag_post/{{id}}" title="Nhãn gắn bài viết">
+                            <i class="fa fa-tags" aria-hidden="true"></i>
+                        </a>
+                        <a class="btn btn-primary" href="/admin/post/detail/{{id}}" title="Chi tiết / chỉnh sửa">
+                            <i class="fa fa-pencil" aria-hidden="true"></i>
+                        </a>
+                    </td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+    <div class="foot article-pagination">
         <ul>
             <li><a {{#unless can_go_prev}} class="disable" {{/unless}} href="?page={{prev_value}}"><i
                         class="fa fa-angle-double-left"></i></a></li>

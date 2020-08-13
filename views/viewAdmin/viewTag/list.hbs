@@ -9,56 +9,58 @@
 <div class="wrapper">
 
     <div class="table-title">
-        <h3 style="color: mediumvioletred;">Danh sách nhãn</h3>
+        <h3>Danh sách nhãn</h3>
     </div>
-    <br>
-    <div style="float:right">
-        <a class="btn success" href="/admin/tag/add" role="button" title="Thêm nhãn">
-            <i class="fa fa-plus" aria-hidden="true"></i>
-            Thêm nhãn
-        </a>
-    </div>
-    <br><br>
-    <table class="table-fill">
-        <thead>
-            <tr>
-                <th class="text-left">Tên nhãn</th>
-                <th class="text-left">Ngày tạo</th>
-                <th class="text-left">Chỉnh sửa lần cuối</th>
-                <th class="text-left=">Tình trạng</th>
-                <th class="text-left">&nbsp;</th>
-            </tr>
-        </thead>
-        <tbody class="table-hover">
-            {{#each this.tags}}
-            <tr>
-                <td class="text-left"><b>{{name}}</b></td>
-                <td class="text-left" id="txtDateCreate">{{parseTime create_date}}</td>
-                <td class="text-left">{{parseTime modifile_date}}</td>
-                {{#if delete}}
-                <td class="text-center" style="color: red;">
-                    <i class="fa fa-lock" aria-hidden="true" title="Bị khóa"></i>
-                </td>
-                {{else}}
-                <td class="text-center">
-                    <i class="fa fa-unlock" aria-hidden="true"></i>
-                </td>
 
-                {{/if}}
-                <td class="text-right">
-                    <a class="" href="/admin/tag/edit/{{id}}" title="Chỉnh sửa">
-                        <i class="fa fa-pencil" aria-hidden="true"></i>
-                    </a>
-                    &nbsp;&nbsp;&nbsp;
-                    <a class="" href="/admin/tag/detail/{{id}}" title="Các bài viết chứa nhãn">
-                        <i class="fa fa-info" aria-hidden="true"></i>
-                    </a>
-                </td>
-            </tr>
-            {{/each}}
-        </tbody>
-    </table>
-    <div class="article-pagination">
+    <div class="panel panel-default">
+        <!-- Default panel contents -->
+        <div class="panel-heading">
+            <h2>Danh sách nhãn</h2>
+            <a class="btn success" href="/admin/tag/add" role="button" title="Thêm nhãn">
+                <i class="fa fa-plus" aria-hidden="true"></i>
+                Thêm nhãn
+            </a>
+        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Tên nhãn</th>
+                    <th>Ngày tạo</th>
+                    <th>Chỉnh sửa lần cuối</th>
+                    <th>Tình trạng</th>
+                    <th>Hành động</th>
+                </tr>
+            </thead>
+            <tbody class="table-hover">
+                {{#each this.tags}}
+                <tr>
+                    <td><b>{{name}}</b></td>
+                    <td id="txtDateCreate">{{parseTime create_date}}</td>
+                    <td>{{parseTime modifile_date}}</td>
+                    {{#if delete}}
+                    <td class="text-center" style="color: red;">
+                        <i class="fa fa-lock" aria-hidden="true" title="Bị khóa"></i>
+                    </td>
+                    {{else}}
+                    <td class="text-center">
+                        <i class="fa fa-unlock" aria-hidden="true"></i>
+                    </td>
+
+                    {{/if}}
+                    <td class="d-flex">
+                        <a class="btn btn-primary" href="/admin/tag/edit/{{id}}" title="Chỉnh sửa">
+                            <i class="fa fa-pencil" aria-hidden="true"></i>
+                        </a>
+                        <a class="btn btn-info" href="/admin/tag/detail/{{id}}" title="Các bài viết chứa nhãn">
+                            <i class="fa fa-info" aria-hidden="true"></i>
+                        </a>
+                    </td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+    <div class=" foot article-pagination">
         <ul>
             <li><a {{#unless can_go_prev}} class="disable" {{/unless}} href="?page={{prev_value}}"><i
                         class="fa fa-angle-double-left"></i></a></li>
@@ -71,5 +73,5 @@
                         class="fa fa-angle-double-right"></i></a></li>
         </ul>
     </div>
+    <!-- end main content -->
 </div>
-<!-- end main content -->
