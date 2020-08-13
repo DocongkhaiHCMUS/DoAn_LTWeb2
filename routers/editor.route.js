@@ -110,73 +110,139 @@ router.post("/update_publish", async function (req, res) {
       }
     }
 
-
     //////////////////////////Tags added
     //WE need create array include items in Tag to add
-    // if (req_tagsADD == null) {
-      
-    // }
-    // // Case Tags added just one tag. 
-    // else if (Array.isArray(req_tagsADD) == false) {
-    //   let temp = false;
-    //   if(checkTagNumber == 1){
-    //     //xxx
-    //     await modelTagPost.add(req_tagsADD);
-    //   }
-    //   else if(checkTagNumber == 2){
-    //     if(req_tagsADD != req_tags){
-    //       //xxx
-    //       await modelTagPost.add(req_tagsADD);
-    //     }
-    //   }
-    //   else {
-    //     for(let i = 0; i < req_tags.length; i++) {
-    //       if(req_tags[i] == req_tagsADD){
-    //         temp = true;
-    //         break;
-    //       }
-    //     }
-    //     if(temp == false)
-    //     {
-    //       await modelTagPost.add(req_tagsADD);
-    //       //xxx
-    //     }
-    //   }
-    // }
-    // // Case Tags added has more tags. 
-    // else if (Array.isArray(req_tagsADD) == true) {
-    //   let temp = false;
-    //   if(checkTagNumber == 1){
-    //     for(let i = 0; i < req_tagsADD.length; i++) {
-    //       await modelTagPost.add(req_tagsADD[i]);
-    //       //xxx
-    //     }
-    //   }
-    //   else if(checkTagNumber == 2){
-    //     for(let i = 0; i < req_tagsADD.length; i++) {
-    //       if(req_tags != req_tagsADD[i]){
-    //         await modelTagPost.add(req_tagsADD[i]);
-    //         //xxx
-    //       }
-    //     }
-    //   }
-    //   else {
-    //     for(let i = 0; i < req_tagsADD.length; i++) {
-    //       for(let j = 0; j < req_tags.length; j++) {
-    //         if(req_tags[j] == req_tagsADD[i]){
-    //           temp = true;
-    //           break;
-    //         }
-    //       }
-    //       if(temp == false)
-    //       {
-    //         await modelTagPost.add(req_tagsADD[i]);
-    //         //xxx
-    //       }
-    //     }
-    //   }
-    // }
+    if (req_tagsADD == null) {
+    }
+    // // Case Tags added just one tag.
+    else if (Array.isArray(req_tagsADD) == false) {
+      let temp = false;
+      let last_id = null;
+      insert_Tags = {
+        name: req_tagsADD,
+        des: req_tagsADD,
+        create_date: null,
+        modifile_date: null,
+        delete: 0,
+      };
 
+      if (checkTagNumber == 1) {
+        //xxx
+       // console.log("111111");
+        last_id = await modelTagPost.add(insert_Tags);
+      } else if (checkTagNumber == 2) {
+        if (req_tagsADD != req_tags) {
+          //xxx
+         // console.log("222222");
+          last_id = await modelTagPost.add(insert_Tags);
+          //await modelTagPost.add(req_tagsADD);
+        }
+      } else {
+        for (let i = 0; i < req_tags.length; i++) {
+          if (req_tags[i] == req_tagsADD) {
+            temp = true;
+            break;
+          }
+        }
+        if (temp == false) {
+         // console.log("333333");
+          last_id = await modelTagPost.add(insert_Tags);
+          //xxx
+        }
+      }
+
+      //Insert value to Tag_post Table
+      insert_Tag_post = {
+        tag: last_id.insertId,
+        post: id,
+        create_date: null,
+        modifile_date: null,
+        delete: 0,
+      };
+      await modelTagPost.add_tp(insert_Tag_post);
+    }
+
+
+    // // Case Tags added has more tags.
+    else if (Array.isArray(req_tagsADD) == true) {
+      let temp = false;
+      let last_id = null;
+
+      if(checkTagNumber == 1){
+        for(let i = 0; i < req_tagsADD.length; i++) {
+          insert_Tags = {
+            name: req_tagsADD[i],
+            des: req_tagsADD[i],
+            create_date: null,
+            modifile_date: null,
+            delete: 0,
+          };
+          last_id = await modelTagPost.add(insert_Tags);
+          insert_Tag_post = {
+            tag: last_id.insertId,
+            post: id,
+            create_date: null,
+            modifile_date: null,
+            delete: 0,
+          };
+          await modelTagPost.add_tp(insert_Tag_post);
+          //xxx
+        }
+      }
+      else if(checkTagNumber == 2){
+        for(let i = 0; i < req_tagsADD.length; i++) {
+          if(req_tags != req_tagsADD[i]){
+            insert_Tags = {
+              name: req_tagsADD[i],
+              des: req_tagsADD[i],
+              create_date: null,
+              modifile_date: null,
+              delete: 0,
+            };
+            last_id = await modelTagPost.add(insert_Tags);
+            insert_Tag_post = {
+              tag: last_id.insertId,
+              post: id,
+              create_date: null,
+              modifile_date: null,
+              delete: 0,
+            };
+            await modelTagPost.add_tp(insert_Tag_post);
+            //xxx
+          }
+        }
+      }
+      else {
+        for(let i = 0; i < req_tagsADD.length; i++) {
+          for(let j = 0; j < req_tags.length; j++) {
+            if(req_tags[j] == req_tagsADD[i]){
+              temp = true;
+              break;
+            }
+          }
+          if(temp == false)
+          {
+            insert_Tags = {
+              name: req_tagsADD[i],
+              des: req_tagsADD[i],
+              create_date: null,
+              modifile_date: null,
+              delete: 0,
+            };
+            last_id = await modelTagPost.add(insert_Tags);
+            insert_Tag_post = {
+              tag: last_id.insertId,
+              post: id,
+              create_date: null,
+              modifile_date: null,
+              delete: 0,
+            };
+            await modelTagPost.add_tp(insert_Tag_post);
+            //xxx
+          }
+        }
+      }
+    }
 
     //Update publish_date
     if (req_dateP != list[0].publish_date) {

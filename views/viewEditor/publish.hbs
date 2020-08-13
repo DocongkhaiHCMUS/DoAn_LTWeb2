@@ -9,11 +9,18 @@
 <Script>
     $(document).ready(function () {
         $('#selected_tags').select2({
-            maximumSelectionLength: {{ tag.length }},
+            // maximumSelectionLength: {{ tag.length }},
         });
         $('#add_tags').select2({
-            maximumSelectionLength: {{ tag.length }},
-            //data: {{tag.name}}
+            tags: ["Kinh tế", "Xã hội", "Thể thao", "Tình yêu", "Gia đình", "Sức khỏe",
+                "Giải Trí", "Âm nhạc", "Thời trang", "Sao Việt", "Du lịch"],
+        });
+        $("#add_tags").on("change", function () { $("#add_tags_val").html($("#add_tags").val()); });
+
+        $("#add_tags").select2("container").find("ul.select2-choices").sortable({
+            containment: 'parent',
+            start: function () { $("#add_tags").select2("onSortStart"); },
+            update: function () { $("#add_tags").select2("onSortEnd"); }
         });
     });
 </Script>
@@ -36,7 +43,7 @@
                 <label for="nID_tag">ID_NewTag </label>
                 <input type="number" class="form-control" id="nID_tag" name="id_tag" value="{{tag_all.id}}">
             </div> --}}
-            
+
             <div hidden class="form-group" style="width: 300px;">
                 <label for="nID_post">ID_post </label>
                 <input type="number" class="form-control" id="nID_post" name="id" value="{{post.id}}">
@@ -54,12 +61,15 @@
 
 
             <label for="txtAddTag"> Nhãn bạn muốn thêm </label>
-            <select class="js-example-basic-multiple" style="width: 100%;" id="add_tags" name="add_tags" multiple="multiple">
-                {{#each tag_all}}
+            <select class="js-example-basic-multiple" style="width: 100%;" id="add_tags" name="add_tags"
+                multiple="multiple">
+                {{!-- {{#each tag_all}}
                 <option value="{{tag_all.name}}">
                     {{tag_all.name}}
                 </option>
-                {{/each}}
+                {{/each}} --}}
+
+                <option value=""></option>
             </select>
 
             <div class="form-group" style="width: 300px;">

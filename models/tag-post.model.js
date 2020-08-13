@@ -17,8 +17,15 @@ module.exports = {
 
     add: (entity) => {
 
-        //entity['create_date'] = moment().format('YYYY/MM/DD HH:mm:ss');
-        //entity['modifile_date'] = moment().format('YYYY/MM/DD HH:mm:ss');
+        entity['create_date'] = moment().format('YYYY/MM/DD HH:mm:ss');
+        entity['modifile_date'] = moment().format('YYYY/MM/DD HH:mm:ss');
+
+        return db.add(TBL_Tag, entity)
+    },
+    add_tp: (entity) => {
+
+        entity['create_date'] = moment().format('YYYY/MM/DD HH:mm:ss');
+        entity['modifile_date'] = moment().format('YYYY/MM/DD HH:mm:ss');
 
         return db.add(TBL_TP, entity)
     },
@@ -50,6 +57,8 @@ module.exports = {
         return db.patch(TBL_TP, entity, condition)
     },
     patch_post: (entity) => {
+        entity['modifile_date'] = moment().format('YYYY/MM/DD HH:mm:ss');
+
         return new Promise(function (resolve, reject) {
             const sql = `   UPDATE post
                             SET category = ${entity.category}
