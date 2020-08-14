@@ -1,6 +1,6 @@
 {{#section 'css'}}
 <link rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css">s
+    href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css">
 {{/section}}
 {{#section 'js'}}
 <script
@@ -22,52 +22,82 @@
 {{/section}}
 <!-- main content -->
 <div class="wrapper">
-    <form action="/admin/user/update" method="POST">
-        <label for="id">#</label>
-        <input type="text" id="id" name="id" value="{{this.user.id}}" readonly>
-        <label for="user_name">Tên đăng nhập</label>
-        <input type="text" id="user_name" name="user_name" value="{{this.user.user_name}}" autofocus required>
-        <label for="display_name">Tên hiển thị</label>
-        <input type="text" id="display_name" name="display_name" value="{{this.user.display_name}}" required>
-        <label for="DOB">Ngày sinh</label>
-        <input id="inputDOB" type="text" name="DOB" value="{{parseTime this.user.DOB}}">
-        <label for="gender"> Giới tính</label>
-        <select name="gender">
-            {{#if this.user.gender}}
-            <option value="1" selected>&#xf182; Nữ </option>
-            <option value="0">&#xf183; Nam</option>
-            {{else}}
-            <option value="1">&#xf182; Nữ </option>
-            <option value="0" selected>&#xf183; Nam</option>
-            {{/if}}
-        </select>
-        <br><br>
-        <i class="fa fa-clock-o" aria-hidden="true"></i>
-        <label for="time_out">Time out</label>
-        <input type="text" id="txttime_out" name="time_out" value="{{parseTime this.user.time_out}}">
-        <label for="create_date">Ngày tạo</label>
-        <input type="text" id="" name="" value="{{parseTime this.user.create_date}}" readonly>
-        <label for="permission">Quyền hạn: </label>
-        <select name="permission">
-            {{#each this.pers }}
-            <option value="{{id}}" {{#if Select}} selected {{/if}}>{{name}}</option>
-            {{/each}}
-        </select>
-        <label for="delete">Tình trạng</label>
-        <select name="delete">
-            {{#if this.user.delete}}
-            <option value="1" selected>đang khóa <i class="fa fa-frown-o" aria-hidden="true"></i></option>
-            <option value="0">không khóa <i class="fa fa-smile-o" aria-hidden="true"></i></option>
-            {{else}}
-            <option value="1">đang khóa <i class="fa fa-frown-o" aria-hidden="true"></option>
-            <option value="0" selected>không khóa<i class="fa fa-smile-o" aria-hidden="true"></i></option>
-            {{/if}}
-        </select>
+    <form class="frm" action="/admin/user/update" method="POST">
+        <h4 class="title">Chi tiết người dùng</h4>
+        <div class="form-group">
+            <label for="id">ID</label>
+            <input type="text" id="id" name="id" value="{{this.user.id}}" readonly>
+        </div>
+        <div class="form-group">
+            <label for="user_name">Tên đăng nhập</label>
+            <input type="text" id="user_name" name="user_name" value="{{this.user.user_name}}" autofocus required>
+        </div>
+        <div class="form-group">
+            <label for="display_name">Tên hiển thị</label>
+            <input type="text" id="display_name" name="display_name" value="{{this.user.display_name}}" required>
+        </div>
+        <div class="form-group">
+            <label for="DOB">Ngày sinh</label>
+            <input id="inputDOB" type="text" name="DOB" value="{{parseTime this.user.DOB}}">
+        </div>
+        <div class="form-group">
+            <label for="gender"> Giới tính</label>
+            <select name="gender">
+                {{#if this.user.gender}}
+                <option class="select-item" value="1" selected>
+                    Nữ
+                </option>
+                <option class="select-item" value="0">
+                    Nam
+                </option>
+                {{else}}
+                <option class="select-item" value="1">
+                    Nữ
+                </option>
+                <option class="select-item" value="0" selected>
+                    Nam
+                </option>
+                {{/if}}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="time_out">
+                <i class="fa fa-clock-o" aria-hidden="true"></i>
+                Time out
+            </label>
+            <input type="text" id="txttime_out" name="time_out" value="{{parseTime this.user.time_out}}">
+        </div>
+        <div class="form-group">
+            <label for="create_date">Ngày tạo</label>
+            <input type="text" id="" name="" value="{{parseTime this.user.create_date}}" readonly>
+        </div>
+        <div class="form-group">
+            <label for="permission">Quyền hạn: </label>
+            <select name="permission">
+                {{#each this.pers }}
+                <option class="select-item" value="{{id}}" {{#if Select}} selected {{/if}}>{{name}}</option>
+                {{/each}}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="delete">Tình trạng</label>
+            <select name="delete">
+                {{#if this.user.delete}}
+                <option class="select-item" value="1" selected>đang khóa </option>
+                <option class="select-item" value="0">không khóa</option>
+                {{else}}
+                <option class="select-item" value="1">đang khóa </option>
+                <option class="select-item" value="0" selected>không khóa</option>
+                {{/if}}
+            </select>
+        </div>
         <hr>
-        <a href="/admin/user" role="button" title="Back to List">
-            <i class="fa fa-backward" aria-hidden="true"></i>
-        </a>
-        <input type="submit" value="Lưu">
+        <div class="form-group d-flex">
+            <a class="btn btn-primary" href="/admin/user" role="button" title="Back to List">
+                <i class="fa fa-backward" aria-hidden="true"></i>
+            </a>
+            <button class="btn btn-success" type="submit"> Lưu</button>
+        </div>
     </form>
 </div>
 <!-- end main content -->

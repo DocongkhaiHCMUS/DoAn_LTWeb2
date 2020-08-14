@@ -16,25 +16,35 @@
 {{/section}}
 <!-- main content -->
 <div class="wrapper">
-    <form method="POST">
-        <label for="id">#</label>
-        <input type="text" name="tag" readonly value="{{this.tag.id}}">
-        <p>Tên nhãn : {{this.tag.name}}</p>
-        <label for="post">Chọn bài viết</label>
-        <select class="js-example-basic-single" name="post">
-            {{#each this.posts }}
-            <option value="{{id}}">{{title}}</option>
-            {{/each}}
-        </select>
+    <form class="frm" method="POST">
+        <h4 class="title">Gán nhãn vào bài viết</h4>
+        <div class="form-group">
+            <label for="id">ID</label>
+            <input type="text" name="tag" readonly value="{{this.tag.id}}">
+        </div>
+        <div class="form-group">
+            <label for="">Tên nhãn</label>
+            <input type="text" name="" id="" value="{{tag.name}}" readonly>
+        </div>
+        <div class="form-group">
+            <label for="post">Chọn bài viết</label>
+            <select class="js-example-basic-single" name="post">
+                {{#each this.posts }}
+                <option value="{{id}}">{{title}}</option>
+                {{/each}}
+            </select>
+        </div>
 
         <hr>
-        <a href="/admin/tag" role="button" title="Back to List">
-            <i class="fa fa-backward" aria-hidden="true"></i>
-        </a>
-        <button type="submit" formaction="/admin/tag_post/add">
-            <i class="fa fa-check" aria-hidden="true"></i>
-            Gắn nhãn
-        </button>
+        <div class="form-group d-flex">
+            <a class="btn btn-primary" href="/admin/tag" role="button" title="Back to List">
+                <i class="fa fa-backward" aria-hidden="true"></i>
+            </a>
+            <button class="btn btn-success" type="submit" formaction="/admin/tag_post/add">
+                <i class="fa fa-check" aria-hidden="true"></i>
+                Gán nhãn
+            </button>
+    </form>
     </form>
 </div>
 <!-- end main content -->

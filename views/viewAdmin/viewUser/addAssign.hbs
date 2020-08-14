@@ -16,24 +16,33 @@
 {{/section}}
 <!-- main content -->
 <div class="wrapper">
-    <form method="POST">
-        <label for="id">#</label>
-        <input type="text" name="user" readonly value="{{this.Editor.id}}">
-        <p style="color:navy;">Biên tập viên : {{this.Editor.display_name}}</p>
-        <label for="post">Chọn chuyên mục</label>
-        <select class="js-example-basic-single" name="category">
-            {{#each this.Cat1 }}
-            <option value="{{id}}" selected>{{name}}</option>
-            {{/each}}
-        </select>
-        <hr>
-        <a href="/admin/user" role="button" title="Back to List">
-            <i class="fa fa-backward" aria-hidden="true"></i>
-        </a>
-        <button type="submit" formaction="/admin/user/addAssign/add">
-            <i class="fa fa-check" aria-hidden="true"></i>
-            Xác nhận
-        </button>
+    <form class="frm" action="/admin/user/addAssign/add" method="POST">
+        <h4 class="title">Phân công chuyên mục</h4>
+        <div class="form-group">
+            <label for="id">ID User</label>
+            <input type="text" name="user" readonly value="{{this.Editor.id}}">
+        </div>
+        <div class="form-group">
+            <label for="">Tên Người dùng</label>
+            <input type="text" name="display_name" id="" value="{{Editor.display_name}}" readonly>
+        </div>
+        <div class="form-group">
+            <label for="post">Chọn chuyên mục</label>
+            <select class="js-example-basic-single" name="category">
+                {{#each this.Cat1 }}
+                <option value="{{id}}" selected>{{name}}</option>
+                {{/each}}
+            </select>
+            <hr>
+            <div class="form-group d-flex">
+                <a class="btn btn-primary" href="/admin/user" role="button" title="Back to List">
+                    <i class="fa fa-backward" aria-hidden="true"></i>
+                </a>
+                <button class="btn btn-success" type="submit">
+                    <i class="fa fa-check" aria-hidden="true"></i>
+                    Xác nhận
+                </button>
+            </div>
     </form>
 </div>
 <!-- end main content -->

@@ -1,14 +1,21 @@
 <!-- main content -->
 <div class="wrapper">
-    <form action="" method="POST">
-        <label for="name">Tên nhãn</label>
-        <input type="text" id="name" name="name" autofocus required>
-        <label for="name">Mô tả</label>
-        <textarea placeholder="Viết gì đó..." name="des"></textarea>
-        <a href="/admin/category" role="button" title="Back to List">
-            <i class="fa fa-backward" aria-hidden="true"></i>
-        </a>
-        <input type="submit" value="Thêm">
+    <form class="frm" action="" method="POST">
+        <h4 class="title">Thêm Nhãn</h4>
+        <div class="form-group">
+            <label for="name">Tên nhãn</label>
+            <input type="text" id="name" name="name" autofocus required>
+        </div>
+        <div class="form-group">
+            <label for="name">Mô tả</label>
+            <textarea placeholder="Viết gì đó..." name="des"></textarea>
+        </div>
+        <hr>
+        <div class="form-group d-flex">
+            <a class="btn btn-primary" href="/admin/category" role="button" title="Back to List">
+                <i class="fa fa-backward" aria-hidden="true"></i>
+            </a>
+            <button class="btn btn-success" type="submit"> Thêm </button>
     </form>
 </div>
 <!-- end main content -->

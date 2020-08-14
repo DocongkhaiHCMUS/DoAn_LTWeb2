@@ -22,78 +22,104 @@
 
 <!-- main content -->
 <div class="wrapper">
-    <form action="/admin/post/update" method="POST">
-        <label for="id">#</label>
-        <input type="text" id="id" name="id" value="{{this.post.id}}" readonly>
-        <label for="title">Tên bài viết</label>
-        <input type="text" id="title" name="title" value="{{this.post.title}}" autofocus required>
-        <label for="tiny_des">Mô tả ngắn</label>
-        <input type="text" id="tiny_des" name="tiny_des" value="{{this.post.tiny_des}}" required>
-        <label for="tiny_des">Mô tả đầy đủ</label>
-        <textarea type="text" id="full_des" name="full_des" required> {{this.post.full_des}}</textarea>
-        <i class="fa fa-paint-brush" aria-hidden="true"></i>
-        <label for="author">Tác giả</label>
-        <select name="author">
-            {{#each this.users }}
-            <option value="{{id}}" {{#if isAuthor}} selected {{/if}}>&#xf2c0; {{display_name}}</option>
-            {{/each}}
-        </select>
-        <br><br>
-        <i class="fa fa-genderless" aria-hidden="true"></i>
-        <label for="premium">Loại bài viết</label>
-        <select name="premium">
-            {{#if this.post.premium}}
-            <option value="1" selected> &#xf219; Premium </option>
-            <option value="0">Thường</option>
-            {{else}}
-            <option value="1"> &#xf219; Premium</option>
-            <option value="0" selected>Thường </option>
-            {{/if}}
-        </select>
-        <p>
-            <i class="fa fa-clock-o" aria-hidden="true"></i>
-            Sửa lần cuối vào lúc: {{parseTime this.post.modifile_date}}
-        </p>
-        <label for="publish_date">
-            <i class="fa fa-clock-o" aria-hidden="true"></i>
-            Ngày ra mắt
-        </label>
-        <input id="input" type="text" name="publish_date" value="{{parseTime this.post.publish_date}}">
-        <label for="status">Trạng thái</label>
-        <select name="status">
-            {{#if this.post.status}}
-            <option value="0">&#xf00d; Draft</option>
-            <option value="1" selected>&#xf14a; Đã xuất bản</option>
-            {{else}}
-            <option value="0" selected>&#xf00d; Draft</option>
-            <option value="1">&#xf14a; Đã xuất bản</option>
-            {{/if}}
-        </select>
-        <br><br>
-        <label for="delete">Tình trạng</label>
-        <select name="delete">
-            {{#if this.post.delete}}
-            <option value="1" selected>đang khóa &#xf119;</option>
-            <option value="0">không khóa &#xf118;</option>
-            {{else}}
-            <option value="1">đang khóa &#xf119;</option>
-            <option value="0" selected>không khóa &#xf118;</option>
-            {{/if}}
-        </select>
-        <br><br>
-        <label for="category">Thể loại</label>
-        <input list="catLv2" name="category" id="category" value="{{this.post.category}}">
-        <datalist id="catLv2">
-            {{#each this.cats2}}
-            <option value="{{id}}" {{#if isCat2}} selected {{/if}}>{{name}}</option>
-            {{/each}}
-        </datalist>
+    <form class="frm" action="/admin/post/update" method="POST">
+        <h4 class="title">Chi tiết bài viết</h4>
+        <div class="form-group">
+            <label for="id">ID</label>
+            <input type="text" id="id" name="id" value="{{this.post.id}}" readonly>
+        </div>
+        <div class="form-group">
+            <label for="title">Tên bài viết</label>
+            <textarea type="text" id="title" name="title" rows="4" autofocus required>
+                {{this.post.title}}
+            </textarea>
+        </div>
+        <div class="form-group">
+            <label for="tiny_des">Mô tả ngắn</label>
+            <textarea type="text" id="tiny_des" name="tiny_des" rows="4" required>
+                {{this.post.tiny_des}}
+            </textarea>
+        </div>
+        <div class="form-group">
+            <label for="tiny_des">Mô tả đầy đủ</label>
+            <textarea type="text" id="full_des" name="full_des" rows="11" required> {{this.post.full_des}}</textarea>
+        </div>
+        <div class="form-group">
+            <label for="author"> <i class="fa fa-paint-brush" aria-hidden="true">&nbsp;&nbsp;</i>Tác giả</label>
+            <select name="author">
+                {{#each this.users }}
+                <option value="{{id}}" {{#if isAuthor}} selected {{/if}}> <i class="fa fa-male" aria-hidden="true"></i>
+                    {{display_name}}</option>
+                {{/each}}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="premium"><i class="fa fa-diamond" aria-hidden="true">&nbsp;&nbsp;</i>Loại bài viết</label>
+            <select name="premium">
+                {{#if this.post.premium}}
+                <option value="1" selected>Premium </option>
+                <option value="0">Thường</option>
+                {{else}}
+                <option value="1">Premium</option>
+                <option value="0" selected>Thường </option>
+                {{/if}}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="">
+                <i class="fa fa-clock-o" aria-hidden="true">&nbsp;</i>
+                Chỉnh sửa lần cuối
+            </label>
+            <input type="text " value="{{parseTime this.post.modifile_date}}" readonly>
+        </div>
+        <div class="form-group">
+            <label for="publish_date">
+                <i class="fa fa-clock-o" aria-hidden="true"></i>
+                Ngày ra mắt
+            </label>
+            <input id="input" type="text" name="publish_date" value="{{parseTime this.post.publish_date}}">
+        </div>
+        <div class="form-group">
+            <label for="status">Trạng thái</label>
+            <select name="status">
+                {{#if this.post.status}}
+                <option value="0">Draft</option>
+                <option value="1" selected>Đã xuất bản</option>
+                {{else}}
+                <option value="0" selected>Draft</option>
+                <option value="1">Đã xuất bản</option>
+                {{/if}}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="delete">Tình trạng</label>
+            <select name="delete">
+                {{#if this.post.delete}}
+                <option value="1" selected>đang khóa </option>
+                <option value="0">không khóa </option>
+                {{else}}
+                <option value="1">đang khóa </option>
+                <option value="0" selected>không khóa </option>
+                {{/if}}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="category">Thể loại</label>
+            <input list="catLv2" name="category" id="category" value="{{this.post.category}}">
+            <datalist id="catLv2">
+                {{#each this.cats2}}
+                <option value="{{id}}" {{#if isCat2}} selected {{/if}}>{{name}}</option>
+                {{/each}}
+            </datalist>
+        </div>
         <p>Lượt xem: {{this.post.views}}</p>
         <hr>
-        <a href="/admin/post" role="button" title="Back to List">
-            <i class="fa fa-backward" aria-hidden="true"></i>
-        </a>
-        <input type="submit" value="Lưu">
+        <div class="form-group d-flex">
+            <a class="btn btn-primary" href="/admin/post" role="button" title="Back to List">
+                <i class="fa fa-backward" aria-hidden="true"></i>
+            </a>
+            <button class="btn btn-success" type="submit">Lưu</button>
+    </form>
     </form>
 </div>
 <!-- end main content -->

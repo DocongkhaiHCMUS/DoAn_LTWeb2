@@ -11,56 +11,57 @@
     <div class="table-title">
         <h3>Danh sách chuyên mục đã phân công</h3>
     </div>
-    <p>Biên tập viên: {{this.user.display_name}} </p>
-    <br>
-    <div style="float:right">
-        <a class="btn success" href="/admin/user/addAssign/{{this.user.id}}" role="button" title="Thêm người dùng">
-            <i class="fa fa-plus" aria-hidden="true"></i>
-            Phân công chuyên mục
-        </a>
+    <div class="panel panel-default">
+        <!-- Default panel contents -->
+        <div class="panel-heading">
+            <h2>Biên tập viên : "{{this.user.display_name}}"</h2>
+            <a class="btn success" href="/admin/user/addAssign/{{this.user.id}}" role="button" title="Thêm người dùng">
+                <i class="fa fa-plus" aria-hidden="true"></i>
+                Phân công chuyên mục
+            </a>
+        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Chuyên mục</th>
+                    <th>Tình trạng</th>
+                    <th>Hành động</th>
+                </tr>
+            </thead>
+            <tbody class="table-hover">
+                {{#each this.assign}}
+                <tr>
+                    <td class="text-left">
+                        {{name}}
+                    </td>
+                    <form method="POST">
+                        <input hidden name="id" value="{{id}}">
+                        {{#if delete}}
+                        <td class="text-center" style="color: red;">
+                            Đã ngừng phân công
+                        </td>
+                        <td class="text-center">
+                            <button class="btn btn-success" type="submit" title="Phân công lại" formaction="/admin/assign/restore">
+                                <i class="fa fa-refresh" aria-hidden="true"></i>
+                            </button>
+                        </td>
+                        {{else}}
+                        <td class="text-center" style="color: blue;">
+                            Đang được phân công
+                        </td>
+                        <td class="text-center">
+                            <button class="btn btn-danger" type="submit" title="Ngừng phân công" formaction="/admin/assign/del">
+                                <i class="fa fa-trash" aria-hidden="true"></i>
+                            </button>
+                        </td>
+                        {{/if}}
+                    </form>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
     </div>
-    <br><br>
-    <table class="table-fill">
-        <thead>
-            <tr>
-                <th class="text-left">Chuyên mục</th>
-                <th class="text-left">Tình trạng</th>
-                <th class="text-left">&nbsp;</th>
-            </tr>
-        </thead>
-        <tbody class="table-hover">
-            {{#each this.assign}}
-            <tr>
-                <td class="text-left">
-                    {{name}}
-                </td>
-                <form method="POST">
-                    <input hidden name="id" value="{{id}}">
-                    {{#if delete}}
-                    <td class="text-center" style="color: red;">
-                        Đã ngừng phân công
-                    </td>
-                    <td class="text-center">
-                        <button type="submit" title="Phân công lại" formaction="/admin/assign/restore">
-                            <i class="fa fa-refresh" aria-hidden="true"></i>
-                        </button>
-                    </td>
-                    {{else}}
-                    <td class="text-center" style="color: blue;">
-                        Đang được phân công
-                    </td>
-                    <td class="text-center">
-                        <button type="submit" title="Ngừng phân công" formaction="/admin/assign/del">
-                            <i class="fa fa-trash" aria-hidden="true"></i>
-                        </button>
-                    </td>
-                    {{/if}}
-                </form>
-            </tr>
-            {{/each}}
-        </tbody>
-    </table>
-    <div>
+    <div class="foot">
         <a class="btn success" href="/admin/user" role="button">
             <i class="fa fa-backward" aria-hidden="true"></i>
             Trở lại

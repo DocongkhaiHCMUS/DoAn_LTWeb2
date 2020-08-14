@@ -7,13 +7,16 @@
 {{/section}}
 
 {{#section 'js'}}
-
+<script
+    src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
+</script>
 <script>
     $('#inputDOB').datetimepicker({
         format: 'd/m/Y',
         timepicker: false,
         mask: true
     });
+
     //handling when btnSignIn submit
     $('#frmReg').submit(function (e) {
         e.preventDefault();

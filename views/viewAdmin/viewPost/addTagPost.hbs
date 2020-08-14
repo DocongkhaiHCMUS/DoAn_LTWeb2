@@ -15,24 +15,33 @@
 {{/section}}
 <!-- main content -->
 <div class="wrapper">
-    <form method="POST">
-        <label for="id">#</label>
-        <input type="text" name="post" readonly value="{{this.post.id}}">
-        <p>Tên bài viết : {{this.post.title}}</p>
-        <label>Chọn nhãn</label>
-        <select name="tag" class="js-example-basic-single">
-            {{#each this.tags }}
-            <option value="{{id}}">ID: {{id}} , {{name}}</option>
-            {{/each}}
-        </select>
+    <form class="frm" method="POST">
+        <h4 class="title">Gán nhãn bài viết</h4>
+        <div class="form-group">
+            <label for="id">ID</label>
+            <input type="text" name="post" readonly value="{{this.post.id}}">
+        </div>
+        <div class="form-group">
+            <label for="">Tiêu đề bài viết</label>
+            <textarea type="text" name="" id="" rows="4" readonly>{{this.post.title}}</textarea>
+        </div>
+        <div class="form-group">
+            <label>Chọn nhãn</label>
+            <select name="tag" class="js-example-basic-single">
+                {{#each this.tags }}
+                <option value="{{id}}">{{name}}</option>
+                {{/each}}
+            </select>
+        </div>
         <hr>
-        <a href="/admin/post" role="button" title="Back to List">
-            <i class="fa fa-backward" aria-hidden="true"></i>
-        </a>
-        <button type="submit" formaction="/admin/tag_post/add">
-            <i class="fa fa-check" aria-hidden="true"></i>
-            Lưu
-        </button>
+        <div class="form-group d-flex">
+            <a class="btn btn-primary" href="/admin/post" role="button" title="Back to List">
+                <i class="fa fa-backward" aria-hidden="true"></i>
+            </a>
+            <button class="btn btn-success" type="submit" formaction="/admin/tag_post/add">
+                <i class="fa fa-check" aria-hidden="true"></i>
+                Lưu
+            </button>
     </form>
 </div>
 <!-- end main content -->
