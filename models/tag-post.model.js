@@ -1,11 +1,9 @@
 const db = require('../db/util/db');
 const moment = require('moment');
-const mysql = require('mysql');
-const config = require('../db/config/config.json');
-var pool = mysql.createPool(config.mysql);
 
 const TBL_TP = 'tag_post';
 const TBL_Tag = 'tag';
+const TBL_Post = 'post';
 
 module.exports = {
     load: () => db.load(`select tp.id, tp.tag, tag.name, tp.post from ${TBL_TP} tp join ${TBL_Tag} tag on tp.tag = tag.id and tp.delete = 0`),

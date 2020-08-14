@@ -2,10 +2,6 @@ const express = require("express");
 const router = express.Router();
 const modelPost = require("../models/post.model");
 const modelTagPost = require("../models/tag-post.model");
-const config = require("../db/config/config.json");
-const moment = require("moment");
-
-limit = config.pagination.limit;
 
 router.get("/", async function (req, res) {
   const list = await modelPost.postTag();
