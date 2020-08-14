@@ -1,140 +1,22 @@
-<!DOCTYPE html>
-<html>
-
-<head>
-    <title>Thêm thể loại báo cấp 2</title>
-
-    <meta name="viewport"
-        content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
-    <link rel="icon" type="image/png" href="/public/img/logo-2.png" />
-
-    <!-- Import lib -->
-    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/public/css/font-awesome.min.css">
-    <!-- End import lib -->
-
-    <link rel="stylesheet" type="text/css" href="/public/css/admin.css">
-
-</head>
-
-<body class="overlay-scrollbar">
-
-    <!-- navbar -->
-    <div class="navbar">
-        <!-- nav left -->
-        <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link">
-                    <i class="fa fa-bars" aria-hidden="true" onclick="collapseSidebar()"></i>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="/admin">
-                    <img src="/public/img/logo.png" alt="News24H logo" class="logo">
-                </a>
-            </li>
-        </ul>
-        <!-- end nav left -->
-        <!-- form -->
-
-        <!-- end form -->
-        <!-- nav right -->
-        <ul class="navbar-nav nav-right">
-            <li class="nav-item dropdown">
-            </li>
-            <li class="nav-item">
-                <div class="avt dropdown">
-                    <img src="/public/img/img_avatar/default_user.png" alt="User image" class="dropdown-toggle"
-                        data-toggle="user-menu">
-                    <ul id="user-menu" class="dropdown-menu">
-                        <li class="dropdown-menu-item">
-                            <a class="dropdown-menu-link">
-                                <div>
-                                    <i class="fa fa-user-circle-o" aria-hidden="true"></i>
-                                </div>
-                                <span>Profile</span>
-                            </a>
-                        </li>
-                        <li class="dropdown-menu-item">
-                              <a href="/pass/change" class="dropdown-menu-link">
-                                <div>
-                                    <i class="fa fa-cog" aria-hidden="true"></i>
-                                </div>
-                                <span>Change Password</span>
-                            </a>
-                        </li>
-                        <li class="dropdown-menu-item">
-                            <a href="/login/logout" class="dropdown-menu-link">
-                                <div>
-                                    <i class="fa fa-sign-out" aria-hidden="true"></i>
-                                </div>
-                                <span>Logout</span>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </li>
-        </ul>
-        <!-- end nav right -->
-    </div>
-    <!-- end navbar -->
-    <!-- sidebar -->
-    <div class="sidebar">
-        <ul class="sidebar-nav">
-            <li class="sidebar-nav-item">
-                <a href="/admin/category" class="sidebar-nav-link">
-                    <div>
-                        <i class="fa fa-list" aria-hidden="true"></i>
-                    </div>
-                    <span>
-                        Category
-                    </span>
-                </a>
-            </li>
-            <li class="sidebar-nav-item">
-                <a href="/admin/tag" class="sidebar-nav-link">
-                    <div>
-                        <i class="fa fa-tags" aria-hidden="true"></i>
-                    </div>
-                    <span>Tags</span>
-                </a>
-            </li>
-            <li class="sidebar-nav-item">
-                <a href="/admin/post" class="sidebar-nav-link">
-                    <div>
-                        <i class="fa fa-book" aria-hidden="true"></i>
-                    </div>
-                    <span>Posts</span>
-                </a>
-            </li>
-            <li class="sidebar-nav-item">
-                <a href="/admin/user" class="sidebar-nav-link">
-                    <div>
-                        <i class="fa fa-users" aria-hidden="true"></i>
-                    </div>
-                    <span>Users</span>
-                </a>
-            </li>
-        </ul>
-    </div>
-    <!-- end sidebar -->
-    <!-- main content -->
-    <div class="wrapper">
-        <form action="/admin/categorylv2/add" method="POST">
+<!-- main content -->
+<div class="wrapper">
+    <form class="frm" action="/admin/categorylv2/add" method="POST">
+        <h4 class="title">Thêm thể loại cấp 2</h4>
+        <div class="form-group">
+            <label for="category_level1">Thể loại cấp 1</label>
+            <input type="text" id="catID1" name="category_level1" value="{{this.catLv1.name}}" readonly>
+        </div>
+        <div class="form-group">
             <label for="name">Tên thể loại cấp 2</label>
             <input type="text" id="name" name="name" autofocus required>
-            <label for="category_level1">Thể loại cấp 1 : {{this.catLv1.name}}</label>
-            <input type="text" id="catID1" name="category_level1" value="{{this.catLv1.id}}" readonly>
-            <a href="/admin/category" role="button" title="Back to List">
+        </div>
+        <hr>
+        <div class="form-group d-flex">
+            <a class="btn btn-primary" href="/admin/category" role="button" title="Back to List">
                 <i class="fa fa-backward" aria-hidden="true"></i>
             </a>
-            <input type="submit" value="Thêm">
-        </form>
-    </div>
-    <!-- end main content -->
-    <!-- import script -->
-    <script src="/public/js/admin.js"></script>
-    <!-- end import script -->
-</body>
-
-</html>
+            <buttom class="btn btn-success" type="submit">Thêm</buttom>
+        </div>
+    </form>
+</div>
+<!-- end main content -->

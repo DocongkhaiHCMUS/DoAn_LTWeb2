@@ -140,80 +140,34 @@
                 </div>
                 <!-- /Main Column -->
 
-                <!-- Aside Column -->
-                <div class="col-md-4">
-                    <div class="scroll">
-                        <div class="side-bar">
-                            <!-- article widget -->
-                            <div class="widget">
-                                <div class="widget-title">
-                                    <h2 class="title">Tin Nổi Bật</h2>
-                                </div>
+            <!-- Aside Column -->
+            <div class="col-md-4">
+                <div class="scroll">
+                    <div class="side-bar">
+                        <!-- article widget -->
+                        <div class="widget">
+                            <div class="widget-title">
+                                <h2 class="title">Tin Nổi Bật</h2>
+                            </div>
 
-                                <!-- owl carousel 3 -->
-                                <div id="owl-carousel-3" class="owl-carousel owl-theme center-owl-nav">
+                            <!-- owl carousel 3 -->
+                            <div id="owl-carousel-3" class="owl-carousel owl-theme center-owl-nav">
 
-                                    {{#if lcSubcriber}}
-
-                                    {{#each highlightPost}}
-                                    <article class="article">
-                                        <div class="article-img">
-                                            <a href="/post/{{id}}">
-                                                <img src="/public/img/img_post/{{folder_img}}/{{avatar}}.jpg" alt="">
-                                            </a>
-                                        </div>
-                                        <div class="article-body">
-                                            <h4 class="article-title">
-                                                <a href="/post/{{id}}">{{title}}</a>
-                                            </h4>
-                                            <ul class="article-meta">
-                                                <li><i class="fa fa-clock-o">&nbsp;</i>{{parseTime publish_date}}
-                                                </li>
-                                                <li><i class="fa fa-eye">&nbsp;</i>{{views}}</li>
-                                            </ul>
-                                        </div>
-                                    </article>
-                                    {{/each}}
-
-                                    {{else}}
-
-                                    {{#each highlightPost}}
-                                    <article class="article">
-                                        <div {{#if premium}} id="lock-premium" {{/if}} class="article-img">
-                                            <a href="/post/{{id}}">
-                                                <img src="/public/img/img_post/{{folder_img}}/{{avatar}}.jpg" alt="">
-                                            </a>
-                                        </div>
-                                        <div class="article-body">
-                                            <h4 {{#if premium}} id="lock-premium" {{/if}} class="article-title">
-                                                <a href="/post/{{id}}">{{title}}</a>
-                                            </h4>
-                                            <ul class="article-meta">
-                                                <li><i class="fa fa-clock-o">&nbsp;</i>{{parseTime publish_date}}
-                                                </li>
-                                                <li><i class="fa fa-eye">&nbsp;</i>{{views}}</li>
-                                            </ul>
-                                        </div>
-                                    </article>
-                                    {{/each}}
-
-                                    {{/if}}
-                                </div>
-                                <!-- /owl carousel 3 -->
-                                <div class="widget-title">
-                                    <h2 class="title">Tin Mới Nhất</h2>
-                                </div>
                                 {{#if lcSubcriber}}
 
-                                {{#each latestPost10}}
-                                {{#each listPost}}
-                                <article class="article widget-article">
+                                {{#each highlightPost}}
+                                <article class="article">
                                     <div class="article-img">
                                         <a href="/post/{{id}}">
                                             <img src="/public/img/img_post/{{folder_img}}/{{avatar}}.jpg" alt="">
                                         </a>
                                     </div>
                                     <div class="article-body">
+                                        <ul class="article-info">
+                                            {{#if premium}}
+                                            <li class="premium">Premium </li>
+                                            {{/if}}
+                                        </ul>
                                         <h4 class="article-title">
                                             <a href="/post/{{id}}">{{title}}</a>
                                         </h4>
@@ -225,19 +179,22 @@
                                     </div>
                                 </article>
                                 {{/each}}
-                                {{/each}}
 
                                 {{else}}
 
-                                {{#each latestPost10}}
-                                {{#each listPost}}
-                                <article class="article widget-article">
+                                {{#each highlightPost}}
+                                <article class="article">
                                     <div {{#if premium}} id="lock-premium" {{/if}} class="article-img">
                                         <a href="/post/{{id}}">
                                             <img src="/public/img/img_post/{{folder_img}}/{{avatar}}.jpg" alt="">
                                         </a>
                                     </div>
                                     <div class="article-body">
+                                        <ul class="article-info">
+                                            {{#if premium}}
+                                            <li class="premium">Premium </li>
+                                            {{/if}}
+                                        </ul>
                                         <h4 {{#if premium}} id="lock-premium" {{/if}} class="article-title">
                                             <a href="/post/{{id}}">{{title}}</a>
                                         </h4>
@@ -249,15 +206,79 @@
                                     </div>
                                 </article>
                                 {{/each}}
-                                {{/each}}
 
                                 {{/if}}
                             </div>
-                            <!-- /article widget -->
+                            <!-- /owl carousel 3 -->
+                            <div class="widget-title">
+                                <h2 class="title">Tin Mới Nhất</h2>
+                            </div>
+                            {{#if lcSubcriber}}
+
+                            {{#each latestPost10}}
+                            {{#each listPost}}
+                            <article class="article widget-article">
+                                <div class="article-img">
+                                    <a href="/post/{{id}}">
+                                        <img src="/public/img/img_post/{{folder_img}}/{{avatar}}.jpg" alt="">
+                                    </a>
+                                </div>
+                                <div class="article-body">
+                                    <h4 class="article-title">
+                                        <a href="/post/{{id}}">{{title}}</a>
+                                    </h4>
+                                    <ul class="article-meta">
+                                        <li><i class="fa fa-clock-o">&nbsp;</i>{{parseTime publish_date}}
+                                        </li>
+                                        <li><i class="fa fa-eye">&nbsp;</i>{{views}}</li>
+                                        <ul class="article-info">
+                                            {{#if premium}}
+                                            <li class="premium">Premium </li>
+                                            {{/if}}
+                                        </ul>
+                                    </ul>
+                                </div>
+                            </article>
+                            {{/each}}
+                            {{/each}}
+
+                            {{else}}
+
+                            {{#each latestPost10}}
+                            {{#each listPost}}
+                            <article class="article widget-article">
+                                <div {{#if premium}} id="lock-premium" {{/if}} class="article-img">
+                                    <a href="/post/{{id}}">
+                                        <img src="/public/img/img_post/{{folder_img}}/{{avatar}}.jpg" alt="">
+                                    </a>
+                                </div>
+                                <div class="article-body">
+                                    <h4 {{#if premium}} id="lock-premium" {{/if}} class="article-title">
+                                        <a href="/post/{{id}}">{{title}}</a>
+                                    </h4>
+                                    <ul class="article-meta">
+                                        <li><i class="fa fa-clock-o">&nbsp;</i>{{parseTime publish_date}}
+                                        </li>
+                                        <li><i class="fa fa-eye">&nbsp;</i>{{views}}</li>
+                                        <ul class="article-info">
+                                            {{#if premium}}
+                                            <li class="premium">Premium </li>
+                                            {{/if}}
+                                        </ul>
+                                    </ul>
+                                </div>
+                            </article>
+                            {{/each}}
+                            {{/each}}
+
+                            {{/if}}
+
+
                         </div>
                     </div>
                 </div>
-                <!-- /Aside Column -->
+            </div>
+            <!-- /Aside Column -->
             </div>
         </div>
         <!-- /ROW -->
