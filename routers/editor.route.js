@@ -62,7 +62,6 @@ router.post("/update_publish", async function (req, res) {
     modelTagPost.singleByPost(id),
   ]);
 
-  console.log(req.body);
   //Create var was be give value change
   request_ = req.body;
   req_category = req.body.category;
@@ -70,7 +69,6 @@ router.post("/update_publish", async function (req, res) {
   req_dateP = req.body.publish_date;
   req_tagsADD = req.body.add_tags;
 
-  console.log(req_tagsADD);
   //Process date, if values change, we will change value in db
   let checkTagNumber;
   if (request_ != null) {

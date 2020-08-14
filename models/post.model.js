@@ -1,12 +1,6 @@
 const db = require('../db/util/db');
 const moment = require('moment');
 
-const mysql = require('mysql');
-const config = require('../db/config/config.json');
-var pool = mysql.createPool(config.mysql);
-
-const { text } = require('express');
-
 const TBL_Post = 'post';
 const TBL_Cat2 = 'category_level2';
 const TBL_Tag = 'tag';
