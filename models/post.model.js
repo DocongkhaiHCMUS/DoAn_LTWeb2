@@ -57,7 +57,7 @@ module.exports = {
     },  
     countByIDTag: (idTag) => {
         return db.load(`select count(*) as total from ${TBL_Post} p join ${TBL_TagPost} tp on p.id = tp.post join 
-                            ${TBL_Tag} tag on tp.tag = tag.id and tag.id = ${idTag} where p.delete = 0 p.id <= 20`);
+                            ${TBL_Tag} tag on tp.tag = tag.id and tag.id = ${idTag} where p.delete = 0`);
     },
 
     searchText: (text,limit,offset) =>{
