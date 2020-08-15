@@ -19,13 +19,14 @@
                 <i class="fa fa-backward" aria-hidden="true"></i>
             </a>
             {{#if this.category.delete}}
-            <button class="btn btn-success" type="submit" title="Khôi phục" formaction="/admin/category/restore">
+            <button class="btn btn-primary" type="submit" title="Khôi phục" formaction="/admin/category/restore">
                 <i class="fa fa-undo" aria-hidden="true"></i>
             </button>
-            {{/if}}
+            {{else}}
             <button class="btn btn-danger" type="submit" title="Xóa thể loại" formaction="/admin/category/del">
                 <i class="fa fa-trash" aria-hidden="true"></i>
             </button>
+            {{/if}}
             <button class="btn btn-success" type="submit" formaction="/admin/category/update">
                 <i class="fa fa-check" aria-hidden="true"></i>
                 Lưu

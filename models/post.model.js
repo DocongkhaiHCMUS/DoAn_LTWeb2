@@ -8,8 +8,8 @@ const TBL_TagPost = "tag_post";
 
 module.exports = {
   load: () => db.load(`select * from ${TBL_Post} p where p.delete = 0`),
-  loadSortByTitle: () =>
-    db.load(`select * from ${TBL_Post} p where p.delete = 0 order by title`),
+  loadSortByTitle: (id) =>
+    db.load(`SELECT p.id,p.title FROM ${TBL_Post} p  WHERE p.delete = 0 and p.id NOT IN (SELECT tp.post FROM tag_post tp WHERE tp.tag =${id} )`),
   // load_home:() => db.load(`select p.id,p.title,p.avatar,p.folder_img, p.tiny_des, p.views.p.categories,
   //                         p.publish_date from ${TBL_Post}`),
 
