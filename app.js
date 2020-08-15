@@ -27,8 +27,6 @@ app.use(express.urlencoded({
     extended: true
 }));
 
-//read file .env
-// require('dotenv').config();
 //set static folder public
 app.use('/public', express.static('public'));
 
@@ -44,17 +42,13 @@ const restrict = require('./middlewares/authenticated.mdw');
 //require local variables
 require('./middlewares/locals.mdw')(app);
 
-// //config passport Facebook
-// require('./middlewares/passport_FB.mdw')(app);
-
 // CODE IN HERE
+
+//set layout for guest
+app.use(require('./middlewares/set_layout_guest.mdw'));
 
 //set link home
 app.get('/', require('./routers/home.route'))
-
-// app.get('/post', function (req, res) {
-//     res.render('post.hbs');
-// })
 
 //require all router
 app.use('/guest', require('./routers/default.route'));

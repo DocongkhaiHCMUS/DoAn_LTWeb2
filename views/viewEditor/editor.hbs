@@ -1,0 +1,56 @@
+{{#section 'js'}}
+<script>
+    $('.article-pagination .disable').on('click', function (e) {
+        e.preventDefault();
+    })
+</script>
+{{/section}}
+
+<div class="content-body">
+    <div class="">
+        <h4>Editor</h4>
+    </div>
+    {{#if this.empty}}
+    {{!-- Card body thong bao table empty  --}}
+    <div class="card-body">
+        <h6 class="card-text">Không có bài cần duyệt</h6>
+    </div>
+    {{else}}
+    <table class="table custom-table">
+        <thead>
+            <tr>
+                <th>STT</th>
+                <th>Tiêu đề</th>
+                <th>Tóm tắt</th>
+                <th>Nội dung</th>
+                <th>Chuyên mục</th>
+                <th>Nhãn</th>
+                <th>&nbsp;</th>
+            </tr>
+        </thead>
+        <tbody>
+            {{#each this.editor}}
+            <tr>
+                <th>{{id}}</th>
+                <td>{{title}}</td>
+                <td>{{tiny_des}}</td>
+                <td>{{full_des}}</td>
+                <td>{{category}}</td>
+                <td>{{tags}} </td>
+
+                <td>
+                    <a name="" i d="" class="btn btn-primary btn-sm" href="/editor/publish/{{id}}" role="button">
+                        <i class="fa fa-pencil-square" aria-hidden="true"></i>
+                        Duyệt
+                    </a>
+                    <a name="" id="" class="btn btn-danger btn-sm" href="/editor/decline/{{id}}" role="button">
+                        Từ chối
+                    </a>
+                </td>
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+
+    {{/if}}
+</div>

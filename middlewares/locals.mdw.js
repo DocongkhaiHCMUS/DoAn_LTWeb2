@@ -75,7 +75,7 @@ function convertToCatFull(list, cat1, getID = false) {
                 }
             })
 
-            cat1[i]['list'] = listCat2;
+            cat1[i]['list'] = (listCat2 == (undefined || '' || null) ? [] : listCat2);
 
         }
     }
@@ -91,7 +91,7 @@ function convertToCatFull(list, cat1, getID = false) {
                 return item.id_cat2;
             });
 
-            cat1[i]['list'] = listIDCat2;
+            cat1[i]['list'] = (listIDCat2 == (undefined || '' || null) ? [] : listIDCat2);
         }
 
     }

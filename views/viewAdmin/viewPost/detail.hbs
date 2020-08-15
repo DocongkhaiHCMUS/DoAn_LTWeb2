@@ -1,229 +1,129 @@
-<!DOCTYPE html>
-<html>
+{{#section 'css'}}
 
-<head>
-    <title>Chi tiết bài tiết</title>
+<link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css">
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
+{{/section}}
 
-    <meta name="viewport"
-        content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
-    <link rel="icon" type="image/png" href="/public/img/logo-2.png" />
+{{#section 'js'}}
 
-    <!-- Import lib -->
-    <link rel="stylesheet" type="text/css" href="/public/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/public/css/font-awesome.min.css">
-    <link rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css">
-    <!-- End import lib -->
+<script
+    src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
+</script>
+<script>
+    $('#input').datetimepicker({
+        format: 'H:i, d/m/Y',
+        mask: true
+    });
+</script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('.js-example-basic-single').select2();
+    });
+</script>
 
-    <link rel="stylesheet" type="text/css" href="/public/css/admin.css">
-    <style>
-        @import url(https://fonts.googleapis.com/css?family=Roboto:400,500,700,300,100);
+{{/section}}
 
-        .wrapper {
-            background-color: #4AC29A;
-            font-family: "Roboto", helvetica, arial, sans-serif;
-            font-size: 16px;
-            font-weight: 400;
-            text-rendering: optimizeLegibility;
-        }
-    </style>
-</head>
-
-<body class="overlay-scrollbar">
-
-    <!-- navbar -->
-    <div class="navbar">
-        <!-- nav left -->
-        <ul class="navbar-nav">
-            <li class="nav-item">
-                <a class="nav-link">
-                    <i class="fa fa-bars" aria-hidden="true" onclick="collapseSidebar()"></i>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="/admin">
-                    <img src="/public/img/logo.png" alt="News24H logo" class="logo">
-                </a>
-            </li>
-        </ul>
-        <!-- end nav left -->
-        <!-- form -->
-        <form class="navbar-search">
-            <input type="text" name="Search" class="navbar-search-input" placeholder="What you looking for...">
-            <i class="fa fa-search" aria-hidden="true"></i>
-        </form>
-        <!-- end form -->
-        <!-- nav right -->
-        <ul class="navbar-nav nav-right">
-            <li class="nav-item dropdown">
-            </li>
-            <li class="nav-item">
-                <div class="avt dropdown">
-                    <img src="/public/img/img_avatar/default_user.png" alt="User image" class="dropdown-toggle"
-                        data-toggle="user-menu">
-                    <ul id="user-menu" class="dropdown-menu">
-                        <li class="dropdown-menu-item">
-                            <a class="dropdown-menu-link">
-                                <div>
-                                    <i class="fa fa-user-circle-o" aria-hidden="true"></i>
-                                </div>
-                                <span>Profile</span>
-                            </a>
-                        </li>
-                        <li class="dropdown-menu-item">
-                            <a href="/pass/change" class="dropdown-menu-link">
-                                <div>
-                                    <i class="fa fa-cog" aria-hidden="true"></i>
-                                </div>
-                                <span>Change Password</span>
-                            </a>
-                        </li>
-                        <li class="dropdown-menu-item">
-                            <a href="/login/logout" class="dropdown-menu-link">
-                                <div>
-                                    <i class="fa fa-sign-out" aria-hidden="true"></i>
-                                </div>
-                                <span>Logout</span>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </li>
-        </ul>
-        <!-- end nav right -->
-    </div>
-    <!-- end navbar -->
-    <!-- sidebar -->
-    <div class="sidebar">
-        <ul class="sidebar-nav">
-            <li class="sidebar-nav-item">
-                <a href="/admin/category" class="sidebar-nav-link">
-                    <div>
-                        <i class="fa fa-list" aria-hidden="true"></i>
-                    </div>
-                    <span>
-                        Category
-                    </span>
-                </a>
-            </li>
-            <li class="sidebar-nav-item">
-                <a href="/admin/tag" class="sidebar-nav-link">
-                    <div>
-                        <i class="fa fa-tags" aria-hidden="true"></i>
-                    </div>
-                    <span>Tags</span>
-                </a>
-            </li>
-            <li class="sidebar-nav-item">
-                <a href="/admin/post" class="sidebar-nav-link">
-                    <div>
-                        <i class="fa fa-book" aria-hidden="true"></i>
-                    </div>
-                    <span>Posts</span>
-                </a>
-            </li>
-            <li class="sidebar-nav-item">
-                <a href="/admin/user" class="sidebar-nav-link">
-                    <div>
-                        <i class="fa fa-users" aria-hidden="true"></i>
-                    </div>
-                    <span>Users</span>
-                </a>
-            </li>
-        </ul>
-    </div>
-    <!-- end sidebar -->
-    <!-- main content -->
-    <div class="wrapper">
-        <form action="/admin/post/update" method="POST">
-            <label for="id">#</label>
+<!-- main content -->
+<div class="wrapper">
+    <form class="frm" action="/admin/post/update" method="POST">
+        <h4 class="title">Chi tiết bài viết</h4>
+        <div class="form-group">
+            <label for="id">ID</label>
             <input type="text" id="id" name="id" value="{{this.post.id}}" readonly>
+        </div>
+        <div class="form-group">
             <label for="title">Tên bài viết</label>
-            <input type="text" id="title" name="title" value="{{this.post.title}}" autofocus required>
+            <textarea type="text" id="title" name="title" rows="4" autofocus required>
+                {{this.post.title}}
+            </textarea>
+        </div>
+        <div class="form-group">
             <label for="tiny_des">Mô tả ngắn</label>
-            <input type="text" id="tiny_des" name="tiny_des" value="{{this.post.tiny_des}}" required>
+            <textarea type="text" id="tiny_des" name="tiny_des" rows="4" required>
+                {{this.post.tiny_des}}
+            </textarea>
+        </div>
+        <div class="form-group">
             <label for="tiny_des">Mô tả đầy đủ</label>
-            <textarea type="text" id="full_des" name="full_des" required> {{this.post.full_des}}</textarea>
-            <i class="fa fa-paint-brush" aria-hidden="true"></i>
-            <label for="author">Tác giả</label>
+            <textarea type="text" id="full_des" name="full_des" rows="11" required> {{this.post.full_des}}</textarea>
+        </div>
+        <div class="form-group">
+            <label for="author"> <i class="fa fa-paint-brush" aria-hidden="true">&nbsp;&nbsp;</i>Tác giả</label>
             <select name="author">
                 {{#each this.users }}
-                <option value="{{id}}" {{#if isAuthor}} selected {{/if}}>&#xf2c0; {{display_name}}</option>
+                <option value="{{id}}" {{#if isAuthor}} selected {{/if}}> <i class="fa fa-male" aria-hidden="true"></i>
+                    {{display_name}}</option>
                 {{/each}}
             </select>
-            <br><br>
-            <i class="fa fa-genderless" aria-hidden="true"></i>
-            <label for="premium">Loại bài viết</label>
+        </div>
+        <div class="form-group">
+            <label for="premium"><i class="fa fa-diamond" aria-hidden="true">&nbsp;&nbsp;</i>Loại bài viết</label>
             <select name="premium">
                 {{#if this.post.premium}}
-                <option value="1" selected> &#xf219; Premium </option>
+                <option value="1" selected>Premium </option>
                 <option value="0">Thường</option>
                 {{else}}
-                <option value="1"> &#xf219; Premium</option>
+                <option value="1">Premium</option>
                 <option value="0" selected>Thường </option>
                 {{/if}}
             </select>
-            <p>
-                <i class="fa fa-clock-o" aria-hidden="true"></i>
-                Sửa lần cuối vào lúc: {{parseTime this.post.modifile_date}}
-            </p>
+        </div>
+        <div class="form-group">
+            <label for="">
+                <i class="fa fa-clock-o" aria-hidden="true">&nbsp;</i>
+                Chỉnh sửa lần cuối
+            </label>
+            <input type="text " value="{{parseTime this.post.modifile_date}}" readonly>
+        </div>
+        <div class="form-group">
             <label for="publish_date">
                 <i class="fa fa-clock-o" aria-hidden="true"></i>
                 Ngày ra mắt
             </label>
             <input id="input" type="text" name="publish_date" value="{{parseTime this.post.publish_date}}">
+        </div>
+        <div class="form-group">
             <label for="status">Trạng thái</label>
             <select name="status">
                 {{#if this.post.status}}
-                <option value="0">&#xf00d; Draft</option>
-                <option value="1" selected>&#xf14a; Đã xuất bản</option>
+                <option value="0">Draft</option>
+                <option value="1" selected>Đã xuất bản</option>
                 {{else}}
-                <option value="0" selected>&#xf00d; Draft</option>
-                <option value="1">&#xf14a; Đã xuất bản</option>
+                <option value="0" selected>Draft</option>
+                <option value="1">Đã xuất bản</option>
                 {{/if}}
             </select>
-            <br><br>
+        </div>
+        <div class="form-group">
             <label for="delete">Tình trạng</label>
             <select name="delete">
                 {{#if this.post.delete}}
-                <option value="1" selected>đang khóa &#xf119;</option>
-                <option value="0">không khóa &#xf118;</option>
+                <option value="1" selected>đang khóa </option>
+                <option value="0">không khóa </option>
                 {{else}}
-                <option value="1">đang khóa &#xf119;</option>
-                <option value="0" selected>không khóa &#xf118;</option>
+                <option value="1">đang khóa </option>
+                <option value="0" selected>không khóa </option>
                 {{/if}}
             </select>
-            <br><br>
+        </div>
+        <div class="form-group">
             <label for="category">Thể loại</label>
-            <input list="catLv2" name="category" id="category" value="{{this.post.category}}">
-            <datalist id="catLv2">
-                {{#each this.cats2}}
+            <select class="js-example-basic-single" name="category">
+                {{#each this.cats2 }}
                 <option value="{{id}}" {{#if isCat2}} selected {{/if}}>{{name}}</option>
                 {{/each}}
-            </datalist>
-            <p>Lượt xem: {{this.post.views}}</p>
-            <hr>
-            <a href="/admin/post" role="button" title="Back to List">
+            </select>
+        </div>
+        <p>Lượt xem: {{this.post.views}}</p>
+        <hr>
+        <div class="form-group d-flex">
+            <a class="btn btn-primary" href="/admin/post" role="button" title="Back to List">
                 <i class="fa fa-backward" aria-hidden="true"></i>
             </a>
-            <input type="submit" value="Lưu">
-        </form>
-    </div>
-    <!-- end main content -->
-    <!-- import script -->
-    <script src="/public/js/admin.js"></script>
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script
-        src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
-    </script>
-    <script>
-        $('#input').datetimepicker({
-            format: 'H:i, d/m/Y',
-            mask: true
-        });
-    </script>
-    <!-- end import script -->
-</body>
-
-</html>
+            <button class="btn btn-success" type="submit">Lưu</button>
+        </div>
+    </form>
+</div>
+<!-- end main content -->

@@ -1,0 +1,86 @@
+{{#section 'css'}}
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
+{{/section}}
+
+{{#section 'js'}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+
+<Script>
+    $(document).ready(function () {
+        $('#selected_tags').select2({
+            // maximumSelectionLength: {{ tag.length }},
+            placeholder: "Nhãn của người viết",
+        });
+        $('#add_tags').select2({
+            tags: ["Kinh tế", "Xã hội", "Thể thao", "Tình yêu", "Gia đình", "Sức khỏe",
+                "Giải Trí", "Âm nhạc", "Thời trang", "Sao Việt", "Du lịch"],
+            placeholder: "Nhãn bạn muốn thêm",
+        });
+        $("#add_tags").on("change", function () { $("#add_tags_val").html($("#add_tags").val()); });
+
+        $("#add_tags").select2("container").find("ul.select2-choices").sortable({
+            containment: 'parent',
+            start: function () { $("#add_tags").select2("onSortStart"); },
+            update: function () { $("#add_tags").select2("onSortEnd"); }
+        });
+    });
+</Script>
+{{/section}}
+
+<div class="card" style="margin-top:150px; margin-left:50px; margin-right:50px;">
+    <div class="card-header">
+        <h4>Duyệt bài</h4>
+    </div>
+
+    <div class="card-body">
+        <form method="POST" style="width: 1000px; align-items: center;">
+
+            <div class="form-group" style="width: 300px;">
+                <label for="nCategory">Danh mục </label>
+                <input type="number" class="form-control" id="nCategory" name="category" value="{{post.category}}">
+            </div>
+
+            <div hidden class="form-group" style="width: 300px;">
+                <label for="nID_post">ID_post </label>
+                <input type="number" class="form-control" id="nID_post" name="id" value="{{post.id}}">
+            </div>
+
+            <label for="txtTag"> Nhãn </label>
+            <select class="js-example-basic-multiple" style="width: 100%;" id="selected_tags" name="selected_tags"
+                multiple="multiple">
+                {{#each tag}}
+                <option title="Nhãn" value="{{tag.name}}" selected="selected">
+                    {{tag.name}}
+                </option>
+                {{/each}}
+            </select>
+
+
+            <label for="txtAddTag"> Nhãn bạn muốn thêm </label>
+            <select class="js-example-basic-multiple" style="width: 100%;" id="add_tags" name="add_tags"
+                multiple="multiple">
+                <option title="Nhãn bạn muốn thêm" value=""></option>
+            </select>
+
+            <div class="form-group" style="width: 300px;">
+                <label for="txtPublish_date">Thời gian đăng bài </label>
+                <input type="datetime-local" class="form-control" id="txtPublish_date" name="publish_date"
+                    value="{{post.publish_date}}">
+            </div>
+
+            <a class="btn btn-success" href="/editor" title="Back to list" role="button">
+                <i class="fa fa-backward" aria-hidden="true"></i>
+            </a>
+
+            <button formaction="/editor/update_publish" type="submit" class="btn btn-primary">
+                <i class="fa fa-check" aria-hidden="true"></i>
+                Duyệt
+            </button>
+        </form>
+    </div>
+
+    <div class="card-footer text-muted">
+        Footer
+    </div>
+</div>

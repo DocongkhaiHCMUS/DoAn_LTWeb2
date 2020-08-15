@@ -5,319 +5,277 @@
 	})
 </script>
 {{/section}}
-<div class="content-body">
-	<!-- Owl Carousel 1 -->
-	<div id="owl-carousel-1" class="owl-carousel owl-theme center-owl-nav top-body">
-		<!-- ARTICLE -->
+<!-- Owl Carousel 1 -->
+<div id="owl-carousel-1" class="owl-carousel owl-theme center-owl-nav top-body">
+	<!-- ARTICLE -->
+	{{#if lcSubcriber}}
+
+	{{#each highlightPost}}
+	<article class="article thumb-article">
+		<div class="article-img">
+			<img src="/public/img/img_post/{{folder_img}}/{{avatar}}.jpg" alt="">
+		</div>
+		<div class="article-body">
+			<ul class="article-info">
+				<li class="article-category"><a href="/category/cat1/{{category.id_cat1}}">{{category.nameCat1}}</a>
+				</li>
+				<li class="article-category"><a href="/category/cat2/{{category.id_cat2}}">{{category.nameCat2}}</a>
+				</li>
+				{{#if premium}}
+				<li class="premium">Premium</li>
+				{{/if}}
+				<li class="article-category"><a href="javascript:;">Nổi bật</a></li>
+				<li class="article-type"><i class="fa fa-file-text"></i></li>
+			</ul>
+			<h2 class="article-title">
+				<a href="/post/{{id}}">{{title}}</a>
+			</h2>
+			<h3 class="article-description">
+				{{tiny_des}}
+			</h3>
+			<ul class="article-meta">
+				<li>
+					<i class="fa fa-clock-o">&nbsp;</i>
+					{{parseTime publish_date}}
+				</li>
+				<li>
+					<i class="fa fa-eye">&nbsp;</i>
+					{{views}}
+				</li>
+			</ul>
+		</div>
+	</article>
+	{{/each}}
+
+	{{else}}
+
+	{{#each highlightPost}}
+	<article class="article thumb-article">
+		<div class="article-img">
+			<img src="/public/img/img_post/{{folder_img}}/{{avatar}}.jpg" alt="">
+		</div>
+		<div class="article-body">
+			<ul class="article-info">
+				<li class="article-category"><a href="/category/cat1/{{category.id_cat1}}">{{category.nameCat1}}</a>
+				</li>
+				<li class="article-category"><a href="/category/cat2/{{category.id_cat2}}">{{category.nameCat2}}</a>
+				</li>
+				{{#if premium}}
+				<li class="premium">Premium</li>
+				{{/if}}
+				<li class="article-category"><a href="javascript:;">Nổi bật</a></li>
+				<li class="article-type"><i class="fa fa-file-text"></i></li>
+			</ul>
+			<h2 {{#if premium}} id="lock-premium" {{/if}} class="article-title">
+				<a href="/post/{{id}}">{{title}}</a>
+			</h2>
+			<h3 class="article-description">
+				{{tiny_des}}
+			</h3>
+			<ul class="article-meta">
+				<li>
+					<i class="fa fa-clock-o">&nbsp;</i>
+					{{parseTime publish_date}}
+				</li>
+				<li>
+					<i class="fa fa-eye">&nbsp;</i>
+					{{views}}
+				</li>
+			</ul>
+		</div>
+	</article>
+	{{/each}}
+
+	{{/if}}
+	<!-- /ARTICLE -->
+</div>
+<!-- /Owl Carousel 1 -->
+
+<!-- SECTION -->
+<div id="news" class="section">
+	<!-- CONTAINER -->
+	<div class="container">
+		<!-- ROW -->
+		<div class="row">
+			<!-- Main Column -->
+			<div class="col-md-12">
+				<!-- section title -->
+				<div class="title-bar">
+					<h2 class="des_title">Tin Tức Mới Nhất</h2>
+				</div>
+				<div class="section-title">
+					<h2 class="title">Tin Tức Mới Nhất</h2>
+				</div>
+				<!-- /section title -->
+
+				<!-- Tab content -->
+				<div class="tab-content">
+					<!-- tab1 -->
+					<div id="tabAll" class="tab-pane fade in active">
+						<!-- row -->
+						<div class="row"></div>
+						{{#if lcSubcriber}}
+
+						{{#each latestPost10}}
+						{{#each listPost}}
+						<!-- Column 1 -->
+						<div class="col-md-6 col-sm-6">
+							<!-- ARTICLE -->
+							<article class="article">
+								<div class="article-img">
+									<img class="img-responsive" src="/public/img/img_post/{{folder_img}}/{{avatar}}.jpg"
+										alt="">
+								</div>
+								<div class="article-body">
+									<ul class="article-info">
+										<li class="article-category"><a
+												href="/category/cat1/{{category.id_cat1}}">{{category.nameCat1}}</a>
+										</li>
+										<li class="article-category"><a
+												href="/category/cat2/{{category.id_cat2}}">{{category.nameCat2}}</a>
+										</li>
+										{{#if premium}}
+										<li class="premium">Premium</li>
+										{{/if}}
+										<li class="article-type"><i class="fa fa-file-text"></i></li>
+									</ul>
+									<h4 class="article-title">
+										<a href="/post/{{id}}">{{title}}</a>
+									</h4>
+									<h5 class="article-description">
+										{{tiny_des}}
+									</h5>
+									<ul class="article-meta">
+										<li>
+											<i class="fa fa-clock-o">&nbsp;</i>
+											{{parseTime publish_date}}
+										</li>
+										<li>
+											<i class="fa fa-eye">&nbsp;</i>
+											{{views}}
+										</li>
+									</ul>
+								</div>
+							</article>
+							<!-- /ARTICLE -->
+						</div>
+						<!-- /Column 1 -->
+						{{/each}}
+						{{/each}}
+
+						{{else}}
+
+						{{#each latestPost10}}
+						{{#each listPost}}
+						<!-- Column 1 -->
+						<div class="col-md-6 col-sm-6">
+							<!-- ARTICLE -->
+							<article class="article">
+								<div class="article-img">
+									<img class="img-responsive" src="/public/img/img_post/{{folder_img}}/{{avatar}}.jpg"
+										alt="">
+								</div>
+								<div class="article-body">
+									<ul class="article-info">
+										<li class="article-category"><a
+												href="/category/cat1/{{category.id_cat1}}">{{category.nameCat1}}</a>
+										</li>
+										<li class="article-category"><a
+												href="/category/cat2/{{category.id_cat2}}">{{category.nameCat2}}</a>
+										</li>
+										{{#if premium}}
+										<li class="premium">Premium</li>
+										{{/if}}
+										<li class="article-type"><i class="fa fa-file-text"></i></li>
+									</ul>
+									<h4 {{#if premium}} id="lock-premium" {{/if}} class="article-title">
+										<a href="/post/{{id}}">{{title}}</a>
+									</h4>
+									<h5 class="article-description">
+										{{tiny_des}}
+									</h5>
+									<ul class="article-meta">
+										<li>
+											<i class="fa fa-clock-o">&nbsp;</i>
+											{{parseTime publish_date}}
+										</li>
+										<li>
+											<i class="fa fa-eye">&nbsp;</i>
+											{{views}}
+										</li>
+									</ul>
+								</div>
+							</article>
+							<!-- /ARTICLE -->
+						</div>
+						<!-- /Column 1 -->
+						{{/each}}
+						{{/each}}
+
+						{{/if}}
+					</div>
+					<!-- /tab1 -->
+				</div>
+				<!-- /tab content -->
+			</div>
+			<!-- /Main Column -->
+		</div>
+		<!-- /ROW -->
+	</div>
+	<!-- /CONTAINER -->
+</div>
+<!-- /SECTION -->
+
+<div class="container">
+	<div class="title-bar">
+		<h2 class="des_title">Chuyên Mục</h2>
+	</div>
+</div>
+<!-- SECTION -->
+<div id="category" class="section">
+	<!-- CONTAINER -->
+	<div class="container">
 		{{#if lcSubcriber}}
 
-		{{#each highlightPost}}
-		<article class="article thumb-article">
-			<div class="article-img">
-				<img src="/public/img/img_post/{{folder_img}}/{{avatar}}.jpg" alt="">
-			</div>
-			<div class="article-body">
-				<ul class="article-info">
-					<li class="article-category"><a href="/category/cat1/{{category.id_cat1}}">{{category.nameCat1}}</a>
-					</li>
-					<li class="article-category"><a href="/category/cat2/{{category.id_cat2}}">{{category.nameCat2}}</a>
-					</li>
-					{{#if premium}}
-					<li class="premium">Premium</li>
-					{{/if}}
-					<li class="article-category"><a href="javascript:;">Nổi bật</a></li>
-					<li class="article-type"><i class="fa fa-file-text"></i></li>
-				</ul>
-				<h2 class="article-title">
-					<a href="/post/{{id}}">{{title}}</a>
-				</h2>
-				<h3 class="article-description">
-					{{tiny_des}}
-				</h3>
-				<ul class="article-meta">
-					<li>
-						<i class="fa fa-clock-o">&nbsp;</i>
-						{{parseTime publish_date}}
-					</li>
-					<li>
-						<i class="fa fa-eye">&nbsp;</i>
-						{{views}}
-					</li>
-				</ul>
-			</div>
-		</article>
-		{{/each}}
 
-		{{else}}
-
-		{{#each highlightPost}}
-		<article class="article thumb-article">
-			<div class="article-img">
-				<img src="/public/img/img_post/{{folder_img}}/{{avatar}}.jpg" alt="">
-			</div>
-			<div class="article-body">
-				<ul class="article-info">
-					<li class="article-category"><a href="/category/cat1/{{category.id_cat1}}">{{category.nameCat1}}</a>
-					</li>
-					<li class="article-category"><a href="/category/cat2/{{category.id_cat2}}">{{category.nameCat2}}</a>
-					</li>
-					{{#if premium}}
-					<li class="premium">Premium</li>
-					{{/if}}
-					<li class="article-category"><a href="javascript:;">Nổi bật</a></li>
-					<li class="article-type"><i class="fa fa-file-text"></i></li>
-				</ul>
-				<h2 {{#if premium}} id="lock-premium" {{/if}} class="article-title">
-					<a href="/post/{{id}}">{{title}}</a>
-				</h2>
-				<h3 class="article-description">
-					{{tiny_des}}
-				</h3>
-				<ul class="article-meta">
-					<li>
-						<i class="fa fa-clock-o">&nbsp;</i>
-						{{parseTime publish_date}}
-					</li>
-					<li>
-						<i class="fa fa-eye">&nbsp;</i>
-						{{views}}
-					</li>
-				</ul>
-			</div>
-		</article>
-		{{/each}}
-
-		{{/if}}
-		<!-- /ARTICLE -->
-	</div>
-	<!-- /Owl Carousel 1 -->
-
-	<!-- SECTION -->
-	<div id="news" class="section">
-		<!-- CONTAINER -->
-		<div class="container">
-			<!-- ROW -->
-			<div class="row">
-				<!-- Main Column -->
-				<div class="col-md-12">
-					<!-- section title -->
-					<div class="title-bar">
-						<h2 class="des_title">Tin Tức Mới Nhất</h2>
-					</div>
-					<div class="section-title">
-						<h2 class="title">Tin Tức Mới Nhất</h2>
-					</div>
-					<!-- /section title -->
-
-					<!-- Tab content -->
-					<div class="tab-content">
-						<!-- tab1 -->
-						<div id="tabAll" class="tab-pane fade in active">
-							<!-- row -->
-							<div class="row"></div>
-							{{#if lcSubcriber}}
-
-							{{#each latestPost10}}
-							{{#each listPost}}
-							<!-- Column 1 -->
-							<div class="col-md-6 col-sm-6">
-								<!-- ARTICLE -->
-								<article class="article">
-									<div class="article-img">
-										<img class="img-responsive"
-											src="/public/img/img_post/{{folder_img}}/{{avatar}}.jpg" alt="">
-									</div>
-									<div class="article-body">
-										<ul class="article-info">
-											<li class="article-category"><a
-													href="/category/cat1/{{category.id_cat1}}">{{category.nameCat1}}</a>
-											</li>
-											<li class="article-category"><a
-													href="/category/cat2/{{category.id_cat2}}">{{category.nameCat2}}</a>
-											</li>
-											{{#if premium}}
-											<li class="premium">Premium</li>
-											{{/if}}
-											<li class="article-type"><i class="fa fa-file-text"></i></li>
-										</ul>
-										<h4 class="article-title">
-											<a href="/post/{{id}}">{{title}}</a>
-										</h4>
-										<h5 class="article-description">
-											{{tiny_des}}
-										</h5>
-										<ul class="article-meta">
-											<li>
-												<i class="fa fa-clock-o">&nbsp;</i>
-												{{parseTime publish_date}}
-											</li>
-											<li>
-												<i class="fa fa-eye">&nbsp;</i>
-												{{views}}
-											</li>
-										</ul>
-									</div>
-								</article>
-								<!-- /ARTICLE -->
-							</div>
-							<!-- /Column 1 -->
-							{{/each}}
-							{{/each}}
-
-							{{else}}
-
-							{{#each latestPost10}}
-							{{#each listPost}}
-							<!-- Column 1 -->
-							<div class="col-md-6 col-sm-6">
-								<!-- ARTICLE -->
-								<article class="article">
-									<div class="article-img">
-										<img class="img-responsive"
-											src="/public/img/img_post/{{folder_img}}/{{avatar}}.jpg" alt="">
-									</div>
-									<div class="article-body">
-										<ul class="article-info">
-											<li class="article-category"><a
-													href="/category/cat1/{{category.id_cat1}}">{{category.nameCat1}}</a>
-											</li>
-											<li class="article-category"><a
-													href="/category/cat2/{{category.id_cat2}}">{{category.nameCat2}}</a>
-											</li>
-											{{#if premium}}
-											<li class="premium">Premium</li>
-											{{/if}}
-											<li class="article-type"><i class="fa fa-file-text"></i></li>
-										</ul>
-										<h4 {{#if premium}} id="lock-premium" {{/if}} class="article-title">
-											<a href="/post/{{id}}">{{title}}</a>
-										</h4>
-										<h5 class="article-description">
-											{{tiny_des}}
-										</h5>
-										<ul class="article-meta">
-											<li>
-												<i class="fa fa-clock-o">&nbsp;</i>
-												{{parseTime publish_date}}
-											</li>
-											<li>
-												<i class="fa fa-eye">&nbsp;</i>
-												{{views}}
-											</li>
-										</ul>
-									</div>
-								</article>
-								<!-- /ARTICLE -->
-							</div>
-							<!-- /Column 1 -->
-							{{/each}}
-							{{/each}}
-
-							{{/if}}
-						</div>
-						<!-- /tab1 -->
-					</div>
-					<!-- /tab content -->
+		{{#each mostViewedPost}}
+		<!-- ROW -->
+		<div class="row">
+			<!-- Main Column -->
+			<div class="col-md-12">
+				<!-- section title -->
+				<div class="section-title">
+					<h2 class="title">{{category}}</h2>
+					<!-- tab nav -->
+					<ul class="tab-nav pull-right">
+						{{#each listCat2}}
+						<li>
+							<a href="/category/cat2/{{id_cat2}}">
+								{{nameCat2}}
+							</a>
+						</li>
+						{{/each}}
+					</ul>
+					<!-- /tab nav -->
 				</div>
-				<!-- /Main Column -->
-			</div>
-			<!-- /ROW -->
-		</div>
-		<!-- /CONTAINER -->
-	</div>
-	<!-- /SECTION -->
+				<!-- /section title -->
 
-	<div class="container">
-		<div class="title-bar">
-			<h2 class="des_title">Chuyên Mục</h2>
-		</div>
-	</div>
-	<!-- SECTION -->
-	<div id="category" class="section">
-		<!-- CONTAINER -->
-		<div class="container">
-			{{#if lcSubcriber}}
+				<div class="row">
 
-
-			{{#each mostViewedPost}}
-			<!-- ROW -->
-			<div class="row">
-				<!-- Main Column -->
-				<div class="col-md-12">
-					<!-- section title -->
-					<div class="section-title">
-						<h2 class="title">{{category}}</h2>
-						<!-- tab nav -->
-						<ul class="tab-nav pull-right">
-							{{#each listCat2}}
-							<li>
-								<a href="/category/cat2/{{id_cat2}}">
-									{{nameCat2}}
-								</a>
-							</li>
-							{{/each}}
-						</ul>
-						<!-- /tab nav -->
-					</div>
-					<!-- /section title -->
-
-					<div class="row">
-
-						<!-- Main Column -->
-						<div class="col-md-12 mostView">
-							<!-- section title -->
-							<div class="section-title">
-							</div>
-							<!-- /section title -->
-
-							<!-- owl carousel 2 -->
-							<div id="" class="owl-carousel owl-theme owl-carousel-2">
-								{{#each listMostViewedPost}}
-								<!-- ARTICLE -->
-								<article class="article thumb-article">
-									<div class="article-img">
-										<img src="/public/img/img_post/{{folder_img}}/{{avatar}}.jpg" alt="">
-									</div>
-									<div class="article-body">
-										<ul class="article-info">
-											<li class="article-category"><a
-													href="/category/cat1/{{category.id_cat1}}">{{category.nameCat1}}</a>
-											</li>
-											<li class="article-category"><a
-													href="/category/cat2/{{category.id_cat2}}">{{category.nameCat2}}</a>
-											</li>
-											{{#if premium}}
-											<li class="premium">Premium</li>
-											{{/if}}
-											<li class="article-type"><i class="fa fa-file-text"></i></li>
-										</ul>
-										<h3 class="article-title">
-											<a href="/post/{{id}}">{{title}}</a>
-										</h3>
-										<ul class="article-meta">
-											<li><i class="fa fa-clock-o">&nbsp;</i>{{parseTime publish_date}}</li>
-											<li><i class="fa fa-eye">&nbsp;</i>{{views}}</li>
-										</ul>
-										<p>
-											{{tiny_des}}
-										</p>
-									</div>
-								</article>
-								<!-- /ARTICLE -->
-								{{/each}}
-							</div>
-							<!-- /owl carousel 2 -->
+					<!-- Main Column -->
+					<div class="col-md-12 mostView">
+						<!-- section title -->
+						<div class="section-title">
 						</div>
-						<!-- /Main Column -->
+						<!-- /section title -->
 
-						<div class="col-md-11">
+						<!-- owl carousel 2 -->
+						<div id="" class="owl-carousel owl-theme owl-carousel-2">
+							{{#each listMostViewedPost}}
 							<!-- ARTICLE -->
-							{{#each listLatestPost}}
-							<article class="article row-article">
+							<article class="article thumb-article">
 								<div class="article-img">
-									<a href="/post/{{id}}">
-										<img src="/public/img/img_post/{{folder_img}}/{{avatar}}.jpg" alt="">
-									</a>
+									<img src="/public/img/img_post/{{folder_img}}/{{avatar}}.jpg" alt="">
 								</div>
 								<div class="article-body">
 									<ul class="article-info">
@@ -344,100 +302,100 @@
 									</p>
 								</div>
 							</article>
-							{{/each}}
-							<a href="/category/cat1/{{id}}">Xem thêm &nbsp;<i class="fa fa-angle-double-right"
-									aria-hidden="true"></i></a>
 							<!-- /ARTICLE -->
+							{{/each}}
 						</div>
-						<!-- /Main Column -->
+						<!-- /owl carousel 2 -->
 					</div>
+					<!-- /Main Column -->
+
+					<div class="col-md-11">
+						<!-- ARTICLE -->
+						{{#each listLatestPost}}
+						<article class="article row-article">
+							<div class="article-img">
+								<a href="/post/{{id}}">
+									<img src="/public/img/img_post/{{folder_img}}/{{avatar}}.jpg" alt="">
+								</a>
+							</div>
+							<div class="article-body">
+								<ul class="article-info">
+									<li class="article-category"><a
+											href="/category/cat1/{{category.id_cat1}}">{{category.nameCat1}}</a>
+									</li>
+									<li class="article-category"><a
+											href="/category/cat2/{{category.id_cat2}}">{{category.nameCat2}}</a>
+									</li>
+									{{#if premium}}
+									<li class="premium">Premium</li>
+									{{/if}}
+									<li class="article-type"><i class="fa fa-file-text"></i></li>
+								</ul>
+								<h3 class="article-title">
+									<a href="/post/{{id}}">{{title}}</a>
+								</h3>
+								<ul class="article-meta">
+									<li><i class="fa fa-clock-o">&nbsp;</i>{{parseTime publish_date}}</li>
+									<li><i class="fa fa-eye">&nbsp;</i>{{views}}</li>
+								</ul>
+								<p>
+									{{tiny_des}}
+								</p>
+							</div>
+						</article>
+						{{/each}}
+						<a href="/category/cat1/{{id}}">Xem thêm &nbsp;<i class="fa fa-angle-double-right"
+								aria-hidden="true"></i></a>
+						<!-- /ARTICLE -->
+					</div>
+					<!-- /Main Column -->
 				</div>
-				<!-- /ROW -->
 			</div>
 			<!-- /ROW -->
-			{{/each}}
+		</div>
+		<!-- /ROW -->
+		{{/each}}
 
-			{{else}}
+		{{else}}
 
-			{{#each mostViewedPost}}
-			<!-- ROW -->
-			<div class="row">
-				<!-- Main Column -->
-				<div class="col-md-12">
-					<!-- section title -->
-					<div class="section-title">
-						<h2 class="title">{{category}}</h2>
-						<!-- tab nav -->
-						<ul class="tab-nav pull-right">
-							{{#each listCat2}}
-							<li>
-								<a href="/category/cat2/{{id_cat2}}">
-									{{nameCat2}}
-								</a>
-							</li>
-							{{/each}}
-						</ul>
-						<!-- /tab nav -->
-					</div>
-					<!-- /section title -->
+		{{#each mostViewedPost}}
+		<!-- ROW -->
+		<div class="row">
+			<!-- Main Column -->
+			<div class="col-md-12">
+				<!-- section title -->
+				<div class="section-title">
+					<h2 class="title">{{category}}</h2>
+					<!-- tab nav -->
+					<ul class="tab-nav pull-right">
+						{{#each listCat2}}
+						<li>
+							<a href="/category/cat2/{{id_cat2}}">
+								{{nameCat2}}
+							</a>
+						</li>
+						{{/each}}
+					</ul>
+					<!-- /tab nav -->
+				</div>
+				<!-- /section title -->
 
-					<div class="row">
+				<div class="row">
 
-						<!-- Main Column -->
-						<div class="col-md-12 mostView">
-							<!-- section title -->
-							<div class="section-title">
-							</div>
-							<!-- /section title -->
-
-							<!-- owl carousel 2 -->
-							<div id="" class="owl-carousel owl-theme owl-carousel-2">
-								{{#each listMostViewedPost}}
-								<!-- ARTICLE -->
-								<article class="article thumb-article">
-									<div class="article-img">
-										<img src="/public/img/img_post/{{folder_img}}/{{avatar}}.jpg" alt="">
-									</div>
-									<div class="article-body">
-										<ul class="article-info">
-											<li class="article-category"><a
-													href="/category/cat1/{{category.id_cat1}}">{{category.nameCat1}}</a>
-											</li>
-											<li class="article-category"><a
-													href="/category/cat2/{{category.id_cat2}}">{{category.nameCat2}}</a>
-											</li>
-											{{#if premium}}
-											<li class="premium">Premium</li>
-											{{/if}}
-											<li class="article-type"><i class="fa fa-file-text"></i></li>
-										</ul>
-										<h3 {{#if premium}} id="lock-premium" {{/if}} class="article-title">
-											<a href="/post/{{id}}">{{title}}</a>
-										</h3>
-										<ul class="article-meta">
-											<li><i class="fa fa-clock-o">&nbsp;</i>{{parseTime publish_date}}</li>
-											<li><i class="fa fa-eye">&nbsp;</i>{{views}}</li>
-										</ul>
-										<p>
-											{{tiny_des}}
-										</p>
-									</div>
-								</article>
-								<!-- /ARTICLE -->
-								{{/each}}
-							</div>
-							<!-- /owl carousel 2 -->
+					<!-- Main Column -->
+					<div class="col-md-12 mostView">
+						<!-- section title -->
+						<div class="section-title">
 						</div>
-						<!-- /Main Column -->
+						<!-- /section title -->
 
-						<div class="col-md-11">
+						<!-- owl carousel 2 -->
+						<div id="" class="owl-carousel owl-theme owl-carousel-2">
+							{{#each listMostViewedPost}}
 							<!-- ARTICLE -->
-							{{#each listLatestPost}}
-							<article class="article row-article">
+							<article class="article thumb-article">
 								<div class="article-img">
-									<a href="/post/{{id}}">
-										<img src="/public/img/img_post/{{folder_img}}/{{avatar}}.jpg" alt="">
-									</a>
+									<img src="/public/img/img_post/{{folder_img}}/{{avatar}}.jpg" alt="">
 								</div>
 								<div class="article-body">
 									<ul class="article-info">
@@ -452,8 +410,7 @@
 										{{/if}}
 										<li class="article-type"><i class="fa fa-file-text"></i></li>
 									</ul>
-									<h3 {{#if premium}} id="lock-premium" {{/if}}
-										class="article-title">
+									<h3 {{#if premium}} id="lock-premium" {{/if}} class="article-title">
 										<a href="/post/{{id}}">{{title}}</a>
 									</h3>
 									<ul class="article-meta">
@@ -465,22 +422,62 @@
 									</p>
 								</div>
 							</article>
-							{{/each}}
-							<a href="/category/cat1/{{id}}">Xem thêm &nbsp;<i class="fa fa-angle-double-right"
-									aria-hidden="true"></i></a>
 							<!-- /ARTICLE -->
+							{{/each}}
 						</div>
-						<!-- /Main Column -->
+						<!-- /owl carousel 2 -->
 					</div>
+					<!-- /Main Column -->
+
+					<div class="col-md-11">
+						<!-- ARTICLE -->
+						{{#each listLatestPost}}
+						<article class="article row-article">
+							<div class="article-img">
+								<a href="/post/{{id}}">
+									<img src="/public/img/img_post/{{folder_img}}/{{avatar}}.jpg" alt="">
+								</a>
+							</div>
+							<div class="article-body">
+								<ul class="article-info">
+									<li class="article-category"><a
+											href="/category/cat1/{{category.id_cat1}}">{{category.nameCat1}}</a>
+									</li>
+									<li class="article-category"><a
+											href="/category/cat2/{{category.id_cat2}}">{{category.nameCat2}}</a>
+									</li>
+									{{#if premium}}
+									<li class="premium">Premium</li>
+									{{/if}}
+									<li class="article-type"><i class="fa fa-file-text"></i></li>
+								</ul>
+								<h3 {{#if premium}} id="lock-premium" {{/if}} class="article-title">
+									<a href="/post/{{id}}">{{title}}</a>
+								</h3>
+								<ul class="article-meta">
+									<li><i class="fa fa-clock-o">&nbsp;</i>{{parseTime publish_date}}</li>
+									<li><i class="fa fa-eye">&nbsp;</i>{{views}}</li>
+								</ul>
+								<p>
+									{{tiny_des}}
+								</p>
+							</div>
+						</article>
+						{{/each}}
+						<a href="/category/cat1/{{id}}">Xem thêm &nbsp;<i class="fa fa-angle-double-right"
+								aria-hidden="true"></i></a>
+						<!-- /ARTICLE -->
+					</div>
+					<!-- /Main Column -->
 				</div>
-				<!-- /ROW -->
 			</div>
 			<!-- /ROW -->
-			{{/each}}
-
-			{{/if}}
 		</div>
-		<!-- /CONTAINER -->
+		<!-- /ROW -->
+		{{/each}}
+
+		{{/if}}
 	</div>
-	<!-- /SECTION -->
+	<!-- /CONTAINER -->
 </div>
+<!-- /SECTION -->

@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const cateModel = require('../models/category.model');
-const { options } = require('./home.route');
 const tagModel = require('../models/tag.model');
 const config = require('../db/config/config.json');
 const tagPostModel = require('../models/tag-post.model');
@@ -12,19 +11,22 @@ const AssignModel = require('../models/assign.model');
 const bcrypt = require('bcrypt');
 const moment = require('moment');
 const assignModel = require('../models/assign.model');
-// router.use(function (req, res, next) {
-//     req.app.set('view options', { layout: 'admin.hbs' });
-//     next();
-// })
-//                  DEFAULT VIEW ADMIN
+
+//set layout for admin
+router.all('/*', function (req, res, next) {
+    req.app.locals.layout = 'admin.hbs';
+    next();
+});
+
 router.get('/', function (req, res) {
     if (!req.session.isAuthenticated || parseInt(req.session.authUser.permission, 10) != 4) {
         res.redirect('/');
     }
     else {
-        res.render('layouts/admin.hbs', { layout: false });
+        res.render('viewAdmin/home_admin.hbs');
     }
 });
+
 //                                          ADMIN CATEGORY1 
 router.get('/category', async function (req, res) {
     if (!req.session.isAuthenticated || parseInt(req.session.authUser.permission, 10) != 4) {
@@ -34,7 +36,6 @@ router.get('/category', async function (req, res) {
         const categoryLv1 = await cateModel.loadCat1();
         res.render('viewAdmin/viewCategory/listCategory.hbs',
             {
-                layout: false,
                 categories1: categoryLv1,
                 empty: categoryLv1.length === 0
             });
@@ -45,17 +46,13 @@ router.get('/category/add', function (req, res) {
     if (!req.session.isAuthenticated || parseInt(req.session.authUser.permission, 10) != 4) {
         res.redirect('/');
     } else {
-        res.render('viewAdmin/viewCategory/add.hbs', {
-            layout: false
-        });
+        res.render('viewAdmin/viewCategory/add.hbs');
     }
 });
 
 router.post('/category/add', async function (req, res) {
     await cateModel.add1(req.body);
-    res.render('viewAdmin/viewCategory/add.hbs', {
-        layout: false
-    });
+    res.render('viewAdmin/viewCategory/add.hbs');
 });
 
 router.get('/category/edit/:catID', async function (req, res) {
@@ -70,7 +67,7 @@ router.get('/category/edit/:catID', async function (req, res) {
             return res.send('Invalid parameter.');
 
         const category = rows[0];
-        res.render('viewAdmin/viewCategory/edit.hbs', { layout: false, category });
+        res.render('viewAdmin/viewCategory/edit.hbs', { category });
     }
 });
 
@@ -107,7 +104,6 @@ router.get('/category/detail/:catID', async function (req, res) {
         const id = +req.params.catID || -1;
         const categoryLv2 = await cateModel.single2(req.params.catID);
         res.render('viewAdmin/viewCategory/detail.hbs', {
-            layout: false,
             category: categoryLv2,
             cat1ID: id,
             empty: categoryLv2.length === 0
@@ -121,7 +117,8 @@ router.get('/categorylv2/add/:id', async function (req, res) {
     else {
         const id = +req.params.id || -1;
         const cat1 = await cateModel.single1(id);
-        res.render('viewAdmin/viewCategory/addLv2.hbs', { layout: false, catLv1: cat1[0] });
+        console.log(cat1[0]);
+        res.render('viewAdmin/viewCategory/addLv2.hbs', { catLv1: cat1[0] });
     }
 });
 router.post('/categorylv2/add', async function (req, res) {
@@ -148,7 +145,7 @@ router.get('/categorylv2/edit/:id', async function (req, res) {
             }
             i++;
         }
-        res.render('viewAdmin/viewCategory/editLv2.hbs', { layout: false, category, catLv1: cat1 });
+        res.render('viewAdmin/viewCategory/editLv2.hbs', { category, catLv1: cat1 });
     }
 });
 router.post('/categorylv2/update', async function (req, res) {
@@ -259,7 +256,6 @@ router.get('/tag', async function (req, res) {
 
         res.render('viewAdmin/viewTag/list.hbs',
             {
-                layout: false,
                 tags: list,
                 empty: list.length === 0,
                 pageItems,
@@ -275,17 +271,13 @@ router.get('/tag/add', function (req, res) {
         res.redirect('/');
     }
     else {
-        res.render('viewAdmin/viewTag/add.hbs', {
-            layout: false
-        });
+        res.render('viewAdmin/viewTag/add.hbs');
     }
 });
 
 router.post('/tag/add', async function (req, res) {
     await tagModel.add(req.body);
-    res.render('viewAdmin/viewTag/add.hbs', {
-        layout: false
-    });
+    res.render('viewAdmin/viewTag/add.hbs');
 });
 
 router.get('/tag/edit/:id', async function (req, res) {
@@ -300,7 +292,7 @@ router.get('/tag/edit/:id', async function (req, res) {
             return res.send('Invalid parameter.');
 
         const tag = rows[0];
-        res.render('viewAdmin/viewTag/edit.hbs', { layout: false, tag });
+        res.render('viewAdmin/viewTag/edit.hbs', { tag });
     }
 });
 
@@ -339,7 +331,6 @@ router.get('/tag/detail/:id', async function (req, res) {
         const _tag = await tagModel.singleTagById(id);
         const tag_post = await tagPostModel.singleByTag(id);
         res.render('viewAdmin/viewTag/detail.hbs', {
-            layout: false,
             tag_post,
             tag: _tag[0],
             empty: tag_post.length === 0
@@ -369,9 +360,9 @@ router.get('/tag_post/add/:id', async function (req, res) {
     else {
         const id = +req.params.id || -1;
         const _tag = await tagModel.singleTagById(id);
-        const posts = await postModel.loadSortByTitle();
+        const posts = await postModel.loadSortByTitle(id);
         req.session.prevURL = req.headers.referer
-        res.render('viewAdmin/viewTag/addTagPost.hbs', { layout: false, tag: _tag[0], posts });
+        res.render('viewAdmin/viewTag/addTagPost.hbs', { tag: _tag[0], posts });
     }
 });
 router.post('/tag_post/add', async function (req, res) {
@@ -449,7 +440,6 @@ router.get('/post', async function (req, res) {
 
         res.render('viewAdmin/viewPost/list.hbs',
             {
-                layout: false,
                 posts: list,
                 empty: list.length === 0,
                 pageItems,
@@ -486,7 +476,6 @@ router.get('/post/detail/:id', async function (req, res) {
             i++;
         }
         res.render('viewAdmin/viewPost/detail.hbs', {
-            layout: false,
             post: _post[0],
             users: listUser,
             cats2: categoryLv2,
@@ -510,7 +499,6 @@ router.get('/post/tag_post/:id', async function (req, res) {
         const tag_post = await tagPostModel.postInTagPost(id);
         const _post = await postModel.singlePostById(id);
         res.render('viewAdmin/viewPost/tagToPost.hbs', {
-            layout: false,
             empty: tag_post.length === 0,
             tag_posts: tag_post,
             post: _post[0]
@@ -526,7 +514,7 @@ router.get('/post_tag/add/:id', async function (req, res) {
         const _post = await postModel.singlePostById(id);
         const tags = await tagModel.All();
         req.session.prevURL = req.headers.referer;
-        res.render('viewAdmin/viewPost/addTagPost.hbs', { layout: false, post: _post[0], tags });
+        res.render('viewAdmin/viewPost/addTagPost.hbs', { post: _post[0], tags });
     }
 });
 /*router.get('/post/add', function (req, res) {
@@ -570,7 +558,6 @@ router.get('/user', async function (req, res) {
         }
         res.render('viewAdmin/viewUser/list.hbs',
             {
-                layout: false,
                 users: listUser,
                 empty: listUser.length === 0
             });
@@ -584,7 +571,6 @@ router.get('/user/add', async function (req, res) {
     else {
         const pers = await perModel.load();
         res.render('viewAdmin/viewUser/add.hbs', {
-            layout: false,
             pers
         });
     }
@@ -636,7 +622,7 @@ router.get('/user/detail/:id', async function (req, res) {
             }
             i++;
         }
-        res.render('viewAdmin/viewUser/detail.hbs', { layout: false, user, pers });
+        res.render('viewAdmin/viewUser/detail.hbs', {user, pers });
     }
 });
 router.post('/user/update', async function (req, res) {
@@ -654,7 +640,7 @@ router.get('/user/assign/:id', async function (req, res) {
         const id = +req.params.id || -1;
         const rows = await assignModel.singleByUser(id);
         const _user = await userModel.singleByID2(id);
-        res.render('viewAdmin/viewUser/CategoryEditor.hbs', { layout: false, assign: rows,user: _user[0] });
+        res.render('viewAdmin/viewUser/CategoryEditor.hbs', { assign: rows,user: _user[0] });
     }
 });
 
@@ -669,7 +655,7 @@ router.get('/user/addAssign/:id', async function (req, res) {
         const cat1 = await cateModel.loadCat1ByAssign(id);
         
         req.session.prevURL  = req.headers.referer;
-        res.render('viewAdmin/viewUser/addAssign.hbs', { layout: false, Editor: editor[0],Cat1: cat1 });
+        res.render('viewAdmin/viewUser/addAssign.hbs', { Editor: editor[0],Cat1: cat1 });
     }
 });
 router.post('/user/addAssign/add', async function (req, res) {
@@ -690,4 +676,6 @@ router.post('/assign/del', async function (req, res) {
     await AssignModel.delete(req.body.id)
     res.redirect(req.headers.referer);
 });
+
+
 module.exports = router;

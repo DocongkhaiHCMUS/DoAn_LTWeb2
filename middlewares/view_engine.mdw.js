@@ -4,7 +4,7 @@ const moment = require('moment');
 
 module.exports = function (app) {
     app.engine('hbs', hbs({
-        defaultLayout: 'index.hbs',
+        // defaultLayout: 'index.hbs',
         helpers:
         {
             section: hbs_session(),
