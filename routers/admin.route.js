@@ -117,6 +117,7 @@ router.get('/categorylv2/add/:id', async function (req, res) {
     else {
         const id = +req.params.id || -1;
         const cat1 = await cateModel.single1(id);
+        console.log(cat1[0]);
         res.render('viewAdmin/viewCategory/addLv2.hbs', { catLv1: cat1[0] });
     }
 });
@@ -359,7 +360,7 @@ router.get('/tag_post/add/:id', async function (req, res) {
     else {
         const id = +req.params.id || -1;
         const _tag = await tagModel.singleTagById(id);
-        const posts = await postModel.loadSortByTitle();
+        const posts = await postModel.loadSortByTitle(id);
         req.session.prevURL = req.headers.referer
         res.render('viewAdmin/viewTag/addTagPost.hbs', { tag: _tag[0], posts });
     }

@@ -3,8 +3,11 @@
     <form class="frm" action="/admin/categorylv2/add" method="POST">
         <h4 class="title">Thêm thể loại cấp 2</h4>
         <div class="form-group">
+            <input type="text" name="category_level1" value="{{this.catLv1.id}}" hidden>
+        </div>
+        <div class="form-group">
             <label for="category_level1">Thể loại cấp 1</label>
-            <input type="text" id="catID1" name="category_level1" value="{{this.catLv1.name}}" readonly>
+            <input type="text" id="catID1" value="{{this.catLv1.name}}" readonly>
         </div>
         <div class="form-group">
             <label for="name">Tên thể loại cấp 2</label>
@@ -15,7 +18,7 @@
             <a class="btn btn-primary" href="/admin/category" role="button" title="Back to List">
                 <i class="fa fa-backward" aria-hidden="true"></i>
             </a>
-            <buttom class="btn btn-success" type="submit">Thêm</buttom>
+            <button class="btn btn-success" type="submit">Thêm</button>
         </div>
     </form>
 </div>
