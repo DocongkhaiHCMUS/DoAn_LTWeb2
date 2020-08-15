@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const postModel = require('../models/post.model');
 const fs = require('fs');
+const fse = require('fs-extra');
 const multer  = require('multer')
 const path = require("path");
 const modelImageCaption = require('../models/img-caption.route');
@@ -132,12 +133,14 @@ function convertContent(post, img_cap) {
           cb(null, b)
         }
         else
+        {
           var n;
           do {
             a = Math.floor(Math.random() * 10000);
             b = "f__"+String(req.app.locals.numberOfFolder)+'_img_'+String(a)+'.jpg';
           } while (fs.existsSync('./public/img/img_post/'+b));
           cb(null, b)
+        }
       }
   })
   var upload = multer({ storage: storage })
@@ -150,7 +153,9 @@ router.get('/files',async function (req, res) {
     var images = fs.readdirSync('public/img/img_post/'+req.app.locals.folderImgEditor)
   }
   else
-  var images = fs.readdirSync('public/img/img_post/'+req.app.locals.folderImgModified)
+  {
+    var images = fs.readdirSync('public/img/img_post/'+req.app.locals.folderImgModified)
+  }
   var sorted = []
   for (let item of images){
       if(item.split('.').pop() === 'png'
@@ -166,11 +171,13 @@ router.get('/files',async function (req, res) {
             sorted.push(abc)
           }
           else
+          {
             var abc = {
-              "image" : "/public/img/img_post/"+req.app.locals.folderImgEditor+"/"+item,
+              "image" : "/public/img/img_post/"+req.app.locals.folderImgModified+"/"+item,
               "folder" : '/'
             }
             sorted.push(abc)
+          }
       }
   }
   res.send(sorted);
@@ -192,19 +199,32 @@ res.redirect('back')
 var storageAvatar = multer.diskStorage({
   destination: function (req, file, cb) {
     //fs.mkdirSync(path.join('./public/img/img_post/', f));
-    cb(null, './public/img/img_post/'+req.app.locals.folderImgEditor)
+    if(req.app.locals.folderImgEditor != null)
+    {
+      cb(null, './public/img/img_post/'+req.app.locals.folderImgEditor)
+    }
+    else
+    {
+      cb(null, './public/img/img_post/'+req.app.locals.folderImgModified)
+    }
+
   },
   filename: function (req, file, cb) {
-    cb(null, 'f__'+String(req.app.locals.rd)+'_avatar.jpg')
+    if(req.app.locals.folderImgEditor != null)
+    { 
+      cb(null, 'f__'+String(req.app.locals.rd)+'_avatar.jpg')
+    }
+    else
+    {
+      cb(null, 'f__'+String(req.app.locals.numberOfFolder)+'_avatar.jpg')
+    }
   }
 })
 var uploadAvatar = multer({ storage: storageAvatar })
 
-
 //////////get, post editor//////////
 router.get('/editor',async function (req, res) {
   ////////random, create folder////////
-    req.app.locals
     var f 
     var rd
     do {
@@ -215,8 +235,7 @@ router.get('/editor',async function (req, res) {
     req.app.locals.folderImgEditor = f
     req.app.locals.rd = rd
     fs.mkdirSync(path.join("./public/img/img_post",req.app.locals.folderImgEditor));
-    req.app.locals.folderImgModified = null
-  
+    req.app.locals.folderImgModified = null  
     const list = await postModel.selectNameCat1Cat2()
     const tag = await postModel.selectTag()
 
@@ -303,7 +322,11 @@ router.get('/modifiedpost/:id', async function (req, res) {
       layout: false,
     });
   })
-  router.post('/modifiedpost/:id', async function (req, res) {
+  router.post('/modifiedpost/:id', uploadAvatar.single('avatar'),async function (req, res) {
+    if(req.body.avatar != null)
+    {
+      fse.remove('./public/img/img_post/f__'+req.app.locals.numberOfFolder+'avatar.ipg')
+    }
   //////////patch post//////////
     const entity1 = {
       id : req.params.id,
@@ -363,7 +386,7 @@ router.get('/modifiedpost/:id', async function (req, res) {
         await postModel.addTag_Post(entity3)
       }
     }
-    console.log(req.body.avatar);
+    console.log( req.app.locals.numberOfFolder);
     res.redirect('/writer/listpost');
   })
 

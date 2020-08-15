@@ -46,41 +46,40 @@
                 <!-- /breadcrumb -->
 
                 <!-- ARTICLE POST -->
-                    <article class="article article-post" >
-                        {{!-- <div class="article-share">
-                            <a href="#" class="facebook"><i class="fa fa-facebook"></i></a>
-                            <a href="#" class="twitter"><i class="fa fa-twitter"></i></a>
-                            <a href="#" class="google"><i class="fa fa-google-plus"></i></a>
-                        </div> --}}
-                        <div class="article-main-img">
-                            <img src="/public/img/img_post/{{post.folder_img}}/{{post.avatar}}.jpg" alt="">
-                        </div>
-                        <div class="article-body">
-                            <ul class="article-info">
-                                <li class="article-category"><a
-                                        href="/category/cat1/{{post.category.id_cat1}}">{{post.category.name_cat1}}</a></li>
-                                <li class="article-category"><a
-                                        href="/category/cat2/{{post.category.id_cat2}}">{{post.category.name_cat2}}</a></li>
-                                <li class="article-type"><i class="fa fa-file-text"></i></li>
-                            </ul>
-                            <h1 class="article-title" id="title">{{post.title}}</h1>
-                            <ul class="article-meta">
-                                <li><i class="fa fa-clock-o">&nbsp;</i>{{parseTime post.publish_date}}</li>
-                                <li><i class="fa fa-eye">&nbsp;</i>{{post.views}}</li>
-                            </ul>
-                            
-                            <p class="post_tiny_des" id="tiny_des">
-                                "&nbsp;{{post.tiny_des}}&nbsp;"
-                            </p>
-                            <p id="full_des">
-                                {{{post.full_des}}}  
-                            </p>
-                    </article>
-                    
-                    {{#when post.premium 'eq' 1 }}
-                        <button type="submit" id="submit"class="btn btn-lg btn-success btn-block" >Download PDF</button>
- 					{{/when}}
-                
+                <article class="article article-post">
+                    {{!-- <div class="article-share">
+						<a href="#" class="facebook"><i class="fa fa-facebook"></i></a>
+						<a href="#" class="twitter"><i class="fa fa-twitter"></i></a>
+						<a href="#" class="google"><i class="fa fa-google-plus"></i></a>
+					</div> --}}
+                    <div class="article-main-img">
+                        <img src="/public/img/img_post/{{post.folder_img}}/{{post.avatar}}.jpg" alt="">
+                    </div>
+                    <div class="article-body">
+                        <ul class="article-info">
+                            <li class="article-category"><a
+                                    href="/category/cat1/{{post.category.id_cat1}}">{{post.category.name_cat1}}</a></li>
+                            <li class="article-category"><a
+                                    href="/category/cat2/{{post.category.id_cat2}}">{{post.category.name_cat2}}</a></li>
+                            {{#if post.premium}}
+                            <li class="premium">Premium</li>
+                            {{/if}}
+                            <li class="article-type"><i class="fa fa-file-text"></i></li>
+                        </ul>
+                        <h1 class="article-title">{{post.title}}</h1>
+                        <ul class="article-meta">
+                            <li><i class="fa fa-clock-o">&nbsp;</i>{{parseTime post.publish_date}}</li>
+                            <li><i class="fa fa-eye">&nbsp;</i>{{post.views}}</li>
+                        </ul>
+                        <p class="post_tiny_des">
+                            "&nbsp;{{post.tiny_des}}&nbsp;"
+                        </p>
+                        {{!-- {{#each post.full_des}} --}}
+                        {{!-- {{{text}}} --}}
+                        {{!-- {{/each}} --}}
+                        {{{post.full_des}}}
+                    </div>
+                </article>
                 <!-- /ARTICLE POST -->
 
                 <!-- widget tags -->
