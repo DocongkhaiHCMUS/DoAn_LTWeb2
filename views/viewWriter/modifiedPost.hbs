@@ -113,7 +113,11 @@
 
       <div class="form-group">
         <label>Nội dung bài viết</label>
-        <textarea name="full_des" id="full_des" class="form-control" cols="30" rows="10">{{_post.full_des}}</textarea>
+        <textarea name="full_des" id="full_des" class="form-control" cols="30" rows="10">
+          {{#each post.full_des}}
+                                {{{text}}}
+                                {{/each}}   
+        </textarea>
       </div>
 
       <div class="form-group">

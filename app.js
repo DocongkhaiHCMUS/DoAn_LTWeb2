@@ -102,7 +102,7 @@ app.use(function (req, res) {
 
 
 
-const PORT = 3001;
+const PORT = 3000;
 app.listen(PORT, () => {
     console.log(`App is running at http://localhost:3000 :))) !`);
 })

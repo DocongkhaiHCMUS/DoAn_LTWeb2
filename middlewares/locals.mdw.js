@@ -189,7 +189,7 @@ module.exports = function (app) {
 
             //local 10 latest post and most viewed post each category
             let listIDCat1 = convertToCat1(listCategory, true);
-            app.locals.listIDCat = convertToCatFull(listCategory, listIDCat1, true);
+            listIDCat = convertToCatFull(listCategory, listIDCat1, true);
 
             let latestPost = [];
             let latestPost10 = [];
@@ -199,12 +199,7 @@ module.exports = function (app) {
                 let listPostTemp = listPost.filter(function (item1) {
                     let rs;
                     try {
-                        if (item.id < 8)
-                            rs = listIDCat1[item.id - 1].list.includes(item1.category);
-                        else if (item.id == 8)
-                            rs = listIDCat1[14].list.includes(item1.category);
-                        else if (item.id > 8)
-                            rs = listIDCat1[item.id - 2].list.includes(item1.category);
+                        rs = listIDCat1[item.id - 1].list.includes(item1.category);
                     } catch (error) {
                         console.log(errer);
                     }
@@ -235,12 +230,7 @@ module.exports = function (app) {
 
                 let listPostTemp1 = listPost.filter(function (item1) {
                     let rs;
-                    if (item.id < 8)
-                        rs = listIDCat1[item.id - 1].list.includes(item1.category);
-                    else if (item.id == 8)
-                        rs = listIDCat1[14].list.includes(item1.category);
-                    else if (item.id > 8)
-                        rs = listIDCat1[item.id - 2].list.includes(item1.category);
+                    rs = listIDCat1[item.id - 1].list.includes(item1.category);
                     return rs;
                 })
                     .sort(function (a, b) {
@@ -257,12 +247,7 @@ module.exports = function (app) {
 
             mostViewedPost.map(function (item) {
                 try {
-                    if (item.id < 8)
-                        item['listCat2'] = app.locals.listCat[item.id - 1].list;
-                    else if (item.id == 8)
-                        item['listCat2'] = app.locals.listCat[14].list;
-                    else if (item.id > 8)
-                        item['listCat2'] = app.locals.listCat[item.id - 2].list;
+                    item['listCat2'] = app.locals.listCat[item.id - 1].list;
                     item['listLatestPost'] = latestPost[item.id - 1].listPost;
                 }
                 catch (err) {
