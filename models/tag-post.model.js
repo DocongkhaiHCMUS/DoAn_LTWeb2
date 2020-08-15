@@ -21,10 +21,22 @@ module.exports = {
   },
   postInTagPost: (postID) => {
     return db.load(
-      `select p.id as postid, t.id as tagid ,t.name as tagname, tp.* from ${TBL_Post} p join ${TBL_TP} tp on p.id = tp.post join ${TBL_Tag } t on t.id = tp.tag where p.id = '${postID}'`
+      `select p.id as postid, t.id as tagid ,t.name as tagname, tp.* from ${TBL_Post} p join ${TBL_TP} tp on p.id = tp.post join ${TBL_Tag} t on t.id = tp.tag where p.id = '${postID}'`
     );
   },
   add: (entity) => {
+    entity["create_date"] = moment().format("YYYY/MM/DD HH:mm:ss");
+    entity["modifile_date"] = moment().format("YYYY/MM/DD HH:mm:ss");
+
+    return db.add(TBL_TP, entity);
+  },
+  add_tag: (entity) => {
+    entity["create_date"] = moment().format("YYYY/MM/DD HH:mm:ss");
+    entity["modifile_date"] = moment().format("YYYY/MM/DD HH:mm:ss");
+
+    return db.add(TBL_Tag, entity);
+  },
+  add_tp: (entity) => {
     entity["create_date"] = moment().format("YYYY/MM/DD HH:mm:ss");
     entity["modifile_date"] = moment().format("YYYY/MM/DD HH:mm:ss");
 
@@ -68,5 +80,17 @@ module.exports = {
     entity["modifile_date"] = moment().format("YYYY/MM/DD HH:mm:ss");
 
     return db.patch(TBL_TP, entity, condition);
+  },
+  patch_post: (entity) => {
+    entity["modifile_date"] = moment().format("YYYY/MM/DD HH:mm:ss");
+    return db.patch_post(TBL_Post, entity);
+  },
+  patch_tag: (entity) => {
+    entity["modifile_date"] = moment().format("YYYY/MM/DD HH:mm:ss");
+    return db.patch_tag(TBL_Tag, entity);
+  },
+  undo_tag: (entity) => {
+    entity["modifile_date"] = moment().format("YYYY/MM/DD HH:mm:ss");
+    return db.undo_tag(TBL_Tag, entity);
   },
 };

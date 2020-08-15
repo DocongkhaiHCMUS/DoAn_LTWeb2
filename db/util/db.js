@@ -41,6 +41,47 @@ module.exports = {
             });
         });
     },
+    patch_post: function (table, entity) {
+        return new Promise(function (resolve, reject) {
+            const sql = `update ${table}
+                         set category = ${entity.category}
+                         where id = ${entity.id}`;
+            pool.query(sql, function (error, results) {
+                if (error) {
+                    return reject(error);
+                }
+
+                resolve(results);
+            });
+        });
+    },
+    patch_tag: function (table, entity) {
+        return new Promise(function (resolve, reject) {
+            const sql = `update ${table} 
+                        set name = null
+                        where id = ${entity}`;
+            pool.query(sql, function (error, results) {
+                if (error) {
+                    return reject(error);
+                }
+
+                resolve(results);
+            });
+        });
+    },
+    undo_tag: function (table, entity) {
+        return new Promise(function (resolve, reject) {
+            const sql = `update ${table} 
+                        set name = des`;
+            pool.query(sql, function (error, results) {
+                if (error) {
+                    return reject(error);
+                }
+
+                resolve(results);
+            });
+        });
+    },
     delete: function(table, ID){
         return new Promise(function(resolve,reject){
             const sql =`delete from ${table} where ?`;
@@ -101,4 +142,5 @@ module.exports = {
             });
         })
     },
+
 };
