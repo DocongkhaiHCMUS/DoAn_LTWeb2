@@ -1,0 +1,89 @@
+{{#section 'css'}}
+<link rel="stylesheet" href="/public//css/_login.css">
+{{/section}}
+
+{{#section 'js'}}
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<!--date picker-->
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+        <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+        <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+
+        <script>
+            $(document).ready(
+                    function () {
+                        $("#dob").datepicker({
+                            dateFormat: 'YYYY/MM/DD HH:mm:ss',
+                            changeMonth: true, 
+                            changeYear: true 
+                        });
+                    }
+            );
+        </script>
+{{/section}}
+
+<div class="demo-1">
+    <div class="main-agileits">
+  <div class="container">
+      <form action="/user/profile" method="POST">
+            <div class="col-md-9  admin-content" id="profile">
+                <div class="panel panel-info" style="margin: 1em;">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Displayname</h3>
+                    </div>
+                    <div class="panel-body">
+                        <input type="text" class="form-control" id="display_name" name="display_name" value="{{_user.display_name}}">
+                    </div>
+                </div>
+                <div class="panel panel-info" style="margin: 1em;">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Username</h3>
+                    </div>
+                    <div class="panel-body" name="user_name">
+                        <input type="text" class="form-control" id="user_name" name="user_name" value="{{_user.user_name}}">
+                    </div>
+                </div>
+                <div class="panel panel-info" style="margin: 1em;">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Email</h3>
+                    </div>
+                    <div class="panel-body">
+                        <input type="text" class="form-control" id="email" name="email" value="{{_user.email}}">
+                    </div>
+                </div>
+                <div class="panel panel-info" style="margin: 1em;">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Ngày sinh</h3>
+                    </div>
+                    <div class="panel-body">
+                        <input type="text" class="form-control" id="dob" name="dob" value="{{_user.DOB}}">
+                    </div>
+                </div>
+                <div class="panel panel-info" style="margin: 1em;">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Giới tính</h3>
+                    </div>
+                    {{#if isMale}}
+                        <div class="panel-body">
+                        <select name="gender" id="gender" class="browser-default custom-select">
+                            <option value="0" selected>Nam</option>
+                            <option value="1">Nữ</option>
+                        </select>
+                        </div>
+                    {{else}}
+                        <div class="panel-body">
+                        <select name="gender" id="gender" class="browser-default custom-select">
+                            <option value="1" selected>Nữ</option>
+                            <option value="0">Nam</option>
+                        </select>
+                        </div>
+                    {{/if}}
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </form>
+  </div>
+    </div>
+</div>

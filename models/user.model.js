@@ -35,8 +35,6 @@ module.exports = {
         }
 
         entity['modifile_date'] = moment().format('YYYY/MM/DD HH:mm:ss');
-
-
         return db.patch(TBL_User, entity, condition)
     },
     patch: (entity) => {
