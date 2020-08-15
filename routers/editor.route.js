@@ -2,9 +2,11 @@ const express = require("express");
 const router = express.Router();
 const modelPost = require("../models/post.model");
 const modelTagPost = require("../models/tag-post.model");
+const assignModel = require('..//models/assign.model');
 
 router.get("/", async function (req, res) {
-  const list = await modelPost.postTag();
+  const assign =  await assignModel.singleByUser(req.session.authUser.id);
+  
 
   res.render("viewEditor/editor", {
     editor: list,

@@ -6,42 +6,39 @@
 </script>
 {{/section}}
 
-
-<div class="card" style="margin-top:150px; margin-left:50px; margin-right:50px;">
-    <div class="card-header d-flex justify-content-between" style="top:500px; left:220px;">
-        <h4 align="center">Editor</h4>
+<div class="content-body">
+    <div class="">
+        <h4>Editor</h4>
     </div>
-
-
     {{#if this.empty}}
     {{!-- Card body thong bao table empty  --}}
     <div class="card-body">
         <h6 class="card-text">Không có bài cần duyệt</h6>
     </div>
     {{else}}
-    <table class="table">
+    <table class="table custom-table">
         <thead>
             <tr>
-                <th scope="col" class="text-center">STT</th>
-                <th scope="col">Tiêu đề</th>
-                <th scope="col">Tóm tắt</th>
-                <th scope="col">Nội dung</th>
-                <th scope="col">Chuyên mục</th>
-                <th scope="col">Nhãn</th>
-                <th scope="col">&nbsp;</th>
+                <th>STT</th>
+                <th>Tiêu đề</th>
+                <th>Tóm tắt</th>
+                <th>Nội dung</th>
+                <th>Chuyên mục</th>
+                <th>Nhãn</th>
+                <th>&nbsp;</th>
             </tr>
         </thead>
         <tbody>
             {{#each this.editor}}
             <tr>
-                <th scope="row" class="text-center">{{id}}</th>
+                <th>{{id}}</th>
                 <td>{{title}}</td>
                 <td>{{tiny_des}}</td>
                 <td>{{full_des}}</td>
                 <td>{{category}}</td>
                 <td>{{tags}} </td>
 
-                <td class="text-right">
+                <td>
                     <a name="" i d="" class="btn btn-primary btn-sm" href="/editor/publish/{{id}}" role="button">
                         <i class="fa fa-pencil-square" aria-hidden="true"></i>
                         Duyệt
@@ -56,7 +53,4 @@
     </table>
 
     {{/if}}
-    <div class="card-footer text-muted" >
-        Footer
-    </div>
 </div>

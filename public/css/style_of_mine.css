@@ -3,6 +3,16 @@
   margin: 0;
 }
 
+table.table.custom-table {
+    width: 70% !important;
+    margin: 30px auto;
+    display: table;
+}
+
+.content-body {
+    margin-top: 12% !important;
+}
+
 option {
     font-weight: 500;
 }

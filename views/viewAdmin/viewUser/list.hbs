@@ -25,12 +25,12 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th class="text-left">Loại người dùng</th>
-                    <th class="text-left">Tên đăng nhập</th>
-                    <th class="text-left">Tên hiển thị</th>
-                    <th class="text-left">Email</th>
-                    <th class="text-left">Trạng thái</th>
-                    <th class="text-left">Hàng động</th>
+                    <th>Loại người dùng</th>
+                    <th>Tên đăng nhập</th>
+                    <th>Tên hiển thị</th>
+                    <th>Email</th>
+                    <th>Trạng thái</th>
+                    <th>Hàng động</th>
                 </tr>
             </thead>
             <tbody class="table-hover">
@@ -67,7 +67,8 @@
                             <i class="fa fa-pencil" aria-hidden="true"></i>
                         </a>
                         {{#if isEditor}}
-                        <a class="btn btn-info" href="/admin/user/assign/{{id}}" title="Danh sách chuyên mục được phân công">
+                        <a class="btn btn-info" href="/admin/user/assign/{{id}}"
+                            title="Danh sách chuyên mục được phân công">
                             <i class="fa fa-briefcase" aria-hidden="true"></i>
                         </a>
                         {{/if}}

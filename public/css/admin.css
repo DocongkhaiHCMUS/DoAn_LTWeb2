@@ -24,70 +24,76 @@
   box-sizing: border-box;
 }
 
-.select2-container--default .select2-selection--single .select2-selection__rendered {
-    color: inherit !important;
+.select2-container--default
+  .select2-selection--single
+  .select2-selection__rendered {
+  color: inherit !important;
 }
 
 .select2-container--open .select2-dropdown--above {
-    border: 2px solid #0881a3;
+  border: 2px solid #0881a3;
 }
 
 .select2-container--open .select2-dropdown--below {
   border: 2px solid #0881a3;
 }
 
-
 .select2-results__option {
-    font-size: 16px !important;
-    font-weight: 500 !important;
+  font-size: 16px !important;
+  font-weight: 500 !important;
 }
 
-.select2-container--default .select2-selection--single .select2-selection__arrow b {
-    border-width: 12px 8px 0 8px !important;
-    border-color: #e43a19 transparent  transparent  transparent !important;
+.select2-container--default
+  .select2-selection--single
+  .select2-selection__arrow
+  b {
+  border-width: 12px 8px 0 8px !important;
+  border-color: #e43a19 transparent transparent transparent !important;
 }
 
-.select2-container--default .select2-selection--single .select2-selection__arrow {
-    top: 20% !important;
-    right: 3% !important;
+.select2-container--default
+  .select2-selection--single
+  .select2-selection__arrow {
+  top: 20% !important;
+  right: 3% !important;
 }
 
 .select2-container .select2-selection--single {
-    height: fit-content !important;
-    padding: 10px !important;
+  height: fit-content !important;
+  padding: 10px !important;
 }
 
 .select2-container--default .select2-selection--single {
-    border: 2px solid #0881a3 !important;
+  border: 2px solid #0881a3 !important;
 }
 
 .select2-container--default .select2-selection--single:focus {
-    outline: none;
+  outline: none;
 }
 
 .frm hr {
-    position: relative;
-    transform: translateX(-7%);
-    border-top: 2px solid #b5b5b5;
-    margin-top: 30px;
-    margin-bottom: 51px;
-    width: 116%;
+  position: relative;
+  transform: translateX(-7%);
+  border-top: 2px solid #b5b5b5;
+  margin-top: 30px;
+  margin-bottom: 51px;
+  width: 116%;
 }
 
 .form-group.d-flex {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .form-group.d-flex {
-    margin-bottom: 0;
+  margin-bottom: 0;
 }
 
 option.select-item {
-    font-size: 16px !important;
-    color: #fff !important;
-    font-weight: 500;
+  font-size: 16px !important;
+  color: #fff !important;
+  font-weight: 500;
 }
 
 .frm h4.title {
@@ -237,8 +243,8 @@ body {
 }
 
 .navbar.d-flex {
-    display: flex;
-    justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
 }
 
 .navbar-nav {
@@ -251,8 +257,8 @@ body {
 }
 
 .navbar-nav.left-nav-item {
-    width: 18%;
-    margin-left: 2.2%;
+  width: 18%;
+  margin-left: 2.2%;
 }
 
 .right-nav-item {
@@ -403,9 +409,6 @@ a.nav-link {
   color: var(--main-color);
 }
 
-.dropdown-menu > li > a {
-}
-
 .dropdown-menu-link div {
   min-width: 82px;
   height: 50px;
@@ -494,11 +497,12 @@ a.nav-link {
   box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 4px 1px;
   overflow: hidden;
   z-index: 100;
-  transition: width 0.5s;
+  transition: width 0.3s;
 }
 
-.sidebar:hover {
-  width: 14%;
+.sidebar:hover,
+.sidebar-expand .sidebar {
+  width: 15%;
 }
 
 .sidebar-nav {
@@ -555,10 +559,6 @@ a.nav-link {
   margin-left: -5px;
 }
 
-.sidebar-expand .sidebar {
-  width: 14%;
-}
-
 .sidebar-expand .wrapper {
   margin-left: 250px;
 }
@@ -573,22 +573,20 @@ a.nav-link {
 }
 
 .frm .btn.btn-danger {
-    margin-right: 10px;
+  margin-right: 10px;
 }
 
 .frm .btn.btn-success {
-    width: 90%;
+  width: 90%;
 }
 
 .frm .btn.btn-primary {
-    width: 9%;
+  width: 9%;
 }
 
 .d-flex a.btn:first-child {
   margin-right: 10px;
 }
-
-.frm .d-flex a.btn:first-child {}
 
 .d-inline-b a.btn {
   margin: 21px 8px;
@@ -616,10 +614,10 @@ a.nav-link {
 }
 
 .select2-search--dropdown .select2-search__field {
-    font-size: 16px;
-    font-weight: 500;
-    border: 2px solid #0881a3 !important;
-    border-radius: 6px;
+  font-size: 16px;
+  font-weight: 500;
+  border: 2px solid #0881a3 !important;
+  border-radius: 6px;
 }
 
 input[readonly] {
@@ -804,9 +802,9 @@ textarea {
   width: 100%;
   padding: 12px 20px;
   box-sizing: border-box;
-  border: 2px solid #ccc;
+  border: 2px solid #0881a3;
   border-radius: 4px;
-  background-color: #f8f8f8;
+  background-color: #fbfbfb;
   font-size: 16px;
   resize: none;
 }
@@ -830,9 +828,6 @@ select {
   border-radius: 6px;
   color: #04886f !important;
   margin: 11px 0px;
-}
-
-.frm select:focus {
 }
 
 /* For IE <= 11 */
