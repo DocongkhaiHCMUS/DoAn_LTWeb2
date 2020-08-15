@@ -3,7 +3,7 @@ const moment = require('moment');
 const TBL_Tag = 'tag';
 
 module.exports = {
-    All: () => db.load(`select * from ${TBL_Tag} order by name`),
+    All: () => db.load(`select * from ${TBL_Tag}`),
     add: (entity) => {
 
         entity['create_date'] = moment().format('YYYY/MM/DD HH:mm:ss');

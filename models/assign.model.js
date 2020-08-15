@@ -6,6 +6,7 @@ const TBL_Assign = 'assign';
 module.exports = {
     load: () => db.load(`select us.* from ${TBL_Assign} us where`),
     singleByUser: (ID) => db.load(`select us.*,cat1.id as idcat,cat1.name  from ${TBL_Assign} us join category_level1 cat1 on us.category = cat1.id where us.user =${ID}`),
+    singleCatByID: (ID) => db.load(`select cat1.id as idcat,cat1.name  from ${TBL_Assign} us join category_level1 cat1 on us.category = cat1.id where us.user =${ID}`),
     add: (entity) => {
 
         entity['create_date'] = moment().format('YYYY/MM/DD HH:mm:ss');
