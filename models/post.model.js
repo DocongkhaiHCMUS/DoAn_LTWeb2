@@ -1,6 +1,5 @@
 const db = require("../db/util/db");
 const moment = require("moment");
-const { text } = require("express");
 
 const TBL_Post = "post";
 const TBL_Cat2 = "category_level2";
@@ -14,6 +13,12 @@ module.exports = {
   // load_home:() => db.load(`select p.id,p.title,p.avatar,p.folder_img, p.tiny_des, p.views.p.categories,
   //                         p.publish_date from ${TBL_Post}`),
 
+  postTag: () => {
+    return db.load(`SELECT p.*, GROUP_CONCAT(tag.name) as 'tags'
+                    FROM tag_post tp, tag tag, post p
+                    WHERE tp.tag = tag.id AND p.id = tp.post
+                    GROUP by p.id`);
+  },
   singleByID: (ID) => {
     return db.load(
       `select * from ${TBL_Post} p where p.id = ${ID} and p.delete = 0`
