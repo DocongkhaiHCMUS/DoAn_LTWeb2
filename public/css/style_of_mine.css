@@ -14,8 +14,6 @@
     border-radius: 6px;
 }
 
-ul.article-meta {}
-
 ul.lb {
     margin: 0px !important;
     padding: 0px;
@@ -32,8 +30,6 @@ ul.lb {
     border-radius: 6px;
     text-transform: capitalize;
 }
-
-h3.danger {}
 
 .body .foot-card {
     display: flex;
@@ -56,6 +52,7 @@ h3.danger {}
     padding: 10px;
     border-radius: 6px;
     box-shadow: 5px 4px 2px 1px #99d1d6;
+    height: 650px;
 }
 
 .head select {
@@ -926,6 +923,10 @@ h2.des_title {
 
 .article .article-img {
   border-radius: 6px;
+}
+
+.body .article .article-img {
+    height: 300px;
 }
 
 .article .article-description {
