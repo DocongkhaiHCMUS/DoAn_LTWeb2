@@ -9,6 +9,10 @@ module.exports = {
     db.load(
       `select tp.id, tp.tag, tag.name, tp.post from ${TBL_TP} tp join ${TBL_Tag} tag on tp.tag = tag.id and tp.delete = 0`
     ),
+  singleByTagPost: (idTag, idPost) => {
+    return db.load(`select tp.id, tp.tag, tag.name from ${TBL_TP} tp join ${TBL_Tag} tag on tp.tag = tag.id and tp.tag = '${idTag}' and tp.post = ${idPost} 
+    and tp.delete = 0`);
+  },
 
   singleByPost: (postID) => {
     return db.load(`select tp.id, tp.tag, tag.name from ${TBL_TP} tp join ${TBL_Tag} tag on tp.tag = tag.id and tp.post = '${postID}' 
@@ -56,6 +60,7 @@ module.exports = {
 
     return db.patch(TBL_TP, entity, condition);
   },
+
   restore: (ID) => {
     let condition = {
       id: ID,

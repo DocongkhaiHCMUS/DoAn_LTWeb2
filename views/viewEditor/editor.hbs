@@ -7,8 +7,8 @@
 {{/section}}
 
 <div class="content-body">
-    <div class="">
-        <h4>Editor</h4>
+    <div class="title-editor">
+        <h4>Biên tập viên</h4>
     </div>
     {{#if this.empty}}
     {{!-- Card body thong bao table empty  --}}
@@ -16,41 +16,84 @@
         <h6 class="card-text">Không có bài cần duyệt</h6>
     </div>
     {{else}}
-    <table class="table custom-table">
-        <thead>
-            <tr>
-                <th>STT</th>
-                <th>Tiêu đề</th>
-                <th>Tóm tắt</th>
-                <th>Nội dung</th>
-                <th>Chuyên mục</th>
-                <th>Nhãn</th>
-                <th>&nbsp;</th>
-            </tr>
-        </thead>
-        <tbody>
-            {{#each this.editor}}
-            <tr>
-                <th>{{id}}</th>
-                <td>{{title}}</td>
-                <td>{{tiny_des}}</td>
-                <td>{{full_des}}</td>
-                <td>{{category}}</td>
-                <td>{{tags}} </td>
+    <div class="panel panel-default">
+        <!-- Default panel contents -->
+        {{#if process}}
+        <div class="panel-heading">
+            <h2>Danh sách bài viết Biên tập viên "{{lcUser.display_name}}" đã duyệt</h2>
+        </div>
+        {{else}}
+        <div class="panel-heading">
+            <h2>Danh sách bài viết cần duyệt</h2>
+        </div>
+        {{/if}}
 
-                <td>
-                    <a name="" i d="" class="btn btn-primary btn-sm" href="/editor/publish/{{id}}" role="button">
-                        <i class="fa fa-pencil-square" aria-hidden="true"></i>
-                        Duyệt
-                    </a>
-                    <a name="" id="" class="btn btn-danger btn-sm" href="/editor/decline/{{id}}" role="button">
-                        Từ chối
-                    </a>
-                </td>
-            </tr>
+        <table class="table custom-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Tiêu đề</th>
+                    <th>Tóm tắt</th>
+                    <th>Chuyên mục</th>
+                    {{#if process}}
+                    <th>Trạng thái</th>
+                    {{/if}}
+                    <th>Hành động</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#if process}}
+
+                {{#each this.editor}}
+                <tr>
+                    <td>{{id}}</td>
+                    <td>{{title}}</td>
+                    <td>{{tiny_des}}</td>
+                    <td>{{nameCat2}}</td>
+                    <td>{{status}}</td>
+                    <td>
+                        <a class="btn btn-info" href="/editor/detail/{{id}}" role="button">
+                            <i class="fa fa-info-circle" aria-hidden="true"></i>
+                            Chi tiết
+                        </a>
+                    </td>
+                </tr>
+                {{/each}}
+
+                {{else}}
+
+                {{#each this.editor}}
+                <tr>
+                    <td>{{id}}</td>
+                    <td>{{title}}</td>
+                    <td>{{tiny_des}}</td>
+                    <td>{{nameCat2}}</td>
+                    <td>
+                        <a class="btn btn-info" href="/editor/detail/{{id}}" role="button">
+                            <i class="fa fa-info-circle" aria-hidden="true"></i>
+                            Chi tiết
+                        </a>
+                    </td>
+                </tr>
+                {{/each}}
+                {{/if}}
+            </tbody>
+        </table>
+        {{/if}}
+    </div>
+    <!-- pagination -->
+    <div class="article-pagination foot">
+        <ul>
+            <li><a {{#unless can_go_prev}} class="disable" {{/unless}} href="?page={{prev_value}}"><i
+                        class="fa fa-angle-double-left"></i></a></li>
+            {{#each pageItems}}
+            <li {{#if active}} class="active" {{/if}}>
+                <a {{#if disable}} class="disable" {{/if}} {{#if active}} class="active" {{/if}}
+                    href="?page={{value}}">{{value}}</a></li>
             {{/each}}
-        </tbody>
-    </table>
-
-    {{/if}}
+            <li><a {{#unless can_go_next}} class="disable" {{/unless}} href="?page={{next_value}}"><i
+                        class="fa fa-angle-double-right"></i></a></li>
+        </ul>
+    </div>
+    <!-- /pagination -->
 </div>
