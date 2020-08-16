@@ -1,4 +1,32 @@
 {{#section 'js'}}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            var specialElementHandler = {
+                "#editor": function(element, renderer){
+                    return true;
+
+                }
+            }
+            $("#submit").click(function(){
+                var doc = new jsPDF();
+                doc.setFontSize(10);
+
+                var title = document.getElementById("title").textContent;
+                var tiny_des = document.getElementById("tiny_des").textContent;
+                var full_des = document.getElementById("full_des").textContent;
+                var y = 30;
+                doc.text(0,y,title)
+                doc.text(-60,y+20,tiny_des)
+                doc.text(-60,y+20,tiny_des)
+                doc.save(title+".pdf")
+
+            })
+
+        })
+    </script>
+{{/section}}
 <script>
     $('#lock-premium>a').on('click', function (e) {
         e.preventDefault();

@@ -35,8 +35,6 @@ module.exports = {
         }
 
         entity['modifile_date'] = moment().format('YYYY/MM/DD HH:mm:ss');
-
-
         return db.patch(TBL_User, entity, condition)
     },
     patch: (entity) => {
@@ -47,8 +45,8 @@ module.exports = {
         delete entity.id;
 
         entity['modifile_date'] = moment().format('YYYY/MM/DD HH:mm:ss');
-        entity['DOB'] = moment().format('YYYY/MM/DD HH:mm:ss');
-        entity['time_out'] = moment().format('YYYY/MM/DD HH:mm:ss');
+        entity['DOB'] = moment(entity['DOB'],'DD/MM/YYYY').format('YYYY/MM/DD HH:mm:ss');
+        entity['time_out'] = moment(entity['time_out'],'HH:mm, DD/MM/YYYY').format('YYYY/MM/DD HH:mm:ss');
         return db.patch(TBL_User, entity, condition)
     }
 };

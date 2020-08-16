@@ -2,7 +2,7 @@
 
 <link rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css">
-
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
 {{/section}}
 
 {{#section 'js'}}
@@ -16,7 +16,12 @@
         mask: true
     });
 </script>
-
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('.js-example-basic-single').select2();
+    });
+</script>
 
 {{/section}}
 
@@ -105,12 +110,11 @@
         </div>
         <div class="form-group">
             <label for="category">Thể loại</label>
-            <input list="catLv2" name="category" id="category" value="{{this.post.category}}">
-            <datalist id="catLv2">
-                {{#each this.cats2}}
+            <select class="js-example-basic-single" name="category">
+                {{#each this.cats2 }}
                 <option value="{{id}}" {{#if isCat2}} selected {{/if}}>{{name}}</option>
                 {{/each}}
-            </datalist>
+            </select>
         </div>
         <p>Lượt xem: {{this.post.views}}</p>
         <hr>

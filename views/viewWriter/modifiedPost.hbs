@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--tiny mce-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <script src="https://cdn.tiny.cloud/1/zbfdt7ar01pn6lmkt1zlp38650brpnde0vbcnfdd78p3xk2x/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+    <script>
+      tinymce.init({
+        selector: '#full_des',
+        height: 390,
+        plugins: 'paste image link autolink lists table media',
+        menubar: false,
+        toolbar: [
+          'undo redo | bold italic underline strikethrough | numlist bullist | alignleft aligncenter alignright | forecolor backcolor | table link image media',
+        ],
+      });
+    </script>
+
+    <!--upload fileinput-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.9/css/fileinput.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.9/js/fileinput.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.9/themes/fa/theme.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.9/js/locales/vi.min.js"></script>
+    <script>
+      $('#avatar').fileinput({
+        theme: 'fa',
+        showCaption: true,
+        dropZoneEnabled: true,
+        allowedFileExtensions: ['png', 'jpg', 'gif'],
+        language: 'vi'
+      });
+    </script>
+
+    <!--multi select-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+    <script>
+        $(document).ready(function()
+        {
+            $("#tag").select2({
+                placeholder: "Thêm từ khoá bài viết",
+            });
+        });
+    </script>
+
+    <!--xu ly validate-->
+    <script type="text/javascript">
+      function validateForm() {
+      var title = document.forms["frmEditor"]["title"].value;
+      var tiny_des = document.forms["frmEditor"]["tiny_des"].value;
+      var category = document.forms["frmEditor"]["category"].value;
+      var full_des = document.forms["frmEditor"]["full_des"].value;
+      var avatar = document.forms["frmEditor"]["avatar"].value;
+      if (title == "") {
+        alert("Xin nhập tiêu đề bài viết");
+        return false;
+      }
+      if (tiny_des == "") {
+        alert("Xin nhập mô tả bài viết");
+        return false;
+      }
+      if (category == 0) {
+        alert("Xin chọn chuyên mục bài viết");
+        return false;
+      }
+      if (full_des == "") {
+        alert("Xin nhập nội dung bài viết");
+        return false;
+      }
+      if (avatar == "") {
+        alert("Xin hãy chọn ảnh đại diện của bài viết");
+        return false;
+      }
+    }
+    </script>
+    <title>Editor</title>
+</head>
+
+
+<body>
+<a href="/" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Back to Home</a>
+<form method="post" id="frmEditor" action="/writer/modifiedpost/{{_post.id}}" >
+  <div class="card">
+    <div class="card-header">
+       Editor
+    </div>
+    <div class="card-body">
+
+      <div class="form-group">
+        <label>Tiêu đề bài viết</label>
+        <input type="text" class="form-control" id="title" name="title" placeholder="Tiêu đề bài viết" value="{{_post.title}}">
+      </div>
+
+      <div class="form-group">
+        <label>Mô tả bài viết</label>
+        <input type="text" class="form-control" id="tiny_des" name="tiny_des" placeholder="Mô tả bài viết" value="{{_post.tiny_des}}">
+      </div>
+
+      <div class="form-group">
+        <label>Chuyên mục</label>
+          <select id="category" name="category" >
+            <option selected value="{{_post.category}}">{{_post.cat1name}} - {{_post.cat2name}}</option>
+            {{#each this.list1}}
+                <option value="{{cat2id}}">{{cat1name}} - {{cat2name}}</option>
+            {{/each}}
+          </select>
+      </div>
+
+      <div class="form-group">
+        <label>Nội dung bài viết</label>
+        <textarea name="full_des" id="full_des" class="form-control" cols="30" rows="10">
+          {{#each post.full_des}}
+            {{{text}}}
+          {{/each}}   
+        </textarea>
+      </div>
+
+      <div class="form-group">
+        <label>Từ khoá bài viết</label>
+        <select id="tag" name="tag"  multiple="multiple">
+            {{#each this.list2}}
+                <option value="{{tag}}" selected>{{name}}</option>
+            {{/each}}
+            {{#each this.list3}}
+                <option value="{{id}}">{{name}}</option>
+            {{/each}}
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Avatar</label>
+        <input type="file" class="form-control" id="avatar" name="avatar" placeholder="Tiêu đề bài viết" value="{{_post.avatar}}">
+      </div>
+
+    </div>
+
+    <div class="card-footer">
+      <button type="submit" class="btn btn-lg btn-success btn-block" >
+        <i class="fa fa-check" aria-hidden="true"></i>
+        Submit
+      </button>
+    </div>
+  </div>
+</form>
+</body>
+
+</html>

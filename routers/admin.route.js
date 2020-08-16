@@ -117,6 +117,7 @@ router.get('/categorylv2/add/:id', async function (req, res) {
     else {
         const id = +req.params.id || -1;
         const cat1 = await cateModel.single1(id);
+        console.log(cat1[0]);
         res.render('viewAdmin/viewCategory/addLv2.hbs', { catLv1: cat1[0] });
     }
 });
@@ -273,7 +274,13 @@ router.get('/tag/add', function (req, res) {
         res.render('viewAdmin/viewTag/add.hbs');
     }
 });
-
+router.get('/tag/add/is-available', async function (req, res) {
+    const tag = await tagModel.singleTagByTagName(req.query.tag)
+    if (!tag[0]) {
+        return res.json(true);
+    }
+    return res.json(false);
+})
 router.post('/tag/add', async function (req, res) {
     await tagModel.add(req.body);
     res.render('viewAdmin/viewTag/add.hbs');
@@ -359,7 +366,7 @@ router.get('/tag_post/add/:id', async function (req, res) {
     else {
         const id = +req.params.id || -1;
         const _tag = await tagModel.singleTagById(id);
-        const posts = await postModel.loadSortByTitle();
+        const posts = await postModel.loadSortByTitle(id);
         req.session.prevURL = req.headers.referer
         res.render('viewAdmin/viewTag/addTagPost.hbs', { tag: _tag[0], posts });
     }
@@ -576,15 +583,17 @@ router.get('/user/add', async function (req, res) {
 });
 
 router.post('/user/add', async function (req, res) {
-    const hashPass = bcrypt.hashSync(req.body.password, 10);
-    const user = await userModel.singleByUserName(req.body.username);
-    const us = user[0];
-    if (us) {
-        res.render('viewAdmin/viewUser/add.hbs', {
-            err: 'Tên tài khoản đã tồn tại.'
-        });
-    }
-    else {
+ //   const user = await userModel.singleByUserName(req.body.user_name);
+   // const us = user[0];
+    // if (us) {
+    //     const pers = await perModel.load();
+    //     res.render('viewAdmin/viewUser/add.hbs', {
+    //         err: 'Tên tài khoản đã tồn tại.',
+    //         pers
+    //     });
+    // }
+    // else {
+        const hashPass = bcrypt.hashSync(req.body.password, 10);
         let new_user = {
             user_name: req.body.user_name,
             display_name: req.body.display_name,
@@ -597,7 +606,7 @@ router.post('/user/add', async function (req, res) {
         }
         userModel.add(new_user);
         res.redirect('/admin/user');
-    }
+    //}
 });
 
 router.get('/user/detail/:id', async function (req, res) {
@@ -614,6 +623,9 @@ router.get('/user/detail/:id', async function (req, res) {
         const user = rows[0];
         const pers = await perModel.load();
         let i = 0;
+        if(user.permission ==1){
+            user.isGuest = true;
+        }
         while (i < pers.length) {
             if (user.permission === pers[i].id) {
                 pers[i].Select = true;
@@ -639,7 +651,21 @@ router.get('/user/assign/:id', async function (req, res) {
         const id = +req.params.id || -1;
         const rows = await assignModel.singleByUser(id);
         const _user = await userModel.singleByID2(id);
-        res.render('viewAdmin/viewUser/CategoryEditor.hbs', { assign: rows,user: _user[0] });
+        const count = await assignModel.countByEditor(id);
+        var assigned;
+        if(count > 0){
+            assigned = false;
+        }
+        else{
+            assigned= true;
+        }
+        let i = 0;
+        while(i< rows.length){
+            rows[i].isResote = assigned;
+            i++;
+        }
+        console.log(assigned);
+        res.render('viewAdmin/viewUser/CategoryEditor.hbs', { assign: rows,user: _user[0],assigned});
     }
 });
 
