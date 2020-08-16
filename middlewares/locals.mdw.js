@@ -205,7 +205,10 @@ module.exports = function (app) {
                 let listPostTemp = listPost.filter(function (item1) {
                     let rs;
                     try {
-                        rs = listIDCat1[item.id - 1].list.includes(item1.category);
+                        let tempListCat = listIDCat1.filter(function (item2) {
+                            return item2.id_cat1 === item.id;
+                        })
+                        rs = tempListCat[0].list.includes(item1.category);
                     } catch (error) {
                         console.log(errer);
                     }
@@ -236,8 +239,17 @@ module.exports = function (app) {
 
                 let listPostTemp1 = listPost.filter(function (item1) {
                     let rs;
-                    rs = listIDCat1[item.id - 1].list.includes(item1.category);
-                    return rs;
+                    try {
+                        let tempListCat = listIDCat1.filter(function (item2) {
+                            return item2.id_cat1 === item.id;
+                        })
+                        rs = tempListCat[0].list.includes(item1.category);
+                    } catch (error) {
+                        console.log(errer);
+                    }
+                    finally {
+                        return rs;
+                    }
                 })
                     .sort(function (a, b) {
                         return b.views - a.views;
@@ -253,8 +265,14 @@ module.exports = function (app) {
 
             mostViewedPost.map(function (item) {
                 try {
-                    item['listCat2'] = app.locals.listCat[item.id - 1].list;
-                    item['listLatestPost'] = latestPost[item.id - 1].listPost;
+                    let listCat2 = app.locals.listCat.filter(function (item1) {
+                        return item1.id_cat1 === item.id;
+                    })
+                    item['listCat2'] = listCat2[0].list;
+                    let listLatestPost = latestPost.filter(function (item1) {
+                        return item1.id === item.id;
+                    })
+                    item['listLatestPost'] = listLatestPost[0].listPost;
                 }
                 catch (err) {
                     console.log(err);
