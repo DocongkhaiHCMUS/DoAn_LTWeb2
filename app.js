@@ -54,7 +54,7 @@ app.use(require('./middlewares/set_layout_guest.mdw'));
 app.get('/',checktimeout, require('./routers/home.route'))
 
 //require all router
-app.use('/guest', checktimeout, require('./routers/default.route'));
+// app.use('/guest', checktimeout, require('./routers/default.route'));
 
 app.use('/sub', checktimeout, restrict, require('./routers/subscriber.route'));
 
