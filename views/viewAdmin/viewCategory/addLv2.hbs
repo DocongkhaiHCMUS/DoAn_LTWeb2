@@ -1,19 +1,80 @@
+{{#section 'js'}}
+<script>
+    //handling when btnSignIn submit
+    $('#frmAdd').submit(function (e) {
+        e.preventDefault();
+
+        if (validate() == 1) {
+
+            // remove all error before 
+            $('#txtValidate').empty();
+            // add error text
+            let error = $("<p></p>").append("<i class='fa fa-exclamation-triangle' aria-hidden='true'>&nbsp;</i>Vui lòng nhập thông tin !");
+            $('#txtValidate').append(error);
+            if ($('#txtValidate').hasClass('d-none'))
+                $('#txtValidate').removeClass('d-none')
+        }
+        else {
+           validateAvailable();
+        //  $('#frmAdd').off('submit').submit();
+        }
+    });
+
+    function validate() {
+        let name = $('#name').val();
+        if (!name)
+            return 1;
+    }
+    function validateAvailable() {
+        let name = $('#name').val();
+        let cat1 = $('#catID1').val();
+        $.getJSON(`/admin/categorylv2/is-available?category=${name}?${cat1}`, function (data) {
+            if (data === true) {
+                if ($('#txtValidate').hasClass('d-none') == false)
+                    $('#txtValidate').addClass('d-none')
+                $('#frmAdd').off('submit').submit();
+            }
+            else {
+                // remove all error before 
+                $('#txtValidate').empty();
+                // add error text
+                let error = $("<p></p>").append("<i class='fa fa-exclamation-triangle' aria-hidden='true'>&nbsp;</i>Tên nhãn đã tồn tại !");
+                $('#txtValidate').append(error);
+                if ($('#txtValidate').hasClass('d-none'))
+                    $('#txtValidate').removeClass('d-none')
+            }
+        })
+    }
+</script>
+{{/section}}
 <!-- main content -->
 <div class="wrapper">
-    <form class="frm" action="/admin/categorylv2/add" method="POST">
+    <form id="frmAdd" class="frm" action="/admin/categorylv2/add" method="POST" novalidate>
         <h4 class="title">Thêm thể loại cấp 2</h4>
         <div class="form-group">
-            <input type="text" name="category_level1" value="{{this.catLv1.id}}" hidden>
+            <input type="text" id="catID1" name="category_level1" value="{{this.catLv1.id}}" hidden>
         </div>
         <div class="form-group">
-            <label for="category_level1">Thể loại cấp 1</label>
-            <input type="text" id="catID1" value="{{this.catLv1.name}}" readonly>
+            <label >Thể loại cấp 1</label>
+            <input type="text" value="{{this.catLv1.name}}" readonly>
         </div>
         <div class="form-group">
             <label for="name">Tên thể loại cấp 2</label>
-            <input type="text" id="name" name="name" autofocus required>
+            <input type="text" id="name" name="name" autofocus>
         </div>
         <hr>
+        {{#if error}}
+        <h3 class="alert">
+            <p>
+                <i class='fa fa-exclamation-triangle' aria-hidden='true'>&nbsp;</i>
+                {{error.err}}
+            <p>
+        </h3>
+        {{/if}}
+
+        <h4 id="txtValidate" class="alert d-none">
+
+        </h4>
         <div class="form-group d-flex">
             <a class="btn btn-primary" href="/admin/category" role="button" title="Back to List">
                 <i class="fa fa-backward" aria-hidden="true"></i>

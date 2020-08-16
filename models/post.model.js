@@ -138,6 +138,7 @@ module.exports = {
     delete entity.id;
 
     entity["modifile_date"] = moment().format("YYYY/MM/DD HH:mm:ss");
+    entity['publish_date'] = moment(entity['publish_date'],'HH:mm, DD/MM/YYYY').format('YYYY/MM/DD HH:mm:ss');
     return db.patch(TBL_Post, entity, condition);
   },
   pageByPost: function (limit, offset) {

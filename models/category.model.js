@@ -12,7 +12,12 @@ module.exports = {
     load_cat2: () => db.load(`select cat2.id id,cat2.name name,cat2.category_level1 from ${TBL_Cat2} cat2 where cat2.delete = 0`),
     loadCat1ByAssign: (id) => db.load(`select cat1.id id,cat1.name from ${TBL_Cat1} cat1 where cat1.delete = 0
      and cat1.id not in (select category from ${TBL_Assign} where user = ${id})`),
-
+    singleCat1ByCat1Name: function (catname) {
+        return db.load(`select t.name from ${TBL_Cat1} t where  UPPER(t.name) = UPPER('${catname}')`);
+    },
+    singleCat2ByCat1IDCat2Name: function (catname,id) {
+        return db.load(`select t.name from ${TBL_Cat2} t where  UPPER(t.name) = UPPER('${catname}') and t.category_level1 =${id}`);
+    },
     singleCatByIDCat2: (ID) => db.load(`select cat2.id id_cat2,cat2.name name_cat2,cat1.id id_cat1, cat1.name name_cat1 from ${TBL_Cat2} cat2 join 
     ${TBL_Cat1} cat1 on cat2.category_level1 = cat1.id and cat2.id = ${ID} and cat2.delete = 0`),
     loadCat1: () => db.load(`select * from ${TBL_Cat1} order by name`),
