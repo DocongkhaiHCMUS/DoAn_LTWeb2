@@ -30,7 +30,7 @@
 				<button onclick="locBaiViet()" class="btn btn-info">Lọc bài viết</button>
 			</div>
 			<div class="row body">
-				
+
 				{{#each this.list1}}
 				<div class="col-md-6 col-sm-6">
 					<article class="article">
@@ -40,10 +40,10 @@
 						<div class="article-body">
 							<ul class="article-info">
 								<li class="article-category">
-									<a href="/category/cat1/{{cat1id}}">{{cat1name}}</a>
+									<a href="javascript:;">{{cat1name}}</a>
 								</li>
 								<li class="article-category">
-									<a href="/category/cat2/{{cat1id}}">{{cat2name}}</a>
+									<a href="javascript:;">{{cat2name}}</a>
 								</li>
 								<li class="article-type">
 									<i class="fa fa-file-text"></i>
@@ -52,7 +52,7 @@
 							<h4 class="article-title">
 								<a href="/post/{{id}}">{{title}}</a>
 							</h4>
-				
+
 							<ul class="article-meta">
 								<li>
 									<i class="fa fa-clock-o">&nbsp;</i>{{parseTime publish_date}}
@@ -61,7 +61,7 @@
 									<i class="fa fa-eye">&nbsp;</i>{{views}}
 								</li>
 							</ul>
-						
+
 							<h5 class="article-description">
 								{{tiny_des}}
 							</h5>
@@ -69,7 +69,7 @@
 								<button type="button" class="btn btn-info">Info Button</button>
 								<ul class="article-meta lb">
 									<li>
-										<h3 info>Đã được xuất bản</h3>
+										<h3 class="info">Đã được xuất bản</h3>
 									</li>
 								</ul>
 							</div>
@@ -99,7 +99,7 @@
 							<h4 class="article-title">
 								<a href="/post/{{id}}">{{title}}</a>
 							</h4>
-				
+
 							<ul class="article-meta">
 								<li>
 									<i class="fa fa-clock-o">&nbsp;</i>{{parseTime publish_date}}
@@ -108,7 +108,7 @@
 									<i class="fa fa-eye">&nbsp;</i>{{views}}
 								</li>
 							</ul>
-						
+
 							<h5 class="article-description">
 								{{tiny_des}}
 							</h5>
@@ -118,7 +118,7 @@
 								</a>
 								<ul class="article-meta lb">
 									<li>
-										<h3 info>Đã được duyệt, chưa được xuất bản</h3>
+										<h3 class="info">Đã được duyệt, chưa được xuất bản</h3>
 									</li>
 								</ul>
 							</div>
@@ -148,7 +148,7 @@
 							<h4 class="article-title">
 								<a href="/post/{{id}}">{{title}}</a>
 							</h4>
-				
+
 							<ul class="article-meta">
 								<li>
 									<i class="fa fa-clock-o">&nbsp;</i>{{parseTime publish_date}}
@@ -157,7 +157,7 @@
 									<i class="fa fa-eye">&nbsp;</i>{{views}}
 								</li>
 							</ul>
-						
+
 							<h5 class="article-description">
 								{{tiny_des}}
 							</h5>
@@ -167,7 +167,7 @@
 								</a>
 								<ul class="article-meta lb">
 									<li>
-										<h3 info>Chưa được duyệt</h3>
+										<h3 class="danger">Chưa được duyệt</h3>
 									</li>
 								</ul>
 							</div>
@@ -197,7 +197,7 @@
 							<h4 class="article-title">
 								<a href="/post/{{id}}">{{title}}</a>
 							</h4>
-				
+
 							<ul class="article-meta">
 								<li>
 									<i class="fa fa-clock-o">&nbsp;</i>{{parseTime publish_date}}
@@ -206,7 +206,7 @@
 									<i class="fa fa-eye">&nbsp;</i>{{views}}
 								</li>
 							</ul>
-						
+
 							<h5 class="article-description">
 								{{tiny_des}}
 							</h5>
@@ -216,7 +216,7 @@
 								</a>
 								<ul class="article-meta lb">
 									<li>
-										<h3 info>Đã bị từ chối</h3>
+										<h3 class="danger">Đã bị từ chối</h3>
 									</li>
 								</ul>
 							</div>
