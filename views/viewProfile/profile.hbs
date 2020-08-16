@@ -15,6 +15,17 @@
         mask: true
     });
 </script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.9/css/fileinput.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.9/js/fileinput.min.js"></script>
+<script>
+  $('#avatar').fileinput({
+    theme: 'fa',
+    showCaption: true,
+    dropZoneEnabled: true,
+    allowedFileExtensions: ['png', 'jpg', 'gif'],
+    language: 'vi'
+  });
+</script>
 {{/section}}
 <div class="content-body">
     <div class="title-editor">
@@ -25,7 +36,7 @@
         <div class="panel-heading">
             <h2>Thông tin chi tiết</h2>
         </div>
-        <form id="frmEditor" class="frmEditor" action="/user/profile" method="post">
+        <form id="frmEditor" class="frmEditor" action="/user/profile" method="post" enctype='multipart/form-data'>
             <div class="form-group">
                 {{!-- <label for="">Ảnh đại diện</label> --}}
                 {{#if _user.avatar}}
@@ -37,6 +48,10 @@
             <div class="form-group">
                 <label for="">Tên Hiển Thị</label>
                 <input type="text" name="display_name" id="display_name" value="{{_user.display_name}}">
+            </div>
+            <div class="form-group">
+                <label for="">User name</label>
+                <input type="text" name="user_name" id="user_name" value="{{_user.user_name}}">
             </div>
             <div class="form-group">
                 <label for="">Ngày sinh</label>
@@ -57,6 +72,10 @@
             <div class="form-group">
                 <label for="">email</label>
                 <input type="text" name="email" id="email" value="{{_user.email}}">
+            </div>
+            <div class="form-group">
+                <label>Avatar</label>
+                <input id="avatar" name="avatar" type="file" class="file" data-browse-on-zone-click="true">
             </div>
             <hr>
             <div class="form-group flex">

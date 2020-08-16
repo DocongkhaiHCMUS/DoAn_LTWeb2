@@ -21,14 +21,34 @@
     <link
 		href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
 		rel="stylesheet">
+	<script>
+		function locBaiViet() {
+			var status = String(document.getElementById("statusBaiViet").value);
+			if(status == "0")
+			{
+  				location.replace("/writer/listpost/")
+			}
+			else
+				location.replace("/writer/listpost/"+status)
+		}
+	</script>
     <title>List Post</title>
 </head>
 <body>
   <a href="/" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Back to Home</a>
-  
+
   
 <div class="py-5">
     <div class="container">
+		<select class="form-control" id="statusBaiViet">
+			<option value="0" selected>Tất cả bài viết</option>
+			<option value="1">Các bài viết đã được xuất bản</option>
+			<option value="2">Các bài viết đã được duyệt chưa xuất bản</option>
+			<option value="3">Các bài viết chưa được duyệt</option>
+			<option value="4">Các bài viết bị từ chối</option>
+		</select> 
+		<button onclick="locBaiViet()" class="btn btn-info">Lọc bài viết</button>
+		<br>
       <div class="row hidden-md-up">
         
         {{#each this.list}}
@@ -67,7 +87,7 @@
 					</a>
  					{{/when}}
 					{{#when status 'eq' 4}}
-						<a href="/writer/modifiedpost/{{id}}" class="btn btn-secondary">
+						<a href="/writer/modifiedpost/{{list.id}}" class="btn btn-secondary">
 						Chỉnh sửa
 					</a>
  					{{/when}}
