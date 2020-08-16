@@ -13,11 +13,37 @@ module.exports = {
   // load_home:() => db.load(`select p.id,p.title,p.avatar,p.folder_img, p.tiny_des, p.views.p.categories,
   //                         p.publish_date from ${TBL_Post}`),
 
-  postTag: () => {
-    return db.load(`SELECT p.*, GROUP_CONCAT(tag.name) as 'tags'
-                    FROM tag_post tp, tag tag, post p
-                    WHERE tp.tag = tag.id AND p.id = tp.post
-                    GROUP by p.id`);
+  // postTag: () => {
+  //   return db.load(`SELECT p.*, GROUP_CONCAT(tag.name) as 'tags'
+  //                   FROM tag_post tp, tag tag, post p
+  //                   WHERE tp.tag = tag.id AND p.id = tp.post
+  //                   GROUP by p.id`);
+  // },
+  loadPostForEditor_page: (limit, offset, idCat1) => {
+    return db.load(`select p.*, cat2.id id_cat2, cat2.name nameCat2 from ${TBL_Post} p join ${TBL_Cat2} cat2 on 
+    p.category = cat2.id 
+    and cat2.category_level1 = ${idCat1}
+    and p.delete = 0 and p.status = 1 
+    limit ${limit} offset ${offset}`);
+  },
+  countPostForEditor: (idCat1) => {
+    return db.load(`select count(*) as total from ${TBL_Post} p join ${TBL_Cat2} cat2 on 
+    p.category = cat2.id 
+    and cat2.category_level1 = ${idCat1}
+    and p.delete = 0 and p.status = 1 `)
+  },
+  loadPostEditByEditor_page: (limit, offset, idEditor) => {
+    return db.load(`select p.*, cat2.id id_cat2, cat2.name nameCat2 from ${TBL_Post} p join ${TBL_Cat2} cat2 on 
+    p.category = cat2.id 
+    and p.editor = ${idEditor}
+    and p.delete = 0 and p.status = 1 
+    limit ${limit} offset ${offset}`);
+  },
+  countPostEditByEditor: (idEditor) => {
+    return db.load(`select count(*) as total from ${TBL_Post} p join ${TBL_Cat2} cat2 on 
+    p.category = cat2.id 
+    and p.editor = ${idEditor}
+    and p.delete = 0 and p.status = 1 `)
   },
   singleByID: (ID) => {
     return db.load(
@@ -110,7 +136,6 @@ module.exports = {
     delete entity.id;
 
     entity["modifile_date"] = moment().format("YYYY/MM/DD HH:mm:ss");
-    entity["publish_date"] = moment().format("YYYY/MM/DD HH:mm:ss");
     return db.patch(TBL_Post, entity, condition);
   },
   pageByPost: function (limit, offset) {

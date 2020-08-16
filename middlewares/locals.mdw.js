@@ -9,7 +9,7 @@ const options = {
     max: 500
     , length: function (n, key) { return n * 2 + key.length }
     , dispose: function (key, n) { n.close() }
-    , maxAge: 1000 * 60 * 60 * 24
+    , maxAge: 1000 * 60 * 5
 }
 
 const Cache = new LRU(options)
@@ -135,16 +135,21 @@ module.exports = function (app) {
                 modelPost.load()
             ]);
 
+            //all post
+            listPost_raw = listPost;
+
             //filter all post has publish date before current time
             listPost = listPost.filter(function (item) {
                 moment.locale('vi');
                 return moment(item.publish_date).diff(moment(), 'seconds') <= 0;
             })
 
+
             Cache.set('listCategory', listCategory);
             Cache.set('list1', list1);
             Cache.set('list2', list2);
             Cache.set('listTag', listTag);
+            Cache.set('listPost_raw', listPost_raw);
             Cache.set('listPost', listPost);
 
             //local categories menu
@@ -157,6 +162,7 @@ module.exports = function (app) {
         app.locals.list1 = Cache.get('list1');
         app.locals.list2 = Cache.get('list2');
         app.locals.listTag = Cache.get('listTag');
+        app.locals.listPost_raw = Cache.get('listPost_raw');
         app.locals.listPost = Cache.get('listPost');
 
         //check if list list Post exists in cache
@@ -286,6 +292,8 @@ module.exports = function (app) {
             app.locals.lcIsAuthenticated = req.session.isAuthenticated;
             app.locals.lcUser = req.session.authUser;
             app.locals.lcSubcriber = (req.session.authUser.permission === 1);
+            app.locals.lcWriter = (req.session.authUser.permission === 2);
+            app.locals.lcEditor = (req.session.authUser.permission === 3);
         }
         next();
     });

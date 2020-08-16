@@ -33,13 +33,13 @@ app.get('/', require('./routers/home.route'))
 //require all router
 app.use('/guest', require('./routers/default.route'));
 
-app.use('/sub', require('./routers/subscriber.route'));
+app.use('/sub',restrict, require('./routers/subscriber.route'));
 
-app.use('/writer', require('./routers/writer.route'));
+app.use('/writer',restrict, require('./routers/writer.route'));
 
-app.use('/admin', require('./routers/admin.route'));
+app.use('/admin',restrict, require('./routers/admin.route'));
 
-app.use('/editor', require('./routers/editor.route'));
+app.use('/editor',restrict, require('./routers/editor.route'));
 
 app.use('/login', require('./routers/login.route'));
 

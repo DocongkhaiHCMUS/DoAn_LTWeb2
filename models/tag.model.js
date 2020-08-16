@@ -4,6 +4,7 @@ const TBL_Tag = 'tag';
 
 module.exports = {
     All: () => db.load(`select * from ${TBL_Tag}`),
+    load: () => db.load(`select t.* from ${TBL_Tag} t where t.delete = 0`),
     add: (entity) => {
 
         entity['create_date'] = moment().format('YYYY/MM/DD HH:mm:ss');

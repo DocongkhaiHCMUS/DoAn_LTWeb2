@@ -15,15 +15,11 @@ router.get('/', function (req, res) {
         res.render('home.hbs');
 
     else if (req.session.authUser.permission == 2) {
-        res.render('home.hbs', {
-            isWriter: true
-        });
+        res.render('home.hbs');
     }
 
     else if (req.session.authUser.permission == 3) {
-        res.render('home.hbs', {
-            isEditor: true
-        });
+        res.render('home.hbs');
     }
 
     else if (req.session.authUser.permission == 4) {
