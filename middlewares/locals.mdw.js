@@ -144,7 +144,6 @@ module.exports = function (app) {
                 return moment(item.publish_date).diff(moment(), 'seconds') <= 0;
             })
 
-
             Cache.set('listCategory', listCategory);
             Cache.set('list1', list1);
             Cache.set('list2', list2);
@@ -208,7 +207,8 @@ module.exports = function (app) {
                         let tempListCat = listIDCat1.filter(function (item2) {
                             return item2.id_cat1 === item.id;
                         })
-                        rs = tempListCat[0].list.includes(item1.category);
+                        if (tempListCat != null && tempListCat != undefined && tempListCat.length > 0)
+                            rs = tempListCat[0].list.includes(item1.category);
                     } catch (error) {
                         console.log(errer);
                     }
@@ -243,7 +243,8 @@ module.exports = function (app) {
                         let tempListCat = listIDCat1.filter(function (item2) {
                             return item2.id_cat1 === item.id;
                         })
-                        rs = tempListCat[0].list.includes(item1.category);
+                        if (tempListCat != null && tempListCat != undefined && tempListCat.length > 0)
+                            rs = tempListCat[0].list.includes(item1.category);
                     } catch (error) {
                         console.log(errer);
                     }
@@ -268,11 +269,15 @@ module.exports = function (app) {
                     let listCat2 = app.locals.listCat.filter(function (item1) {
                         return item1.id_cat1 === item.id;
                     })
-                    item['listCat2'] = listCat2[0].list;
+                    if (listCat2[0].list != null && listCat2[0].list != undefined
+                        && listCat2[0].list.length > 0 && listCat2 != undefined)
+                        item['listCat2'] = listCat2[0].list;
                     let listLatestPost = latestPost.filter(function (item1) {
                         return item1.id === item.id;
                     })
-                    item['listLatestPost'] = listLatestPost[0].listPost;
+                    if (listLatestPost[0].listPost != null && listLatestPost[0].listPost != undefined
+                        && listLatestPost[0].listPost.length > 0 && listLatestPost != undefined)
+                        item['listLatestPost'] = listLatestPost[0].listPost;
                 }
                 catch (err) {
                     console.log(err);
