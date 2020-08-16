@@ -173,8 +173,12 @@ router.get("/process", async function (req, res) {
     list = list.map(function (item) {
       if (item.status == 1)
         item.status = "Đã xuất bản";
-      if (item.status == 0)
+      else if (item.status == 0)
+        item.status = "Đã duyệt và chờ xuất bản";
+      else if (item.status == 2)
         item.status = "Từ chối";
+      else if (item.status == 3)
+        item.status = "Chưa được duyệt";
       return item;
     })
 
@@ -226,7 +230,6 @@ router.get("/detail/:id", async function (req, res) {
   let tagOfPost = listTagPost.map(function (item) {
     return item.tag;
   })
-
   //map list tag
   listTag = listTag.map(function (item) {
     if (tagOfPost.includes(item.id)) {
@@ -237,7 +240,6 @@ router.get("/detail/:id", async function (req, res) {
 
   // //set list tag
   // post['listTag'] = tagOfPost;
-
   res.render('viewEditor/detail.hbs', {
     post: post[0],
     listTag,
@@ -307,7 +309,7 @@ router.post("/accept", async function (req, res) {
 router.post("/deny", async function (req, res) {
   const entity = {
     id: req.body.id,
-    status: 1,
+    status: 2,
     reason: req.body.reason,
     editor: req.session.authUser.id
   }

@@ -27,14 +27,14 @@ module.exports = {
     return db.load(`select p.*, cat2.id id_cat2, cat2.name nameCat2 from ${TBL_Post} p join ${TBL_Cat2} cat2 on 
     p.category = cat2.id 
     and cat2.category_level1 = ${idCat1}
-    and p.delete = 0 and p.status = 0 
+    and p.delete = 0 and p.status = 3 
     limit ${limit} offset ${offset}`);
   },
   countPostForEditor: (idCat1) => {
     return db.load(`select count(*) as total from ${TBL_Post} p join ${TBL_Cat2} cat2 on 
     p.category = cat2.id 
     and cat2.category_level1 = ${idCat1}
-    and p.delete = 0 and p.status = 0 `)
+    and p.delete = 0 and p.status = 3 `)
   },
   loadPostEditByEditor_page: (limit, offset, idEditor) => {
     return db.load(`select p.*, cat2.id id_cat2, cat2.name nameCat2 
