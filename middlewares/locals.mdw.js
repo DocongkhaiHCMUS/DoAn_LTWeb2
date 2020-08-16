@@ -12,7 +12,7 @@ const options = {
     , maxAge: 1000 * 60 * 5
 }
 
-const Cache = new LRU(options)
+let Cache = new LRU(options)
 
 // const Cache = new nodeCache();
 
@@ -120,7 +120,8 @@ function convertCat(item, list2, list1) {
 
 module.exports = function (app) {
     app.use(async function (req, res, next) {
-
+        if (!Cache)
+            Cache = new LRU(options);
         //check if list Category, list Tag, list Post exists in cache
         // if not exixts then get data from database and push to cahe
         if (!Cache.has('listCat') || !Cache.has('list1') || !Cache.has('list2') ||

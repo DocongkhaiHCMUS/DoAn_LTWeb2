@@ -3,87 +3,68 @@
 {{/section}}
 
 {{#section 'js'}}
-<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-<!--date picker-->
-<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
-        <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
-        <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+<div class="content-body">
+    <div class="title-editor">
+        <h4>Thông Tin Tài Khoản</h4>
+    </div>
+    <div class="panel panel-default">
+        <!-- Default panel contents -->
+        <div class="panel-heading">
+            <h2>Thông tin chi tiết</h2>
+        </div>
+        <form id="frmEditor" class="frmEditor" action="/user/profile" method="post">
+            <div class="form-group">
+                <label for="">Ảnh đại diện</label>
+                <img src="" alt="" srcset="">
+            </div>
+            <div class="form-group">
+                <label for="">Tên Hiển Thị</label>
+                <input type="text" name="display_name" id="display_name" value="{{_user.display_name}}">
+            </div>
+            <div class="form-group">
+                <label for="">Ngày sinh</label>
+                <input type="text" name="DOB" id="DOB">{{parseTime _user.DOB}}</input>
+            </div>
+            <div class="form-group">
+                <label for="">Giới tính</label>
+                <select name="gender" id="gender">
+                    {{#if _user.gender}}
 
-        <script>
-            $(document).ready(
-                    function () {
-                        $("#dob").datepicker({
-                            dateFormat: 'YYYY/MM/DD HH:mm:ss',
-                            changeMonth: true, 
-                            changeYear: true 
-                        });
-                    }
-            );
-        </script>
-{{/section}}
-
-<div class="demo-1">
-    <div class="main-agileits">
-  <div class="container">
-      <form action="/user/profile" method="POST">
-            <div class="col-md-9  admin-content" id="profile">
-                <div class="panel panel-info" style="margin: 1em;">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Displayname</h3>
-                    </div>
-                    <div class="panel-body">
-                        <input type="text" class="form-control" id="display_name" name="display_name" value="{{_user.display_name}}">
-                    </div>
-                </div>
-                <div class="panel panel-info" style="margin: 1em;">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Username</h3>
-                    </div>
-                    <div class="panel-body" name="user_name">
-                        <input type="text" class="form-control" id="user_name" name="user_name" value="{{_user.user_name}}">
-                    </div>
-                </div>
-                <div class="panel panel-info" style="margin: 1em;">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Email</h3>
-                    </div>
-                    <div class="panel-body">
-                        <input type="text" class="form-control" id="email" name="email" value="{{_user.email}}">
-                    </div>
-                </div>
-                <div class="panel panel-info" style="margin: 1em;">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Ngày sinh</h3>
-                    </div>
-                    <div class="panel-body">
-                        <input type="text" class="form-control" id="dob" name="dob" value="{{_user.DOB}}">
-                    </div>
-                </div>
-                <div class="panel panel-info" style="margin: 1em;">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Giới tính</h3>
-                    </div>
-                    {{#if isMale}}
-                        <div class="panel-body">
-                        <select name="gender" id="gender" class="browser-default custom-select">
-                            <option value="0" selected>Nam</option>
-                            <option value="1">Nữ</option>
-                        </select>
-                        </div>
+                    <option value="0">Nam</option>
+                    <option value="1" selected>Nữ</option>
                     {{else}}
-                        <div class="panel-body">
-                        <select name="gender" id="gender" class="browser-default custom-select">
-                            <option value="1" selected>Nữ</option>
-                            <option value="0">Nam</option>
-                        </select>
-                        </div>
+                    <option value="0" selected>Nam</option>
+                    <option value="1">Nữ</option>
                     {{/if}}
-                </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="">email</label>
+                <textarea type="text" name="email" id="email">{{_user.email}}</textarea>
+            </div>
+            <hr>
+            <div class="form-group flex">
+                <a class="btn btn-primary" href="/editor">
+                    <i class="fa fa-backward" aria-hidden="true">&nbsp;</i>
+                    Quay lại
+                </a>
+                <button class="btn btn-danger" id="btnTuChoi">
+                    <i class="fa fa-ban" aria-hidden="true">&nbsp;</i>
+                    Từ chối
+                </button>
+                <button class="btn btn-danger d-none" type="submit" id="btnTuChoiDY" formaction="/editor/deny">
+                    <i class="fa fa-ban" aria-hidden="true">&nbsp;</i>
+                    Đồng ý Từ chối
+                </button>
+                <button class="btn btn-success" id="btnPheDuyet">
+                    <i class="fa fa-check" aria-hidden="true">&nbsp;</i>
+                    Phê Duyệt
+                </button>
+                <button class="btn btn-success d-none" type="submit" id="btnPheDuyetDY">
+                    <i class="fa fa-check" aria-hidden="true">&nbsp;</i>
+                    Đồng ý Phê Duyệt
+                </button>
             </div>
         </form>
-  </div>
     </div>
 </div>
