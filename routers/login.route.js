@@ -59,6 +59,7 @@ router.get('/logout', function (req, res) {
     req.app.locals.lcUser = null;
     req.app.locals.lcIsAuthenticated = false;
     req.app.locals.lcSubcriber = false;
+    req.app.locals.lcEditor = false;
 
     res.redirect('/');
 })

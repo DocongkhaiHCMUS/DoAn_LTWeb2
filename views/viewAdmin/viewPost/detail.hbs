@@ -1,5 +1,6 @@
 {{#section 'css'}}
-
+<script src="https://cdn.tiny.cloud/1/rbcj6cato868rot4qvtt4pqj81xjm7fc42ekdwqtooawu1rh/tinymce/5/tinymce.min.js"
+    referrerpolicy="origin"></script>
 <link rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css">
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
@@ -10,10 +11,20 @@
 <script
     src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
 </script>
+<script
+    src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
+</script>
 <script>
     $('#input').datetimepicker({
         format: 'H:i, d/m/Y',
         mask: true
+    });
+    tinymce.init({
+        selector: '#full_des',
+        plugins: '',
+        menubar: false,
+        toolbar: '',
+        readonly: 1
     });
 </script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
@@ -47,7 +58,7 @@
         </div>
         <div class="form-group">
             <label for="tiny_des">Mô tả đầy đủ</label>
-            <textarea type="text" id="full_des" name="full_des" rows="11" required> {{this.post.full_des}}</textarea>
+            <textarea type="text" id="full_des" name="full_des" rows="21" required> {{this.post.full_des}}</textarea>
         </div>
         <div class="form-group">
             <label for="author"> <i class="fa fa-paint-brush" aria-hidden="true">&nbsp;&nbsp;</i>Tác giả</label>
