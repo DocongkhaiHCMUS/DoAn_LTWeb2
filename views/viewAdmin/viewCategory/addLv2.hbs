@@ -28,7 +28,7 @@
     function validateAvailable() {
         let name = $('#name').val();
         let cat1 = $('#catID1').val();
-        $.getJSON(`/admin/categorylv2/add/is-available?category2=${name}?cat1=${cat1}`, function (data) {
+        $.getJSON(`/admin/categorylv2/is-available?category=${name}?${cat1}`, function (data) {
             if (data === true) {
                 if ($('#txtValidate').hasClass('d-none') == false)
                     $('#txtValidate').addClass('d-none')
@@ -49,18 +49,18 @@
 {{/section}}
 <!-- main content -->
 <div class="wrapper">
-    <form class="frmAdd" action="/admin/categorylv2/add" method="POST" novalidate>
+    <form id="frmAdd" class="frm" action="/admin/categorylv2/add" method="POST" novalidate>
         <h4 class="title">Thêm thể loại cấp 2</h4>
         <div class="form-group">
-            <input type="text" name="category_level1" value="{{this.catLv1.id}}" hidden>
+            <input type="text" id="catID1" name="category_level1" value="{{this.catLv1.id}}" hidden>
         </div>
         <div class="form-group">
-            <label for="category_level1">Thể loại cấp 1</label>
-            <input type="text" id="catID1" value="{{this.catLv1.name}}" readonly>
+            <label >Thể loại cấp 1</label>
+            <input type="text" value="{{this.catLv1.name}}" readonly>
         </div>
         <div class="form-group">
             <label for="name">Tên thể loại cấp 2</label>
-            <input type="text" id="name" name="name" autofocus required>
+            <input type="text" id="name" name="name" autofocus>
         </div>
         <hr>
         {{#if error}}
