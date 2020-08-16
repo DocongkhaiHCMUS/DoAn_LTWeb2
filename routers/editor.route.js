@@ -25,73 +25,75 @@ router.get("/draft", async function (req, res) {
     res.render("viewEditor/editor", {
       empty: true
     });
-  let cat1 = assign[0].category;
+  else {
+    let cat1 = assign[0].category;
 
-  let [list, total] = await Promise.all([
-    modelPost.loadPostForEditor_page(limit, offset, cat1),
-    modelPost.countPostForEditor(cat1)
-  ]);
+    let [list, total] = await Promise.all([
+      modelPost.loadPostForEditor_page(limit, offset, cat1),
+      modelPost.countPostForEditor(cat1)
+    ]);
 
-  //compute total page number
-  total = total[0].total;
-  const nPages = Math.ceil(total / limit);
-  let pageItems = [];
+    //compute total page number
+    total = total[0].total;
+    const nPages = Math.ceil(total / limit);
+    let pageItems = [];
 
-  if (1 == page)
-    pageItems.push({
-      'value': 1,
-      'active': true
-    });
-  else
-    pageItems.push({
-      'value': 1,
-    });
-
-  if (page - 3 > 2) {
-    pageItems.push({
-      'value': '...',
-      'disable': true
-    });
-  }
-
-  let top = (page + 3 < nPages - 1 ? page + 3 : nPages - 1);
-  let bot = (page - 3 > 1 ? page - 3 : 2);
-  for (let i = bot; i <= top; i++) {
-    if (i == page)
+    if (1 == page)
       pageItems.push({
-        'value': i,
+        'value': 1,
         'active': true
       });
     else
-      pageItems.push({ 'value': i });
-  }
+      pageItems.push({
+        'value': 1,
+      });
 
-  if (page + 3 < nPages - 1) {
-    pageItems.push({
-      'value': '...',
-      'disable': true
+    if (page - 3 > 2) {
+      pageItems.push({
+        'value': '...',
+        'disable': true
+      });
+    }
+
+    let top = (page + 3 < nPages - 1 ? page + 3 : nPages - 1);
+    let bot = (page - 3 > 1 ? page - 3 : 2);
+    for (let i = bot; i <= top; i++) {
+      if (i == page)
+        pageItems.push({
+          'value': i,
+          'active': true
+        });
+      else
+        pageItems.push({ 'value': i });
+    }
+
+    if (page + 3 < nPages - 1) {
+      pageItems.push({
+        'value': '...',
+        'disable': true
+      });
+    }
+
+    if (nPages == page && nPages != 1)
+      pageItems.push({
+        'value': nPages,
+        'active': true
+      });
+    else if (nPages > 1)
+      pageItems.push({
+        'value': nPages
+      });
+
+    res.render("viewEditor/editor", {
+      editor: list,
+      empty: list.length === 0,
+      pageItems,
+      prev_value: page - 1,
+      next_value: page + 1,
+      can_go_prev: page > 1,
+      can_go_next: page < nPages
     });
   }
-
-  if (nPages == page && nPages != 1)
-    pageItems.push({
-      'value': nPages,
-      'active': true
-    });
-  else if (nPages > 1)
-    pageItems.push({
-      'value': nPages
-    });
-
-  res.render("viewEditor/editor", {
-    editor: list,
-    empty: list.length === 0,
-    pageItems,
-    prev_value: page - 1,
-    next_value: page + 1,
-    can_go_prev: page > 1,
-    can_go_next: page < nPages
-  });
 });
 
 router.get("/process", async function (req, res) {
@@ -108,83 +110,85 @@ router.get("/process", async function (req, res) {
     res.render("viewEditor/editor", {
       empty: true
     });
-  let cat1 = assign[0].category;
+  else {
+    let cat1 = assign[0].category;
 
 
-  let [list, total] = await Promise.all([
-    modelPost.loadPostEditByEditor_page(limit, offset, req.session.authUser.id),
-    modelPost.countPostEditByEditor(cat1)
-  ]);
+    let [list, total] = await Promise.all([
+      modelPost.loadPostEditByEditor_page(limit, offset, req.session.authUser.id),
+      modelPost.countPostEditByEditor(cat1)
+    ]);
 
-  //compute total page number
-  total = total[0].total;
-  const nPages = Math.ceil(total / limit);
-  let pageItems = [];
+    //compute total page number
+    total = total[0].total;
+    const nPages = Math.ceil(total / limit);
+    let pageItems = [];
 
-  if (1 == page)
-    pageItems.push({
-      'value': 1,
-      'active': true
-    });
-  else
-    pageItems.push({
-      'value': 1,
-    });
-
-  if (page - 3 > 2) {
-    pageItems.push({
-      'value': '...',
-      'disable': true
-    });
-  }
-
-  let top = (page + 3 < nPages - 1 ? page + 3 : nPages - 1);
-  let bot = (page - 3 > 1 ? page - 3 : 2);
-  for (let i = bot; i <= top; i++) {
-    if (i == page)
+    if (1 == page)
       pageItems.push({
-        'value': i,
+        'value': 1,
         'active': true
       });
     else
-      pageItems.push({ 'value': i });
-  }
+      pageItems.push({
+        'value': 1,
+      });
 
-  if (page + 3 < nPages - 1) {
-    pageItems.push({
-      'value': '...',
-      'disable': true
+    if (page - 3 > 2) {
+      pageItems.push({
+        'value': '...',
+        'disable': true
+      });
+    }
+
+    let top = (page + 3 < nPages - 1 ? page + 3 : nPages - 1);
+    let bot = (page - 3 > 1 ? page - 3 : 2);
+    for (let i = bot; i <= top; i++) {
+      if (i == page)
+        pageItems.push({
+          'value': i,
+          'active': true
+        });
+      else
+        pageItems.push({ 'value': i });
+    }
+
+    if (page + 3 < nPages - 1) {
+      pageItems.push({
+        'value': '...',
+        'disable': true
+      });
+    }
+
+    if (nPages == page && nPages != 1)
+      pageItems.push({
+        'value': nPages,
+        'active': true
+      });
+    else if (nPages > 1)
+      pageItems.push({
+        'value': nPages
+      });
+
+    list = list.map(function (item) {
+      if (item.status == 1)
+        item.status = "Đã xuất bản";
+      if (item.status == 0)
+        item.status = "Từ chối";
+      return item;
+    })
+
+    res.render("viewEditor/editor", {
+      editor: list,
+      empty: list.length === 0,
+      pageItems,
+      process: true,
+      prev_value: page - 1,
+      next_value: page + 1,
+      can_go_prev: page > 1,
+      can_go_next: page < nPages
     });
   }
-
-  if (nPages == page && nPages != 1)
-    pageItems.push({
-      'value': nPages,
-      'active': true
-    });
-  else if (nPages > 1)
-    pageItems.push({
-      'value': nPages
-    });
-
-  list = list.map(function (item) {
-    if (item.status == 1)
-      item.status = "Đã xuất bản";
-    if (item.status == 0)
-      item.status = "Từ chối";
-    return item;
-  })
-
-  res.render("viewEditor/editor", {
-    editor: list,
-    empty: list.length === 0,
-    pageItems,
-    process: true,
-    prev_value: page - 1,
-    next_value: page + 1,
-    can_go_prev: page > 1,
-    can_go_next: page < nPages
-  });
 });
 
 
