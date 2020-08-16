@@ -21,11 +21,11 @@ router.get("/draft", async function (req, res) {
 
   //get data
   let assign = await assignModel.singleByUser(req.session.authUser.id);
-  let cat1 = assign[0].category;
-  if (cat1 == undefined || cat1 == '' || cat1 == [])
+  if (assign == undefined || assign == '' || assign == [])
     res.render("viewEditor/editor", {
       empty: true
     });
+  let cat1 = assign[0].category;
 
   let [list, total] = await Promise.all([
     modelPost.loadPostForEditor_page(limit, offset, cat1),
@@ -104,11 +104,13 @@ router.get("/process", async function (req, res) {
 
   //get data
   let assign = await assignModel.singleByUser(req.session.authUser.id);
-  let cat1 = assign[0].category;
-  if (cat1 == undefined || cat1 == '' || cat1 == [])
+  if (assign == undefined || assign == '' || assign == [])
     res.render("viewEditor/editor", {
       empty: true
     });
+  let cat1 = assign[0].category;
+
+
   let [list, total] = await Promise.all([
     modelPost.loadPostEditByEditor_page(limit, offset, req.session.authUser.id),
     modelPost.countPostEditByEditor(cat1)
