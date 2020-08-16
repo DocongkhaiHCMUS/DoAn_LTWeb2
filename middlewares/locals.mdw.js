@@ -178,9 +178,9 @@ module.exports = function (app) {
 
             //local 4 highlights posts
             // highlights posts are the posts are most viewed the current way the number of days specified
-            // in there number of days are 40 days
+            // in there number of days are 10 days
             let highlightPost = listPost.filter(function (item) {
-                return moment().diff(moment(item.time), 'days') <= 40;
+                return moment().diff(moment(item.time), 'days') <= 10;
             })
                 .sort(function (a, b) {
                     return b.views - a.views;
