@@ -60,9 +60,9 @@ router.post('/', function (req, res) {
         display_name: req.body.display_name,
         password: hashPass,
         email: req.body.email,
-        DOB: moment(req.body.dob, 'DD/MM/YYYY').format('YYY/MM/YYY'),
+        DOB: moment(req.body.dob, 'DD/MM/YYYY').format('YYY/MM/DD'),
         permission: 1,
-        time_out: moment().add(5,'minute').format("YYYY/MM/DD HH:mm:ss")
+        time_out: moment().add(config.time_out.timeout,'minute').format("YYYY/MM/DD HH:mm:ss")
     }
 
     // console.log(new_user);
