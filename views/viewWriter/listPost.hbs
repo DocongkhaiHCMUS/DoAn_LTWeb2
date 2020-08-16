@@ -19,24 +19,23 @@
 			<h2>Danh sách bài viết của Phóng viên "{{lcUser.display_name}}"</h2>
 		</div>
 		<div class="body-panel">
-			<select class="form-control" id="statusBaiViet">
-				<option value="0" selected>Tất cả bài viết</option>
-				<option value="1">Các bài viết đã được xuất bản</option>
-				<option value="2">Các bài viết đã được duyệt chưa xuất bản</option>
-				<option value="3">Các bài viết chưa được duyệt</option>
-				<option value="4">Các bài viết bị từ chối</option>
-			</select>
-			<button onclick="locBaiViet()" class="btn btn-info">Lọc bài viết</button>
-			<br>
-			<div class="row hidden-md-up">
+			<div class="head">
+				<select class="form-control" id="statusBaiViet">
+					<option value="0" selected>Tất cả bài viết</option>
+					<option value="1">Các bài viết đã được xuất bản</option>
+					<option value="2">Các bài viết đã được duyệt chưa xuất bản</option>
+					<option value="3">Các bài viết chưa được duyệt</option>
+					<option value="4">Các bài viết bị từ chối</option>
+				</select>
+				<button onclick="locBaiViet()" class="btn btn-info">Lọc bài viết</button>
+			</div>
+			<div class="row body">
 				{{#each this.list}}
 				<div class="col-md-6 col-sm-6">
 					<article class="article">
-
 						<div class="article-img">
 							<img class="img-responsive" src="/public/img/img_post/{{folder_img}}/{{avatar}}.jpg" alt="">
 						</div>
-
 						<div class="article-body">
 							<ul class="article-info">
 								<li class="article-category">
@@ -52,19 +51,7 @@
 							<h4 class="article-title">
 								<a href="/post/{{id}}">{{title}}</a>
 							</h4>
-							<h5 class="article-description">
-								{{tiny_des}}
-							</h5>
-							{{#when status 'eq' 3}}
-							<a href="/writer/modifiedpost/{{id}}" class="btn btn-secondary">
-								Chỉnh sửa
-							</a>
-							{{/when}}
-							{{#when status 'eq' 4}}
-							<a href="/writer/modifiedpost/{{list.id}}" class="btn btn-secondary">
-								Chỉnh sửa
-							</a>
-							{{/when}}
+							{{#when status 'eq' 1}}
 							<ul class="article-meta">
 								<li>
 									<i class="fa fa-clock-o">&nbsp;</i>{{parseTime publish_date}}
@@ -73,34 +60,50 @@
 									<i class="fa fa-eye">&nbsp;</i>{{views}}
 								</li>
 							</ul>
-							{{#when status 'eq' 1}}
-							<ul class="article-meta">
-								<li>
-									<h3>Đã được xuất bản </h3>
-								</li>
-							</ul>
 							{{/when}}
-							{{#when status 'eq' 2}}
-							<ul class="article-meta">
-								<li>
-									<h3>Đã được kiểm duyệt, chưa được xuất bản</h3>
-								</li>
-							</ul>
-							{{/when}}
-							{{#when status 'eq' 3}}
-							<ul class="article-meta">
-								<li>
-									<h3>Chưa được duyệt</h3>
-								</li>
-							</ul>
-							{{/when}}
-							{{#when status 'eq' 4}}
-							<ul class="article-meta">
-								<li>
-									<h3>Đã từ chối</h3>
-								</li>
-							</ul>
-							{{/when}}
+							<h5 class="article-description">
+								{{tiny_des}}
+							</h5>
+							<div class="foot-card">
+								{{#when status 'eq' 3}}
+								<a href="/writer/modifiedpost/{{id}}" class="btn btn-primary">
+									Chỉnh sửa
+								</a>
+								{{/when}}
+								{{#when status 'eq' 4}}
+								<a href="/writer/modifiedpost/{{list.id}}" class="btn btn-primary">
+									Chỉnh sửa
+								</a>
+								{{/when}}
+								{{#when status 'eq' 1}}
+								<ul class="article-meta lb">
+									<li>
+										<h3 info>Đã được xuất bản </h3>
+									</li>
+								</ul>
+								{{/when}}
+								{{#when status 'eq' 2}}
+								<ul class="article-meta lb">
+									<li>
+										<h3 class="info">Đã được kiểm duyệt, chưa được xuất bản</h3>
+									</li>
+								</ul>
+								{{/when}}
+								{{#when status 'eq' 3}}
+								<ul class="article-meta lb">
+									<li>
+										<h3 class="danger">Chưa được duyệt</h3>
+									</li>
+								</ul>
+								{{/when}}
+								{{#when status 'eq' 4}}
+								<ul class="article-meta lb">
+									<li>
+										<h3 class="danger">Đã từ chối</h3>
+									</li>
+								</ul>
+								{{/when}}
+							</div>
 							<h4>{{reason}}</h4>
 						</div>
 					</article>

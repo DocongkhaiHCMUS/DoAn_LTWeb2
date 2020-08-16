@@ -3,6 +3,77 @@
   margin: 0;
 }
 
+.info {
+    font-size: 15px;
+    font-weight: 600;
+    text-transform: capitalize;
+    padding: 9px;
+    margin: 0;
+    background: #4dd0fd;
+    color: #fff;
+    border-radius: 6px;
+}
+
+ul.article-meta {}
+
+ul.lb {
+    margin: 0px !important;
+    padding: 0px;
+}
+
+.body h3.danger {
+    margin: 0;
+    border: 1px solid;
+    background: #ff556a;
+    color: #fff;
+    font-size: 15px;
+    font-weight: 600;
+    padding: 8px;
+    border-radius: 6px;
+    text-transform: capitalize;
+}
+
+h3.danger {}
+
+.body .foot-card {
+    display: flex;
+    justify-content: space-between;
+    width: 92%;
+    margin: auto;
+}
+
+.body .article .article-title > a {
+    line-height: 2.4rem;
+}
+
+.body .btn.btn-primary {
+    font-weight: 550;
+    font-size: 15px;
+}
+
+.body article.article {
+    border: 1px solid #398b93;
+    padding: 10px;
+    border-radius: 6px;
+    box-shadow: 5px 4px 2px 1px #99d1d6;
+}
+
+.head select {
+    font-size: 18px;
+    height: 50px;
+    padding: 10px;
+    border: 2px solid #398b93;
+}
+
+.panel .head .btn {margin-left: 1%;font-size: 16px;font-weight: 600;text-transform: capitalize;}
+
+.head {
+    margin-bottom: 5%;
+    display: flex;
+    justify-content: space-around;
+    font-weight: 550 !important;
+}
+
 .body-panel {
     width: 90%;
     margin: 5% auto;
@@ -861,6 +932,13 @@ h2.des_title {
   color: #fff;
   font-weight: 350;
   text-align: justify;
+}
+
+.body .article-description {
+    color: #6f6f6f !important;
+    font-weight: 500;
+    line-height: 2.1rem;
+    margin: 3% 0px;
 }
 
 .article.widget-article .article-img img {
