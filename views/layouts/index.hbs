@@ -5,7 +5,7 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	
+
 	<title>Magnews - Website tin tức Tổng hợp</title>
 	<link
 		href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
@@ -167,15 +167,17 @@
 									</li>
 									{{/if}}
 								</ul>
-
 								<ul class="nav navbar-nav navbar-right">
 									<li class="dropdown account">
 										<a href="#" class="dropdown-toggle account" data-toggle="dropdown" role="button"
 											aria-haspopup="true" aria-expanded="false">
-											<img class="avatar" {{#if lcUser.avartar}}
-												src="/public/img/img_avatar/{{lcUser.avartar}}" {{else}}
-												src="/public/img/img_avatar/default_user.png"
-												style="border: 1px solid black;" {{/if}} alt="avatar">
+											{{#if lcUser.avartar}}
+											<img class="avatar" src="/public/img/img_avatar/{{lcUser.avartar}}"
+												style="border: 1px solid black;" alt="avatar">
+											{{else}}
+											<img class="avatar" src="/public/img/img_avatar/default_user.png"
+												style="border: 1px solid black;" alt="avatar">
+											{{/if}}
 											{{#if lcUser}}
 											{{lcUser.display_name}}
 											<i class="fa fa-angle-double-down" aria-hidden="true"></i>

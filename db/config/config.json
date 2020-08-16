@@ -10,6 +10,9 @@
         "limit": 6,
         "limitAdmin":10
     },
+    "time_out":{
+        "timeout": 5
+    },
     "server": {
         "PORT": 3000
     },

@@ -3,6 +3,11 @@
   margin: 0;
 }
 
+.body-panel {
+    width: 90%;
+    margin: 5% auto;
+}
+
 .file-caption-main {
     margin-top: 20px;
 }

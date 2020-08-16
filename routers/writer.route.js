@@ -7,112 +7,6 @@ const multer  = require('multer')
 const path = require("path");
 const modelImageCaption = require('../models/img-caption.route');
 
-// //////////
-// function xoa_dau(str) {
-//   str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a");
-//   str = str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, "e");
-//   str = str.replace(/ì|í|ị|ỉ|ĩ/g, "i");
-//   str = str.replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g, "o");
-//   str = str.replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, "u");
-//   str = str.replace(/ỳ|ý|ỵ|ỷ|ỹ/g, "y");
-//   str = str.replace(/đ/g, "d");
-//   str = str.replace(/À|Á|Ạ|Ả|Ã|Â|Ầ|Ấ|Ậ|Ẩ|Ẫ|Ă|Ằ|Ắ|Ặ|Ẳ|Ẵ/g, "A");
-//   str = str.replace(/È|É|Ẹ|Ẻ|Ẽ|Ê|Ề|Ế|Ệ|Ể|Ễ/g, "E");
-//   str = str.replace(/Ì|Í|Ị|Ỉ|Ĩ/g, "I");
-//   str = str.replace(/Ò|Ó|Ọ|Ỏ|Õ|Ô|Ồ|Ố|Ộ|Ổ|Ỗ|Ơ|Ờ|Ớ|Ợ|Ở|Ỡ/g, "O");
-//   str = str.replace(/Ù|Ú|Ụ|Ủ|Ũ|Ư|Ừ|Ứ|Ự|Ử|Ữ/g, "U");
-//   str = str.replace(/Ỳ|Ý|Ỵ|Ỷ|Ỹ/g, "Y");
-//   str = str.replace(/Đ/g, "D");
-//   return str;
-// }
-
-// function handlingP(str, img_cap, pos_cap) {
-//   if (str.includes('+++')) {
-//       str =
-//           `<figure>
-//           <img src="/public/img/img_post/${img_cap[pos_cap.i].folder}/${img_cap[pos_cap.i].name_img}.jpg" alt="" style="width:100%">
-//           <figcaption>${img_cap[pos_cap.i].caption}</figcaption>
-//       </figure>`;
-//       pos_cap.i = pos_cap.i + 1;
-//   }
-
-//   if (str.includes('xxx')) {
-
-//       str =
-//           `<figure>
-//           <img src="/public/img/img_post/${img_cap[pos_cap.i].folder}/${img_cap[pos_cap.i].name_img}.jpg" alt="" style="width:100%">
-//       </figure>`;
-//       pos_cap.i = pos_cap.i + 1;
-//   }
-
-//   let pat = /<em\*\* ([^\<\>\*]+) \*\*em>/g;
-//   let pat_1 = /<em\*\* ([^\<\>\*]+) \*\*em>\s*\r\n/g;
-//   if (pat_1.test(str)) {
-//       str = str.replace(pat_1, function (x, group1) {
-//           return `<\p><p class="post_des"><em>${group1}</em></p><p class="post_des">`;
-//       });
-//   }
-//   else if (pat.test(str)) {
-//       str = str.replace(pat, function (x, group1) {
-//           return `<em>${group1}</em>`;
-//       });
-//   }
-
-//   let pat1 = /<strong\*\* ([^\<\>\*]+) \*\*strong>/g;
-//   let pat1_1 = /<strong\*\* ([^\<\>\*]+) \*\*strong>\s*\r\n/g;
-//   if (pat1_1.test(str)) {
-//       str = str.replace(pat1_1, function (x, group1) {
-//           return `<\p><p class="post_des"><strong>${group1}</strong></p><p class="post_des">`;
-//       });
-//   }
-//   else if (pat1.test(str)) {
-//       str = str.replace(pat1, function (x, group1) {
-//           return `<strong>${group1}</strong>`;
-//       });
-//   }
-
-
-//   let pat2 = /<under\*\* ([^\<\>\*]+) \*\*under>/g;
-//   let pat2_1 = /<under\*\* ([^\<\>\*]+) \*\*under>\s*\r\n/g;
-//   if (pat2_1.test(str)) {
-//       str = str.replace(pat1_1, function (x, group1) {
-//           return `<\p><p class="post_des"><u>${group1}</u></p><p class="post_des">`;
-//       });
-//   }
-//   else if (pat2.test(str)) {
-//       str = str.replace(pat2, function (x, group1) {
-//           return `<u>${group1}</u>`;
-//       });
-//   }
-
-//   let pat3 = /<sup\*\* ([^\<\>\*]+) \*\*sup>/g;
-//   if (pat3.test(str)) {
-//       str = str.replace(pat3, function (x, group1) {
-//           return `<sup>${group1}</sup>`;
-//       });
-//   }
-
-//   str = `<p class="post_des">${str}</p>`;
-
-//   return str;
-// }
-// function convertContent(post, img_cap) {
-//   let content = post.full_des;
-//   let res = content.split("\r\n\r");
-
-//   var pos_cap = { 'i': 0 }
-//   for (let i = 0; i < res.length; i++) {
-//       res[i] = { 'text': handlingP(res[i], img_cap, pos_cap) };
-//   }
-
-//   post.full_des = res;
-//   return post;
-// }
-
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 //////////upload image editor//////////
   var storage = multer.diskStorage({
       destination: function (req, file, cb) {
@@ -293,8 +187,7 @@ router.get('/listpost/', async function (req, res) {
 
     res.render('viewWriter/listPost', {
       list: list,
-      empty: list.length === 0,
-      layout: false,
+      empty: list.length === 0
     });
   }),
 router.get('/listpost/:status', async function (req, res) {
@@ -302,8 +195,7 @@ router.get('/listpost/:status', async function (req, res) {
 
     res.render('viewWriter/listPost', {
       list: list,
-      empty: list.length === 0,
-      layout: false,
+      empty: list.length === 0
     });
 }),
 
