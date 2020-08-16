@@ -288,12 +288,14 @@ module.exports = function (app) {
             });
 
             for (let i = 0; i < mostViewedPost.length; i++) {
-                mostViewedPost[i].listLatestPost.map(function (item1) {
-                    return convertCat(item1, list2, list1);
-                });
-                mostViewedPost[i].listMostViewedPost.map(function (item1) {
-                    return convertCat(item1, list2, list1);
-                });
+                if (mostViewedPost[i].listLatestPost != undefined && mostViewedPost[i].listLatestPost.length > 0)
+                    mostViewedPost[i].listLatestPost.map(function (item1) {
+                        return convertCat(item1, list2, list1);
+                    });
+                if (mostViewedPost[i].listMostViewedPost != undefined && mostViewedPost[i].listMostViewedPost.length > 0)
+                    mostViewedPost[i].listMostViewedPost.map(function (item1) {
+                        return convertCat(item1, list2, list1);
+                    });
             }
             Cache.set('mostViewedPost', mostViewedPost);
 

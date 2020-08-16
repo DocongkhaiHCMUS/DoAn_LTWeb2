@@ -50,6 +50,14 @@ router.get('/category/add', function (req, res) {
     }
 });
 
+router.get('/category/add/is-available', async function (req, res) {
+    const cat = await cateModel.singleCat1ByCat1Name(req.query.category)
+    if (!cat[0]) {
+        return res.json(true);
+    }
+    return res.json(false);
+})
+
 router.post('/category/add', async function (req, res) {
     await cateModel.add1(req.body);
     res.render('viewAdmin/viewCategory/add.hbs');
@@ -121,6 +129,15 @@ router.get('/categorylv2/add/:id', async function (req, res) {
         res.render('viewAdmin/viewCategory/addLv2.hbs', { catLv1: cat1[0] });
     }
 });
+
+router.get('/categorylv2/add/is-available', async function (req, res) {
+    const cat2 = await cateModel.singleCat2ByCat1IDCat2Name(req.query.category2,req.query.cat1)
+    if (!cat2[0]) {
+        return res.json(true);
+    }
+    return res.json(false);
+});
+
 router.post('/categorylv2/add', async function (req, res) {
     await cateModel.add2(req.body);
     res.redirect(req.headers.referer);
