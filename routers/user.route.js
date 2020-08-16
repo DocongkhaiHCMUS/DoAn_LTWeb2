@@ -41,7 +41,7 @@ router.get('/profile/', async function (req, res) {
         display_name: req.body.display_name,
         user_name: req.body.user_name,
         email: req.body.email,
-        DOB: (req.body.DOB == undefined ? null : moment(req.body.dob, "DD/MM/YYYY").format("YYYY/MM/DD")),
+        DOB: (req.body.DOB == undefined ? null : moment(req.body.DOB, "DD/MM/YYYY").format("YYYY/MM/DD")),
         gender: Number(req.body.gender),
         avatar: req.file.filename,
         delete: 0
@@ -54,7 +54,7 @@ router.get('/profile/', async function (req, res) {
         display_name: req.body.display_name,
         user_name: req.body.user_name,
         email: req.body.email,
-        DOB: (req.body.DOB == undefined ? null : moment(req.body.dob, "DD/MM/YYYY").format("YYYY/MM/DD")),
+        DOB: (req.body.DOB == undefined ? null : moment(req.body.DOB, "DD/MM/YYYY").format("YYYY/MM/DD")),
         gender: Number(req.body.gender),
         //avatar : req.file.filename,
         delete: 0
