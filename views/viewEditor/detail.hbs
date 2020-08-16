@@ -1,0 +1,199 @@
+{{#section 'css'}}
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
+<link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css">
+<script src="https://cdn.tiny.cloud/1/rbcj6cato868rot4qvtt4pqj81xjm7fc42ekdwqtooawu1rh/tinymce/5/tinymce.min.js"
+    referrerpolicy="origin"></script>
+{{/section}}
+
+{{#section 'js'}}
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+<script
+    src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
+</script>
+<script>
+    $('#publish_date').datetimepicker({
+        format: 'H:i, d/m/Y',
+        timepicker: true,
+        mask: true
+    });
+
+    $(document).ready(function () {
+        $('#tagRO').select2();
+        $('#tag').select2();
+    });
+
+    tinymce.init({
+        selector: '#full_des',
+        plugins: '',
+        menubar: false,
+        toolbar: '',
+        readonly: 1
+    });
+
+
+    $('#btnTuChoi').on('click', function (e) {
+        e.preventDefault();
+        $('#alert').empty().addClass('d-none');
+        if ($('.special.general').hasClass('d-none'))
+            $('.special.general').removeClass('d-none');
+        if ($('.special.pd').hasClass('d-none') == false)
+            $('.special.pd').addClass('d-none');
+        if ($('.special.tc').hasClass('d-none'))
+            $('.special.tc').removeClass('d-none');
+        if ($('#btnPheDuyet').hasClass('d-none'))
+            $('#btnPheDuyet').removeClass('d-none');
+        if ($('#btnPheDuyetDY').hasClass('d-none') == false)
+            $('#btnPheDuyetDY').addClass('d-none');
+        $(this).addClass('d-none');
+        $('#btnTuChoiDY').removeClass('d-none');
+    })
+    $('#btnPheDuyet').on('click', function (e) {
+        e.preventDefault();
+        $('#alert').empty().addClass('d-none');
+        if ($('.special.general').hasClass('d-none'))
+            $('.special.general').removeClass('d-none');
+        if ($('.special.tc').hasClass('d-none') == false)
+            $('.special.tc').addClass('d-none');
+        if ($('.special.pd').hasClass('d-none'))
+            $('.special.pd').removeClass('d-none');
+        if ($('#btnTuChoi').hasClass('d-none'))
+            $('#btnTuChoi').removeClass('d-none');
+        if ($('#btnTuChoiDY').hasClass('d-none') == false)
+            $('#btnTuChoiDY').addClass('d-none');
+        $(this).addClass('d-none');
+        $('#btnPheDuyetDY').removeClass('d-none');
+    })
+
+    $('#frmEditor').on('submit', function (e) {
+        e.preventDefault();
+        if ($('#btnTuChoiDY').hasClass('d-none') == false) {
+            if ($('#reason').val() == "") {
+                $('#alert>p').empty();
+                $('#alert').append("<p>Mời nhập dữ liệu</p>");
+                $('#alert').removeClass('d-none')
+            }
+            else {
+                $('#frmEditor').off('submit');
+                $('#frmEditor').attr('action', '/editor/deny').submit();
+            }
+        }
+        else if ($('#btnPheDuyetiDY').hasClass('d-none') == false) {
+            if ($('#publish_date').val() == "") {
+                $('#alert>p').empty();
+                $('#alert').append("<p>Mời nhập ngày xuất bản</p>");
+                $('#alert').removeClass('d-none')
+            }
+            else {
+                $('#frmEditor').off('submit');
+                $('#frmEditor').attr('action', '/editor/accept').submit();
+            }
+        }
+    })
+</script>
+{{/section}}
+<div class="content-body">
+    <div class="title-editor">
+        <h4>Biên tập viên</h4>
+    </div>
+    <div class="panel panel-default">
+        <!-- Default panel contents -->
+        <div class="panel-heading">
+            <h2>Chi tiết bài viết cần duyệt</h2>
+        </div>
+        <form id="frmEditor" class="frmEditor" method="post">
+            <div class="form-group">
+                <label for="">ID</label>
+                <input type="text" name="id" id="id" value="{{post.id}}" readonly>
+            </div>
+            <div class="form-group">
+                <label for="">Tiêu đề</label>
+                <textarea type="text" name="title" id="title" rows="4" readonly>{{post.title}}</textarea>
+            </div>
+            <div class="form-group">
+                <label for="">ảnh đại diện</label>
+                <img src="/public/img/img_post/{{post.folder_img}}/{{post.avatar}}.jpg" alt="" srcset="">
+            </div>
+            <div class="form-group">
+                <label for="">Tóm tắt</label>
+                <textarea type="text" name="tiny_des" id="tiny_des" rows="4" readonly>{{post.tiny_des}}</textarea>
+            </div>
+            <div class="form-group">
+                <label for="">Nội dung</label>
+                <textarea type="text" name="full_des" id="full_des" rows="21" readonly>{{post.full_des}}</textarea>
+            </div>
+            <div class="form-group">
+                <label for="">Chuyên mục</label>
+                <select name="categoryRO" id="categoryRO" disabled>
+                    {{#each listCat2Assign}}
+                    <option value="{{id}}" {{#if active}} selected {{/if}}>{{name}}</option>
+                    {{/each}}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="">Nhãn</label>
+                <select class="js-example-basic-single" name="tagRO" id="tagRO" disabled multiple>
+                    {{#each listTag}}
+                    <option value="{{id}}" {{#if active}} selected {{/if}}>
+                        {{name}}
+                    </option>
+                    {{/each}}
+                </select>
+            </div>
+            <hr class="special d-none general">
+            <h4 class="special d-none general">Hiệu chỉnh thông tin</h4>
+            <div id="alert" class="alert alert-danger d-none" role="alert">
+            </div>
+            <div class="form-group special d-none pd">
+                <label for="">Chuyên mục</label>
+                <select name="category" id="category">
+                    {{#each listCat2Assign}}
+                    <option value="{{id}}" {{#if active}} selected {{/if}}>{{name}}</option>
+                    {{/each}}
+                </select>
+            </div>
+            <div class="form-group special d-none pd">
+                <label for="">Nhãn</label>
+                <select class="js-example-basic-single" name="tag" id="tag" multiple>
+                    {{#each listTag}}
+                    <option value="{{id}}" {{#if active}} selected {{/if}}>
+                        {{name}}
+                    </option>
+                    {{/each}}
+                </select>
+            </div>
+            <div class="form-group special d-none pd">
+                <label for="">Ngày xuất bản</label>
+                <input type="text" name="publish_date" id="publish_date" value="{{parseTime post.publish_date}}">
+            </div>
+            <div class="form-group special d-none tc">
+                <label for="">Lý do từ chối</label>
+                <textarea type="text" name="reason" id="reason" rows="3">{{post.reason}}</textarea>
+            </div>
+
+            <hr>
+            <div class="form-group flex">
+                <a class="btn btn-primary" href="/editor">
+                    <i class="fa fa-backward" aria-hidden="true">&nbsp;</i>
+                    Quay lại
+                </a>
+                <button class="btn btn-danger" id="btnTuChoi">
+                    <i class="fa fa-ban" aria-hidden="true">&nbsp;</i>
+                    Từ chối
+                </button>
+                <button class="btn btn-danger d-none" type="submit" id="btnTuChoiDY" formaction="/editor/deny">
+                    <i class="fa fa-ban" aria-hidden="true">&nbsp;</i>
+                    Đồng ý Từ chối
+                </button>
+                <button class="btn btn-success" id="btnPheDuyet">
+                    <i class="fa fa-check" aria-hidden="true">&nbsp;</i>
+                    Phê Duyệt
+                </button>
+                <button class="btn btn-success d-none" type="submit" id="btnPheDuyetDY">
+                    <i class="fa fa-check" aria-hidden="true">&nbsp;</i>
+                    Đồng ý Phê Duyệt
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
