@@ -43,7 +43,7 @@ const restrict = require('./middlewares/authenticated.mdw');
 require('./middlewares/locals.mdw')(app);
 
 //reuire check timeout Subscriber
-require('./middlewares/checkTimeout.mdw');
+const checktimeout = require('./middlewares/checkTimeout.mdw');
 
 // CODE IN HERE
 
@@ -51,36 +51,36 @@ require('./middlewares/checkTimeout.mdw');
 app.use(require('./middlewares/set_layout_guest.mdw'));
 
 //set link home
-app.get('/', require('./routers/home.route'))
+app.get('/',checktimeout, require('./routers/home.route'))
 
 //require all router
-app.use('/guest', require('./routers/default.route'));
+app.use('/guest', checktimeout, require('./routers/default.route'));
 
-app.use('/sub', restrict, require('./routers/subscriber.route'));
+app.use('/sub', checktimeout, restrict, require('./routers/subscriber.route'));
 
-app.use('/writer', restrict, require('./routers/writer.route'));
+app.use('/writer', checktimeout, restrict, require('./routers/writer.route'));
 
-app.use('/admin', restrict, require('./routers/admin.route'));
+app.use('/admin', checktimeout, restrict, require('./routers/admin.route'));
 
-app.use('/editor', restrict, require('./routers/editor.route'));
+app.use('/editor', checktimeout, restrict, require('./routers/editor.route'));
 
-app.use('/login', require('./routers/login.route'));
+app.use('/login', checktimeout, require('./routers/login.route'));
 
-app.use('/register', require('./routers/register.route'));
+app.use('/register', checktimeout, require('./routers/register.route'));
 
-app.use('/post', require('./routers/post.route'));
+app.use('/post', checktimeout, require('./routers/post.route'));
 
-app.use('/category', require('./routers/category.route'));
+app.use('/category', checktimeout, require('./routers/category.route'));
 
-app.use('/tag', require('./routers/tag.route'));
+app.use('/tag', checktimeout, require('./routers/tag.route'));
 
-app.use('/user', require('./routers/user.route'));
+app.use('/user', checktimeout, require('./routers/user.route'));
 
-app.use('/pass', require('./routers/password.route'));
+app.use('/pass', checktimeout, require('./routers/password.route'));
 
-app.use('/comment', require('./routers/comment.route'));
+app.use('/comment', checktimeout, require('./routers/comment.route'));
 
-app.use('/search', require('./routers/search.route'));
+app.use('/search', checktimeout, require('./routers/search.route'));
 
 
 //error handling
