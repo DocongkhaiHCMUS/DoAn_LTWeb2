@@ -1,16 +1,78 @@
+{{#section 'js'}}
+<script>
+    //handling when btnSignIn submit
+    $('#frmAdd').submit(function (e) {
+        e.preventDefault();
+
+        if (validate() == 1) {
+
+            // remove all error before 
+            $('#txtValidate').empty();
+            // add error text
+            let error = $("<p></p>").append("<i class='fa fa-exclamation-triangle' aria-hidden='true'>&nbsp;</i>Vui lòng nhập thông tin !");
+            $('#txtValidate').append(error);
+            if ($('#txtValidate').hasClass('d-none'))
+                $('#txtValidate').removeClass('d-none')
+        }
+        else {
+           validateAvailable();
+        //  $('#frmAdd').off('submit').submit();
+        }
+    });
+
+    function validate() {
+        let name = $('#name').val();
+        let des = $('#des').val();
+        if (!name || !des)
+            return 1;
+    }
+    function validateAvailable() {
+        let name = $('#name').val();
+
+        $.getJSON(`/admin/tag/add/is-available?tag=${name}`, function (data) {
+            if (data === true) {
+                if ($('#txtValidate').hasClass('d-none') == false)
+                    $('#txtValidate').addClass('d-none')
+                $('#frmAdd').off('submit').submit();
+            }
+            else {
+                // remove all error before 
+                $('#txtValidate').empty();
+                // add error text
+                let error = $("<p></p>").append("<i class='fa fa-exclamation-triangle' aria-hidden='true'>&nbsp;</i>Tên nhãn đã tồn tại !");
+                $('#txtValidate').append(error);
+                if ($('#txtValidate').hasClass('d-none'))
+                    $('#txtValidate').removeClass('d-none')
+            }
+        })
+    }
+</script>
+{{/section}}
 <!-- main content -->
 <div class="wrapper">
-    <form class="frm" action="" method="POST">
+    <form id="frmAdd" class="frm" action="" method="POST" >       
         <h4 class="title">Thêm Nhãn</h4>
         <div class="form-group">
             <label for="name">Tên nhãn</label>
-            <input type="text" id="name" name="name" autofocus required>
+            <input type="text" id="name" name="name" autofocus>
         </div>
         <div class="form-group">
             <label for="name">Mô tả</label>
-            <textarea placeholder="Viết gì đó..." name="des"></textarea>
+            <textarea placeholder="Viết gì đó..." name="des" id="des"></textarea>
         </div>
         <hr>
+        {{#if error}}
+        <h3 class="alert">
+            <p>
+                <i class='fa fa-exclamation-triangle' aria-hidden='true'>&nbsp;</i>
+                {{error.err}}
+            <p>
+        </h3>
+        {{/if}}
+
+        <h4 id="txtValidate" class="alert d-none">
+
+        </h4>
         <div class="form-group d-flex">
             <a class="btn btn-primary" href="/admin/tag" role="button" title="Back to List">
                 <i class="fa fa-backward" aria-hidden="true"></i>

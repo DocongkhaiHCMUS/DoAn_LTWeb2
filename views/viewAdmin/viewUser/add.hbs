@@ -50,9 +50,7 @@
                 $('#txtValidate').removeClass('d-none')
         }
         else {
-            if ($('#txtValidate').hasClass('d-none') == false)
-                $('#txtValidate').addClass('d-none')
-            $('#frmReg').off('submit').submit();
+           validateAvailable();
         }
     });
 
@@ -82,6 +80,27 @@
 
         if (!regexE.test(email))
             return 1;
+    }
+
+    function validateAvailable() {
+        let name = $('#inputName').val();
+
+        $.getJSON(`/register/is-available?user=${name}`, function (data) {
+            if (data === true) {
+                if ($('#txtValidate').hasClass('d-none') == false)
+                    $('#txtValidate').addClass('d-none')
+                $('#frmReg').off('submit').submit();
+            }
+            else {
+                // remove all error before 
+                $('#txtValidate').empty();
+                // add error text
+                let error = $("<p></p>").append("<i class='fa fa-exclamation-triangle' aria-hidden='true'>&nbsp;</i>UserName đã tồn tại !");
+                $('#txtValidate').append(error);
+                if ($('#txtValidate').hasClass('d-none'))
+                    $('#txtValidate').removeClass('d-none')
+            }
+        })
     }
 </script>
 

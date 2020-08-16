@@ -60,6 +60,7 @@
                 {{/if}}
             </select>
         </div>
+        {{#if this.user.isGuest}}
         <div class="form-group">
             <label for="time_out">
                 <i class="fa fa-clock-o" aria-hidden="true"></i>
@@ -67,6 +68,7 @@
             </label>
             <input type="text" id="txttime_out" name="time_out" value="{{parseTime this.user.time_out}}">
         </div>
+        {{/if}}
         <div class="form-group">
             <label for="create_date">Ngày tạo</label>
             <input type="text" id="" name="" value="{{parseTime this.user.create_date}}" readonly>
