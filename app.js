@@ -4,20 +4,20 @@ const express = require('express');
 var hbs = require('handlebars');
 hbs.registerHelper("when", (operand_1, operator, operand_2, options) => {
     let operators = {
-      'eq': (l,r) => l == r,              
-      'noteq': (l,r) => l != r,
-      'gt': (l,r) => (+l) > (+r),                        
-      'gteq': (l,r) => ((+l) > (+r)) || (l == r),        
-      'lt': (l,r) => (+l) < (+r),                        
-      'lteq': (l,r) => ((+l) < (+r)) || (l == r),        
-      'or': (l,r) => l || r,                             
-      'and': (l,r) => l && r,                            
-      '%': (l,r) => (l % r) === 0
+        'eq': (l, r) => l == r,
+        'noteq': (l, r) => l != r,
+        'gt': (l, r) => (+l) > (+r),
+        'gteq': (l, r) => ((+l) > (+r)) || (l == r),
+        'lt': (l, r) => (+l) < (+r),
+        'lteq': (l, r) => ((+l) < (+r)) || (l == r),
+        'or': (l, r) => l || r,
+        'and': (l, r) => l && r,
+        '%': (l, r) => (l % r) === 0
     }
-    let result = operators[operator](operand_1,operand_2);
-    if(result) return options.fn(this); 
-    return options.inverse(this);       
-  });
+    let result = operators[operator](operand_1, operand_2);
+    if (result) return options.fn(this);
+    return options.inverse(this);
+});
 
 //decalre library to control throw async error
 require('express-async-errors');
@@ -42,6 +42,9 @@ const restrict = require('./middlewares/authenticated.mdw');
 //require local variables
 require('./middlewares/locals.mdw')(app);
 
+//reuire check timeout Subscriber
+require('./middlewares/checkTimeout.mdw');
+
 // CODE IN HERE
 
 //set layout for guest
@@ -53,13 +56,13 @@ app.get('/', require('./routers/home.route'))
 //require all router
 app.use('/guest', require('./routers/default.route'));
 
-app.use('/sub',restrict, require('./routers/subscriber.route'));
+app.use('/sub', restrict, require('./routers/subscriber.route'));
 
-app.use('/writer',restrict, require('./routers/writer.route'));
+app.use('/writer', restrict, require('./routers/writer.route'));
 
-app.use('/admin',restrict, require('./routers/admin.route'));
+app.use('/admin', restrict, require('./routers/admin.route'));
 
-app.use('/editor',restrict, require('./routers/editor.route'));
+app.use('/editor', restrict, require('./routers/editor.route'));
 
 app.use('/login', require('./routers/login.route'));
 

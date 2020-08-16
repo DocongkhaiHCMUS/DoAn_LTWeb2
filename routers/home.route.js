@@ -10,8 +10,9 @@ router.get('/', function (req, res) {
 
     if (!req.session.authUser)
         res.render('home.hbs');
-    else if (req.session.authUser.permission == 1)
+    else if (req.session.authUser.permission == 1) {
         res.render('home.hbs');
+    }
     else if (req.session.authUser.permission == 2) {
         res.render('home.hbs');
     }
