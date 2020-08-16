@@ -35,17 +35,34 @@ router.get('/profile/', async function (req, res) {
     });
   }),
 router.post('/profile/',upload.single('avatar'),async function (req, res) {
-  const entity = {
-    id : req.session.authUser.id,
-    display_name : req.body.display_name,
-    user_name : req.body.user_name,
-    email : req.body.email,
-    //DOB : req.body.dob,
-    gender : Number(req.body.gender),
-    avatar : req.file.filename,
-    delete : 0
+  if(req.body.avatar !=null)
+  {
+    const entity1 = {
+      id : req.session.authUser.id,
+      display_name : req.body.display_name,
+      user_name : req.body.user_name,
+      email : req.body.email,
+      //DOB : req.body.dob,
+      gender : Number(req.body.gender),
+      avatar : req.file.filename,
+      delete : 0
+    }
+    await userModel.patchUser(entity1);
   }
-  await userModel.patchUser(entity);
+  else
+  {
+    const entity2 = {
+      id : req.session.authUser.id,
+      display_name : req.body.display_name,
+      user_name : req.body.user_name,
+      email : req.body.email,
+      //DOB : req.body.dob,
+      gender : Number(req.body.gender),
+      //avatar : req.file.filename,
+      delete : 0
+    }
+    await userModel.patchUser(entity2);
+  }
   res.redirect('/user/profile');
   }),
 module.exports = router;
