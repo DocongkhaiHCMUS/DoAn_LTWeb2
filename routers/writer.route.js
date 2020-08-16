@@ -292,6 +292,15 @@ router.get('/listpost/', async function (req, res) {
       layout: false,
     });
   }),
+router.get('/listpost/:status', async function (req, res) {
+    const list = await postModel.selectByAuthorByStatus(req.session.authUser.id, req.params.status)
+
+    res.render('viewWriter/listPost', {
+      list: list,
+      empty: list.length === 0,
+      layout: false,
+    });
+}),
 
 
   

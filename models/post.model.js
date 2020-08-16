@@ -199,6 +199,11 @@ module.exports = {
     },
     selectAllTagByPost: function (post) {
       return db.load(`SELECT tag FROM tag_post WHERE post = ${post}`);
+    },
+    selectByAuthorByStatus: function(author, status) {
+      return db.load(`select p.id, title, avatar, folder_img, tiny_des, full_des, views, 
+                      publish_date,c1.name as cat1name, c2.name as cat2name, c1.id as cat1id, c2.id as cat2id, p.status, p.reason
+                      from ${TBL_Post} p join ${TBL_Cat1} c1 join ${TBL_Cat2} c2 
+                      where p.category = c2.id and c2.category_level1 = c1.id and p.author = ${author} and p.delete = 0 and status = ${status}`)
     }
-    
 };

@@ -1,5 +1,5 @@
 {{#section 'js'}}
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
     <script>
         $(document).ready(function(){
@@ -9,7 +9,7 @@
 
                 }
             }
-            $("#submit").click(function(){
+            $("#allowDownloadPDF").click(function(){
                 var doc = new jsPDF();
                 doc.setFontSize(10);
 
@@ -23,10 +23,9 @@
                 doc.save(title+".pdf")
 
             })
-
         })
     </script>
-{{/section}}
+
 <script>
     $('#lock-premium>a').on('click', function (e) {
         e.preventDefault();
@@ -73,19 +72,27 @@
                             {{/if}}
                             <li class="article-type"><i class="fa fa-file-text"></i></li>
                         </ul>
-                        <h1 class="article-title">{{post.title}}</h1>
+                        <h1 class="article-title" id="title">{{post.title}}</h1>
                         <ul class="article-meta">
                             <li><i class="fa fa-clock-o">&nbsp;</i>{{parseTime post.publish_date}}</li>
                             <li><i class="fa fa-eye">&nbsp;</i>{{post.views}}</li>
                         </ul>
-                        <p class="post_tiny_des">
+                        <p class="post_tiny_des" id="tiny_des">
                             "&nbsp;{{post.tiny_des}}&nbsp;"
                         </p>
                         {{!-- {{#each post.full_des}} --}}
                         {{!-- {{{text}}} --}}
                         {{!-- {{/each}} --}}
+                        <div id="full_des">
+
                         {{{post.full_des}}}
+                        </div>
                     </div>
+                    {{#if post.premium}}
+                        <button type="button" id="allowDownloadPDF" class="btn btn-info">Dowload PDF</button>
+                        {{else}}
+                        <button type="button" id="disallowDownloadPDF" class="btn btn-info" disabled>Dowload PDF</button>
+                    {{/if}}
                 </article>
                 <!-- /ARTICLE POST -->
 
