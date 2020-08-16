@@ -125,13 +125,12 @@ router.get('/categorylv2/add/:id', async function (req, res) {
     else {
         const id = +req.params.id || -1;
         const cat1 = await cateModel.single1(id);
-        console.log(cat1[0]);
         res.render('viewAdmin/viewCategory/addLv2.hbs', { catLv1: cat1[0] });
     }
 });
-
-router.get('/categorylv2/add/is-available', async function (req, res) {
-    const cat2 = await cateModel.singleCat2ByCat1IDCat2Name(req.query.category2,req.query.cat1)
+router.get('/categorylv2/is-available', async function (req, res) {
+    var split= req.query.category.split("?",2);
+    const cat2 = await cateModel.singleCat2ByCat1IDCat2Name(split[0],split[1])
     if (!cat2[0]) {
         return res.json(true);
     }
