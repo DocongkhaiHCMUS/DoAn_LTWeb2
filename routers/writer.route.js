@@ -240,7 +240,6 @@ router.get('/editor',async function (req, res) {
     const tag = await postModel.selectTag()
 
     res.render('viewWriter/test1',{
-      layout: false,
       list: list,
       tag: tag,
       result: 'result'
