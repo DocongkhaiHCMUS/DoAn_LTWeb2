@@ -280,5 +280,8 @@ module.exports = {
     //entity['publish_date'] = moment(entity['publish_date'],'HH:mm, DD/MM/YYYY').format('YYYY/MM/DD HH:mm:ss');
     return db.patch(TBL_Post, entity, condition)
   },
+  selectAllFolder_Image: ()=>{
+    return db.load(`SELECT post.folder_img FROM post`)
+  }
 
 };
