@@ -1,0 +1,115 @@
+{{#section 'js'}}
+<script>
+	function locBaiViet() {
+		var status = String(document.getElementById("statusBaiViet").value);
+		if (status == "0") {
+			location.replace("/writer/listpost/")
+		}
+		else
+			location.replace("/writer/listpost/" + status)
+	}
+</script>
+{{/section}}
+<div class="content-body">
+	<div class="title-editor">
+		<h4>Phóng viên</h4>
+	</div>
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h2>Danh sách bài viết của Phóng viên "{{lcUser.display_name}}"</h2>
+		</div>
+		<div class="body-panel">
+			<div class="head">
+				<select class="form-control" id="statusBaiViet">
+					<option value="0" selected>Tất cả bài viết</option>
+					<option value="1">Các bài viết đã được xuất bản</option>
+					<option value="2">Các bài viết đã được duyệt chưa xuất bản</option>
+					<option value="3">Các bài viết chưa được duyệt</option>
+					<option value="4">Các bài viết bị từ chối</option>
+				</select>
+				<button onclick="locBaiViet()" class="btn btn-info">Lọc bài viết</button>
+			</div>
+			<div class="row body">
+				{{#each this.list}}
+				<div class="col-md-6 col-sm-6">
+					<article class="article">
+						<div class="article-img">
+							<img class="img-responsive" src="/public/img/img_post/{{folder_img}}/{{avatar}}.jpg" alt="">
+						</div>
+						<div class="article-body">
+							<ul class="article-info">
+								<li class="article-category">
+									<a href="/category/cat1/{{cat1id}}">{{cat1name}}</a>
+								</li>
+								<li class="article-category">
+									<a href="/category/cat2/{{cat1id}}">{{cat2name}}</a>
+								</li>
+								<li class="article-type">
+									<i class="fa fa-file-text"></i>
+								</li>
+							</ul>
+							<h4 class="article-title">
+								<a href="/post/{{id}}">{{title}}</a>
+							</h4>
+						
+							<ul class="article-meta">
+								<li>
+									<i class="fa fa-clock-o">&nbsp;</i>{{parseTime publish_date}}
+								</li>
+								<li>
+									<i class="fa fa-eye">&nbsp;</i>{{views}}
+								</li>
+							</ul>
+						
+							<h5 class="article-description">
+								{{tiny_des}}
+							</h5>
+							<div class="foot-card">
+								{{#when status 'eq' 1}}
+								<a href="/writer/modifiedpost/{{id}}" class="btn btn-primary" disabled="disabled">
+									Chỉnh sửa
+								</a>
+								{{/when}}
+								{{#when status 'eq' 2}}
+								<a href="/writer/modifiedpost/{{list.id}}" class="btn btn-primary" disabled="disabled">
+									Chỉnh sửa
+								</a>
+								{{/when}}
+                                <a href="/writer/modifiedpost/{{list.id}}" class="btn btn-primary">
+									Chỉnh sửa
+								</a>
+								{{#when status 'eq' 1}}
+								<ul class="article-meta lb">
+									<li>
+										<h3 info>Đã được xuất bản </h3>
+									</li>
+								</ul>
+								{{/when}}
+								{{#when status 'eq' 2}}
+								<ul class="article-meta lb">
+									<li>
+										<h3 class="info">Đã được kiểm duyệt, chưa được xuất bản</h3>
+									</li>
+								</ul>
+								{{/when}}
+								{{#when status 'eq' 3}}
+								<ul class="article-meta lb">
+									<li>
+										<h3 class="danger">Chưa được duyệt</h3>
+									</li>
+								</ul>
+								{{/when}}
+								{{#when status 'eq' 4}}
+								<ul class="article-meta lb">
+									<li>
+										<h3 class="danger">Đã từ chối</h3>
+									</li>
+								</ul>
+								{{/when}}
+							</div>
+							<h4>{{reason}}</h4>
+						</div>
+					</article>
+				</div>
+				{{/each}}
+				

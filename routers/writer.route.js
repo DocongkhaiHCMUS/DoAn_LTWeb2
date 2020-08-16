@@ -111,7 +111,14 @@ var uploadAvatar = multer({ storage: storageAvatar })
 //////////get, post editor//////////
 router.get('/editor', async function (req, res) {
   ////////random, create folder////////
-  if (req.app.locals.folderImgEditor != null) {
+  var listFolder_image =[]
+  var _listFolder_image = await postModel.selectAllFolder_Image()
+  for (var item of _listFolder_image) {
+    listFolder_image.push(item.folder_img)
+  }
+  var exists = listFolder_image.includes(req.app.locals.folderImgEditor)//kiem tra ton tai tren db
+
+  if (req.app.locals.folderImgEditor != null && exists == false) {
     fse.remove('./public/img/img_post/' + req.app.locals.folderImgEditor)
   }
   var f
@@ -150,7 +157,7 @@ router.post('/editor', uploadAvatar.single('avatar'), async function (req, res) 
     premium: 0,
     status: 3
   }
-  //await postModel.add(entity1)
+  await postModel.add(entity1)
   //////////add tag_post//////////
   const maxIDPost = await postModel.selectMaxIDPost();
   var arr = []
@@ -167,8 +174,8 @@ router.post('/editor', uploadAvatar.single('avatar'), async function (req, res) 
         post: Number(arr[0]),
         delete: 0
       }
+      await postModel.addTag_Post(entity2)
     }
-    await postModel.addTag_Post(entity2)
     console.log(listTag[i]);
   }
   else {
@@ -186,17 +193,22 @@ router.post('/editor', uploadAvatar.single('avatar'), async function (req, res) 
 
 //////////get lispost by author//////////
 router.get('/listpost/', async function (req, res) {
-  const list = await postModel.selectByAuthor(req.session.authUser.id)
+  const list1 = await postModel.selectByAuthorByStatus(req.session.authUser.id,1)
+  const list2 = await postModel.selectByAuthorByStatus(req.session.authUser.id,2)
+  const list3 = await postModel.selectByAuthorByStatus(req.session.authUser.id,3)
+  const list4 = await postModel.selectByAuthorByStatus(req.session.authUser.id,4)
 
   res.render('viewWriter/listPost', {
-    list: list,
-    empty: list.length === 0
+    list1: list1,
+    list2: list2,
+    list3: list3,
+    list4: list4,
   });
 }),
   router.get('/listpost/:status', async function (req, res) {
     const list = await postModel.selectByAuthorByStatus(req.session.authUser.id, req.params.status)
 
-    res.render('viewWriter/listPost', {
+    res.render('viewWriter/filterPost', {
       list: list,
       empty: list.length === 0
     });

@@ -35,7 +35,7 @@ router.get('/profile/', async function (req, res) {
     });
   }),
 router.post('/profile/',upload.single('avatar'),async function (req, res) {
-  if(req.body.avatar !=null)
+  if(req.file !=undefined)
   {
     const entity1 = {
       id : req.session.authUser.id,
