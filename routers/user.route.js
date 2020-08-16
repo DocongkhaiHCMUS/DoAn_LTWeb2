@@ -29,7 +29,7 @@ router.get('/profile/', async function (req, res) {
     }
     else
       isMale = false;
-    res.render('viewProfile/test', {
+    res.render('viewProfile/profile', {
       _user,
       isMale
     });

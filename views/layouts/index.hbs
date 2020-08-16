@@ -120,7 +120,7 @@
 									</li>
 									{{/if}}
 
-									{{#if isWriter}}
+									{{#if lcWriter}}
 
 									<li class="dropdown">
 										<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
@@ -143,7 +143,7 @@
 									</li>
 									{{/if}}
 
-									{{#if isEditor}}
+									{{#if lcEditor}}
 									<li class="dropdown">
 										<a href="/editor" class="dropdown-toggle" data-toggle="dropdown" role="button"
 											aria-haspopup="true" aria-expanded="false">
@@ -153,9 +153,13 @@
 										</a>
 										<ul class="dropdown-menu">
 											<li>
-												<a href="/editor">
+												<a href="/editor/draft">
 													<i class="fa fa-list" aria-hidden="true">&nbsp;</i>
-													Danh Sách Bài Viết
+													Danh Sách Bài Viết Cần Duyệt
+												</a>
+												<a href="/editor/process">
+													<i class="fa fa-list" aria-hidden="true">&nbsp;</i>
+													Danh Sách Bài Viết Đã Duyệt
 												</a>
 											</li>
 										</ul>
@@ -179,7 +183,7 @@
 										</a>
 										<ul class="dropdown-menu">
 											<li>
-												<a href="user/profile">
+												<a href="/user/profile">
 													<i class="fa fa-user" aria-hidden="true">&nbsp;</i>
 													Tài khoản người dùng
 												</a>

@@ -105,9 +105,7 @@
       <div class="form-group">
         <label>Nội dung bài viết</label>
         <textarea name="full_des" id="ckeditor" class="ckeditor" cols="30" rows="10">
-            {{#each _post.full_des}}
-                {{{text}}}
-            {{/each}}   
+            {{{_post.full_des}}}
         </textarea>
       </div>
 

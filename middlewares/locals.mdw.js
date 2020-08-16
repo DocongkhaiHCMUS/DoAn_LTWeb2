@@ -8,11 +8,11 @@ const LRU = require("lru-cache");
 const options = {
     max: 500
     , length: function (n, key) { return n * 2 + key.length }
-    , dispose: function (key, n) { n.close() }
-    , maxAge: 1000 * 60 * 60 * 24
+    // , dispose: function (key, n) { n.close() }
+    , maxAge: 1000 * 60 * 5
 }
 
-const Cache = new LRU(options)
+let Cache = new LRU(options)
 
 // const Cache = new nodeCache();
 
@@ -120,7 +120,8 @@ function convertCat(item, list2, list1) {
 
 module.exports = function (app) {
     app.use(async function (req, res, next) {
-
+        if (!Cache)
+            Cache = new LRU(options);
         //check if list Category, list Tag, list Post exists in cache
         // if not exixts then get data from database and push to cahe
         if (!Cache.has('listCat') || !Cache.has('list1') || !Cache.has('list2') ||
@@ -135,6 +136,9 @@ module.exports = function (app) {
                 modelPost.load()
             ]);
 
+            //all post
+            listPost_raw = listPost;
+
             //filter all post has publish date before current time
             listPost = listPost.filter(function (item) {
                 moment.locale('vi');
@@ -145,6 +149,7 @@ module.exports = function (app) {
             Cache.set('list1', list1);
             Cache.set('list2', list2);
             Cache.set('listTag', listTag);
+            Cache.set('listPost_raw', listPost_raw);
             Cache.set('listPost', listPost);
 
             //local categories menu
@@ -157,6 +162,7 @@ module.exports = function (app) {
         app.locals.list1 = Cache.get('list1');
         app.locals.list2 = Cache.get('list2');
         app.locals.listTag = Cache.get('listTag');
+        app.locals.listPost_raw = Cache.get('listPost_raw');
         app.locals.listPost = Cache.get('listPost');
 
         //check if list list Post exists in cache
@@ -199,7 +205,11 @@ module.exports = function (app) {
                 let listPostTemp = listPost.filter(function (item1) {
                     let rs;
                     try {
-                        rs = listIDCat1[item.id - 1].list.includes(item1.category);
+                        let tempListCat = listIDCat1.filter(function (item2) {
+                            return item2.id_cat1 === item.id;
+                        })
+                        if (tempListCat != null && tempListCat != undefined && tempListCat.length > 0)
+                            rs = tempListCat[0].list.includes(item1.category);
                     } catch (error) {
                         console.log(errer);
                     }
@@ -230,8 +240,18 @@ module.exports = function (app) {
 
                 let listPostTemp1 = listPost.filter(function (item1) {
                     let rs;
-                    rs = listIDCat1[item.id - 1].list.includes(item1.category);
-                    return rs;
+                    try {
+                        let tempListCat = listIDCat1.filter(function (item2) {
+                            return item2.id_cat1 === item.id;
+                        })
+                        if (tempListCat != null && tempListCat != undefined && tempListCat.length > 0)
+                            rs = tempListCat[0].list.includes(item1.category);
+                    } catch (error) {
+                        console.log(errer);
+                    }
+                    finally {
+                        return rs;
+                    }
                 })
                     .sort(function (a, b) {
                         return b.views - a.views;
@@ -247,8 +267,18 @@ module.exports = function (app) {
 
             mostViewedPost.map(function (item) {
                 try {
-                    item['listCat2'] = app.locals.listCat[item.id - 1].list;
-                    item['listLatestPost'] = latestPost[item.id - 1].listPost;
+                    let listCat2 = app.locals.listCat.filter(function (item1) {
+                        return item1.id_cat1 === item.id;
+                    })
+                    if (listCat2[0].list != null && listCat2[0].list != undefined
+                        && listCat2[0].list.length > 0 && listCat2 != undefined)
+                        item['listCat2'] = listCat2[0].list;
+                    let listLatestPost = latestPost.filter(function (item1) {
+                        return item1.id === item.id;
+                    })
+                    if (listLatestPost[0].listPost != null && listLatestPost[0].listPost != undefined
+                        && listLatestPost[0].listPost.length > 0 && listLatestPost != undefined)
+                        item['listLatestPost'] = listLatestPost[0].listPost;
                 }
                 catch (err) {
                     console.log(err);
@@ -259,12 +289,14 @@ module.exports = function (app) {
             });
 
             for (let i = 0; i < mostViewedPost.length; i++) {
-                mostViewedPost[i].listLatestPost.map(function (item1) {
-                    return convertCat(item1, list2, list1);
-                });
-                mostViewedPost[i].listMostViewedPost.map(function (item1) {
-                    return convertCat(item1, list2, list1);
-                });
+                if (mostViewedPost[i].listLatestPost != undefined && mostViewedPost[i].listLatestPost.length > 0)
+                    mostViewedPost[i].listLatestPost.map(function (item1) {
+                        return convertCat(item1, list2, list1);
+                    });
+                if (mostViewedPost[i].listMostViewedPost != undefined && mostViewedPost[i].listMostViewedPost.length > 0)
+                    mostViewedPost[i].listMostViewedPost.map(function (item1) {
+                        return convertCat(item1, list2, list1);
+                    });
             }
             Cache.set('mostViewedPost', mostViewedPost);
 
@@ -286,6 +318,8 @@ module.exports = function (app) {
             app.locals.lcIsAuthenticated = req.session.isAuthenticated;
             app.locals.lcUser = req.session.authUser;
             app.locals.lcSubcriber = (req.session.authUser.permission === 1);
+            app.locals.lcWriter = (req.session.authUser.permission === 2);
+            app.locals.lcEditor = (req.session.authUser.permission === 3);
         }
         next();
     });

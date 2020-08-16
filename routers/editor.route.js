@@ -2,261 +2,313 @@ const express = require("express");
 const router = express.Router();
 const modelPost = require("../models/post.model");
 const modelTagPost = require("../models/tag-post.model");
-const assignModel = require('..//models/assign.model');
+const modelTag = require('../models/tag.model');
+const assignModel = require('../models/assign.model');
+const categoryModel = require('../models/category.model');
+const config = require('../db/config/config.json');
+const tagModel = require("../models/tag.model");
+const postModel = require("../models/post.model");
+const tagPostModel = require("../models/tag-post.model");
+const moment = require('moment');
 
-router.get("/", async function (req, res) {
-  const assign =  await assignModel.singleByUser(req.session.authUser.id);
-  
+router.get("/draft", async function (req, res) {
+
+  let page = +req.query.page || -1;
+  if (page <= 0 || !page)
+    page = 1;
+  let limit = config.pagination.limit;
+  const offset = (page - 1) * limit;
+
+  //get data
+  let assign = await assignModel.singleByUser(req.session.authUser.id);
+  if (assign == undefined || assign == '' || assign == [])
+    res.render("viewEditor/editor", {
+      empty: true
+    });
+  let cat1 = assign[0].category;
+
+  let [list, total] = await Promise.all([
+    modelPost.loadPostForEditor_page(limit, offset, cat1),
+    modelPost.countPostForEditor(cat1)
+  ]);
+
+  //compute total page number
+  total = total[0].total;
+  const nPages = Math.ceil(total / limit);
+  let pageItems = [];
+
+  if (1 == page)
+    pageItems.push({
+      'value': 1,
+      'active': true
+    });
+  else
+    pageItems.push({
+      'value': 1,
+    });
+
+  if (page - 3 > 2) {
+    pageItems.push({
+      'value': '...',
+      'disable': true
+    });
+  }
+
+  let top = (page + 3 < nPages - 1 ? page + 3 : nPages - 1);
+  let bot = (page - 3 > 1 ? page - 3 : 2);
+  for (let i = bot; i <= top; i++) {
+    if (i == page)
+      pageItems.push({
+        'value': i,
+        'active': true
+      });
+    else
+      pageItems.push({ 'value': i });
+  }
+
+  if (page + 3 < nPages - 1) {
+    pageItems.push({
+      'value': '...',
+      'disable': true
+    });
+  }
+
+  if (nPages == page && nPages != 1)
+    pageItems.push({
+      'value': nPages,
+      'active': true
+    });
+  else if (nPages > 1)
+    pageItems.push({
+      'value': nPages
+    });
 
   res.render("viewEditor/editor", {
     editor: list,
     empty: list.length === 0,
+    pageItems,
+    prev_value: page - 1,
+    next_value: page + 1,
+    can_go_prev: page > 1,
+    can_go_next: page < nPages
   });
 });
 
-router.get("/publish/:id", async function (req, res) {
-  let id = +req.params.id || -1;
+router.get("/process", async function (req, res) {
 
-  //get data in db
-  const rows = await modelPost.singleByID(id);
-  const tag = await modelTagPost.singleByPost(id);
-  const tag_all = await modelTagPost.load();
+  let page = +req.query.page || -1;
+  if (page <= 0 || !page)
+    page = 1;
+  let limit = config.pagination.limit;
+  const offset = (page - 1) * limit;
 
-  // tag
-  for (let i = 0; i < tag.length; i++) {
-    tag[i] = { tag: tag[i] };
-  }
+  //get data
+  let assign = await assignModel.singleByUser(req.session.authUser.id);
+  if (assign == undefined || assign == '' || assign == [])
+    res.render("viewEditor/editor", {
+      empty: true
+    });
+  let cat1 = assign[0].category;
 
-  // tag_all
-  for (let i = 0; i < tag_all.length; i++) {
-    tag_all[i] = { tag_all: tag_all[i] };
-  }
 
-  const post = rows[0];
-  //const catName = cat[0];
-  res.render("viewEditor/publish.hbs", {
-    post,
-    tag,
-    tag_all,
-    //catName,
-  });
-});
-
-router.get("/decline/:id", async function (req, res) {
-  // const id = +req.query.id || -1; // plus: parse int
-  const id = +req.params.id || -1;
-  const rows = await modelPost.singleByID(id);
-  if (rows.length === 0) return res.send("Invalid parameter.");
-
-  const editor = rows[0];
-  res.render("viewEditor/decline", { editor });
-});
-
-router.post("/update_publish", async function (req, res) {
-  const id = +req.body.id || -1;
-
-  let [list, tag] = await Promise.all([
-    modelPost.singleByID(id),
-    modelTagPost.singleByPost(id),
+  let [list, total] = await Promise.all([
+    modelPost.loadPostEditByEditor_page(limit, offset, req.session.authUser.id),
+    modelPost.countPostEditByEditor(cat1)
   ]);
 
-  //Create var was be give value change
-  request_ = req.body;
-  req_category = req.body.category;
-  req_tags = req.body.selected_tags;
-  req_dateP = req.body.publish_date;
-  req_tagsADD = req.body.add_tags;
+  //compute total page number
+  total = total[0].total;
+  const nPages = Math.ceil(total / limit);
+  let pageItems = [];
 
-  // console.log(req_tags);
-  // console.log(req_tagsADD);
-  //Process date, if values change, we will change value in db
-  let checkTagNumber;
-  if (request_ != null) {
-    ////////////////////CHECK Tags
+  if (1 == page)
+    pageItems.push({
+      'value': 1,
+      'active': true
+    });
+  else
+    pageItems.push({
+      'value': 1,
+    });
 
-    if (req_tags == null) {
-      checkTagNumber = 1;
-      for (let i = 0; i < tag.length; i++) {
-        if (tag[i].name != "") {
-          await modelTagPost.patch_tag(tag[i].tag);
-        }
+  if (page - 3 > 2) {
+    pageItems.push({
+      'value': '...',
+      'disable': true
+    });
+  }
+
+  let top = (page + 3 < nPages - 1 ? page + 3 : nPages - 1);
+  let bot = (page - 3 > 1 ? page - 3 : 2);
+  for (let i = bot; i <= top; i++) {
+    if (i == page)
+      pageItems.push({
+        'value': i,
+        'active': true
+      });
+    else
+      pageItems.push({ 'value': i });
+  }
+
+  if (page + 3 < nPages - 1) {
+    pageItems.push({
+      'value': '...',
+      'disable': true
+    });
+  }
+
+  if (nPages == page && nPages != 1)
+    pageItems.push({
+      'value': nPages,
+      'active': true
+    });
+  else if (nPages > 1)
+    pageItems.push({
+      'value': nPages
+    });
+
+  list = list.map(function (item) {
+    if (item.status == 1)
+      item.status = "Đã xuất bản";
+    if (item.status == 0)
+      item.status = "Từ chối";
+    return item;
+  })
+
+  res.render("viewEditor/editor", {
+    editor: list,
+    empty: list.length === 0,
+    pageItems,
+    process: true,
+    prev_value: page - 1,
+    next_value: page + 1,
+    can_go_prev: page > 1,
+    can_go_next: page < nPages
+  });
+});
+
+
+router.get("/detail/:id", async function (req, res) {
+  let id = +req.params.id || -1;
+
+  //get data
+  let [post, list1, list2, listTagPost, listTag, assign] = await Promise.all([
+    modelPost.singleByID(id),
+    categoryModel.loadCat1(),
+    categoryModel.loadCat2(),
+    modelTagPost.singleByPost(id),
+    tagModel.load(),
+    assignModel.singleByUser(req.session.authUser.id)
+  ]);
+
+  //add category into post
+  let catOfPost = post[0].category;
+  // console.log(catOfPost);
+
+  //get category1 of editor
+  let cat1Assign = assign[0].category;
+
+  //get listcat2 of assign
+  let listCat2Assign = list2.filter(function (item) {
+    return item.category_level1 === cat1Assign;
+  }).map(function (item) {
+    if (catOfPost == item.id) {
+      item['active'] = true;
+    }
+    return item;
+  })
+
+  //get list tag
+  let tagOfPost = listTagPost.map(function (item) {
+    return item.tag;
+  })
+
+  //map list tag
+  listTag = listTag.map(function (item) {
+    if (tagOfPost.includes(item.id)) {
+      item['active'] = true;
+    }
+    return item;
+  })
+
+  // //set list tag
+  // post['listTag'] = tagOfPost;
+
+  res.render('viewEditor/detail.hbs', {
+    post: post[0],
+    listTag,
+    listCat2Assign
+  });
+})
+
+router.post("/accept", async function (req, res) {
+  let entity = {
+    id: req.body.id,
+    status: 1,
+    category: req.body.category,
+    publish_date: moment(req.body.publish_date, "HH:mm, DD/MM/YYYY").format("YYYY/MM/DD HH:mm:ss"),
+    editor: req.session.authUser.id
+  }
+
+  console.log(entity);
+
+  await postModel.patch(entity);
+
+  //get data
+  let listTagPost_old = await modelTagPost.singleByPost(req.body.id);
+  let listIDTagPost = [...listTagPost_old];
+  listTagPost_old = listTagPost_old.map(item => item.tag);
+  let listTagPost_new = req.body.tag;
+  listTagPost_new = listTagPost_new.map(item => parseInt(item));
+
+  //filter difference between 2 list Tag new and old
+  let arrTemp = [...listTagPost_old]
+  listTagPost_old = listTagPost_old.filter(function (item) {
+    return listTagPost_new.indexOf(item) == -1;
+  })
+  listTagPost_new = listTagPost_new.filter(function (item) {
+    return arrTemp.indexOf(item) == -1;
+  })
+
+  // console.log('old 2 : ' + listTagPost_old);
+  // console.log('new 2: ' + listTagPost_new);
+
+  //delete old tag_post
+  for (let item of listTagPost_old) {
+    let tpID = listIDTagPost.filter(function (item1) {
+      return item1.tag == item;
+    })
+    // console.log('delete' + item);
+    await tagPostModel.delete(tpID[0].id);
+  }
+
+  //insert new tag
+  for (let item of listTagPost_new) {
+    let rs = await modelTagPost.singleByTagPost(item, req.body.id);
+    if (!rs || rs === undefined || rs.length <= 0) {
+      let tpadd = {
+        tag: item,
+        post: req.body.id
       }
-    } else if (Array.isArray(req_tags) == false) {
-      checkTagNumber = 2;
-      for (let i = 0; i < tag.length; i++) {
-        if (tag[i].name != req_tags) {
-          if (tag[i].name != "") {
-            await modelTagPost.patch_tag(tag[i].tag);
-          }
-        } else {
-          continue;
-        }
-      }
+      await tagPostModel.add(tpadd);
     }
-    //Request Tag has tags AND Tag by Writer > more
-    else if (Array.isArray(req_tags) == true) {
-      checkTagNumber = 3;
-      let j = 0;
-      for (let i = 0; i < tag.length; i++) {
-        if (tag[i].name != req_tags[j]) {
-          if (tag[i].name != "") {
-            await modelTagPost.patch_tag(tag[i].tag);
-          }
-        } else {
-          j++;
-        }
-      }
+    else {
+      await tagPostModel.restore(rs[0].id);
     }
-
-    //////////////////////////Tags added
-    //WE need create array include items in Tag to add
-    if (req_tagsADD == null) {
-    }
-    // // Case Tags added just one tag.
-    else if (Array.isArray(req_tagsADD) == false) {
-      let temp = false;
-      let last_id = null;
-      insert_Tags = {
-        name: req_tagsADD,
-        des: req_tagsADD,
-        create_date: null,
-        modifile_date: null,
-        delete: 0,
-      };
-
-      if (checkTagNumber == 1) {
-        //xxx
-        // console.log("111111");
-        last_id = await modelTagPost.add_tag(insert_Tags);
-      } else if (checkTagNumber == 2) {
-        if (req_tagsADD != req_tags) {
-          //xxx
-          // console.log("222222");
-          last_id = await modelTagPost.add_tag(insert_Tags);
-          //await modelTagPost.add(req_tagsADD);
-        }
-      } else {
-        for (let i = 0; i < req_tags.length; i++) {
-          if (req_tags[i] == req_tagsADD) {
-            temp = true;
-            break;
-          }
-        }
-        if (temp == false) {
-          // console.log("333333");
-          last_id = await modelTagPost.add_tag(insert_Tags);
-          //xxx
-        }
-      }
-
-      //Insert value to Tag_post Table
-      insert_Tag_post = {
-        tag: last_id.insertId,
-        post: id,
-        create_date: null,
-        modifile_date: null,
-        delete: 0,
-      };
-      await modelTagPost.add_tp(insert_Tag_post);
-    }
-
-    // // Case Tags added has more tags.
-    else if (Array.isArray(req_tagsADD) == true) {
-      let temp = false;
-      let last_id = null;
-
-      if (checkTagNumber == 1) {
-        for (let i = 0; i < req_tagsADD.length; i++) {
-          insert_Tags = {
-            name: req_tagsADD[i],
-            des: req_tagsADD[i],
-            create_date: null,
-            modifile_date: null,
-            delete: 0,
-          };
-          last_id = await modelTagPost.add_tag(insert_Tags);
-          insert_Tag_post = {
-            tag: last_id.insertId,
-            post: id,
-            create_date: null,
-            modifile_date: null,
-            delete: 0,
-          };
-          await modelTagPost.add_tp(insert_Tag_post);
-          //xxx
-        }
-      } else if (checkTagNumber == 2) {
-        for (let i = 0; i < req_tagsADD.length; i++) {
-          if (req_tags != req_tagsADD[i]) {
-            insert_Tags = {
-              name: req_tagsADD[i],
-              des: req_tagsADD[i],
-              create_date: null,
-              modifile_date: null,
-              delete: 0,
-            };
-            last_id = await modelTagPost.add_tag(insert_Tags);
-            insert_Tag_post = {
-              tag: last_id.insertId,
-              post: id,
-              create_date: null,
-              modifile_date: null,
-              delete: 0,
-            };
-            await modelTagPost.add_tp(insert_Tag_post);
-            //xxx
-          }
-        }
-      } else {
-        for (let i = 0; i < req_tagsADD.length; i++) {
-          for (let j = 0; j < req_tags.length; j++) {
-            if (req_tags[j] == req_tagsADD[i]) {
-              temp = true;
-              break;
-            }
-          }
-          if (temp == false) {
-            insert_Tags = {
-              name: req_tagsADD[i],
-              des: req_tagsADD[i],
-              create_date: null,
-              modifile_date: null,
-              delete: 0,
-            };
-            last_id = await modelTagPost.add_tag(insert_Tags);
-            insert_Tag_post = {
-              tag: last_id.insertId,
-              post: id,
-              create_date: null,
-              modifile_date: null,
-              delete: 0,
-            };
-            await modelTagPost.add_tp(insert_Tag_post);
-            //xxx
-          }
-        }
-      }
-    }
-
-    //Update publish_date
-    if (req_dateP != list[0].publish_date) {
-      await modelTagPost.patch_post(request_);
-    }
-    //Update Category
-    if (req_category != list[0].category) {
-      await modelTagPost.patch_post(request_);
-    }
-  } else {
-    console.log("No values");
   }
 
   res.redirect("/editor");
-  // await modelTagPost.undo_tag(req.body);
-  // res.redirect('/editor');
-});
+})
 
-router.post("/update_decline", async function (req, res) {
-  await modelPost.patch(req.body);
+router.post("/deny", async function (req, res) {
+  const entity = {
+    id: req.body.id,
+    status: 1,
+    reason: req.body.reason,
+    editor: req.session.authUser.id
+  }
+  console.log(entity);
+  await modelPost.patch(entity);
   res.redirect("/editor");
 });
 
