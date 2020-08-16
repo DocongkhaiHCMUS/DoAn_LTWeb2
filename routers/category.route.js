@@ -98,11 +98,11 @@ router.get('/cat1/:id', async function (req, res) {
         return addTag(item, listTag);
     })
 
-    //filter all post has publish date before current time
-    listPost.filter(function (item) {
-        moment.locale('vi');
-        return moment(item.publish_date).diff(moment(), 'seconds') >= 0;
-    })
+    // //filter all post has publish date before current time
+    // listPost.filter(function (item) {
+    //     moment.locale('vi');
+    //     return moment(item.publish_date).diff(moment(), 'seconds') >= 0;
+    // })
 
     //sort all premium if account is subscriber
     if (req.app.locals.lcSubcriber) {
