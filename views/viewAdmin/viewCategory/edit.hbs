@@ -1,55 +1,6 @@
 {{#section 'css'}}
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.css">
 {{/section}}
-{{#section 'js'}}
-<script>
-    //handling when btnSignIn submit
-    $('#frmUpdate').submit(function (e) {
-        e.preventDefault();
-
-        if (validate() == 1) {
-
-            // remove all error before 
-            $('#txtValidate').empty();
-            // add error text
-            let error = $("<p></p>").append("<i class='fa fa-exclamation-triangle' aria-hidden='true'>&nbsp;</i>Vui lòng nhập thông tin !");
-            $('#txtValidate').append(error);
-            if ($('#txtValidate').hasClass('d-none'))
-                $('#txtValidate').removeClass('d-none')
-        }
-        else {
-            validateAvailable();
-            //  $('#frmAdd').off('submit').submit();
-        }
-    });
-
-    function validate() {
-        let name = $('#name').val();
-        if (!name)
-            return 1;
-    }
-    function validateAvailable() {
-        let name = $('#name').val();
-
-        $.getJSON(`/admin/category/add/is-available?category=${name}`, function (data) {
-            if (data === true) {
-                if ($('#txtValidate').hasClass('d-none') == false)
-                    $('#txtValidate').addClass('d-none')
-                $('#frmUpdate').off('submit').submit();
-            }
-            else {
-                // remove all error before 
-                $('#txtValidate').empty();
-                // add error text
-                let error = $("<p></p>").append("<i class='fa fa-exclamation-triangle' aria-hidden='true'>&nbsp;</i>Tên nhãn đã tồn tại !");
-                $('#txtValidate').append(error);
-                if ($('#txtValidate').hasClass('d-none'))
-                    $('#txtValidate').removeClass('d-none')
-            }
-        })
-    }
-</script>
-{{/section}}
 <!-- main content -->
 <div class="wrapper">
     <form id="frmUpdate" class="frm" method="POST" novalidate>
@@ -63,17 +14,6 @@
             <input type="text" id="name" name="name" value="{{this.category.name}}" autofocus required>
         </div>
         <hr>
-        {{#if error}}
-        <h3 class="alert">
-            <p>
-                <i class='fa fa-exclamation-triangle' aria-hidden='true'>&nbsp;</i>
-                {{error.err}}
-            <p>
-        </h3>
-        {{/if}}
-        <h4 id="txtValidate" class="alert d-none">
-
-        </h4>
         <div class="form-group d-flex">
             <a class="btn btn-primary" href="/admin/category" role="button" title="Back to List">
                 <i class="fa fa-backward" aria-hidden="true"></i>
