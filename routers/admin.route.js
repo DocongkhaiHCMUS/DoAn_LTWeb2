@@ -129,8 +129,8 @@ router.get('/categorylv2/add/:id', async function (req, res) {
     }
 });
 router.get('/categorylv2/is-available', async function (req, res) {
-    var split= req.query.category.split("?",2);
-    const cat2 = await cateModel.singleCat2ByCat1IDCat2Name(split[0],split[1])
+    var split = req.query.category.split("?", 2);
+    const cat2 = await cateModel.singleCat2ByCat1IDCat2Name(split[0], split[1])
     if (!cat2[0]) {
         return res.json(true);
     }
@@ -194,8 +194,8 @@ router.post('/categorylv2/del', async function (req, res) {
     await cateModel.patch2(entity);
     let rows = await postModel.countByIDCat2(req.body.id);
     const count = rows[0].total;
-    if(parseInt(count, 10) > 0){
-       await postModel.deteleAllPostByCat2(req.body.id);
+    if (parseInt(count, 10) > 0) {
+        await postModel.deteleAllPostByCat2(req.body.id);
     }
     res.redirect(req.headers.referer);
 });
@@ -481,6 +481,18 @@ router.get('/post/detail/:id', async function (req, res) {
         const _post = await postModel.singleByID2(id);
         const listUser = await userModel.load();
         const categoryLv2 = await cateModel.load_cat2();
+        if (parseInt(_post[0].status, 10) == 0) {
+            _post[0].isBrowsed = true;
+        }
+        else if (parseInt(_post[0].status, 10) == 1) {
+            _post[0].isPublished = true;
+        }
+        else if (parseInt(_post[0].status, 10) == 2) {
+            _post[0].isRejected = true;
+        }
+        else {
+            _post[0].isDrafted = true;
+        }
         let i = 0;
         while (i < listUser.length) {
             if (listUser[i].id === _post[0].author) {
@@ -506,6 +518,7 @@ router.get('/post/detail/:id', async function (req, res) {
     }
 });
 router.post('/post/update', async function (req, res) {
+    console.log(req.body.status);
     await postModel.patch(req.body);
     // if (parseInt(req.body.delete, 10) === 1) {
     //     await postModel.deleteAllTagPostByPost(req.body.id);
@@ -599,8 +612,8 @@ router.get('/user/add', async function (req, res) {
 });
 
 router.post('/user/add', async function (req, res) {
- //   const user = await userModel.singleByUserName(req.body.user_name);
-   // const us = user[0];
+    //   const user = await userModel.singleByUserName(req.body.user_name);
+    // const us = user[0];
     // if (us) {
     //     const pers = await perModel.load();
     //     res.render('viewAdmin/viewUser/add.hbs', {
@@ -609,19 +622,19 @@ router.post('/user/add', async function (req, res) {
     //     });
     // }
     // else {
-        const hashPass = bcrypt.hashSync(req.body.password, 10);
-        let new_user = {
-            user_name: req.body.user_name,
-            display_name: req.body.display_name,
-            password: hashPass,
-            email: req.body.email,
-            DOB: moment(req.body.DOB, 'YY/MM/YYYY').format('YYYY-MM-DD'),
-            permission: req.body.permission,
-            gender: req.body.gender,
-            time_out: moment("00/00/0000", 'DD/MM/YYYY')
-        }
-        userModel.add(new_user);
-        res.redirect('/admin/user');
+    const hashPass = bcrypt.hashSync(req.body.password, 10);
+    let new_user = {
+        user_name: req.body.user_name,
+        display_name: req.body.display_name,
+        password: hashPass,
+        email: req.body.email,
+        DOB: moment(req.body.DOB, 'YY/MM/YYYY').format('YYYY-MM-DD'),
+        permission: req.body.permission,
+        gender: req.body.gender,
+        time_out: moment("00/00/0000", 'DD/MM/YYYY')
+    }
+    userModel.add(new_user);
+    res.redirect('/admin/user');
     //}
 });
 
@@ -639,7 +652,7 @@ router.get('/user/detail/:id', async function (req, res) {
         const user = rows[0];
         const pers = await perModel.load();
         let i = 0;
-        if(user.permission ==1){
+        if (user.permission == 1) {
             user.isGuest = true;
         }
         while (i < pers.length) {
@@ -649,7 +662,7 @@ router.get('/user/detail/:id', async function (req, res) {
             }
             i++;
         }
-        res.render('viewAdmin/viewUser/detail.hbs', {user, pers });
+        res.render('viewAdmin/viewUser/detail.hbs', { user, pers });
     }
 });
 router.post('/user/update', async function (req, res) {
@@ -669,19 +682,19 @@ router.get('/user/assign/:id', async function (req, res) {
         const _user = await userModel.singleByID2(id);
         const count = await assignModel.countByEditor(id);
         var assigned;
-        if(count > 0){
+        if (count > 0) {
             assigned = false;
         }
-        else{
-            assigned= true;
+        else {
+            assigned = true;
         }
         let i = 0;
-        while(i< rows.length){
+        while (i < rows.length) {
             rows[i].isResote = assigned;
             i++;
         }
         console.log(assigned);
-        res.render('viewAdmin/viewUser/CategoryEditor.hbs', { assign: rows,user: _user[0],assigned});
+        res.render('viewAdmin/viewUser/CategoryEditor.hbs', { assign: rows, user: _user[0], assigned });
     }
 });
 
@@ -694,14 +707,14 @@ router.get('/user/addAssign/:id', async function (req, res) {
         const id = +req.params.id || -1;
         const editor = await userModel.singleByID2(id);
         const cat1 = await cateModel.loadCat1ByAssign(id);
-        
-        req.session.prevURL  = req.headers.referer;
-        res.render('viewAdmin/viewUser/addAssign.hbs', { Editor: editor[0],Cat1: cat1 });
+
+        req.session.prevURL = req.headers.referer;
+        res.render('viewAdmin/viewUser/addAssign.hbs', { Editor: editor[0], Cat1: cat1 });
     }
 });
 router.post('/user/addAssign/add', async function (req, res) {
     await AssignModel.add(req.body);
-    res.redirect( req.session.prevURL);
+    res.redirect(req.session.prevURL);
 });
 
 //                              RESTORE,DELETE  ASSIGN

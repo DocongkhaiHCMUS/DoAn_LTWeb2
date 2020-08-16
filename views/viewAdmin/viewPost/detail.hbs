@@ -98,13 +98,10 @@
         <div class="form-group">
             <label for="status">Trạng thái</label>
             <select name="status">
-                {{#if this.post.status}}
-                <option value="0">Draft</option>
-                <option value="1" selected>Đã xuất bản</option>
-                {{else}}
-                <option value="0" selected>Draft</option>
-                <option value="1">Đã xuất bản</option>
-                {{/if}}
+                <option value="0" {{#if this.post.isBrowsed}} selected {{/if}}>Đã được duyệt</option>
+                <option value="1" {{#if this.post.isPublished}} selected {{/if}}>Đã xuất bản</option>
+                <option value="2" {{#if this.post.isRejected}} selected {{/if}}>Bị từ chối</option>
+                <option value="3" {{#if this.post.isDrafted}} selected {{/if}}>Draft</option>
             </select>
         </div>
         <div class="form-group">
