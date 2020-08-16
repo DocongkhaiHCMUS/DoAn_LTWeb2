@@ -9,7 +9,9 @@ const TBL_Cat1 = 'category_level1';
 
 
 module.exports = {
-  load: () => db.load(`select * from ${TBL_Post} p where p.delete = 0`),
+  load: () => db.load(`select * from ${TBL_Post} p 
+  where p.delete = 0 and p.status = 1 
+  and datediff(now(),p.publish_date) >= 0`),
   loadSortByTitle: (id) =>
     db.load(`SELECT p.id,p.title FROM ${TBL_Post} p  WHERE p.delete = 0 and p.id NOT IN (SELECT tp.post FROM tag_post tp WHERE tp.tag =${id} )`),
   // load_home:() => db.load(`select p.id,p.title,p.avatar,p.folder_img, p.tiny_des, p.views.p.categories,
@@ -25,27 +27,28 @@ module.exports = {
     return db.load(`select p.*, cat2.id id_cat2, cat2.name nameCat2 from ${TBL_Post} p join ${TBL_Cat2} cat2 on 
     p.category = cat2.id 
     and cat2.category_level1 = ${idCat1}
-    and p.delete = 0 and p.status = 1 
+    and p.delete = 0 and p.status = 3 
     limit ${limit} offset ${offset}`);
   },
   countPostForEditor: (idCat1) => {
     return db.load(`select count(*) as total from ${TBL_Post} p join ${TBL_Cat2} cat2 on 
     p.category = cat2.id 
     and cat2.category_level1 = ${idCat1}
-    and p.delete = 0 and p.status = 1 `)
+    and p.delete = 0 and p.status = 3 `)
   },
   loadPostEditByEditor_page: (limit, offset, idEditor) => {
-    return db.load(`select p.*, cat2.id id_cat2, cat2.name nameCat2 from ${TBL_Post} p join ${TBL_Cat2} cat2 on 
+    return db.load(`select p.*, cat2.id id_cat2, cat2.name nameCat2 
+    from ${TBL_Post} p join ${TBL_Cat2} cat2 on 
     p.category = cat2.id 
     and p.editor = ${idEditor}
-    and p.delete = 0 and p.status = 1 
+    and p.delete = 0  
     limit ${limit} offset ${offset}`);
   },
   countPostEditByEditor: (idEditor) => {
     return db.load(`select count(*) as total from ${TBL_Post} p join ${TBL_Cat2} cat2 on 
     p.category = cat2.id 
     and p.editor = ${idEditor}
-    and p.delete = 0 and p.status = 1 `)
+    and p.delete = 0 `)
   },
   singleByID: (ID) => {
     return db.load(
@@ -59,23 +62,33 @@ module.exports = {
   },
 
   singleByIDCat1_page: (idCat1, limit, offset) => {
-    return db.load(`select p.*, cat2.name nameCat2 from ${TBL_Post} p join ${TBL_Cat2} cat2 on p.category = cat2.id 
-        and cat2.category_level1 = ${idCat1} and p.delete =0 limit ${limit} offset ${offset}`);
+    return db.load(`select p.*, cat2.name nameCat2 from ${TBL_Post} p join ${TBL_Cat2} cat2 
+    on p.category = cat2.id and cat2.category_level1 = ${idCat1} 
+    and p.delete = 0 and p.status = 1 
+    and datediff(now(),p.publish_date) >=0 
+    limit ${limit} offset ${offset}`);
   },
 
   countByIDCat1: (idCat1) => {
-    return db.load(`select count(*) as total from ${TBL_Post} p join ${TBL_Cat2} cat2 on p.category = cat2.id 
-        and cat2.category_level1 = ${idCat1} and p.delete =0`);
+    return db.load(`select count(*) as total from ${TBL_Post} p join ${TBL_Cat2} cat2
+    on p.category = cat2.id and cat2.category_level1 = ${idCat1} 
+    and p.delete =0 and p.status = 1 
+    and datediff(now(),p.publish_date) >= 0`);
   },
 
   singleByIDCat2_page: (idCat2, limit, offset) => {
-    return db.load(`select p.*,cat2.name nameCat2 from ${TBL_Post} p join ${TBL_Cat2} cat2 on p.category = cat2.id 
-        where p.category = ${idCat2} and p.delete =0 limit ${limit} offset ${offset}`);
+    return db.load(`select p.*,cat2.name nameCat2 from ${TBL_Post} p join ${TBL_Cat2} cat2 
+    on p.category = cat2.id and p.category = ${idCat2} 
+    and p.delete = 0 and p.status = 1 
+    and datediff(now(),p.publish_date) >=0 
+    limit ${limit} offset ${offset}`);
   },
 
   countByIDCat2: (idCat2) => {
     return db.load(
-      `select count(*) as total from ${TBL_Post} p where p.category = ${idCat2} and p.delete =0`
+      `select count(*) as total from ${TBL_Post} p where p.category = ${idCat2} 
+      and p.delete = 0 and p.status = 1 
+      and datediff(now(),p.publish_date) >=0`
     );
   },
 
@@ -86,12 +99,19 @@ module.exports = {
   },
 
   singleByIDTag_page: (idTag, limit, offset) => {
-    return db.load(`select p.*,tag.name as tag_name from ${TBL_Post} p join ${TBL_TagPost} tp on p.id = tp.post join 
-                        ${TBL_Tag} tag on tp.tag = tag.id and tag.id = ${idTag} where p.delete = 0 limit ${limit} offset ${offset}`);
+    return db.load(`select p.*,tag.name as tag_name from ${TBL_Post} p join ${TBL_TagPost} tp 
+    on p.id = tp.post join ${TBL_Tag} tag 
+    on tp.tag = tag.id and tag.id = ${idTag} 
+    and p.delete = 0 and p.status = 1 
+    and datediff(now(),p.publish_date) >=0
+    limit ${limit} offset ${offset}`);
   },
   countByIDTag: (idTag) => {
-    return db.load(`select count(*) as total from ${TBL_Post} p join ${TBL_TagPost} tp on p.id = tp.post join 
-                            ${TBL_Tag} tag on tp.tag = tag.id and tag.id = ${idTag} where p.delete = 0`);
+    return db.load(`select count(*) as total from ${TBL_Post} p join ${TBL_TagPost} tp 
+    on p.id = tp.post join ${TBL_Tag} tag 
+    on tp.tag = tag.id and tag.id = ${idTag} 
+    and p.delete = 0 and p.status = 1 
+    and datediff(now(),p.publish_date) >=0`);
   },
 
   searchText: (text, limit, offset) => {
@@ -138,7 +158,7 @@ module.exports = {
     delete entity.id;
 
     entity["modifile_date"] = moment().format("YYYY/MM/DD HH:mm:ss");
-    entity['publish_date'] = moment(entity['publish_date'],'HH:mm, DD/MM/YYYY').format('YYYY/MM/DD HH:mm:ss');
+    entity['publish_date'] = moment(entity['publish_date'], 'HH:mm, DD/MM/YYYY').format('YYYY/MM/DD HH:mm:ss');
     return db.patch(TBL_Post, entity, condition);
   },
   pageByPost: function (limit, offset) {
@@ -183,82 +203,82 @@ module.exports = {
                         c1.name as cat1name,c2.name as cat2name, p.category
                         from ${TBL_Post} p join ${TBL_Cat2} c2 join ${TBL_Cat1} c1
                         where p.category = c2.id and c2.category_level1=c1.id and p.id=${id} and p.delete = 0`)
-    },
-    countPostByAuthor:(author)=>{
-        return db.load(`select count(*) as n from ${TBL_Post} p where p.author = ${author} and p.delete = 0`)
-    },
-    selectMaxNumberOfFolder:(category)=>{
-        return db.load(`SELECT folder_img FROM ${TBL_Post} WHERE category = ${category}`)
-    },
-    selectFolderNameByIDPost:(id)=>{
-        return db.load(`SELECT folder_img FROM ${TBL_Post} WHERE id = ${id} `)
-    },
-    selectTag:()=>{
-        return db.load(`SELECT * FROM ${TBL_Tag} `)
-    },
-    selectTag_Post:(id)=>{
-        return db.load(`SELECT t.id, t.name, tp.tag FROM ${TBL_Post} p JOIN ${TBL_TagPost} tp JOIN ${TBL_Tag} t WHERE p.id = tp.post AND tp.tag = t.id AND p.id = ${id} and tp.delete=0`)
-    },
-    selectMaxIDPost:()=>{
-        return db.load(`select MAX(id) as max FROM ${TBL_Post}`)
-    },
-    addTag_Post: (entity) => {
+  },
+  countPostByAuthor: (author) => {
+    return db.load(`select count(*) as n from ${TBL_Post} p where p.author = ${author} and p.delete = 0`)
+  },
+  selectMaxNumberOfFolder: (category) => {
+    return db.load(`SELECT folder_img FROM ${TBL_Post} WHERE category = ${category}`)
+  },
+  selectFolderNameByIDPost: (id) => {
+    return db.load(`SELECT folder_img FROM ${TBL_Post} WHERE id = ${id} `)
+  },
+  selectTag: () => {
+    return db.load(`SELECT * FROM ${TBL_Tag} `)
+  },
+  selectTag_Post: (id) => {
+    return db.load(`SELECT t.id, t.name, tp.tag FROM ${TBL_Post} p JOIN ${TBL_TagPost} tp JOIN ${TBL_Tag} t WHERE p.id = tp.post AND tp.tag = t.id AND p.id = ${id} and tp.delete=0`)
+  },
+  selectMaxIDPost: () => {
+    return db.load(`select MAX(id) as max FROM ${TBL_Post}`)
+  },
+  addTag_Post: (entity) => {
 
-        entity['create_date'] = moment().format('YYYY/MM/DD HH:mm:ss');
-        entity['modifile_date'] = moment().format('YYYY/MM/DD HH:mm:ss');
+    entity['create_date'] = moment().format('YYYY/MM/DD HH:mm:ss');
+    entity['modifile_date'] = moment().format('YYYY/MM/DD HH:mm:ss');
 
-        return db.add(TBL_TagPost, entity)
-    },
-    patchTag_Post: (entity) => {
-        const condition = {
-            post: entity.post
-        }
+    return db.add(TBL_TagPost, entity)
+  },
+  patchTag_Post: (entity) => {
+    const condition = {
+      post: entity.post
+    }
 
-        delete entity.post;
+    delete entity.post;
 
-        entity['modifile_date'] = moment().format('YYYY/MM/DD HH:mm:ss');
+    entity['modifile_date'] = moment().format('YYYY/MM/DD HH:mm:ss');
 
-        return db.patch(TBL_TagPost, entity, condition)
-    },
+    return db.patch(TBL_TagPost, entity, condition)
+  },
 
-    //
-    pageByPost: function (limit, offset) {
-      return db.load(
-        `select * from ${TBL_Post} order by create_date desc limit ${limit} offset ${offset} `
-      );
-    },
-    countByPost: async function () {
-      const rows = await db.load(`select count(*) as total from ${TBL_Post}`);
-      return rows[0].total;
-    },
-    deteleAllTagPostByPost: function (id) {
-      return db.deleteAllTagPostByPost(id);
-    },
-    singlePostById: function (id) {
-      return db.load(`select * from ${TBL_Post} where id = ${id}`);
-    },
-    deteleAllPostByCat2: function (id) {
-      return db.deleteAllPostByCat2(id);
-    },
-    selectAllTagByPost: function (post) {
-      return db.load(`SELECT tag FROM tag_post WHERE post = ${post}`);
-    },
-    selectByAuthorByStatus: function(author, status) {
-      return db.load(`select p.id, title, avatar, folder_img, tiny_des, full_des, views, 
+  //
+  pageByPost: function (limit, offset) {
+    return db.load(
+      `select * from ${TBL_Post} order by create_date desc limit ${limit} offset ${offset} `
+    );
+  },
+  countByPost: async function () {
+    const rows = await db.load(`select count(*) as total from ${TBL_Post}`);
+    return rows[0].total;
+  },
+  deteleAllTagPostByPost: function (id) {
+    return db.deleteAllTagPostByPost(id);
+  },
+  singlePostById: function (id) {
+    return db.load(`select * from ${TBL_Post} where id = ${id}`);
+  },
+  deteleAllPostByCat2: function (id) {
+    return db.deleteAllPostByCat2(id);
+  },
+  selectAllTagByPost: function (post) {
+    return db.load(`SELECT tag FROM tag_post WHERE post = ${post}`);
+  },
+  selectByAuthorByStatus: function (author, status) {
+    return db.load(`select p.id, title, avatar, folder_img, tiny_des, full_des, views, 
                       publish_date,c1.name as cat1name, c2.name as cat2name, c1.id as cat1id, c2.id as cat2id, p.status, p.reason
                       from ${TBL_Post} p join ${TBL_Cat1} c1 join ${TBL_Cat2} c2 
                       where p.category = c2.id and c2.category_level1 = c1.id and p.author = ${author} and p.delete = 0 and status = ${status}`)
-    },
-    patchPost:(entity) => {
-      const condition = {
-          id: entity.id
-      }
+  },
+  patchPost: (entity) => {
+    const condition = {
+      id: entity.id
+    }
 
-      delete entity.id;
+    delete entity.id;
 
-      entity['modifile_date'] = moment().format('YYYY/MM/DD HH:mm:ss');
-      //entity['publish_date'] = moment(entity['publish_date'],'HH:mm, DD/MM/YYYY').format('YYYY/MM/DD HH:mm:ss');
-      return db.patch(TBL_Post, entity, condition)
+    entity['modifile_date'] = moment().format('YYYY/MM/DD HH:mm:ss');
+    //entity['publish_date'] = moment(entity['publish_date'],'HH:mm, DD/MM/YYYY').format('YYYY/MM/DD HH:mm:ss');
+    return db.patch(TBL_Post, entity, condition)
   },
   selectAllFolder_Image: ()=>{
     return db.load(`SELECT post.folder_img FROM post`)

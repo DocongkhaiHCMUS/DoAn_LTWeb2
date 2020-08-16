@@ -130,7 +130,7 @@ router.get('/', async function (req, res) {
     //filter all post has publish date before current time
     listPost = listPost.filter(function (item) {
         moment.locale('vi');
-        return moment(item.publish_date).diff(moment(), 'seconds') <= 0;
+        return moment(item.publish_date).diff(moment(), 'seconds') <= 0 && item.status == 1;
     })
 
     //sort all premium if account is subscriber
