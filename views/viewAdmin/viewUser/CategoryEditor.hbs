@@ -15,10 +15,12 @@
         <!-- Default panel contents -->
         <div class="panel-heading">
             <h2>Biên tập viên : "{{this.user.display_name}}"</h2>
+            {{#if this.assigned}}
             <a class="btn success" href="/admin/user/addAssign/{{this.user.id}}" role="button" title="Thêm người dùng">
                 <i class="fa fa-plus" aria-hidden="true"></i>
                 Phân công chuyên mục
             </a>
+            {{/if}}
         </div>
         <table class="table">
             <thead>
@@ -41,16 +43,20 @@
                             Đã ngừng phân công
                         </td>
                         <td class="text-center">
-                            <button class="btn btn-success" type="submit" title="Phân công lại" formaction="/admin/assign/restore">
+                            {{#if isResote}}
+                            <button class="btn btn-success" type="submit" title="Phân công lại"
+                                formaction="/admin/assign/restore">
                                 <i class="fa fa-refresh" aria-hidden="true"></i>
                             </button>
+                            {{/if}}
                         </td>
                         {{else}}
                         <td class="text-center" style="color: blue;">
                             Đang được phân công
                         </td>
                         <td class="text-center">
-                            <button class="btn btn-danger" type="submit" title="Ngừng phân công" formaction="/admin/assign/del">
+                            <button class="btn btn-danger" type="submit" title="Ngừng phân công"
+                                formaction="/admin/assign/del">
                                 <i class="fa fa-trash" aria-hidden="true"></i>
                             </button>
                         </td>

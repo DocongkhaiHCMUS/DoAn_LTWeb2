@@ -225,6 +225,10 @@ var uploadAvatar = multer({ storage: storageAvatar })
 //////////get, post editor//////////
 router.get('/editor',async function (req, res) {
   ////////random, create folder////////
+  if(req.app.locals.folderImgEditor != null)
+  {
+    fse.remove('./public/img/img_post/'+req.app.locals.folderImgEditor)
+  }
     var f 
     var rd
     do {
@@ -277,7 +281,9 @@ router.post('/editor' ,uploadAvatar.single('avatar'),async function (req, res) {
       delete: 0
     }
     await postModel.addTag_Post(entity2)
+    console.log(listTag[i]);
   }
+  console.log(listTag);
   res.redirect('/writer/listpost');
 })
 
@@ -345,12 +351,14 @@ router.get('/modifiedpost/:id', async function (req, res) {
       category: Number(req.body.category),
       status :3
     }
-    await postModel.patch(entity1);
+    await postModel.patchPost(entity1);
 
     //////////patch tag_post//////////
     var listTagModified = req.body.tag
-    var list = await postModel.selectAllTagByPost(1);
-    var listTag = []/////////
+    console.log(listTagModified);
+    console.log(listTagModified.length);
+    var list = await postModel.selectAllTagByPost(req.params.id);
+    var listTag = []
     for (var item of list) {
       listTag.push(item.tag) 
     }
@@ -375,7 +383,7 @@ router.get('/modifiedpost/:id', async function (req, res) {
             post: Number(req.params.id),
             delete: 0
           }
-          await postModel.addTag_Post(entity3)
+        await postModel.addTag_Post(entity3)
         }
       }
     }
@@ -395,7 +403,7 @@ router.get('/modifiedpost/:id', async function (req, res) {
         await postModel.addTag_Post(entity3)
       }
     }
-    console.log( req.app.locals.numberOfFolder);
+
     res.redirect('/writer/listpost');
   })
 

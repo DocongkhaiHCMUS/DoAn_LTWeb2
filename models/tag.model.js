@@ -13,6 +13,9 @@ module.exports = {
     singleTagById: function (id) {
         return db.load(`select * from ${TBL_Tag} where id = ${id}`);
     },
+    singleTagByTagName: function (tagname) {
+        return db.load(`select t.name from ${TBL_Tag} t where  UPPER(t.name) = UPPER('${tagname}')`);
+    },
     patch: function (entity) {
         const condition = {
             id: entity.id

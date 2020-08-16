@@ -113,7 +113,7 @@ module.exports = {
         delete entity.id;
 
         entity['modifile_date'] = moment().format('YYYY/MM/DD HH:mm:ss');
-
+        entity['publish_date'] = moment(entity['publish_date'],'HH:mm, DD/MM/YYYY').format('YYYY/MM/DD HH:mm:ss');
         return db.patch(TBL_Post, entity, condition)
     },
 
@@ -205,5 +205,17 @@ module.exports = {
                       publish_date,c1.name as cat1name, c2.name as cat2name, c1.id as cat1id, c2.id as cat2id, p.status, p.reason
                       from ${TBL_Post} p join ${TBL_Cat1} c1 join ${TBL_Cat2} c2 
                       where p.category = c2.id and c2.category_level1 = c1.id and p.author = ${author} and p.delete = 0 and status = ${status}`)
-    }
+    },
+    patchPost:(entity) => {
+      const condition = {
+          id: entity.id
+      }
+
+      delete entity.id;
+
+      entity['modifile_date'] = moment().format('YYYY/MM/DD HH:mm:ss');
+      //entity['publish_date'] = moment(entity['publish_date'],'HH:mm, DD/MM/YYYY').format('YYYY/MM/DD HH:mm:ss');
+      return db.patch(TBL_Post, entity, condition)
+  },
+
 };
