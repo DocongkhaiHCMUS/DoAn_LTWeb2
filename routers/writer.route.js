@@ -111,7 +111,7 @@ var uploadAvatar = multer({ storage: storageAvatar })
 //////////get, post editor//////////
 router.get('/editor', async function (req, res) {
   ////////random, create folder////////
-  var listFolder_image =[]
+  var listFolder_image = []
   var _listFolder_image = await postModel.selectAllFolder_Image()
   for (var item of _listFolder_image) {
     listFolder_image.push(item.folder_img)
@@ -178,7 +178,7 @@ router.post('/editor', uploadAvatar.single('avatar'), async function (req, res) 
     }
     console.log(listTag[i]);
   }
-  else {
+  else if (listTag != undefined) {
     const entity2 = {
       tag: Number(listTag),
       post: Number(arr[0]),
@@ -193,10 +193,10 @@ router.post('/editor', uploadAvatar.single('avatar'), async function (req, res) 
 
 //////////get lispost by author//////////
 router.get('/listpost/', async function (req, res) {
-  const list1 = await postModel.selectByAuthorByStatus(req.session.authUser.id,1)
-  const list2 = await postModel.selectByAuthorByStatus(req.session.authUser.id,2)
-  const list3 = await postModel.selectByAuthorByStatus(req.session.authUser.id,3)
-  const list4 = await postModel.selectByAuthorByStatus(req.session.authUser.id,4)
+  const list1 = await postModel.selectByAuthorByStatus(req.session.authUser.id, 1)
+  const list2 = await postModel.selectByAuthorByStatus(req.session.authUser.id, 2)
+  const list3 = await postModel.selectByAuthorByStatus(req.session.authUser.id, 3)
+  const list4 = await postModel.selectByAuthorByStatus(req.session.authUser.id, 4)
 
   res.render('viewWriter/listPost', {
     list1: list1,
