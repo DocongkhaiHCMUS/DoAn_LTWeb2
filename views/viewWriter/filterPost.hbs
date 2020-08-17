@@ -78,17 +78,24 @@
 								<a href="/writer/modifiedpost/{{list.id}}" class="btn btn-primary">
 									Chỉnh sửa
 								</a>
+								{{#when status 'eq' 0}}
+								<ul class="article-meta lb">
+									<li>
+										<h3 class="info"> Đã được duyệt & chờ xuất bản </h3>
+									</li>
+								</ul>
+								{{/when}}
 								{{#when status 'eq' 1}}
 								<ul class="article-meta lb">
 									<li>
-										<h3 class ="info">Đã được xuất bản </h3>
+										<h3 class="info">Đã xuất bản</h3>
 									</li>
 								</ul>
 								{{/when}}
 								{{#when status 'eq' 2}}
 								<ul class="article-meta lb">
 									<li>
-										<h3 class="info">Đã được kiểm duyệt, chưa được xuất bản</h3>
+										<h3 class="danger">Bị từ chối</h3>
 									</li>
 								</ul>
 								{{/when}}
@@ -96,13 +103,6 @@
 								<ul class="article-meta lb">
 									<li>
 										<h3 class="danger">Chưa được duyệt</h3>
-									</li>
-								</ul>
-								{{/when}}
-								{{#when status 'eq' 4}}
-								<ul class="article-meta lb">
-									<li>
-										<h3 class="danger">Đã từ chối</h3>
 									</li>
 								</ul>
 								{{/when}}
