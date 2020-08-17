@@ -50,10 +50,10 @@
       alert("Xin nhập nội dung bài viết");
       return false;
     }
-    if (avatar == "") {
-      alert("Xin hãy chọn ảnh đại diện bài viết");
-      return false;
-    }
+    //if (avatar == "") {
+      //alert("Xin hãy chọn ảnh đại diện bài viết");
+      //return false;
+    //}
     return true;
   }
   $('#frmEditor').on('submit', function (e) {
@@ -82,6 +82,10 @@
     </div>
     <form method="post" id="frmEditor" class="frmEditor" name="frmEditor" action="/writer/modifiedpost/{{_post.id}}"
       enctype='multipart/form-data'>
+      <div class="form-group">
+        <label for="">Ảnh đại diện</label>
+        <img src="/public/img/img_post/{{_post.folder_img}}/{{_post.avatar}}.jpg" alt="" srcset="">
+      </div>
       <div class="form-group">
         <label>Tiêu đề bài viết</label>
         <input type="text" class="form-control" id="title" name="title" placeholder="Tiêu đề bài viết"
@@ -118,7 +122,7 @@
       </div>
 
       <div class="form-group">
-        <label>Avatar</label>
+        <label>Thay ảnh đại diện</label>
         <input id="avatar" name="avatar" type="file" class="file" data-browse-on-zone-click="true">
       </div>
       <hr>

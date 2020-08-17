@@ -263,25 +263,41 @@ router.post("/accept", async function (req, res) {
   //get data
   let listTagPost_old = await modelTagPost.singleByPost(req.body.id);
   let listIDTagPost = [...listTagPost_old];
-  listTagPost_old = listTagPost_old.map(item => item.tag);
+  if (listTagPost_old != undefined && listTagPost_old.length > 0 && Array.isArray(listTagPost_old))
+    listTagPost_old = listTagPost_old.map(item => item.tag);
   let listTagPost_new = req.body.tag;
-  listTagPost_new = listTagPost_new.map(item => parseInt(item));
+  if (listTagPost_new != undefined && listTagPost_new.length > 0 && Array.isArray(listTagPost_new))
+    listTagPost_new = listTagPost_new.map(item => parseInt(item));
 
   //filter difference between 2 list Tag new and old
-  let arrTemp = [...listTagPost_old]
-  listTagPost_old = listTagPost_old.filter(function (item) {
-    return listTagPost_new.indexOf(item) == -1;
-  })
-  listTagPost_new = listTagPost_new.filter(function (item) {
-    return arrTemp.indexOf(item) == -1;
-  })
+  if (listTagPost_old != undefined && listTagPost_old.length > 0 && Array.isArray(listTagPost_old)
+    && listTagPost_new != undefined && listTagPost_new.length > 0 && Array.isArray(listTagPost_new)) {
+
+    let arrTemp = [...listTagPost_old]
+    listTagPost_old = listTagPost_old.filter(function (item) {
+      return listTagPost_new.indexOf(item) == -1;
+    })
+    listTagPost_new = listTagPost_new.filter(function (item) {
+      return arrTemp.indexOf(item) == -1;
+    })
+  }
+
 
   // console.log('old 2 : ' + listTagPost_old);
   // console.log('new 2: ' + listTagPost_new);
 
   //delete old tag_post
-  for (let item of listTagPost_old) {
-    let tpID = listIDTagPost.filter(function (item1) {
+  if (Array.isArray(listTagPost_old)) {
+    for (let item of listTagPost_old) {
+      let tpID = listIDTagPost.filter(function (item1) {
+        return item1.tag == item;
+      })
+      // console.log('delete' + item);
+      await tagPostModel.delete(tpID[0].id);
+    }
+  }
+  else if (listTagPost_old != undefined && listTagPost_old != '') {
+    let tpID = listIDTagPost.filter(function (listTagPost_old) {
       return item1.tag == item;
     })
     // console.log('delete' + item);
@@ -289,11 +305,26 @@ router.post("/accept", async function (req, res) {
   }
 
   //insert new tag
-  for (let item of listTagPost_new) {
-    let rs = await modelTagPost.singleByTagPost(item, req.body.id);
+  if (Array.isArray(listTagPost_new)) {
+    for (let item of listTagPost_new) {
+      let rs = await modelTagPost.singleByTagPost(item, req.body.id);
+      if (!rs || rs === undefined || rs.length <= 0) {
+        let tpadd = {
+          tag: item,
+          post: req.body.id
+        }
+        await tagPostModel.add(tpadd);
+      }
+      else {
+        await tagPostModel.restore(rs[0].id);
+      }
+    }
+  }
+  else if (listTagPost_new != undefined && listTagPost_new != '') {
+    let rs = await modelTagPost.singleByTagPost(listTagPost_new, req.body.id);
     if (!rs || rs === undefined || rs.length <= 0) {
       let tpadd = {
-        tag: item,
+        tag: listTagPost_new,
         post: req.body.id
       }
       await tagPostModel.add(tpadd);
@@ -303,7 +334,7 @@ router.post("/accept", async function (req, res) {
     }
   }
 
-  res.redirect("/editor");
+  res.redirect("/editor/draft");
 })
 
 router.post("/deny", async function (req, res) {
@@ -315,7 +346,7 @@ router.post("/deny", async function (req, res) {
   }
   console.log(entity);
   await modelPost.patch(entity);
-  res.redirect("/editor");
+  res.redirect("/editor/draft");
 });
 
 module.exports = router;
