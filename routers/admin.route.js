@@ -678,7 +678,7 @@ router.get('/user/assign/:id', async function (req, res) {
     }
     else {
         const id = +req.params.id || -1;
-        const rows = await assignModel.singleByUser(id);
+        const rows = await assignModel.singleByUser2(id);
         const _user = await userModel.singleByID2(id);
         const count = await assignModel.countByEditor(id);
         var assigned;
