@@ -239,8 +239,7 @@ router.get('/listpost/', async function (req, res) {
       _post,
       list1: list1,
       list2: list2,
-      list3: list3,
-      layout: false,
+      list3: list3
     });
   })
 router.post('/modifiedpost/:id', uploadAvatar.single('avatar'), async function (req, res) {
