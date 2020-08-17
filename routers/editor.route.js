@@ -226,17 +226,19 @@ router.get("/detail/:id", async function (req, res) {
     return item;
   })
 
-  //get list tag
-  let tagOfPost = listTagPost.map(function (item) {
-    return item.tag;
-  })
-  //map list tag
-  listTag = listTag.map(function (item) {
-    if (tagOfPost.includes(item.id)) {
-      item['active'] = true;
-    }
-    return item;
-  })
+  if (listTagPost != undefined && listTagPost.length > 0) {
+    //get list tag
+    let tagOfPost = listTagPost.map(function (item) {
+      return item.tag;
+    })
+    //map list tag
+    listTag = listTag.map(function (item) {
+      if (tagOfPost.includes(item.id)) {
+        item['active'] = true;
+      }
+      return item;
+    })
+  }
 
   // //set list tag
   // post['listTag'] = tagOfPost;
@@ -252,7 +254,7 @@ router.post("/accept", async function (req, res) {
     id: req.body.id,
     status: 1,
     category: req.body.category,
-    publish_date: moment(req.body.publish_date, "HH:mm, DD/MM/YYYY").format("YYYY/MM/DD HH:mm:ss"),
+    publish_date: req.body.publish_date,
     editor: req.session.authUser.id
   }
 
