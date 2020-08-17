@@ -3,6 +3,8 @@
   margin: 0;
 }
 
+#full_des p>img {display: block;width: 100% !important;margin: auto;border-radius: 6px;}
+
 .info {
     font-size: 15px;
     font-weight: 600;
@@ -664,7 +666,7 @@ article.article.row-article .article-body {
 }
 
 #main-content .col-md-4 {
-  margin-top: 195.4px;
+  margin-top: 11.5%;
   position: -webkit-sticky;
   position: sticky;
   top: 150px;
@@ -685,6 +687,10 @@ article.article.row-article .article-body {
 
 p {
   text-align: justify;
+}
+
+#full_des p {
+    font-weight: 500;
 }
 
 .about-des p {
