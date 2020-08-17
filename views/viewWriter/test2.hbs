@@ -1,97 +1,96 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Plugin imagebrowser ckeditor for nodejs</title>
-<!--ckeditor-->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+{{#section 'css'}}
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
+{{/section}}
+{{#section 'js'}}
 <script type="text/javascript" src="../../public/ckeditor/ckeditor.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.9/css/fileinput.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.9/js/fileinput.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.9/themes/fa/theme.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.9/js/locales/vi.min.js"></script>
 
-<!--multi select-->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
-    <script>
-        $(document).ready(function()
-        {
-            $("#tag").select2({
-                placeholder: "Thêm từ khoá bài viết",
-            });
-        });
-    </script>
-
+<script>
+  $(document).ready(function () {
+    $("#tag").select2({
+      placeholder: "Thêm từ khoá bài viết",
+    });
+  });
+</script>
 <!--upload fileinput-->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.9/css/fileinput.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.9/js/fileinput.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.9/themes/fa/theme.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/5.0.9/js/locales/vi.min.js"></script>
-    <script>
-      $('#avatar').fileinput({
-        theme: 'fa',
-        showCaption: true,
-        dropZoneEnabled: true,
-        allowedFileExtensions: ['png', 'jpg', 'gif'],
-        language: 'vi'
-      });
-    </script>
-
+<script>
+  $('#avatar').fileinput({
+    theme: 'fa',
+    showCaption: true,
+    dropZoneEnabled: true,
+    allowedFileExtensions: ['png', 'jpg', 'gif'],
+    language: 'vi'
+  });
+</script>
 <!--xu ly validate-->
-    <script type="text/javascript">
-
-      function validateForm() {
-      var title = document.forms["frmEditor"]["title"].value;
-      var tiny_des = document.forms["frmEditor"]["tiny_des"].value;
-      var category = document.forms["frmEditor"]["category"].value;
-      var full_des = document.forms["frmEditor"]["full_des"].value;
-      var avatar = document.forms["frmEditor"]["avatar"].value;
-      if (title == "") {
-        alert("Xin nhập tiêu đề bài viết");
-        return false;
-      }
-      if (tiny_des == "") {
-        alert("Xin nhập mô tả bài viết");
-        return false;
-      }
-      if (category == 0) {
-        alert("Xin chọn chuyên mục bài viết");
-        return false;
-      }
-      if (full_des == "") {
-        alert("Xin nhập nội dung bài viết");
-        return false;
-      }
-      if (avatar == "") {
-        alert("Xin hãy chọn ảnh đại diện bài viết");
-        return false;
-      }
+<script type="text/javascript">
+  function validateForm() {
+    var title = $("#title").val();
+    var tiny_des = $('#tiny_des').val();
+    var category = $("#category").val();
+    var full_des = $("#full_des").val();
+    var avatar = $('#avatar').val();
+    if (title == "") {
+      alert("Xin nhập tiêu đề bài viết");
+      return false;
     }
-    
-    </script>
-	
-</head>
+    if (tiny_des == "") {
+      alert("Xin nhập mô tả bài viết");
+      return false;
+    }
+    if (category == 0) {
+      alert("Xin chọn chuyên mục bài viết");
+      return false;
+    }
+    if (full_des == "") {
+      alert("Xin nhập nội dung bài viết");
+      return false;
+    }
+    if (avatar == "") {
+      alert("Xin hãy chọn ảnh đại diện bài viết");
+      return false;
+    }
+    return true;
+  }
+  $('#frmEditor').on('submit', function (e) {
+    e.preventDefault();
+    if (validateForm()) {
+      $('#frmEditor').off('submit').submit();
+    }
+  })
+</script>
+<script type="text/javascript">
+  CKEDITOR.replace('ckeditor', {
+    "extraPlugins": 'imagebrowser',
+    "imageBrowser_listUrl": "/writer/files"
+  });
+</script>
+{{/section}}
 
-<body>
-  <a href="/" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Back to Home</a>
-	<div class="container">
-    <form method="post" id="frmEditor" action="/writer/modifiedpost/{{_post.id}}" enctype='multipart/form-data'>
-  <div class="card">
-    <div class="card-header">
-       Editor
+<div class="content-body">
+  <div class="title-editor">
+    <h4>Đăng bài viết</h4>
+  </div>
+  <div class="panel panel-default">
+    <!-- Default panel contents -->
+    <div class="panel-heading">
+      <h2>Chi tiết bài viết</h2>
     </div>
-    <div class="card-body">
-
+    <form method="post" id="frmEditor" class="frmEditor" name="frmEditor" action="/writer/modifiedpost/{{_post.id}}"
+      enctype='multipart/form-data'>
       <div class="form-group">
         <label>Tiêu đề bài viết</label>
-        <input type="text" class="form-control" id="title" name="title" placeholder="Tiêu đề bài viết" value="{{_post.title}}">
+        <input type="text" class="form-control" id="title" name="title" placeholder="Tiêu đề bài viết"
+          enctype="multipart/form-data" value="{{_post.title}}">
       </div>
-
       <div class="form-group">
         <label>Mô tả bài viết</label>
         <input type="text" class="form-control" id="tiny_des" name="tiny_des" placeholder="Mô tả bài viết" value="{{_post.tiny_des}}">
       </div>
-
       <div class="form-group">
         <label>Chuyên mục</label>
           <select id="category" name="category" >
@@ -104,11 +103,8 @@
 
       <div class="form-group">
         <label>Nội dung bài viết</label>
-        <textarea name="full_des" id="ckeditor" class="ckeditor" cols="30" rows="10">
-            {{{_post.full_des}}}
-        </textarea>
+        <textarea name="full_des" id="ckeditor" class="ckeditor" cols="30" rows="10">{{{_post.full_des}}}</textarea>
       </div>
-
       <div class="form-group">
         <label>Từ khoá bài viết</label>
         <select id="tag" name="tag"  multiple="multiple">
@@ -123,26 +119,15 @@
 
       <div class="form-group">
         <label>Avatar</label>
-        <input id="avatar" name="avatar" type="file" class="file" data-browse-on-zone-click="true" value="">
+        <input id="avatar" name="avatar" type="file" class="file" data-browse-on-zone-click="true">
       </div>
-
-    </div>
-
-    <div class="card-footer">
-      <button type="submit" class="btn btn-lg btn-success btn-block" >
-        <i class="fa fa-check" aria-hidden="true"></i>
-        Submit
-      </button>
-    </div>
+      <hr>
+      <div class="form-group flex">
+        <button type="submit" class="btn btn-success">
+          <i class="fa fa-check" aria-hidden="true"></i>
+          Submit
+        </button>
+      </div>
+    </form>
   </div>
-</form>
-	</div>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
-	<script type="text/javascript">
-	  CKEDITOR.replace('ckeditor', {
-	    "extraPlugins" : 'imagebrowser',
-			"imageBrowser_listUrl" : "/writer/files"
-	  });
-	</script>
-</body>
-</html>
+</div>
