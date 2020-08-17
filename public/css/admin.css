@@ -24,6 +24,41 @@
   box-sizing: border-box;
 }
 
+hr.hr-card {
+    border: 1px solid #ff8181;
+    width: 90%;
+    margin: 3% auto;
+    margin-top: 5%;
+}
+
+.card1 h3 {
+    color: #014f65;
+}
+
+.card1 .fa {
+    font-size: 38px;
+    color: #02617c;
+}
+
+.card1 {
+    width: 220px;
+    text-align: center;
+    margin: 2% 3%;
+    border: 2px solid #0286ab;
+    padding: 12px;
+    border-radius: 25px;
+    vertical-align: middle;
+    color: #02617c;
+}
+
+a.card1:hover {
+    background: #0286ab;
+}
+
+a.card1:hover i.fa, a.card1:hover h3 {
+    color: #fff !important;
+}
+
 .select2-container--default
   .select2-selection--single
   .select2-selection__rendered {
@@ -204,6 +239,12 @@ table.table {
 .wrapper {
   font-size: 16px;
   font-weight: 400;
+}
+
+.card-body {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
 }
 
 td.text-right i.fa {
