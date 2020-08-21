@@ -19,7 +19,7 @@
 			<h2>Danh sách bài viết của Phóng viên "{{lcUser.display_name}}"</h2>
 		</div>
 		<div class="body-panel">
-			<div class="head">
+			{{!-- <div class="head">
 				<select class="form-control" id="statusBaiViet">
 					<option value="0" selected>Tất cả bài viết</option>
 					<option value="1">Các bài viết đã được xuất bản</option>
@@ -28,7 +28,7 @@
 					<option value="4">Các bài viết bị từ chối</option>
 				</select>
 				<button onclick="locBaiViet()" class="btn btn-info">Lọc bài viết</button>
-			</div>
+			</div> --}}
 			<div class="row body">
 
 				{{#each this.list1}}
@@ -66,7 +66,7 @@
 								{{tiny_des}}
 							</h5>
 							<div class="foot-card">
-								<button type="button" class="btn btn-info">Info Button</button>
+								{{!-- <button type="button" class="btn btn-info">Info Button</button> --}}
 								<ul class="article-meta lb">
 									<li>
 										<h3 class="info">Đã được xuất bản</h3>
@@ -113,12 +113,12 @@
 								{{tiny_des}}
 							</h5>
 							<div class="foot-card">
-								<a href="/writer/modifiedpost/{{id}}" class="btn btn-primary" disabled="disabled">
+								<a href="/writer/modifiedpost/{{id}}" class="btn btn-primary">
 									Chỉnh sửa
 								</a>
 								<ul class="article-meta lb">
 									<li>
-										<h3 class="info">Đã được duyệt, chưa được xuất bản</h3>
+										<h3 class="danger">Đã bị từ chối</h3>
 									</li>
 								</ul>
 							</div>
@@ -211,12 +211,12 @@
 								{{tiny_des}}
 							</h5>
 							<div class="foot-card">
-								<a href="/writer/modifiedpost/{{id}}" class="btn btn-primary">
+								{{!-- <a href="/writer/modifiedpost/{{id}}" class="btn btn-primary">
 									Chỉnh sửa
-								</a>
+								</a> --}}
 								<ul class="article-meta lb">
 									<li>
-										<h3 class="danger">Đã bị từ chối</h3>
+										<h3 class="info">Đã được duyệt, chưa được xuất bản</h3>
 									</li>
 								</ul>
 							</div>

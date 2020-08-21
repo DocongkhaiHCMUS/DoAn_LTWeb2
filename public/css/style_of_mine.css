@@ -3,6 +3,16 @@
   margin: 0;
 }
 
+.foot-card ~ h4 {
+    display: block;
+    padding-top: 3%;
+    padding-bottom: 3%;
+    color: #ff556a;
+    text-align: right;
+    width: 90%;
+    margin: auto;
+}
+
 #full_des p>img {display: block;width: 100% !important;margin: auto;border-radius: 6px;}
 
 .info {
@@ -998,13 +1008,15 @@ h2.des_title {
 
 .shrink img.avatar {
   border-radius: 100%;
-  width: 60px;
+  height: 61px;
+  width: 61px;
   padding: 0px;
   margin-right: 10px;
 }
 
 img.avatar {
   border-radius: 100%;
+  height: 50px;
   width: 50px;
   margin-right: 5px;
   transition: all 0.3s;

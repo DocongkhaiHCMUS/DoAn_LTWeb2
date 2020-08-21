@@ -1,30 +1,38 @@
 {{#section 'js'}}
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
-    <script>
-        $(document).ready(function(){
-            var specialElementHandler = {
-                "#editor": function(element, renderer){
-                    return true;
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.2/jspdf.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
+<script src="/public/js/html2pdf.bundle.min.js"></script>
+<script>
+    $(document).ready(function () {
+        /*$("#pdf").on('click', function () {
+            const title = document.getElementById("title").textContent;
+            html2canvas($("#article-post"), {
+                onrendered: function (canvas) {
+                    const imgData = canvas.toDataURL(
+                        'image/png');
+                    const doc = new jsPDF('p', 'mm', 'a2');
+                    doc.addImage(imgData, 'PNG', 10, 10);
+                    doc.save(`${title}sample-file.pdf`);
                 }
-            }
-            $("#allowDownloadPDF").click(function(){
-                var doc = new jsPDF();
-                doc.setFontSize(10);
+            });
+        });*/
 
-                var title = document.getElementById("title").textContent;
-                var tiny_des = document.getElementById("tiny_des").textContent;
-                var full_des = document.getElementById("full_des").textContent;
-                var y = 30;
-                doc.text(0,y,title)
-                doc.text(-60,y+20,tiny_des)
-                doc.text(-60,y+20,tiny_des)
-                doc.save(title+".pdf")
-
-            })
+        $("#pdf").on('click', function () {
+            const element = document.getElementById("article-post");
+            const title = document.getElementById("title").textContent;
+            var opt = {
+                margin: [8, 8],
+                html2canvas: { scale: 2 },
+                pagebreak: { mode: ['avoid-all'] }
+            };
+            // Choose the element and save the PDF for our user.
+            html2pdf()
+                .set(opt)
+                .from(element)
+                .save(`${title}.pdf`);
         })
-    </script>
+    });
+</script>
 
 <script>
     $('#lock-premium>a').on('click', function (e) {
@@ -41,7 +49,6 @@
         <div class="row">
             <!-- Main Column -->
             <div class="col-md-8 top-body">
-
                 <!-- breadcrumb -->
                 <ul class="article-breadcrumb">
                     <li><a href="/">Trang Chủ</a></li>
@@ -52,7 +59,7 @@
                 <!-- /breadcrumb -->
 
                 <!-- ARTICLE POST -->
-                <article class="article article-post">
+                <article id="article-post" class="article article-post">
                     {{!-- <div class="article-share">
 						<a href="#" class="facebook"><i class="fa fa-facebook"></i></a>
 						<a href="#" class="twitter"><i class="fa fa-twitter"></i></a>
@@ -85,19 +92,19 @@
                         {{!-- {{/each}} --}}
                         <div id="full_des">
 
-                        {{{post.full_des}}}
+                            {{{post.full_des}}}
                         </div>
                     </div>
-                    {{#if post.premium}}
-                        <button type="button" id="allowDownloadPDF" class="btn btn-info">Dowload PDF</button>
-                        {{else}}
-                        <button type="button" id="disallowDownloadPDF" class="btn btn-info" disabled>Dowload PDF</button>
-                    {{/if}}
                 </article>
                 <!-- /ARTICLE POST -->
 
                 <!-- widget tags -->
                 <div class="widget-tags">
+                    {{#if post.premium}}
+                    <button id="pdf" class="btn btn-info">Dowload PDF</button>
+                    {{else}}
+                    <button id="pdf" class="btn btn-info">Dowload PDF</button>
+                    {{/if}}
                     <h4>Từ khóa : </h4>
                     <ul>
                         {{#each post.listTag}}
@@ -302,8 +309,6 @@
                             {{/each}}
 
                             {{/if}}
-
-
                         </div>
                     </div>
                 </div>

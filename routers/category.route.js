@@ -32,10 +32,12 @@ router.get('/cat1/:id', async function (req, res) {
     let listTag = req.app.locals.listTag;
 
     //filter children cat2 of cat1
-    let cat1 = list1[id - 1];
+    let cat1 = list1.filter(function (item) {
+        return item.id == id;
+    })[0];
     let cat2 = list2.filter(function (item) {
         return item.category_level1 == cat1.id;
-    })
+    });
 
     //get data in db
     let [listPost, total] = await Promise.all([
@@ -148,7 +150,10 @@ router.get('/cat2/:id', async function (req, res) {
     let curCat2 = list2[id - 1];
 
     //compute total page number
-    let cat1 = list1[curCat2.category_level1 - 1];
+    let cat1 = list1.filter(function (item) {
+        return item.id == curCat2.category_level1;
+    })[0];
+    
     let cat2 = list2.filter(function (item) {
         return item.category_level1 == cat1.id;
     })

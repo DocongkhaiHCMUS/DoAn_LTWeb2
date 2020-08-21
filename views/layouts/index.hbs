@@ -232,9 +232,13 @@
 							<ul class="dropdown-menu dropdownhover-bottom">
 								{{#each list}}
 								<li>
+									{{#if id_cat2}}
+
 									<a href="/category/cat2/{{id_cat2}}">
 										{{nameCat2}}
 									</a>
+									{{else}}
+									{{/if}}
 								</li>
 
 								{{/each}}

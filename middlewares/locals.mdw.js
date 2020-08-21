@@ -270,15 +270,19 @@ module.exports = function (app) {
                     let listCat2 = app.locals.listCat.filter(function (item1) {
                         return item1.id_cat1 === item.id;
                     })
-                    if (listCat2[0].list != null && listCat2[0].list != undefined
-                        && listCat2[0].list.length > 0 && listCat2 != undefined)
-                        item['listCat2'] = listCat2[0].list;
+                    if (Array.isArray(listCat2.list)) {
+                        if (listCat2[0].list != null && listCat2[0].list != undefined
+                            && listCat2[0].list.length > 0 && listCat2 != undefined)
+                            item['listCat2'] = listCat2[0].list;
+                    }
                     let listLatestPost = latestPost.filter(function (item1) {
                         return item1.id === item.id;
                     })
-                    if (listLatestPost[0].listPost != null && listLatestPost[0].listPost != undefined
-                        && listLatestPost[0].listPost.length > 0 && listLatestPost != undefined)
-                        item['listLatestPost'] = listLatestPost[0].listPost;
+                    if (Array.isArray(listLatestPost)) {
+                        if (listLatestPost[0].listPost != null && listLatestPost[0].listPost != undefined
+                            && listLatestPost[0].listPost.length > 0 && listLatestPost != undefined)
+                            item['listLatestPost'] = listLatestPost[0].listPost;
+                    }
                 }
                 catch (err) {
                     console.log(err);
